@@ -12,11 +12,21 @@ const resources = {
   },
 };
 
+// Pick saved language from localStorage if available
+const savedLanguage = ((): 'vi' | 'en' => {
+  try {
+    const v = localStorage.getItem('preferred-language');
+    return (v === 'en' ? 'en' : 'vi');
+  } catch {
+    return 'vi';
+  }
+})();
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'vi', // default language
+    lng: savedLanguage, // default language
     fallbackLng: 'vi',
     returnObjects: true,
     interpolation: {

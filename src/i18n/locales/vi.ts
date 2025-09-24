@@ -49,43 +49,60 @@ export const vi: ContentTaxonomy = {
       },
     ],
   },
+
+  landing: {
+    valueProposition: {
+      title: 'Giá trị cốt lõi của chúng tôi',
+      subtitle: 'Khám phá những lợi ích vượt trội mà nền tảng AI của chúng tôi mang lại cho việc tìm kiếm và tuyển dụng nhân tài.',
+      security: {
+        title: 'Bảo mật tuyệt đối',
+        description: 'Dữ liệu của bạn được bảo vệ bằng công nghệ mã hóa tiên tiến và tuân thủ các tiêu chuẩn bảo mật quốc tế.',
+      },
+      performance: {
+        title: 'Hiệu suất vượt trội',
+        description: 'Xử lý nhanh chóng với độ chính xác cao, giúp bạn tiết kiệm thời gian và nâng cao hiệu quả công việc.',
+      },
+      collaboration: {
+        title: 'Hợp tác liền mạch',
+        description: 'Kết nối ứng viên và nhà tuyển dụng một cách hiệu quả, tạo ra môi trường tuyển dụng tối ưu.',
+      },
+      cta: {
+        text: 'Sẵn sàng trải nghiệm sự khác biệt?',
+        button: 'Bắt đầu ngay',
+      },
+    },
+  },
   
   features: {
-    title: 'Tính năng dành cho mọi người',
-    userTypes: [
+    title: 'Tính năng mạnh mẽ cho tuyển dụng hiện đại',
+    subtitle: 'Mọi thứ bạn cần để tối ưu hóa quy trình tuyển dụng với công cụ AI',
+    userFeatures: [
       {
-        title: 'Cho Ứng viên',
-        features: [
-          'Upload CV (PDF/Word)',
-          'AI phân tích tự động',
-          'Job matching thông minh',
-          'Apply trực tiếp',
-        ],
+        title: 'Cộng tác thời gian thực',
+        description: 'Làm việc cùng nhau một cách liền mạch với các thành viên trong nhóm, chia sẻ phản hồi ngay lập tức và đưa ra quyết định tuyển dụng nhanh hơn với các công cụ giao tiếp tích hợp.',
       },
       {
-        title: 'Cho Nhà tuyển dụng',
-        features: [
-          'Đăng tin tuyển dụng',
-          'Tìm CV phù hợp',
-          'Quản lý ứng viên',
-          'Analytics & reports',
-        ],
+        title: 'Tự động hóa thông minh',
+        description: 'Tự động hóa các tác vụ lặp đi lặp lại, lên lịch phỏng vấn tự động và để AI xử lý việc sàng lọc ứng viên ban đầu để tập trung vào những gì quan trọng nhất.',
       },
       {
-        title: 'Cho Admin',
-        features: [
-          'User management',
-          'System monitoring',
-          'Content moderation',
-          'Reports & analytics',
-        ],
+        title: 'Phân tích nâng cao',
+        description: 'Có được cái nhìn sâu sắc về quy trình tuyển dụng của bạn với phân tích toàn diện, theo dõi các chỉ số hiệu suất và tối ưu hóa chiến lược tuyển dụng.',
       },
     ],
     platforms: [
-      { name: 'Web App', description: 'React Application' },
-      { name: 'Slack Bot', description: 'Team Integration' },
-      { name: 'WhatsApp', description: 'Mobile Access' },
-      { name: 'API', description: 'Developer Access' },
+      {
+        name: 'Nền tảng Web',
+        description: 'Ứng dụng web đầy đủ tính năng với bộ công cụ tuyển dụng hoàn chỉnh',
+      },
+      {
+        name: 'Ứng dụng di động',
+        description: 'Ứng dụng di động native cho iOS và Android với khả năng offline',
+      },
+      {
+        name: 'Ứng dụng Desktop',
+        description: 'Ứng dụng desktop đa nền tảng cho Windows, macOS và Linux',
+      },
     ],
   },
   
@@ -243,67 +260,51 @@ export const vi: ContentTaxonomy = {
   },
   
   cta: {
-    headline: 'Sẵn sàng bắt đầu?',
-    subtitle: 'Tham gia cùng 10,000+ ứng viên và nhà tuyển dụng đã tìm thấy thành công với AI Resume Analyzer',
-    primaryCTA: 'Đăng ký miễn phí ngay',
-    secondaryCTA: 'Xem demo',
-    trustMessage: '⏰ Chỉ mất 2 phút để tạo tài khoản và upload CV đầu tiên',
+    title: 'Sẵn sàng bắt đầu?',
+    subtitle: 'Tham gia cùng hàng nghìn công ty đã tin tưởng sử dụng nền tảng của chúng tôi.',
+    buttons: {
+      getStarted: 'Bắt đầu miễn phí',
+      learnMore: 'Tìm hiểu thêm',
+    },
   },
   
-  footer: {
-    company: {
-      description: 'AI Resume Analyzer & Job Match Platform - Tìm việc làm phù hợp với AI',
-      links: [
-        { label: 'Về chúng tôi', href: '/about' },
-        { label: 'Tuyển dụng', href: '/careers' },
-        { label: 'Blog', href: '/blog' },
-        { label: 'Tin tức', href: '/news' },
-      ],
-    },
-    product: {
-      title: 'Sản phẩm',
-      links: [
-        { label: 'Tính năng', href: '/features' },
-        { label: 'Bảng giá', href: '/pricing' },
-        { label: 'API', href: '/api' },
-        { label: 'Tích hợp', href: '/integrations' },
-      ],
-    },
-    support: {
-      title: 'Hỗ trợ',
-      links: [
-        { label: 'Trung tâm trợ giúp', href: '/help' },
-        { label: 'Liên hệ', href: '/contact' },
-        { label: 'Trạng thái', href: '/status' },
-        { label: 'Cộng đồng', href: '/community' },
-      ],
-    },
-    legal: {
-      title: 'Pháp lý',
-      links: [
-        { label: 'Chính sách bảo mật', href: '/privacy' },
-        { label: 'Điều khoản sử dụng', href: '/terms' },
-        { label: 'Chính sách cookie', href: '/cookies' },
-        { label: 'GDPR', href: '/gdpr' },
-      ],
-    },
-    contact: {
-      email: 'hello@resulyze.com',
-      phone: '+84 123 456 789',
-      address: '123 Tech Street, Ho Chi Minh City, Vietnam',
-    },
-    copyright: '© 2024 Resulyze. All rights reserved. Built with ❤️ for modern recruitment.',
+  featuresShowcase: {
+    title: 'Tính năng nổi bật',
+    subtitle: 'Khám phá những tính năng mạnh mẽ giúp bạn tối ưu hóa quy trình tuyển dụng',
+    features: [
+      {
+        title: 'Phân tích CV thông minh',
+        description: 'AI phân tích và đánh giá CV một cách chính xác và nhanh chóng',
+        icon: 'brain',
+      },
+      {
+        title: 'Matching công việc',
+        description: 'Tìm kiếm và ghép nối ứng viên phù hợp với vị trí tuyển dụng',
+        icon: 'target',
+      },
+      {
+        title: 'Dashboard quản lý',
+        description: 'Theo dõi và quản lý toàn bộ quy trình tuyển dụng một cách hiệu quả',
+        icon: 'dashboard',
+      },
+    ],
   },
   
   common: {
     loading: 'Đang tải...',
     error: 'Có lỗi xảy ra',
-    retry: 'Thử lại',
-    close: 'Đóng',
+    success: 'Thành công',
+    cancel: 'Hủy',
+    confirm: 'Xác nhận',
+    save: 'Lưu',
+    edit: 'Chỉnh sửa',
+    delete: 'Xóa',
+    back: 'Quay lại',
     next: 'Tiếp theo',
     previous: 'Trước đó',
-    learnMore: 'Tìm hiểu thêm',
-    getStarted: 'Bắt đầu',
-    contactUs: 'Liên hệ chúng tôi',
+    close: 'Đóng',
+    open: 'Mở',
+    viewMore: 'Xem thêm',
+    viewLess: 'Thu gọn',
   },
 };

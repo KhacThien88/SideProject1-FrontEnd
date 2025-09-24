@@ -1,37 +1,38 @@
-import { useTranslation as useI18nTranslation } from 'react-i18next';
+import { useContext } from 'react';
+import { LanguageContext } from '../contexts/LanguageContext';
+import { en } from '../i18n/locales/en';
+import { vi } from '../i18n/locales/vi';
 import type { ContentTaxonomy } from '../i18n/types/content';
 
+const translations: Record<string, ContentTaxonomy> = {
+  en,
+  vi,
+};
+
 export const useTranslation = () => {
-  const { t, i18n, ready } = useI18nTranslation();
+  const context = useContext(LanguageContext);
   
-  const changeLanguage = (lang: 'vi' | 'en') => {
-    i18n.changeLanguage(lang);
-    localStorage.setItem('preferred-language', lang);
-  };
+  if (!context) {
+    throw new Error('useTranslation must be used within a LanguageProvider');
+  }
   
-  const getCurrentLanguage = () => i18n.language as 'vi' | 'en';
+  const { language, changeLanguage } = context;
+  const t = translations[language] || translations.en;
   
-  const getContent = (key: keyof ContentTaxonomy): any => {
-    if (!ready) {
-      return {};
+  const getContent = (key: string) => {
+    const keys = key.split('.');
+    let result: any = t;
+    for (const k of keys) {
+      result = result?.[k];
     }
-    const content = t(key, { returnObjects: true });
-    return content || {};
+    return result;
   };
   
-  const tContent = (key: string) => {
-    if (!ready) {
-      return key;
-    }
-    return t(key);
-  };
-  
-  return {
-    t: tContent,
+  return { 
+    t, 
+    language, 
+    currentLanguage: language,
     changeLanguage,
-    getCurrentLanguage,
-    getContent,
-    currentLanguage: getCurrentLanguage(),
-    ready,
+    getContent 
   };
 };

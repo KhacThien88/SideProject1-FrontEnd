@@ -1,13 +1,63 @@
 import React from 'react';
+import { Star } from 'lucide-react';
 
-export interface TestimonialCardProps {
+interface TestimonialCardProps {
   quote: string;
   author: string;
   role: string;
   company: string;
-  rating?: number; // 1..5
-  avatarUrl?: string;
+  rating: number;
+  avatar: string;
+  userType: 'candidate' | 'recruiter' | 'admin';
 }
+
+const getUserTypeColor = (userType: string) => {
+  switch (userType) {
+    case 'candidate':
+      return 'border-blue-200 bg-blue-50';
+    case 'recruiter':
+      return 'border-green-200 bg-green-50';
+    case 'admin':
+      return 'border-purple-200 bg-purple-50';
+    default:
+      return 'border-gray-200 bg-gray-50';
+  }
+};
+
+const getUserTypeBadge = (userType: string) => {
+  switch (userType) {
+    case 'candidate':
+      return 'bg-blue-100 text-blue-800';
+    case 'recruiter':
+      return 'bg-green-100 text-green-800';
+    case 'admin':
+      return 'bg-purple-100 text-purple-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
+};
+
+const getUserTypeLabel = (userType: string) => {
+  switch (userType) {
+    case 'candidate':
+      return 'Ứng viên';
+    case 'recruiter':
+      return 'Nhà tuyển dụng';
+    case 'admin':
+      return 'Quản trị viên';
+    default:
+      return 'Người dùng';
+  }
+};
+
+const getInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+};
 
 export const TestimonialCard: React.FC<TestimonialCardProps> = ({
   quote,
@@ -15,25 +65,52 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
   role,
   company,
   rating = 5,
-  avatarUrl,
+  avatar,
+  userType = 'candidate',
 }) => {
+
   return (
-    <div className="rounded-2xl bg-white border border-neutral-200 p-6 h-full flex flex-col justify-between hover:shadow-lg transition-all duration-200">
-      <p className="text-neutral-700 leading-relaxed mb-4">“{quote}”</p>
-      <div className="flex items-center gap-3 mt-4">
-        <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-semibold">
-          {avatarUrl ? (
-            <img src={avatarUrl} alt={author} className="w-10 h-10 rounded-full object-cover" />
-          ) : (
-            author?.[0] || 'U'
-          )}
+    <div className={`relative p-6 rounded-2xl shadow-lg border ${getUserTypeColor(userType)} transition-all duration-500 hover:shadow-xl hover:scale-105 hover:-translate-y-2 group animate-fade-in`}>
+      {/* User Type Badge */}
+      <div className="absolute -top-3 left-6">
+        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getUserTypeBadge(userType)}`}>
+          {getUserTypeLabel(userType)}
+        </span>
+      </div>
+
+      {/* Quote */}
+      <blockquote className="text-gray-700 text-base leading-relaxed mb-6 italic transition-colors duration-300 group-hover:text-gray-800">
+        "{quote}"
+      </blockquote>
+
+      {/* Rating */}
+      <div className="flex items-center mb-4">
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            className={`w-4 h-4 transition-all duration-300 ${
+              i < rating
+                ? 'text-yellow-400 fill-current transform group-hover:scale-110'
+                : 'text-gray-300'
+            }`}
+            style={{ animationDelay: `${i * 100}ms` }}
+          />
+        ))}
+        <span className="ml-2 text-sm text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
+          {rating}/5
+        </span>
+      </div>
+
+      {/* Author Info */}
+      <div className="flex items-center">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-lg mr-4 shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:scale-110">
+          {avatar || getInitials(author)}
         </div>
         <div className="flex-1">
-          <div className="text-sm font-semibold text-neutral-900">{author}</div>
-          <div className="text-xs text-neutral-600">{role} • {company}</div>
-        </div>
-        <div className="text-primary-500 text-sm" aria-label={`rating-${rating}`}>
-          {'★'.repeat(rating)}{'☆'.repeat(5 - rating)}
+          <h4 className="font-semibold text-gray-900 text-base transition-colors duration-300 group-hover:text-blue-600">{author}</h4>
+          <p className="text-gray-600 text-sm transition-colors duration-300 group-hover:text-gray-700">
+            {role} {company && `tại ${company}`}
+          </p>
         </div>
       </div>
     </div>

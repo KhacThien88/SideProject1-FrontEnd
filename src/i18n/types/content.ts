@@ -8,7 +8,7 @@ export interface ContentTaxonomy {
     language: string;
   };
   
-  // Hero Section
+  // Hero section
   hero: {
     headline: string;
     subtitle: string;
@@ -20,57 +20,82 @@ export interface ContentTaxonomy {
     trustIndicators: string[];
   };
   
-  // Value Proposition
+  // Value Props
   valueProps: {
     title: string;
-    items: Array<{
+    items: {
       title: string;
       description: string;
       metric: string;
-    }>;
+    }[];
+  };
+  
+  // Landing sections
+  landing: {
+    valueProposition: {
+      title: string;
+      subtitle: string;
+      security: {
+        title: string;
+        description: string;
+      };
+      performance: {
+        title: string;
+        description: string;
+      };
+      collaboration: {
+        title: string;
+        description: string;
+      };
+      cta: {
+        text: string;
+        button: string;
+      };
+    };
   };
   
   // Features
   features: {
     title: string;
-    userTypes: Array<{
+    subtitle: string;
+    userFeatures: {
       title: string;
-      features: string[];
-    }>;
-    platforms: Array<{
+      description: string;
+    }[];
+    platforms: {
       name: string;
       description: string;
-    }>;
+    }[];
   };
   
   // How It Works
   howItWorks: {
     title: string;
-    steps: Array<{
+    steps: {
       title: string;
       description: string;
       details: string[];
-    }>;
+    }[];
   };
   
   // Statistics
   statistics: {
     title: string;
-    items: Array<{
+    items: {
       label: string;
       description: string;
-    }>;
+    }[];
   };
   
   // Testimonials
   testimonials: {
     title: string;
-    items: Array<{
+    items: {
       quote: string;
       author: string;
       role: string;
       company: string;
-    }>;
+    }[];
   };
   
   // Pricing
@@ -80,59 +105,51 @@ export interface ContentTaxonomy {
       monthly: string;
       yearly: string;
     };
-    plans: Array<{
+    plans: {
       name: string;
       description: string;
       features: string[];
       ctaText: string;
-    }>;
+    }[];
   };
   
-  // CTA Section
+  // CTA
   cta: {
-    headline: string;
+    title: string;
     subtitle: string;
-    primaryCTA: string;
-    secondaryCTA: string;
-    trustMessage: string;
+    buttons: {
+      getStarted: string;
+      learnMore: string;
+    };
   };
   
-  // Footer
-  footer: {
-    company: {
+  // Features Showcase
+  featuresShowcase: {
+    title: string;
+    subtitle: string;
+    features: {
+      title: string;
       description: string;
-      links: Array<{ label: string; href: string }>;
-    };
-    product: {
-      title: string;
-      links: Array<{ label: string; href: string }>;
-    };
-    support: {
-      title: string;
-      links: Array<{ label: string; href: string }>;
-    };
-    legal: {
-      title: string;
-      links: Array<{ label: string; href: string }>;
-    };
-    contact: {
-      email: string;
-      phone: string;
-      address: string;
-    };
-    copyright: string;
+      icon: string;
+    }[];
   };
   
   // Common
   common: {
     loading: string;
     error: string;
-    retry: string;
-    close: string;
+    success: string;
+    cancel: string;
+    confirm: string;
+    save: string;
+    edit: string;
+    delete: string;
+    back: string;
     next: string;
     previous: string;
-    learnMore: string;
-    getStarted: string;
-    contactUs: string;
+    close: string;
+    open: string;
+    viewMore: string;
+    viewLess: string;
   };
 }

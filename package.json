@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "i18next": "^25.5.2",
+    "lucide-react": "^0.544.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-i18next": "^15.7.3",
+    "tailwind-merge": "^3.3.1",
     "vue-i18n": "^11.1.12"
   },
   "devDependencies": {

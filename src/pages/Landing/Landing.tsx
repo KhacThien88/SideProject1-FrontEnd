@@ -1,26 +1,33 @@
 import React from 'react';
-import { Layout } from '../../components/common/Layout';
-import { Navigation } from '../../components/ui/Navigation';
+import { Navigation } from '../../components/layout/Navigation';
 import { HeroSection } from './components/HeroSection';
+import { Testimonials } from './components/Testimonials';
+import { PricingPlans } from './components/PricingPlans';
 import ValueProposition from './components/ValueProposition';
 import FeaturesShowcase from './components/FeaturesShowcase';
 import { HowItWorks } from './components/HowItWorks';
 import { Statistics } from './components/Statistics';
+import CTASection from '../../components/sections/CTASection';
+import Footer from '../../components/layout/Footer';
 import { useOnReveal } from '../../hooks/useOnReveal';
 
-export const LandingPage: React.FC = () => {
+export const Landing: React.FC = () => {
   useOnReveal('.reveal');
   
   return (
-    <Layout>
+    <div className="min-h-screen bg-white">
       <Navigation />
-      <main className="page-max mx-auto">
+      <main>
         <HeroSection />
         <ValueProposition />
         <FeaturesShowcase />
         <HowItWorks />
         <Statistics />
+        <Testimonials />
+        <PricingPlans />
+        <CTASection />
       </main>
-    </Layout>
+      <Footer />
+    </div>
   );
 };

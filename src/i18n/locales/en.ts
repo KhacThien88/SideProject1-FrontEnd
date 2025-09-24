@@ -39,53 +39,70 @@ export const en: ContentTaxonomy = {
       },
       {
         title: 'Real-time Processing',
-        description: 'Fast processing in just 10 seconds',
+        description: 'Fast processing within 10 seconds',
         metric: '10s Processing',
       },
       {
         title: 'Secure & Private',
-        description: 'Absolute data security compliant with GDPR',
+        description: 'Absolute data security with GDPR compliance',
         metric: 'GDPR Compliant',
       },
     ],
   },
+
+  landing: {
+    valueProposition: {
+      title: 'Our Core Values',
+      subtitle: 'Discover the superior benefits that our AI platform brings to talent search and recruitment.',
+      security: {
+        title: 'Absolute Security',
+        description: 'Your data is protected by advanced encryption technology and complies with international security standards.',
+      },
+      performance: {
+        title: 'Superior Performance',
+        description: 'Fast processing with high accuracy, helping you save time and improve work efficiency.',
+      },
+      collaboration: {
+        title: 'Seamless Collaboration',
+        description: 'Efficiently connect candidates and recruiters, creating an optimal recruitment environment.',
+      },
+      cta: {
+        text: 'Ready to experience the difference?',
+        button: 'Get Started',
+      },
+    },
+  },
   
   features: {
-    title: 'Features for Everyone',
-    userTypes: [
+    title: 'Powerful Features for Modern Recruitment',
+    subtitle: 'Everything you need to streamline your hiring process with AI-powered tools',
+    userFeatures: [
       {
-        title: 'For Candidates',
-        features: [
-          'Upload CV (PDF/Word)',
-          'Automatic AI analysis',
-          'Smart job matching',
-          'Direct application',
-        ],
+        title: 'Real-time Collaboration',
+        description: 'Work together seamlessly with your team members, share feedback instantly, and make hiring decisions faster with built-in communication tools.',
       },
       {
-        title: 'For Recruiters',
-        features: [
-          'Post job listings',
-          'Find suitable CVs',
-          'Manage candidates',
-          'Analytics & reports',
-        ],
+        title: 'Smart Automation',
+        description: 'Automate repetitive tasks, schedule interviews automatically, and let AI handle initial candidate screening to focus on what matters most.',
       },
       {
-        title: 'For Admins',
-        features: [
-          'User management',
-          'System monitoring',
-          'Content moderation',
-          'Reports & analytics',
-        ],
+        title: 'Advanced Analytics',
+        description: 'Get deep insights into your hiring process with comprehensive analytics, track performance metrics, and optimize your recruitment strategy.',
       },
     ],
     platforms: [
-      { name: 'Web App', description: 'React Application' },
-      { name: 'Slack Bot', description: 'Team Integration' },
-      { name: 'WhatsApp', description: 'Mobile Access' },
-      { name: 'API', description: 'Developer Access' },
+      {
+        name: 'Web Platform',
+        description: 'Full-featured web application with complete recruitment suite',
+      },
+      {
+        name: 'Mobile App',
+        description: 'Native mobile apps for iOS and Android with offline capabilities',
+      },
+      {
+        name: 'Desktop App',
+        description: 'Cross-platform desktop application for Windows, macOS, and Linux',
+      },
     ],
   },
   
@@ -243,67 +260,53 @@ export const en: ContentTaxonomy = {
   },
   
   cta: {
-    headline: 'Ready to Get Started?',
-    subtitle: 'Join 10,000+ candidates and recruiters who have found success with AI Resume Analyzer',
-    primaryCTA: 'Sign Up Free Now',
-    secondaryCTA: 'View Demo',
-    trustMessage: '⏰ Takes only 2 minutes to create account and upload your first CV',
+    title: 'Ready to get started?',
+    subtitle: 'Join thousands of companies that trust our platform.',
+    buttons: {
+      getStarted: 'Start for free',
+      learnMore: 'Learn more',
+    },
   },
   
-  footer: {
-    company: {
-      description: 'AI Resume Analyzer & Job Match Platform - Find the perfect job with AI',
-      links: [
-        { label: 'About Us', href: '/about' },
-        { label: 'Careers', href: '/careers' },
-        { label: 'Blog', href: '/blog' },
-        { label: 'News', href: '/news' },
-      ],
-    },
-    product: {
-      title: 'Product',
-      links: [
-        { label: 'Features', href: '/features' },
-        { label: 'Pricing', href: '/pricing' },
-        { label: 'API', href: '/api' },
-        { label: 'Integrations', href: '/integrations' },
-      ],
-    },
-    support: {
-      title: 'Support',
-      links: [
-        { label: 'Help Center', href: '/help' },
-        { label: 'Contact', href: '/contact' },
-        { label: 'Status', href: '/status' },
-        { label: 'Community', href: '/community' },
-      ],
-    },
-    legal: {
-      title: 'Legal',
-      links: [
-        { label: 'Privacy Policy', href: '/privacy' },
-        { label: 'Terms of Service', href: '/terms' },
-        { label: 'Cookie Policy', href: '/cookies' },
-        { label: 'GDPR', href: '/gdpr' },
-      ],
-    },
-    contact: {
-      email: 'hello@resulyze.com',
-      phone: '+84 123 456 789',
-      address: '123 Tech Street, Ho Chi Minh City, Vietnam',
-    },
-    copyright: '© 2024 Resulyze. All rights reserved. Built with ❤️ for modern recruitment.',
+  featuresShowcase: {
+    title: 'Featured Capabilities',
+    subtitle: 'Discover the powerful features of our platform',
+    features: [
+      {
+        title: 'AI Resume Analysis',
+        description: 'Intelligent CV analysis with high accuracy',
+        icon: 'brain',
+      },
+      {
+        title: 'Smart Job Matching',
+        description: 'Connect candidates with the most suitable jobs',
+        icon: 'target',
+      },
+      {
+        title: 'Real-time Analytics',
+        description: 'Track recruitment performance in real-time',
+        icon: 'chart',
+      },
+    ],
   },
+  
+
   
   common: {
     loading: 'Loading...',
     error: 'An error occurred',
-    retry: 'Retry',
-    close: 'Close',
+    success: 'Success',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    save: 'Save',
+    edit: 'Edit',
+    delete: 'Delete',
+    back: 'Back',
     next: 'Next',
     previous: 'Previous',
-    learnMore: 'Learn More',
-    getStarted: 'Get Started',
-    contactUs: 'Contact Us',
+    close: 'Close',
+    open: 'Open',
+    viewMore: 'View more',
+    viewLess: 'View less',
   },
 };

@@ -133,6 +133,31 @@ export interface ContentTaxonomy {
       icon: string;
     }[];
   };
+
+  // Authentication
+  auth: {
+    login: {
+      title: string;
+      subtitle: string;
+      welcomeSubtitle: string;
+      email: string;
+      emailPlaceholder: string;
+      emailRequired: string;
+      emailInvalid: string;
+      password: string;
+      passwordPlaceholder: string;
+      passwordRequired: string;
+      passwordMinLength: string;
+      rememberMe: string;
+      forgotPassword: string;
+      loginButton: string;
+      loggingIn: string;
+      googleLogin: string;
+      noAccount: string;
+      signUp: string;
+      or: string;
+    };
+  };
   
   // Common
   common: {

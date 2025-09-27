@@ -265,6 +265,79 @@ html {
   }
 }
 
+/* Smooth slide animations for content transitions */
+@keyframes slide-up {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-to-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50px);
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translateX(50px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50px);
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    transform: translateX(-50px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @keyframes bounce {
   0%, 20%, 53%, 80%, 100% {
     transform: translate3d(0, 0, 0);
@@ -367,6 +440,243 @@ html {
 /* Enhanced Animation Classes */
 .animate-fade-in {
   animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* View Transition API Animations - React Labs Style */
+.view-transition-container {
+  position: relative;
+}
+
+/* View Transition Animation Classes */
+.view-transition-fade-out {
+  animation: view-transition-fade-out var(--view-transition-duration, 300ms) cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.view-transition-fade-in {
+  animation: view-transition-fade-in var(--view-transition-duration, 300ms) cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.view-transition-slide-left-out {
+  animation: view-transition-slide-left-out var(--view-transition-duration, 300ms) cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.view-transition-slide-left-in {
+  animation: view-transition-slide-left-in var(--view-transition-duration, 300ms) cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.view-transition-slide-right-out {
+  animation: view-transition-slide-right-out var(--view-transition-duration, 300ms) cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.view-transition-slide-right-in {
+  animation: view-transition-slide-right-in var(--view-transition-duration, 300ms) cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.view-transition-slide-up-out {
+  animation: view-transition-slide-up-out var(--view-transition-duration, 300ms) cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.view-transition-slide-up-in {
+  animation: view-transition-slide-up-in var(--view-transition-duration, 300ms) cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.view-transition-slide-down-out {
+  animation: view-transition-slide-down-out var(--view-transition-duration, 300ms) cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.view-transition-slide-down-in {
+  animation: view-transition-slide-down-in var(--view-transition-duration, 300ms) cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.view-transition-scale-out {
+  animation: view-transition-scale-out var(--view-transition-duration, 300ms) cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.view-transition-scale-in {
+  animation: view-transition-scale-in var(--view-transition-duration, 300ms) cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+/* View Transition Keyframes */
+@keyframes view-transition-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes view-transition-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes view-transition-slide-left-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes view-transition-slide-left-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes view-transition-slide-right-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes view-transition-slide-right-in {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes view-transition-slide-up-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes view-transition-slide-up-in {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes view-transition-slide-down-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes view-transition-slide-down-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes view-transition-scale-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes view-transition-scale-in {
+  from {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Shared Element Transition Styles */
+.shared-element-transition-overlay {
+  background: inherit;
+  border-radius: inherit;
+  border: inherit;
+  box-shadow: inherit;
+}
+
+/* Activity Component Styles */
+.activity-container {
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.activity-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.activity-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Smooth content transition classes */
+.slide-fade-out {
+  animation: 250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+             250ms cubic-bezier(0.4, 0, 0.2, 1) both slide-down;
+}
+
+.slide-fade-in {
+  animation: 300ms cubic-bezier(0, 0, 0.2, 1) 150ms both fade-in,
+             400ms cubic-bezier(0.4, 0, 0.2, 1) both slide-up;
+}
+
+.slide-left-out {
+  animation: 200ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+             350ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+}
+
+.slide-right-in {
+  animation: 250ms cubic-bezier(0, 0, 0.2, 1) 150ms both fade-in,
+             400ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+}
+
+.slide-right-out {
+  animation: 200ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+             350ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
+}
+
+.slide-left-in {
+  animation: 250ms cubic-bezier(0, 0, 0.2, 1) 150ms both fade-in,
+             400ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-left;
 }
 
 .animate-bounce {

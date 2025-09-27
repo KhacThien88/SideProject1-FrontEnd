@@ -290,6 +290,30 @@ export const vi: ContentTaxonomy = {
     ],
   },
   
+  auth: {
+    login: {
+      title: 'Chào mừng',
+      subtitle: 'trở lại',
+      welcomeSubtitle: 'Đăng nhập để tiếp tục hành trình việc làm của bạn',
+      email: 'Địa chỉ Email',
+      emailPlaceholder: 'Nhập email của bạn',
+      emailRequired: 'Email là bắt buộc',
+      emailInvalid: 'Email không hợp lệ',
+      password: 'Mật khẩu',
+      passwordPlaceholder: 'Nhập mật khẩu của bạn',
+      passwordRequired: 'Mật khẩu là bắt buộc',
+      passwordMinLength: 'Mật khẩu phải có ít nhất 6 ký tự',
+      rememberMe: 'Ghi nhớ đăng nhập',
+      forgotPassword: 'Quên mật khẩu?',
+      loginButton: 'Đăng nhập',
+      loggingIn: 'Đang đăng nhập...',
+      googleLogin: 'Đăng nhập với Google',
+      noAccount: 'Chưa có tài khoản?',
+      signUp: 'Đăng ký',
+      or: 'hoặc'
+    }
+  },
+
   common: {
     loading: 'Đang tải...',
     error: 'Có lỗi xảy ra',

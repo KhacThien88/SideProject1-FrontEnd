@@ -292,6 +292,30 @@ export const en: ContentTaxonomy = {
   
 
   
+  auth: {
+    login: {
+      title: 'Welcome',
+      subtitle: 'Back',
+      welcomeSubtitle: 'Log In to Continue Your Job Journey',
+      email: 'Email Address',
+      emailPlaceholder: 'Enter your email',
+      emailRequired: 'Email is required',
+      emailInvalid: 'Invalid email format',
+      password: 'Password',
+      passwordPlaceholder: 'Enter your password',
+      passwordRequired: 'Password is required',
+      passwordMinLength: 'Password must be at least 6 characters',
+      rememberMe: 'Remember me',
+      forgotPassword: 'Forgot password?',
+      loginButton: 'Sign In',
+      loggingIn: 'Signing in...',
+      googleLogin: 'Sign in with Google',
+      noAccount: "Don't have an account?",
+      signUp: 'Sign up',
+      or: 'or'
+    }
+  },
+
   common: {
     loading: 'Loading...',
     error: 'An error occurred',

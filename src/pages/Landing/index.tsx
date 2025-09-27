@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout } from '../../components/common/Layout';
 import { Navigation } from '../../components/ui/Navigation';
+import Footer from '../../components/layout/Footer';
 import { HeroSection } from './components/HeroSection';
 import ValueProposition from './components/ValueProposition';
 import FeaturesShowcase from './components/FeaturesShowcase';
@@ -19,8 +20,13 @@ export const LandingPage: React.FC = () => {
         <ValueProposition />
         <FeaturesShowcase />
         <HowItWorks />
-        <Statistics />
       </main>
+      <Statistics />
+      <Footer />
     </Layout>
   );
 };
+
+// Export alias để khớp với import trong App.tsx
+export { LandingPage as Landing };
+export default LandingPage;

@@ -104,6 +104,10 @@ export const en: ContentTaxonomy = {
         description: 'Cross-platform desktop application for Windows, macOS, and Linux',
       },
     ],
+    platformSupport: {
+      title: 'Multi-platform Support',
+      description: 'Access from any device and platform',
+    },
   },
   
   howItWorks: {
@@ -270,25 +274,57 @@ export const en: ContentTaxonomy = {
   
   featuresShowcase: {
     title: 'Featured Capabilities',
-    subtitle: 'Discover the powerful features of our platform',
-    features: [
-      {
-        title: 'AI Resume Analysis',
-        description: 'Intelligent CV analysis with high accuracy',
-        icon: 'brain',
+    subtitle: 'Discover the powerful features that optimize your recruitment process',
+    tabs: {
+      candidates: 'Candidates',
+      recruiters: 'Recruiters',
+      admins: 'Admins',
+    },
+    candidates: {
+      upload: {
+        title: 'Upload CV',
+        description: 'Easy CV upload with multi-format and language support',
       },
-      {
-        title: 'Smart Job Matching',
-        description: 'Connect candidates with the most suitable jobs',
-        icon: 'target',
+      analysis: {
+        title: 'AI Analysis',
+        description: 'Smart CV analysis with AI, extracting skills and experience',
       },
-      {
-        title: 'Real-time Analytics',
-        description: 'Track recruitment performance in real-time',
-        icon: 'chart',
+      matching: {
+        title: 'Job Matching',
+        description: 'Find suitable jobs based on profile and preferences',
       },
-    ],
+    },
+    recruiters: {
+      posting: {
+        title: 'Post Jobs',
+        description: 'Create and manage job postings easily and effectively',
+      },
+      search: {
+        title: 'Search Candidates',
+        description: 'Find suitable candidates with specific criteria',
+      },
+      management: {
+        title: 'Manage Candidates',
+        description: 'Track and manage the entire recruitment process',
+      },
+    },
+    admins: {
+      users: {
+        title: 'User Management',
+        description: 'Manage user accounts and system permissions',
+      },
+      monitoring: {
+        title: 'System Monitoring',
+        description: 'Monitor system performance and operational status',
+      },
+      analytics: {
+        title: 'Data Analytics',
+        description: 'Detailed reports and recruitment trend analysis',
+      },
+    },
   },
+  
+
   
 
   

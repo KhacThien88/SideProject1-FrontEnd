@@ -10,37 +10,41 @@ export const ValueProposition: React.FC = () => {
 
   const values = [
     {
-      key: 'valueProposition.values.accuracy',
+      key: 'security',
       icon: Target,
-      color: 'text-primary-600',
-      bgColor: 'bg-gradient-to-br from-primary-50 to-primary-100/50',
+      bgColor: 'from-primary-50 to-primary-100/50',
       borderColor: 'border-primary-200/50',
-      shadowColor: 'shadow-primary-100/50',
+      iconBg: 'from-primary-50 to-primary-100',
+      iconColor: 'text-primary-600',
+      color: 'text-primary-600',
+      progressColor: 'bg-primary-600',
+      stagger: 'stagger-4',
+      delay: '0s'
     },
     {
-      key: 'valueProposition.values.efficiency',
+      key: 'performance',
       icon: Zap,
-      color: 'text-secondary-600',
-      bgColor: 'bg-gradient-to-br from-secondary-50 to-secondary-100/50',
+      bgColor: 'from-secondary-50 to-secondary-100/50',
       borderColor: 'border-secondary-200/50',
-      shadowColor: 'shadow-secondary-100/50',
+      iconBg: 'from-secondary-50 to-secondary-100',
+      iconColor: 'text-secondary-600',
+      color: 'text-secondary-600',
+      progressColor: 'bg-secondary-600',
+      stagger: 'stagger-5',
+      delay: '0.15s'
     },
     {
-      key: 'valueProposition.values.insights',
+      key: 'collaboration',
       icon: BarChart3,
-      color: 'text-accent-600',
-      bgColor: 'bg-gradient-to-br from-accent-50 to-accent-100/50',
+      bgColor: 'from-accent-50 to-accent-100/50',
       borderColor: 'border-accent-200/50',
-      shadowColor: 'shadow-accent-100/50',
-    },
-    {
-      key: 'valueProposition.values.scalability',
-      icon: TrendingUp,
-      color: 'text-purple-600',
-      bgColor: 'bg-gradient-to-br from-purple-50 to-purple-100/50',
-      borderColor: 'border-purple-200/50',
-      shadowColor: 'shadow-purple-100/50',
-    },
+      iconBg: 'from-accent-50 to-accent-100',
+      iconColor: 'text-accent-600',
+      color: 'text-accent-600',
+      progressColor: 'bg-accent-600',
+      stagger: 'stagger-6',
+      delay: '0.3s'
+    }
   ];
 
   return (
@@ -61,11 +65,7 @@ export const ValueProposition: React.FC = () => {
           </div>
           <h2 className="text-hierarchy-2 font-bold text-neutral-900 mb-6 sm:mb-8 animate-bounce-in animate-text-glow stagger-2">
             <span className="text-brand-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-500 hover-gradient">
-              {(getContent('valueProposition.title') || 'AI-Powered CV Analysis').split(' ').slice(0, 2).join(' ')}
-            </span>
-            <br />
-            <span className="text-neutral-800">
-              {(getContent('valueProposition.title') || 'AI-Powered CV Analysis').split(' ').slice(2).join(' ')}
+              {getContent('valueProposition.title') || 'AI-Powered CV Analysis'}
             </span>
           </h2>
           <p className="text-hierarchy-3 text-neutral-600 max-w-4xl mx-auto font-medium animate-slide-left stagger-3">
@@ -97,23 +97,16 @@ export const ValueProposition: React.FC = () => {
                   'w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110 hover-glow glass-effect-strong',
                   value.bgColor.replace('from-', 'from-').replace('to-', 'to-').replace('/50', '')
                 )}>
-                  <Icon className={cn('w-6 h-6 sm:w-8 sm:h-8', value.color, 'group-hover:scale-110 transition-transform duration-300')} />
+                  <Icon className={cn('w-6 h-6 sm:w-8 sm:h-8', value.iconColor, 'group-hover:scale-110 transition-transform duration-300')} />
                 </div>
                 
                 <h3 className="text-hierarchy-4 font-bold text-neutral-900 mb-3 sm:mb-4 group-hover:text-primary-700 transition-colors duration-300">
-                  {getContent(`${value.key}.title`)}
+                  {getContent(`valueProposition.${value.key}.title`)}
                 </h3>
                 
                 <p className="text-neutral-600 leading-relaxed text-base sm:text-lg group-hover:text-neutral-700 transition-colors duration-300">
-                  {getContent(`${value.key}.description`)}
+                  {getContent(`valueProposition.${value.key}.description`)}
                 </p>
-                
-                <div className={cn(
-                  'text-2xl sm:text-3xl font-bold mb-2 group-hover:scale-105 transition-transform duration-300',
-                  value.color
-                )}>
-                  {getContent(`${value.key}.metric`)}
-                </div>
                 
                 {/* Bottom accent line */}
                 <div className={cn(

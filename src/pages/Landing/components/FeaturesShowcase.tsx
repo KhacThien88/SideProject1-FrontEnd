@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Building, Settings, Globe, MessageSquare, Smartphone, Code, Users, Briefcase, Brain, Target } from 'lucide-react';
+import { User, Building, Settings, Globe, Smartphone, Code, Users, Briefcase, Brain, Target, MessageSquare, Phone } from 'lucide-react';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { cn } from '../../../utils/cn';
 
@@ -116,7 +116,7 @@ const FeaturesShowcase: React.FC = () => {
     { name: 'Mobile', icon: Smartphone },
     { name: 'API', icon: Code },
     { name: 'Slack', icon: MessageSquare },
-    { name: 'WhatsApp', icon: MessageSquare },
+    { name: 'WhatsApp', icon: Phone },
     { name: 'Teams', icon: Users }
   ];
 
@@ -286,7 +286,6 @@ const FeaturesShowcase: React.FC = () => {
                     
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
                       {platformSupport.map((platform, index) => {
-                        const Icon = platform.icon;
                         return (
                           <div
                             key={platform.name}
@@ -299,7 +298,12 @@ const FeaturesShowcase: React.FC = () => {
                                'w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-soft group-hover:shadow-brand hover-scale transition-all duration-300 glass-effect-strong',
                                'bg-gradient-to-r from-primary-500 to-secondary-500'
                              )}>
-                              <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                              {platform.name === 'Web App' && <Globe className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                              {platform.name === 'Mobile' && <Smartphone className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                              {platform.name === 'API' && <Code className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                              {platform.name === 'Slack' && <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                              {platform.name === 'WhatsApp' && <Phone className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                              {platform.name === 'Teams' && <Users className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
                             </div>
                             <span className="text-xs sm:text-sm font-semibold text-neutral-700 group-hover:text-primary-700 transition-colors duration-300 text-center">
                                {platform.name}

@@ -77,7 +77,7 @@ export const Statistics: React.FC = () => {
   const { getContent } = useTranslation();
 
   return (
-    <section className="py-20 bg-neutral-900 text-white relative overflow-hidden">
+    <section className="py-20 bg-neutral-900 text-white relative overflow-hidden w-full">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-accent-500/20" />

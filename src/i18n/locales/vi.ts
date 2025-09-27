@@ -104,6 +104,10 @@ export const vi: ContentTaxonomy = {
         description: 'Ứng dụng desktop đa nền tảng cho Windows, macOS và Linux',
       },
     ],
+    platformSupport: {
+      title: 'Hỗ trợ đa nền tảng',
+      description: 'Truy cập từ mọi thiết bị và nền tảng',
+    },
   },
   
   howItWorks: {
@@ -271,24 +275,56 @@ export const vi: ContentTaxonomy = {
   featuresShowcase: {
     title: 'Tính năng nổi bật',
     subtitle: 'Khám phá những tính năng mạnh mẽ giúp bạn tối ưu hóa quy trình tuyển dụng',
-    features: [
-      {
-        title: 'Phân tích CV thông minh',
-        description: 'AI phân tích và đánh giá CV một cách chính xác và nhanh chóng',
-        icon: 'brain',
+    tabs: {
+      candidates: 'Ứng viên',
+      recruiters: 'Nhà tuyển dụng',
+      admins: 'Quản trị viên',
+    },
+    candidates: {
+      upload: {
+        title: 'Tải lên CV',
+        description: 'Tải lên CV dễ dàng với hỗ trợ nhiều định dạng và ngôn ngữ',
       },
-      {
-        title: 'Matching công việc',
-        description: 'Tìm kiếm và ghép nối ứng viên phù hợp với vị trí tuyển dụng',
-        icon: 'target',
+      analysis: {
+        title: 'Phân tích AI',
+        description: 'AI phân tích CV thông minh, trích xuất kỹ năng và kinh nghiệm',
       },
-      {
-        title: 'Dashboard quản lý',
-        description: 'Theo dõi và quản lý toàn bộ quy trình tuyển dụng một cách hiệu quả',
-        icon: 'dashboard',
+      matching: {
+        title: 'Ghép nối công việc',
+        description: 'Tìm kiếm công việc phù hợp dựa trên hồ sơ và sở thích',
       },
-    ],
+    },
+    recruiters: {
+      posting: {
+        title: 'Đăng tin tuyển dụng',
+        description: 'Tạo và quản lý tin tuyển dụng một cách dễ dàng và hiệu quả',
+      },
+      search: {
+        title: 'Tìm kiếm ứng viên',
+        description: 'Tìm kiếm ứng viên phù hợp với các tiêu chí cụ thể',
+      },
+      management: {
+        title: 'Quản lý ứng viên',
+        description: 'Theo dõi và quản lý toàn bộ quy trình tuyển dụng',
+      },
+    },
+    admins: {
+      users: {
+        title: 'Quản lý người dùng',
+        description: 'Quản lý tài khoản và quyền hạn của người dùng hệ thống',
+      },
+      monitoring: {
+        title: 'Giám sát hệ thống',
+        description: 'Theo dõi hiệu suất và trạng thái hoạt động của hệ thống',
+      },
+      analytics: {
+        title: 'Phân tích dữ liệu',
+        description: 'Báo cáo chi tiết và phân tích xu hướng tuyển dụng',
+      },
+    },
   },
+  
+
   
   common: {
     loading: 'Đang tải...',

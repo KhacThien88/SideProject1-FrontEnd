@@ -54,7 +54,7 @@ export interface ContentTaxonomy {
     };
   };
   
-  // Features
+  // Features section
   features: {
     title: string;
     subtitle: string;
@@ -66,6 +66,10 @@ export interface ContentTaxonomy {
       name: string;
       description: string;
     }[];
+    platformSupport: {
+      title: string;
+      description: string;
+    };
   };
   
   // How It Works
@@ -123,15 +127,57 @@ export interface ContentTaxonomy {
     };
   };
   
-  // Features Showcase
+  // Features Showcase section
   featuresShowcase: {
     title: string;
     subtitle: string;
-    features: {
-      title: string;
-      description: string;
-      icon: string;
-    }[];
+    tabs: {
+      candidates: string;
+      recruiters: string;
+      admins: string;
+    };
+    candidates: {
+      upload: {
+        title: string;
+        description: string;
+      };
+      analysis: {
+        title: string;
+        description: string;
+      };
+      matching: {
+        title: string;
+        description: string;
+      };
+    };
+    recruiters: {
+      posting: {
+        title: string;
+        description: string;
+      };
+      search: {
+        title: string;
+        description: string;
+      };
+      management: {
+        title: string;
+        description: string;
+      };
+    };
+    admins: {
+      users: {
+        title: string;
+        description: string;
+      };
+      monitoring: {
+        title: string;
+        description: string;
+      };
+      analytics: {
+        title: string;
+        description: string;
+      };
+    };
   };
   
   // Common

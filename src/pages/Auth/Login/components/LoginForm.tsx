@@ -116,11 +116,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     <div className="w-full">
       {/* Header Outside Card */}
       <div className="text-center mb-6">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent">
+        <div className="flex items-center justify-center gap-2">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent" style={{ lineHeight: '1.3'}}>
             {getContent('auth.login.title')}
           </h1>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-500 via-secondary-400/80 via-primary-500/80 to-primary-500 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-500 via-secondary-400/80 via-primary-500/80 to-primary-500 bg-clip-text text-transparent" style={{ lineHeight: '1.3'}}>
             {getContent('auth.login.subtitle')}
           </h1>
         </div>

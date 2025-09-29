@@ -25,24 +25,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
     // Kiểm tra email với các trường hợp cụ thể
     if (!formData.email || formData.email.trim() === '') {
-      showErrorToast('Vui lòng nhập email');
+      showErrorToast(getContent('auth.login.toast.emailRequired'));
       hasErrors = true;
     } else {
       const email = formData.email.trim();
       // Kiểm tra có chứa @ không
       if (!email.includes('@')) {
-        showErrorToast(`Email '${email}' thiếu ký tự "@"`);
+        showErrorToast(`Email '${email}' ${getContent('auth.login.toast.emailMissingAt')}`);
         hasErrors = true;
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
         // Kiểm tra các trường hợp cụ thể khác
         if (email.startsWith('@')) {
-          showErrorToast('Email không thể bắt đầu bằng "@"');
+          showErrorToast(getContent('auth.login.toast.emailStartsWithAt'));
         } else if (email.endsWith('@')) {
-          showErrorToast(`Email '${email}' thiếu tên miền sau "@"`);
+          showErrorToast(`Email '${email}' ${getContent('auth.login.toast.emailMissingDomain')}`);
         } else if (!email.includes('.') || email.split('@')[1]?.split('.').length < 2) {
-          showErrorToast('Email thiếu tên miền (ví dụ: .com, .vn)');
+          showErrorToast(getContent('auth.login.toast.emailMissingTLD'));
         } else {
-          showErrorToast('Định dạng email không hợp lệ');
+          showErrorToast(getContent('auth.login.toast.emailInvalid'));
         }
         hasErrors = true;
       }
@@ -50,7 +50,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
     // Kiểm tra password
     if (!formData.password || formData.password.trim() === '') {
-      showErrorToast('Vui lòng nhập mật khẩu');
+      showErrorToast(getContent('auth.login.toast.passwordRequired'));
       hasErrors = true;
     }
 
@@ -68,7 +68,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       // Handle custom onSubmit or default behavior
       if (onSubmit) {
         await onSubmit(formData.email, formData.password, formData.rememberMe);
-        showSuccessToast('Đăng nhập thành công!');
+        showSuccessToast(getContent('auth.login.toast.loginSuccess'));
       } else {
         // Default simulation với error handling
         await new Promise((resolve, reject) => {
@@ -85,7 +85,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           }, 1500);
         });
         
-        showSuccessToast('Đăng nhập thành công!');
+        showSuccessToast(getContent('auth.login.toast.loginSuccess'));
       }
     } catch (err: any) {
       console.error('Login error:', err);
@@ -93,11 +93,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       // Hiển thị lỗi cụ thể dựa trên loại lỗi
       const errorMessage = err.message || '';
       if (errorMessage.includes('invalid credentials')) {
-        showErrorToast('Email hoặc mật khẩu không chính xác');
+        showErrorToast(getContent('auth.login.toast.invalidCredentials'));
       } else if (errorMessage.includes('network')) {
-        showErrorToast('Lỗi kết nối mạng. Vui lòng thử lại.');
+        showErrorToast(getContent('auth.login.toast.networkError'));
       } else {
-        showErrorToast('Đăng nhập thất bại. Vui lòng thử lại.');
+        showErrorToast(getContent('auth.login.toast.loginFailed'));
       }
     } finally {
       setIsLoading(false);
@@ -146,11 +146,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               e.preventDefault();
               const email = (e.target as HTMLInputElement).value.trim();
               if (!email) {
-                showErrorToast('Vui lòng nhập email');
+                showErrorToast(getContent('auth.login.toast.emailRequired'));
               } else if (!email.includes('@')) {
-                showErrorToast(`Email '${email}' thiếu ký tự "@"`);
+                showErrorToast(`Email '${email}' ${getContent('auth.login.toast.emailMissingAt')}`);
               } else {
-                showErrorToast('Vui lòng nhập email hợp lệ');
+                showErrorToast(getContent('auth.login.toast.emailInvalid'));
               }
             }}
             onInput={(e) => {
@@ -182,7 +182,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               onChange={(e) => handleInputChange('password', e.target.value)}
               onInvalid={(e) => {
                 e.preventDefault();
-                showErrorToast('Vui lòng nhập mật khẩu');
+                showErrorToast(getContent('auth.login.toast.passwordRequired'));
               }}
               onInput={(e) => {
                 // Clear custom validity when user starts typing

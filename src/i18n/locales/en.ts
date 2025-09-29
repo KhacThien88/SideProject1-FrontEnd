@@ -72,6 +72,51 @@ export const en: ContentTaxonomy = {
       },
     },
   },
+
+  loginHero: {
+    sections: [
+      {
+        name: 'Hero',
+        title: 'TalentFit AI',
+        description: 'Find the perfect job with AI - Fast, Accurate, Effective',
+        metric: 'AI-Powered',
+        features: ['10,000+ trusted users', '95% AI accuracy', '10s fast processing']
+      },
+      {
+        name: 'Value Proposition',
+        title: 'Core Values',
+        description: 'Smart CV analysis and job matching platform',
+        metric: '95% Accuracy',
+        features: ['Automated CV analysis', 'Advanced matching algorithm', 'Deep insights']
+      },
+      {
+        name: 'Features Showcase',
+        title: 'Outstanding Features',
+        description: 'Advanced AI technology for candidates and recruiters',
+        metric: 'Multi-Platform',
+        features: ['Upload CV (PDF/Word)', 'Smart job matching', 'Direct application']
+      },
+      {
+        name: 'How It Works',
+        title: 'Workflow Process',
+        description: 'Simple, fast and efficient in 3 steps',
+        metric: '3 Steps',
+        features: ['Upload CV', 'AI Analysis', 'Job Matching']
+      },
+      {
+        name: 'Statistics',
+        title: 'Impressive Statistics',
+        description: 'Numbers proving the quality and credibility of the platform',
+        metric: '10K+ Users',
+        features: ['High success rate', 'Positive feedback', 'Global coverage']
+      }
+    ],
+    trustIndicators: [
+      '10,000+ trusted users',
+      '95% AI accuracy',
+      '10s fast processing'
+    ]
+  },
   
   features: {
     title: 'Powerful Features for Modern Recruitment',
@@ -312,7 +357,76 @@ export const en: ContentTaxonomy = {
       googleLogin: 'Sign in with Google',
       noAccount: "Don't have an account?",
       signUp: 'Sign up',
-      or: 'or'
+      or: 'or',
+      toast: {
+        emailRequired: 'Please enter email',
+        emailMissingAt: 'missing "@" character',
+        emailStartsWithAt: 'Email cannot start with "@"',
+        emailMissingDomain: 'missing domain after "@"',
+        emailMissingTLD: 'Email missing domain extension (e.g., .com, .net)',
+        emailInvalid: 'Invalid email format',
+        passwordRequired: 'Please enter password',
+        loginSuccess: 'Login successful!',
+        invalidCredentials: 'Email or password is incorrect',
+        networkError: 'Network connection error. Please try again.',
+        loginFailed: 'Login failed. Please try again.'
+      }
+    },
+    register: {
+      title: 'Create',
+      subtitle: 'Account',
+      welcomeSubtitle: 'Join TalentFit AI Community Today',
+      fullName: 'Full Name',
+      fullNamePlaceholder: 'Enter your full name',
+      email: 'Email Address',
+      emailPlaceholder: 'Enter your email address',
+      phone: 'Phone Number',
+      phonePlaceholder: 'Enter your phone number',
+      optional: '(optional)',
+      role: 'Role',
+      candidate: 'Candidate',
+      recruiter: 'Recruiter',
+      password: 'Password',
+      passwordPlaceholder: 'Enter password (at least 6 characters)',
+      confirmPassword: 'Confirm Password',
+      confirmPasswordPlaceholder: 'Re-enter your password',
+      acceptTerms: 'I agree with',
+      termsOfService: 'Terms of Service',
+      privacyPolicy: 'Privacy Policy',
+      registerButton: 'Sign Up',
+      registering: 'Signing up...',
+      hasAccount: 'Already have an account?',
+      loginLink: 'Sign in now'
+    },
+    toast: {
+      // Validation messages
+      fullNameRequired: 'Please enter your full name',
+      fullNameMinLength: 'Please enter full name (at least 2 characters)',
+      emailRequired: 'Please enter email',
+      emailMissingAt: 'missing "@" character',
+      emailStartsWithAt: 'Email cannot start with "@"',
+      emailMissingDomain: 'missing domain after "@"',
+      emailMissingTLD: 'Email missing domain (e.g., .com, .org)',
+      emailInvalid: 'Invalid email format',
+      passwordRequired: 'Please enter password',
+      passwordMinLength: 'Password must be at least 6 characters',
+      confirmPasswordRequired: 'Please confirm password',
+      confirmPasswordMismatch: 'Password confirmation does not match',
+      phoneInvalid: 'Invalid phone number',
+      termsRequired: 'Please agree to the terms of service',
+      
+      // Success messages
+      registerSuccess: 'Registration successful!',
+      registerSuccessSubtitle: 'Welcome to TalentFit AI',
+      
+      // Error messages
+      registerFailed: 'Registration failed',
+      emailExists: 'Email already exists',
+      emailExistsSubtitle: 'Please choose a different email',
+      networkError: 'Network connection error',
+      networkErrorSubtitle: 'Please try again later',
+      generalError: 'Registration failed',
+      generalErrorSubtitle: 'Please try again later'
     }
   },
 

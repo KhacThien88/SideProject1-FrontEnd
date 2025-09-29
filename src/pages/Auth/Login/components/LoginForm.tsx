@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from '../../../../hooks/useTranslation';
-import { useRouter } from '../../../../components/Router';
 import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
 import { useToast } from '../../../../contexts/ToastContext';
@@ -11,7 +10,6 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
-  const { navigate } = useRouter();
   const { showErrorToast, showSuccessToast } = useToast();
   const [formData, setFormData] = useState({
     email: '',
@@ -27,24 +25,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
     // Kiểm tra email với các trường hợp cụ thể
     if (!formData.email || formData.email.trim() === '') {
-      showErrorToast('Vui lòng nhập email', undefined, 4000);
+      showErrorToast('Vui lòng nhập email');
       hasErrors = true;
     } else {
       const email = formData.email.trim();
       // Kiểm tra có chứa @ không
       if (!email.includes('@')) {
-        showErrorToast(`Email '${email}' thiếu ký tự "@"`, undefined, 4000);
+        showErrorToast(`Email '${email}' thiếu ký tự "@"`);
         hasErrors = true;
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
         // Kiểm tra các trường hợp cụ thể khác
         if (email.startsWith('@')) {
-          showErrorToast('Email không thể bắt đầu bằng "@"', undefined, 4000);
+          showErrorToast('Email không thể bắt đầu bằng "@"');
         } else if (email.endsWith('@')) {
-          showErrorToast(`Email '${email}' thiếu tên miền sau "@"`, undefined, 4000);
+          showErrorToast(`Email '${email}' thiếu tên miền sau "@"`);
         } else if (!email.includes('.') || email.split('@')[1]?.split('.').length < 2) {
-          showErrorToast('Email thiếu tên miền (ví dụ: .com, .vn)', undefined, 4000);
+          showErrorToast('Email thiếu tên miền (ví dụ: .com, .vn)');
         } else {
-          showErrorToast('Định dạng email không hợp lệ', undefined, 4000);
+          showErrorToast('Định dạng email không hợp lệ');
         }
         hasErrors = true;
       }
@@ -52,7 +50,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
     // Kiểm tra password
     if (!formData.password || formData.password.trim() === '') {
-      showErrorToast('Vui lòng nhập mật khẩu', undefined, 4000);
+      showErrorToast('Vui lòng nhập mật khẩu');
       hasErrors = true;
     }
 
@@ -95,11 +93,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       // Hiển thị lỗi cụ thể dựa trên loại lỗi
       const errorMessage = err.message || '';
       if (errorMessage.includes('invalid credentials')) {
-        showErrorToast('Email hoặc mật khẩu không chính xác', undefined, 4000);
+        showErrorToast('Email hoặc mật khẩu không chính xác');
       } else if (errorMessage.includes('network')) {
-        showErrorToast('Lỗi kết nối mạng. Vui lòng thử lại.', undefined, 4000);
+        showErrorToast('Lỗi kết nối mạng. Vui lòng thử lại.');
       } else {
-        showErrorToast('Đăng nhập thất bại. Vui lòng thử lại.', undefined, 4000);
+        showErrorToast('Đăng nhập thất bại. Vui lòng thử lại.');
       }
     } finally {
       setIsLoading(false);
@@ -118,11 +116,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     <div className="w-full">
       {/* Header Outside Card */}
       <div className="text-center mb-6">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent">
+        <div className="flex items-center justify-center gap-2">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent" style={{ lineHeight: '1.3'}}>
             {getContent('auth.login.title')}
           </h1>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-500 via-secondary-400/80 via-primary-500/80 to-primary-500 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-500 via-secondary-400/80 via-primary-500/80 to-primary-500 bg-clip-text text-transparent" style={{ lineHeight: '1.3'}}>
             {getContent('auth.login.subtitle')}
           </h1>
         </div>
@@ -148,11 +146,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               e.preventDefault();
               const email = (e.target as HTMLInputElement).value.trim();
               if (!email) {
-                showErrorToast('Vui lòng nhập email', undefined, 4000);
+                showErrorToast('Vui lòng nhập email');
               } else if (!email.includes('@')) {
-                showErrorToast(`Email '${email}' thiếu ký tự "@"`, undefined, 4000);
+                showErrorToast(`Email '${email}' thiếu ký tự "@"`);
               } else {
-                showErrorToast('Vui lòng nhập email hợp lệ', undefined, 4000);
+                showErrorToast('Vui lòng nhập email hợp lệ');
               }
             }}
             onInput={(e) => {
@@ -184,7 +182,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               onChange={(e) => handleInputChange('password', e.target.value)}
               onInvalid={(e) => {
                 e.preventDefault();
-                showErrorToast('Vui lòng nhập mật khẩu', undefined, 4000);
+                showErrorToast('Vui lòng nhập mật khẩu');
               }}
               onInput={(e) => {
                 // Clear custom validity when user starts typing
@@ -298,9 +296,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         <div className="text-sm text-neutral-600">
           {getContent('auth.login.noAccount')}{' '}
           <a 
-            href="/register" 
-            onClick={(e) => { e.preventDefault(); navigate('/register'); }}
-            className="text-primary-600 hover:text-primary-500 font-medium transition-colors focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1 rounded cursor-pointer"
+            href="#register"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.hash = '#register';
+              window.location.reload();
+            }}
+            className="text-primary-600 hover:text-primary-500 font-medium transition-colors focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1 rounded"
           >
             {getContent('auth.login.signUp')}
           </a>

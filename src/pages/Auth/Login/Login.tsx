@@ -13,7 +13,7 @@ export const Login: React.FC = () => {
 
       {/* Login Form Section */}
       <div className="flex-1 flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8 lg:py-4 bg-gradient-to-br from-secondary-600/20 to-primary-600/20">
-        <div className="w-full max-w-md reveal">
+        <div className="w-full max-w-lg reveal">
           <LoginForm/>
         </div>
       </div>

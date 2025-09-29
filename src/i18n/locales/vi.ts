@@ -321,6 +321,7 @@ export const vi: ContentTaxonomy = {
       email: 'Địa chỉ Email',
       emailPlaceholder: 'Nhập địa chỉ email',
       phone: 'Số điện thoại',
+      optional: '(tùy chọn)',
       phonePlaceholder: 'Nhập số điện thoại',
       role: 'Vai trò',
       candidate: 'Ứng viên',
@@ -336,6 +337,36 @@ export const vi: ContentTaxonomy = {
       registering: 'Đang đăng ký...',
       hasAccount: 'Đã có tài khoản?',
       loginLink: 'Đăng nhập ngay'
+    },
+    toast: {
+      // Validation messages
+      fullNameRequired: 'Vui lòng nhập họ và tên',
+      fullNameMinLength: 'Vui lòng nhập họ tên (ít nhất 2 ký tự)',
+      emailRequired: 'Vui lòng nhập email',
+      emailMissingAt: 'thiếu ký tự "@"',
+      emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
+      emailMissingDomain: 'thiếu tên miền sau "@"',
+      emailMissingTLD: 'Email thiếu tên miền (ví dụ: .com, .vn)',
+      emailInvalid: 'Định dạng email không hợp lệ',
+      passwordRequired: 'Vui lòng nhập mật khẩu',
+      passwordMinLength: 'Mật khẩu phải có ít nhất 6 ký tự',
+      confirmPasswordRequired: 'Vui lòng xác nhận mật khẩu',
+      confirmPasswordMismatch: 'Mật khẩu xác nhận không khớp',
+      phoneInvalid: 'Số điện thoại không hợp lệ',
+      termsRequired: 'Vui lòng đồng ý với điều khoản sử dụng',
+      
+      // Success messages
+      registerSuccess: 'Đăng ký thành công!',
+      registerSuccessSubtitle: 'Chào mừng bạn đến với TalentFit AI',
+      
+      // Error messages
+      registerFailed: 'Đăng ký thất bại',
+      emailExists: 'Email đã được sử dụng',
+      emailExistsSubtitle: 'Vui lòng chọn email khác',
+      networkError: 'Lỗi kết nối mạng',
+      networkErrorSubtitle: 'Vui lòng thử lại sau',
+      generalError: 'Đăng ký thất bại',
+      generalErrorSubtitle: 'Vui lòng thử lại sau'
     }
   },
 

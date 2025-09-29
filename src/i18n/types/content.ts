@@ -167,6 +167,7 @@ export interface ContentTaxonomy {
       emailPlaceholder: string;
       phone: string;
       phonePlaceholder: string;
+      optional: string;
       role: string;
       candidate: string;
       recruiter: string;
@@ -181,6 +182,36 @@ export interface ContentTaxonomy {
       registering: string;
       hasAccount: string;
       loginLink: string;
+    };
+    toast: {
+      // Validation messages
+      fullNameRequired: string;
+      fullNameMinLength: string;
+      emailRequired: string;
+      emailMissingAt: string;
+      emailStartsWithAt: string;
+      emailMissingDomain: string;
+      emailMissingTLD: string;
+      emailInvalid: string;
+      passwordRequired: string;
+      passwordMinLength: string;
+      confirmPasswordRequired: string;
+      confirmPasswordMismatch: string;
+      phoneInvalid: string;
+      termsRequired: string;
+      
+      // Success messages
+      registerSuccess: string;
+      registerSuccessSubtitle: string;
+      
+      // Error messages
+      registerFailed: string;
+      emailExists: string;
+      emailExistsSubtitle: string;
+      networkError: string;
+      networkErrorSubtitle: string;
+      generalError: string;
+      generalErrorSubtitle: string;
     };
   };
   

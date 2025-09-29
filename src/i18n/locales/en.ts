@@ -324,6 +324,7 @@ export const en: ContentTaxonomy = {
       emailPlaceholder: 'Enter your email address',
       phone: 'Phone Number',
       phonePlaceholder: 'Enter your phone number',
+      optional: '(optional)',
       role: 'Role',
       candidate: 'Candidate',
       recruiter: 'Recruiter',
@@ -338,6 +339,36 @@ export const en: ContentTaxonomy = {
       registering: 'Signing up...',
       hasAccount: 'Already have an account?',
       loginLink: 'Sign in now'
+    },
+    toast: {
+      // Validation messages
+      fullNameRequired: 'Please enter your full name',
+      fullNameMinLength: 'Please enter full name (at least 2 characters)',
+      emailRequired: 'Please enter email',
+      emailMissingAt: 'missing "@" character',
+      emailStartsWithAt: 'Email cannot start with "@"',
+      emailMissingDomain: 'missing domain after "@"',
+      emailMissingTLD: 'Email missing domain (e.g., .com, .org)',
+      emailInvalid: 'Invalid email format',
+      passwordRequired: 'Please enter password',
+      passwordMinLength: 'Password must be at least 6 characters',
+      confirmPasswordRequired: 'Please confirm password',
+      confirmPasswordMismatch: 'Password confirmation does not match',
+      phoneInvalid: 'Invalid phone number',
+      termsRequired: 'Please agree to the terms of service',
+      
+      // Success messages
+      registerSuccess: 'Registration successful!',
+      registerSuccessSubtitle: 'Welcome to TalentFit AI',
+      
+      // Error messages
+      registerFailed: 'Registration failed',
+      emailExists: 'Email already exists',
+      emailExistsSubtitle: 'Please choose a different email',
+      networkError: 'Network connection error',
+      networkErrorSubtitle: 'Please try again later',
+      generalError: 'Registration failed',
+      generalErrorSubtitle: 'Please try again later'
     }
   },
 

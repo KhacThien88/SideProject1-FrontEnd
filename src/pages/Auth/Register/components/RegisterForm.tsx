@@ -46,48 +46,48 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
     // Validate full name
     if (!formData.fullName || formData.fullName.trim().length < 2) {
-      showErrorToast('Vui lòng nhập họ tên (ít nhất 2 ký tự)');
-      newErrors.fullName = 'Họ tên phải có ít nhất 2 ký tự';
+      showErrorToast(getContent('auth.toast.fullNameMinLength'));
+      newErrors.fullName = getContent('auth.toast.fullNameMinLength');
       hasErrors = true;
     }
 
     // Validate email
     if (!formData.email || formData.email.trim() === '') {
-      showErrorToast('Vui lòng nhập email');
-      newErrors.email = 'Email là bắt buộc';
+      showErrorToast(getContent('auth.toast.emailRequired'));
+      newErrors.email = getContent('auth.toast.emailRequired');
       hasErrors = true;
     } else {
       const email = formData.email.trim();
       if (!email.includes('@')) {
-        showErrorToast(`Email '${email}' thiếu ký tự "@"`);
-        newErrors.email = 'Email không hợp lệ';
+        showErrorToast(`Email '${email}' ${getContent('auth.toast.emailMissingAt')}`);
+        newErrors.email = getContent('auth.toast.emailInvalid');
         hasErrors = true;
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
         if (email.startsWith('@')) {
-          showErrorToast('Email không thể bắt đầu bằng "@"');
+          showErrorToast(getContent('auth.toast.emailStartsWithAt'));
         } else if (email.endsWith('@')) {
-          showErrorToast(`Email '${email}' thiếu tên miền sau "@"`);
+          showErrorToast(`Email '${email}' ${getContent('auth.toast.emailMissingDomain')}`);
         } else if (!email.includes('.') || email.split('@')[1]?.split('.').length < 2) {
-          showErrorToast('Email thiếu tên miền (ví dụ: .com, .vn)');
+          showErrorToast(getContent('auth.toast.emailMissingTLD'));
         } else {
-          showErrorToast('Định dạng email không hợp lệ');
+          showErrorToast(getContent('auth.toast.emailInvalid'));
         }
-        newErrors.email = 'Email không hợp lệ';
+        newErrors.email = getContent('auth.toast.emailInvalid');
         hasErrors = true;
       }
     }
 
     // Validate password
     if (!formData.password || formData.password.length < 6) {
-      showErrorToast('Mật khẩu phải có ít nhất 6 ký tự');
-      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự';
+      showErrorToast(getContent('auth.toast.passwordMinLength'));
+      newErrors.password = getContent('auth.toast.passwordMinLength');
       hasErrors = true;
     }
 
     // Validate confirm password
     if (formData.password !== formData.confirmPassword) {
-      showErrorToast('Mật khẩu xác nhận không khớp');
-      newErrors.confirmPassword = 'Mật khẩu xác nhận không khớp';
+      showErrorToast(getContent('auth.toast.passwordMismatch'));
+      newErrors.confirmPassword = getContent('auth.toast.passwordMismatch');
       hasErrors = true;
     }
 
@@ -95,16 +95,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     if (formData.phone && formData.phone.trim() !== '') {
       const phoneRegex = /^[+]?[0-9\s\-\(\)]{8,}$/;
       if (!phoneRegex.test(formData.phone.trim())) {
-        showErrorToast('Số điện thoại không hợp lệ');
-        newErrors.phone = 'Số điện thoại không hợp lệ';
+        showErrorToast(getContent('auth.toast.phoneInvalid'));
+        newErrors.phone = getContent('auth.toast.phoneInvalid');
         hasErrors = true;
       }
     }
 
     // Validate terms acceptance
     if (!formData.acceptTerms) {
-      showErrorToast('Vui lòng đồng ý với điều khoản sử dụng');
-      newErrors.acceptTerms = 'Bạn cần đồng ý với điều khoản';
+      showErrorToast(getContent('auth.toast.termsRequired'));
+      newErrors.acceptTerms = getContent('auth.toast.termsRequired');
       hasErrors = true;
     }
 
@@ -122,7 +122,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     try {
       if (onSubmit) {
         await onSubmit(formData);
-        showSuccessToast('Đăng ký thành công!', 'Chào mừng bạn đến với TalentFit AI');
+        showSuccessToast(getContent('auth.toast.registrationSuccess'), getContent('auth.toast.welcomeMessage'));
       } else {
         // Simulate API call
         await new Promise((resolve, reject) => {
@@ -139,18 +139,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           }, 2000);
         });
         
-        showSuccessToast('Đăng ký thành công!', 'Chào mừng bạn đến với TalentFit AI');
+        showSuccessToast(getContent('auth.toast.registrationSuccess'), getContent('auth.toast.welcomeMessage'));
       }
     } catch (err: any) {
       console.error('Registration error:', err);
       
       const errorMessage = err.message || '';
       if (errorMessage.includes('email already exists')) {
-        showErrorToast('Email đã được sử dụng', 'Vui lòng chọn email khác', 4000);
+        showErrorToast(getContent('auth.toast.emailExists'), getContent('auth.toast.emailExistsDescription'), 4000);
       } else if (errorMessage.includes('network')) {
-        showErrorToast('Lỗi kết nối mạng', 'Vui lòng thử lại sau', 4000);
+        showErrorToast(getContent('auth.toast.networkError'), getContent('auth.toast.networkErrorDescription'), 4000);
       } else {
-        showErrorToast('Đăng ký thất bại', 'Vui lòng thử lại sau', 4000);
+        showErrorToast(getContent('auth.toast.registrationFailed'), getContent('auth.toast.registrationFailedDescription'), 4000);
       }
     } finally {
       setIsLoading(false);
@@ -171,14 +171,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
       <div className="text-center mb-6">
         <div className="flex items-center justify-center gap-2 mb-2">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent">
-            {getContent('auth.register.title') || 'Tạo tài '}
+            {getContent('auth.register.title')}
           </h1>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-500 via-secondary-400/80 via-primary-500/80 to-primary-500 bg-clip-text text-transparent">
-            {getContent('auth.register.subtitle') || 'khoản mới '}
+            {getContent('auth.register.subtitle')}
           </h1>
         </div>
         <p className="text-sm font-medium text-neutral-600">
-          {getContent('auth.register.welcomeSubtitle') || 'Tham gia cộng đồng TalentFit AI ngay hôm nay'}
+          {getContent('auth.register.welcomeSubtitle')}
         </p>
       </div>
 
@@ -191,7 +191,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               <label htmlFor="fullName" className="block text-sm font-medium text-primary-700 mb-1">
                 <div className="flex flex-row items-center gap-2">
                   <User className="w-4 h-4" />
-                  {getContent('auth.register.fullName') || 'Họ và tên'}
+                  {getContent('auth.register.fullName')}
                   <span className="text-red-500">*</span>
                 </div>
               </label>
@@ -204,9 +204,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   e.preventDefault();
                   const name = (e.target as HTMLInputElement).value.trim();
                   if (!name) {
-                    showErrorToast('Vui lòng nhập họ và tên');
+                    showErrorToast(getContent('auth.toast.fullNameRequired'));
                   } else if (name.length < 2) {
-                    showErrorToast('Họ tên phải có ít nhất 2 ký tự');
+                    showErrorToast(getContent('auth.toast.fullNameMinLength'));
                   }
                 }}
                 onInput={(e) => {
@@ -216,7 +216,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
                   errors.fullName ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
                 }`}
-                placeholder={getContent('auth.register.fullNamePlaceholder') || 'Nhập họ và tên của bạn'}
+                placeholder={getContent('auth.register.fullNamePlaceholder')}
                 disabled={isLoading}
                 required
               />
@@ -230,7 +230,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               <label htmlFor="email" className="block text-sm font-medium text-primary-700 mb-1">
                 <div className="flex flex-row items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  {getContent('auth.register.email') || 'Email'}
+                  {getContent('auth.register.email')}
                   <span className="text-red-500">*</span>
                 </div>
               </label>
@@ -243,11 +243,11 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   e.preventDefault();
                   const email = (e.target as HTMLInputElement).value.trim();
                   if (!email) {
-                    showErrorToast('Vui lòng nhập email');
+                    showErrorToast(getContent('auth.toast.emailRequired'));
                   } else if (!email.includes('@')) {
-                    showErrorToast(`Email '${email}' thiếu ký tự "@"`);
+                    showErrorToast(`Email '${email}' ${getContent('auth.toast.emailMissingAt')}`);
                   } else {
-                    showErrorToast('Vui lòng nhập email hợp lệ');
+                    showErrorToast(getContent('auth.toast.emailInvalid'));
                   }
                 }}
                 onInput={(e) => {
@@ -257,7 +257,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
                   errors.email ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
                 }`}
-                placeholder={getContent('auth.register.emailPlaceholder') || 'Nhập địa chỉ email'}
+                placeholder={getContent('auth.register.emailPlaceholder')}
                 disabled={isLoading}
                 required
               />
@@ -274,8 +274,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               <label htmlFor="phone" className="block text-sm font-medium text-primary-700 mb-1">
                 <div className="flex flex-row items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  {getContent('auth.register.phone') || 'Số điện thoại'}
-                  <span className="text-neutral-400 text-sm">(tùy chọn)</span>
+                  {getContent('auth.register.phone')}
+                  <span className="text-neutral-400 text-sm">{getContent('auth.register.optional')}</span>
                 </div>
               </label>
               <input
@@ -287,7 +287,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   e.preventDefault();
                   const phone = (e.target as HTMLInputElement).value.trim();
                   if (phone && !/^[+]?[0-9\s\-\(\)]{8,}$/.test(phone)) {
-                    showErrorToast('Số điện thoại không hợp lệ');
+                    showErrorToast(getContent('auth.toast.phoneInvalid'));
                   }
                 }}
                 onInput={(e) => {
@@ -297,7 +297,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
                   errors.phone ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
                 }`}
-                placeholder={getContent('auth.register.phonePlaceholder') || 'Nhập số điện thoại'}
+                placeholder={getContent('auth.register.phonePlaceholder')}
                 disabled={isLoading}
               />
               {errors.phone && (
@@ -310,7 +310,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               <label className="block text-sm font-medium text-primary-700 mb-1">
                 <div className="flex flex-row items-center gap-2">
                   <Star className="w-4 h-4" />
-                  {getContent('auth.register.role') || 'Vai trò'}
+                  {getContent('auth.register.role')}
                   <span className="text-red-500">*</span>
                 </div>
               </label>
@@ -334,7 +334,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   <div className="flex flex-row items-center space-x-1">
                     <User className="w-3 h-3 text-primary-600" />
                     <span className="text-xs font-medium text-primary-700">
-                      {getContent('auth.register.candidate') || 'Ứng viên'}
+                      {getContent('auth.register.candidate')}
                     </span>
                   </div>
                   {formData.role === 'candidate' && (
@@ -361,7 +361,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   <div className="flex flex-row items-center space-x-1">
                     <BriefcaseBusiness className="w-3 h-3 text-primary-600" />
                     <span className="text-xs font-medium text-primary-700">
-                      {getContent('auth.register.recruiter') || 'NTD'}
+                      {getContent('auth.register.recruiter')}
                     </span>
                   </div>
                   {formData.role === 'recruiter' && (
@@ -381,7 +381,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               <label htmlFor="password" className="block text-sm font-medium text-primary-700 mb-1">
                 <div className="flex flex-row items-center gap-2">
                   <Shield className="w-4 h-4" />
-                  {getContent('auth.register.password') || 'Mật khẩu'}
+                  {getContent('auth.register.password')}
                   <span className="text-red-500">*</span>
                 </div>
               </label>
@@ -395,9 +395,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     e.preventDefault();
                     const password = (e.target as HTMLInputElement).value;
                     if (!password) {
-                      showErrorToast('Vui lòng nhập mật khẩu');
+                      showErrorToast(getContent('auth.toast.passwordRequired'));
                     } else if (password.length < 6) {
-                      showErrorToast('Mật khẩu phải có ít nhất 6 ký tự');
+                      showErrorToast(getContent('auth.toast.passwordMinLength'));
                     }
                   }}
                   onInput={(e) => {
@@ -407,7 +407,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
                     errors.password ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
                   }`}
-                  placeholder={getContent('auth.register.passwordPlaceholder') || 'Nhập mật khẩu (ít nhất 6 ký tự)'}
+                  placeholder={getContent('auth.register.passwordPlaceholder')}
                   disabled={isLoading}
                   required
                 />
@@ -430,7 +430,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-primary-700 mb-1">
                 <div className="flex flex-row items-center gap-2">
                   <CheckCircle className="w-4 h-4" />
-                  {getContent('auth.register.confirmPassword') || 'Xác nhận mật khẩu'}
+                  {getContent('auth.register.confirmPassword')}
                   <span className="text-red-500">*</span>
                 </div>
               </label>
@@ -444,9 +444,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     e.preventDefault();
                     const confirmPassword = (e.target as HTMLInputElement).value;
                     if (!confirmPassword) {
-                      showErrorToast('Vui lòng xác nhận mật khẩu');
+                      showErrorToast(getContent('auth.toast.confirmPasswordRequired'));
                     } else if (confirmPassword !== formData.password) {
-                      showErrorToast('Mật khẩu xác nhận không khớp');
+                      showErrorToast(getContent('auth.toast.passwordMismatch'));
                     }
                   }}
                   onInput={(e) => {
@@ -456,7 +456,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
                     errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
                   }`}
-                  placeholder={getContent('auth.register.confirmPasswordPlaceholder') || 'Nhập lại mật khẩu'}
+                  placeholder={getContent('auth.register.confirmPasswordPlaceholder')}
                   disabled={isLoading}
                   required
                 />
@@ -486,7 +486,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 e.preventDefault();
                 const checkbox = e.target as HTMLInputElement;
                 if (!checkbox.checked) {
-                  showErrorToast('Vui lòng đồng ý với điều khoản sử dụng');
+                  showErrorToast(getContent('auth.toast.termsRequired'));
                 }
               }}
               onInput={(e) => {
@@ -500,19 +500,19 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               required
             />
             <label htmlFor="acceptTerms" className="text-sm text-neutral-700">
-              {getContent('auth.register.acceptTerms') || 'Tôi đồng ý với'}{' '}
+              {getContent('auth.register.acceptTerms')}{' '}
               <a 
                 href="#terms" 
                 className="text-primary-600 hover:text-primary-500 font-medium underline"
               >
-                {getContent('auth.register.termsOfService') || 'Điều khoản sử dụng'}
+                {getContent('auth.register.termsOfService')}
               </a>
               {' và '}
               <a 
                 href="#privacy" 
                 className="text-primary-600 hover:text-primary-500 font-medium underline"
               >
-                {getContent('auth.register.privacyPolicy') || 'Chính sách bảo mật'}
+                {getContent('auth.register.privacyPolicy')}
               </a>
             </label>
           </div>
@@ -529,10 +529,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             {isLoading ? (
               <div className="flex flex-row items-center justify-center">
                 <LoadingSpinner size="sm" variant="neutral" className="mr-2" />
-                {getContent('auth.register.registering') || 'Đang đăng ký...'}
+                {getContent('auth.register.registering')}
               </div>
             ) : (
-              getContent('auth.register.registerButton') || 'Đăng ký'
+              getContent('auth.register.registerButton')
             )}
           </button>
         </form>
@@ -540,7 +540,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         {/* Login Link */}
         <div className="text-center mt-6">
           <div className="text-sm text-neutral-600">
-            {getContent('auth.register.hasAccount') || 'Đã có tài khoản?'}{' '}
+            {getContent('auth.register.hasAccount')}{' '}
             <a 
               href="/login"
               onClick={(e) => {
@@ -549,7 +549,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               }}
               className="text-primary-600 hover:text-primary-500 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1 rounded cursor-pointer"
             >
-              {getContent('auth.register.loginLink') || 'Đăng nhập ngay'}
+              {getContent('auth.register.loginLink')}
             </a>
           </div>
         </div>

@@ -72,6 +72,51 @@ export const en: ContentTaxonomy = {
       },
     },
   },
+
+  loginHero: {
+    sections: [
+      {
+        name: 'Hero',
+        title: 'TalentFit AI',
+        description: 'Find the perfect job with AI - Fast, Accurate, Effective',
+        metric: 'AI-Powered',
+        features: ['10,000+ trusted users', '95% AI accuracy', '10s fast processing']
+      },
+      {
+        name: 'Value Proposition',
+        title: 'Core Values',
+        description: 'Smart CV analysis and job matching platform',
+        metric: '95% Accuracy',
+        features: ['Automated CV analysis', 'Advanced matching algorithm', 'Deep insights']
+      },
+      {
+        name: 'Features Showcase',
+        title: 'Outstanding Features',
+        description: 'Advanced AI technology for candidates and recruiters',
+        metric: 'Multi-Platform',
+        features: ['Upload CV (PDF/Word)', 'Smart job matching', 'Direct application']
+      },
+      {
+        name: 'How It Works',
+        title: 'Workflow Process',
+        description: 'Simple, fast and efficient in 3 steps',
+        metric: '3 Steps',
+        features: ['Upload CV', 'AI Analysis', 'Job Matching']
+      },
+      {
+        name: 'Statistics',
+        title: 'Impressive Statistics',
+        description: 'Numbers proving the quality and credibility of the platform',
+        metric: '10K+ Users',
+        features: ['High success rate', 'Positive feedback', 'Global coverage']
+      }
+    ],
+    trustIndicators: [
+      '10,000+ trusted users',
+      '95% AI accuracy',
+      '10s fast processing'
+    ]
+  },
   
   features: {
     title: 'Powerful Features for Modern Recruitment',
@@ -312,7 +357,20 @@ export const en: ContentTaxonomy = {
       googleLogin: 'Sign in with Google',
       noAccount: "Don't have an account?",
       signUp: 'Sign up',
-      or: 'or'
+      or: 'or',
+      toast: {
+        emailRequired: 'Please enter email',
+        emailMissingAt: 'missing "@" character',
+        emailStartsWithAt: 'Email cannot start with "@"',
+        emailMissingDomain: 'missing domain after "@"',
+        emailMissingTLD: 'Email missing domain extension (e.g., .com, .net)',
+        emailInvalid: 'Invalid email format',
+        passwordRequired: 'Please enter password',
+        loginSuccess: 'Login successful!',
+        invalidCredentials: 'Email or password is incorrect',
+        networkError: 'Network connection error. Please try again.',
+        loginFailed: 'Login failed. Please try again.'
+      }
     },
     register: {
       title: 'Create',

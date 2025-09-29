@@ -19,53 +19,26 @@ export const LoginHero: React.FC = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
   // Các page/section chính từ Landing page
-  const landingSections: LandingPageSection[] = [
-    {
-      name: 'Hero',
-      title: 'TalentFit AI',
-      description: 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả',
-      metric: 'AI-Powered',
-      icon: Sparkles,
-      gradient: 'from-primary-500 to-secondary-500',
-      features: ['10,000+ người dùng tin tưởng', '95% độ chính xác AI', '10s xử lý nhanh chóng']
-    },
-    {
-      name: 'Value Proposition',
-      title: 'Giá trị cốt lõi',
-      description: 'Nền tảng phân tích CV và ghép đôi việc làm thông minh',
-      metric: '95% Accuracy',
-      icon: Target,
-      gradient: 'from-primary-600 to-primary-400',
-      features: ['Phân tích CV tự động', 'Matching algorithm tiên tiến', 'Insights sâu sắc']
-    },
-    {
-      name: 'Features Showcase',
-      title: 'Tính năng nổi bật',
-      description: 'Công nghệ AI tiên tiến cho ứng viên và nhà tuyển dụng',
-      metric: 'Multi-Platform',
-      icon: Zap,
-      gradient: 'from-secondary-600 to-accent-500',
-      features: ['Upload CV (PDF/Word)', 'Job matching thông minh', 'Apply trực tiếp']
-    },
-    {
-      name: 'How It Works',
-      title: 'Quy trình làm việc',
-      description: 'Đơn giản, nhanh chóng và hiệu quả trong 3 bước',
-      metric: '3 Steps',
-      icon: BarChart3,
-      gradient: 'from-accent-600 to-secondary-500',
-      features: ['Upload CV', 'AI Analysis', 'Job Matching']
-    },
-    {
-      name: 'Statistics',
-      title: 'Thống kê ấn tượng',
-      description: 'Con số chứng minh chất lượng và uy tín của nền tảng',
-      metric: '10K+ Users',
-      icon: TrendingUp,
-      gradient: 'from-secondary-500 to-primary-600',
-      features: ['Tỷ lệ thành công cao', 'Feedback tích cực', 'Phủ sóng toàn cầu']
-    }
-  ];
+  const landingSections: LandingPageSection[] = getContent('loginHero.sections').map((section: any, index: number) => {
+    const icons = [Sparkles, Target, Zap, BarChart3, TrendingUp];
+    const gradients = [
+      'from-primary-500 to-secondary-500',
+      'from-primary-600 to-primary-400',
+      'from-secondary-600 to-accent-500',
+      'from-accent-600 to-secondary-500',
+      'from-secondary-500 to-primary-600'
+    ];
+    
+    return {
+      name: section.name,
+      title: section.title,
+      description: section.description,
+      metric: section.metric,
+      icon: icons[index] || Sparkles,
+      gradient: gradients[index] || 'from-primary-500 to-secondary-500',
+      features: section.features
+    };
+  });
 
   // Initialize view transition hook
   const { startViewTransition } = useViewTransition({ 
@@ -114,7 +87,7 @@ export const LoginHero: React.FC = () => {
           </div>
           
           {/* Animated section showcase */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-12 py-6 mb-8 mt-2 border border-white/20 w-4/5">
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-12 py-6 mb-8 mt-2 border border-white/20 w-9/10">
             <ViewTransition mode="cross-fade" duration={400} className="min-h-32">
               <div key={currentSectionIndex}>
               <div className="flex items-center mb-4">
@@ -160,21 +133,14 @@ export const LoginHero: React.FC = () => {
               ))}
             </div>
           </div>
-          
           {/* Trust indicators */}
           <div className="space-y-3 transition-all duration-500">
-            <div className="flex items-center space-x-3 opacity-80 transition-all duration-300 hover:opacity-100">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-              <span className="text-white/80">10,000+ người dùng tin tưởng</span>
-            </div>
-            <div className="flex items-center space-x-3 opacity-80 transition-all duration-300 delay-75 hover:opacity-100">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-              <span className="text-white/80">95% độ chính xác AI</span>
-            </div>
-            <div className="flex items-center space-x-3 opacity-80 transition-all duration-300 delay-150 hover:opacity-100">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-              <span className="text-white/80">10s xử lý nhanh chóng</span>
-            </div>
+            {getContent('loginHero.trustIndicators').map((indicator: string, index: number) => (
+              <div key={index} className={`flex items-center space-x-3 opacity-80 transition-all duration-300 hover:opacity-100 ${index > 0 ? `delay-${index * 75}` : ''}`}>
+                <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{animationDelay: `${index * 0.2}s`}}></div>
+                <span className="text-white/80">{indicator}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

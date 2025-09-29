@@ -72,6 +72,51 @@ export const vi: ContentTaxonomy = {
       },
     },
   },
+
+  loginHero: {
+    sections: [
+      {
+        name: 'Hero',
+        title: 'TalentFit AI',
+        description: 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả',
+        metric: 'AI-Powered',
+        features: ['10,000+ người dùng tin tưởng', '95% độ chính xác AI', '10s xử lý nhanh chóng']
+      },
+      {
+        name: 'Value Proposition',
+        title: 'Giá trị cốt lõi',
+        description: 'Nền tảng phân tích CV và ghép đôi việc làm thông minh',
+        metric: '95% Accuracy',
+        features: ['Phân tích CV tự động', 'Matching algorithm tiên tiến', 'Insights sâu sắc']
+      },
+      {
+        name: 'Features Showcase',
+        title: 'Tính năng nổi bật',
+        description: 'Công nghệ AI tiên tiến cho ứng viên và nhà tuyển dụng',
+        metric: 'Multi-Platform',
+        features: ['Upload CV (PDF/Word)', 'Job matching thông minh', 'Apply trực tiếp']
+      },
+      {
+        name: 'How It Works',
+        title: 'Quy trình làm việc',
+        description: 'Đơn giản, nhanh chóng và hiệu quả trong 3 bước',
+        metric: '3 Steps',
+        features: ['Upload CV', 'AI Analysis', 'Job Matching']
+      },
+      {
+        name: 'Statistics',
+        title: 'Thống kê ấn tượng',
+        description: 'Con số chứng minh chất lượng và uy tín của nền tảng',
+        metric: '10K+ Users',
+        features: ['Tỷ lệ thành công cao', 'Feedback tích cực', 'Phủ sóng toàn cầu']
+      }
+    ],
+    trustIndicators: [
+      '10,000+ người dùng tin tưởng',
+      '95% độ chính xác AI',
+      '10s xử lý nhanh chóng'
+    ]
+  },
   
   features: {
     title: 'Tính năng mạnh mẽ cho tuyển dụng hiện đại',
@@ -310,7 +355,20 @@ export const vi: ContentTaxonomy = {
       googleLogin: 'Đăng nhập với Google',
       noAccount: 'Chưa có tài khoản?',
       signUp: 'Đăng ký',
-      or: 'hoặc'
+      or: 'hoặc',
+      toast: {
+        emailRequired: 'Vui lòng nhập email',
+        emailMissingAt: 'thiếu ký tự "@"',
+        emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
+        emailMissingDomain: 'thiếu tên miền sau "@"',
+        emailMissingTLD: 'Email thiếu tên miền (ví dụ: .com, .vn)',
+        emailInvalid: 'Định dạng email không hợp lệ',
+        passwordRequired: 'Vui lòng nhập mật khẩu',
+        loginSuccess: 'Đăng nhập thành công!',
+        invalidCredentials: 'Email hoặc mật khẩu không chính xác',
+        networkError: 'Lỗi kết nối mạng. Vui lòng thử lại.',
+        loginFailed: 'Đăng nhập thất bại. Vui lòng thử lại.'
+      }
     },
     register: {
       title: 'Tạo tài khoản',

@@ -54,17 +54,7 @@ export interface ContentTaxonomy {
     };
   };
 
-  // Login Hero sections
-  loginHero: {
-    sections: {
-      name: string;
-      title: string;
-      description: string;
-      metric: string;
-      features: string[];
-    }[];
-    trustIndicators: string[];
-  };
+
   
   // Features
   features: {
@@ -180,6 +170,16 @@ export interface ContentTaxonomy {
         invalidCredentials: string;
         networkError: string;
         loginFailed: string;
+      };
+      hero: {
+        sections: {
+          name: string;
+          title: string;
+          description: string;
+          metric: string;
+          features: string[];
+        }[];
+        trustIndicators: string[];
       };
     };
     register: {

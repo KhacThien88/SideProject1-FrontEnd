@@ -19,7 +19,7 @@ export const LoginHero: React.FC = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
   // Các page/section chính từ Landing page
-  const landingSections: LandingPageSection[] = getContent('loginHero.sections').map((section: any, index: number) => {
+  const landingSections: LandingPageSection[] = getContent('auth.login.hero.sections').map((section: any, index: number) => {
     const icons = [Sparkles, Target, Zap, BarChart3, TrendingUp];
     const gradients = [
       'from-primary-500 to-secondary-500',
@@ -80,10 +80,10 @@ export const LoginHero: React.FC = () => {
         <div className="w-full flex flex-col items-center">
           {/* Main headline */}
           <h1 className="text-4xl font-bold leading-tight">
-            {getContent('hero.headline') || 'AI Resume Analyzer & Job Match Platform'}
+            {getContent('hero.headline')}
           </h1>
           <div className="text-xl text-white/80 my-4">
-            {getContent('hero.subtitle') || 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả'}
+            {getContent('hero.subtitle')}
           </div>
           
           {/* Animated section showcase */}
@@ -135,7 +135,7 @@ export const LoginHero: React.FC = () => {
           </div>
           {/* Trust indicators */}
           <div className="space-y-3 transition-all duration-500">
-            {getContent('loginHero.trustIndicators').map((indicator: string, index: number) => (
+            {getContent('auth.login.hero.trustIndicators').map((indicator: string, index: number) => (
               <div key={index} className={`flex items-center space-x-3 opacity-80 transition-all duration-300 hover:opacity-100 ${index > 0 ? `delay-${index * 75}` : ''}`}>
                 <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{animationDelay: `${index * 0.2}s`}}></div>
                 <span className="text-white/80">{indicator}</span>

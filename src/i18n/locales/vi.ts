@@ -10,7 +10,7 @@ export const vi: ContentTaxonomy = {
   },
   
   hero: {
-    headline: 'AI Resume Analyzer & Job Match Platform',
+    headline: 'Nền tảng phân tích CV & Gợi ý Việc làm',
     subtitle: 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả',
     ctaButtons: {
       uploadCV: 'Tải CV ngay',
@@ -73,51 +73,7 @@ export const vi: ContentTaxonomy = {
     },
   },
 
-  loginHero: {
-    sections: [
-      {
-        name: 'Hero',
-        title: 'TalentFit AI',
-        description: 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả',
-        metric: 'AI-Powered',
-        features: ['10,000+ người dùng tin tưởng', '95% độ chính xác AI', '10s xử lý nhanh chóng']
-      },
-      {
-        name: 'Value Proposition',
-        title: 'Giá trị cốt lõi',
-        description: 'Nền tảng phân tích CV và ghép đôi việc làm thông minh',
-        metric: '95% Accuracy',
-        features: ['Phân tích CV tự động', 'Matching algorithm tiên tiến', 'Insights sâu sắc']
-      },
-      {
-        name: 'Features Showcase',
-        title: 'Tính năng nổi bật',
-        description: 'Công nghệ AI tiên tiến cho ứng viên và nhà tuyển dụng',
-        metric: 'Multi-Platform',
-        features: ['Upload CV (PDF/Word)', 'Job matching thông minh', 'Apply trực tiếp']
-      },
-      {
-        name: 'How It Works',
-        title: 'Quy trình làm việc',
-        description: 'Đơn giản, nhanh chóng và hiệu quả trong 3 bước',
-        metric: '3 Steps',
-        features: ['Upload CV', 'AI Analysis', 'Job Matching']
-      },
-      {
-        name: 'Statistics',
-        title: 'Thống kê ấn tượng',
-        description: 'Con số chứng minh chất lượng và uy tín của nền tảng',
-        metric: '10K+ Users',
-        features: ['Tỷ lệ thành công cao', 'Feedback tích cực', 'Phủ sóng toàn cầu']
-      }
-    ],
-    trustIndicators: [
-      '10,000+ người dùng tin tưởng',
-      '95% độ chính xác AI',
-      '10s xử lý nhanh chóng'
-    ]
-  },
-  
+
   features: {
     title: 'Tính năng mạnh mẽ cho tuyển dụng hiện đại',
     subtitle: 'Mọi thứ bạn cần để tối ưu hóa quy trình tuyển dụng với công cụ AI',
@@ -368,6 +324,50 @@ export const vi: ContentTaxonomy = {
         invalidCredentials: 'Email hoặc mật khẩu không chính xác',
         networkError: 'Lỗi kết nối mạng. Vui lòng thử lại.',
         loginFailed: 'Đăng nhập thất bại. Vui lòng thử lại.'
+      },
+      hero: {
+        sections: [
+          {
+            name: 'Hero',
+            title: 'TalentFit AI',
+            description: 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả',
+            metric: 'Công cụ AI mạnh mẽ',
+            features: ['10,000+ người dùng tin tưởng', '95% độ chính xác AI', '10s xử lý nhanh chóng']
+          },
+          {
+            name: 'Value Proposition',
+            title: 'Giá trị cốt lõi',
+            description: 'Nền tảng phân tích CV và gợi ý việc làm thông minh',
+            metric: '95% độ chính xác',
+            features: ['Phân tích CV tự động', 'Thuật toán tiên tiến', 'Cái nhìn sâu sắc']
+          },
+          {
+            name: 'Features Showcase',
+            title: 'Tính năng nổi bật',
+            description: 'Công nghệ AI tiên tiến cho ứng viên và nhà tuyển dụng',
+            metric: 'Multi-Platform',
+            features: ['Tải lên CV (PDF/Word)', 'Gợi ý việc làm thông minh', 'Nộp đơn trực tiếp']
+          },
+          {
+            name: 'How It Works',
+            title: 'Quy trình làm việc',
+            description: 'Đơn giản, nhanh chóng và hiệu quả trong 3 bước',
+            metric: '3 Bước',
+            features: ['Tải lên CV', 'Phân tích bằng AI', 'Gợi ý việc làm']
+          },
+          {
+            name: 'Statistics',
+            title: 'Thống kê ấn tượng',
+            description: 'Con số chứng minh chất lượng và uy tín của nền tảng',
+            metric: '10K+ người dùng',
+            features: ['Tỷ lệ thành công cao', 'Phản hồi tích cực', 'Phủ sóng toàn cầu']
+          }
+        ],
+        trustIndicators: [
+          '10,000+ người dùng tin tưởng',
+          '95% độ chính xác AI',
+          '10s xử lý nhanh chóng'
+        ]
       }
     },
     register: {

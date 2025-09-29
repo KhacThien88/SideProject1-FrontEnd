@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from '../../../../hooks/useTranslation';
-import { LoginCard } from './LoginCard';
+import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
+import { useToast } from '../../../../contexts/ToastContext';
 
 interface LoginFormProps {
   onSubmit?: (email: string, password: string, rememberMe: boolean) => void;
@@ -9,6 +10,7 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
+  const { showErrorToast, showSuccessToast } = useToast();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,44 +21,86 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!formData.email) {
-      newErrors.email = getContent('auth.login.emailRequired') || 'Email là bắt buộc';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = getContent('auth.login.emailInvalid') || 'Email không hợp lệ';
+    let hasErrors = false;
+
+    // Kiểm tra email với các trường hợp cụ thể
+    if (!formData.email || formData.email.trim() === '') {
+      showErrorToast('Vui lòng nhập email', undefined, 4000);
+      hasErrors = true;
+    } else {
+      const email = formData.email.trim();
+      // Kiểm tra có chứa @ không
+      if (!email.includes('@')) {
+        showErrorToast(`Email '${email}' thiếu ký tự "@"`, undefined, 4000);
+        hasErrors = true;
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+        // Kiểm tra các trường hợp cụ thể khác
+        if (email.startsWith('@')) {
+          showErrorToast('Email không thể bắt đầu bằng "@"', undefined, 4000);
+        } else if (email.endsWith('@')) {
+          showErrorToast(`Email '${email}' thiếu tên miền sau "@"`, undefined, 4000);
+        } else if (!email.includes('.') || email.split('@')[1]?.split('.').length < 2) {
+          showErrorToast('Email thiếu tên miền (ví dụ: .com, .vn)', undefined, 4000);
+        } else {
+          showErrorToast('Định dạng email không hợp lệ', undefined, 4000);
+        }
+        hasErrors = true;
+      }
     }
-    
-    if (!formData.password) {
-      newErrors.password = getContent('auth.login.passwordRequired') || 'Mật khẩu là bắt buộc';
-    } else if (formData.password.length < 6) {
-      newErrors.password = getContent('auth.login.passwordMinLength') || 'Mật khẩu phải có ít nhất 6 ký tự';
+
+    // Kiểm tra password
+    if (!formData.password || formData.password.trim() === '') {
+      showErrorToast('Vui lòng nhập mật khẩu', undefined, 4000);
+      hasErrors = true;
     }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+
+    return !hasErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) return;
     
     setIsLoading(true);
     
-    // Handle custom onSubmit or default behavior
-    if (onSubmit) {
-      onSubmit(formData.email, formData.password, formData.rememberMe);
-    } else {
-      // Default simulation
-      setTimeout(() => {
-        setIsLoading(false);
-        // Handle remember me
-        if (formData.rememberMe) {
-          localStorage.setItem('rememberMe', 'true');
-        }
-        alert('Đăng nhập thành công! (Demo UI)');
-      }, 2000);
+    try {
+      // Handle custom onSubmit or default behavior
+      if (onSubmit) {
+        await onSubmit(formData.email, formData.password, formData.rememberMe);
+        showSuccessToast('Đăng nhập thành công!');
+      } else {
+        // Default simulation với error handling
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            // Simulate different error cases for testing
+            const email = formData.email.toLowerCase();
+            if (email === 'error@test.com') {
+              reject(new Error('invalid credentials'));
+            } else if (email === 'network@test.com') {
+              reject(new Error('network error'));
+            } else {
+              resolve(true);
+            }
+          }, 1500);
+        });
+        
+        showSuccessToast('Đăng nhập thành công!');
+      }
+    } catch (err: any) {
+      console.error('Login error:', err);
+      
+      // Hiển thị lỗi cụ thể dựa trên loại lỗi
+      const errorMessage = err.message || '';
+      if (errorMessage.includes('invalid credentials')) {
+        showErrorToast('Email hoặc mật khẩu không chính xác', undefined, 4000);
+      } else if (errorMessage.includes('network')) {
+        showErrorToast('Lỗi kết nối mạng. Vui lòng thử lại.', undefined, 4000);
+      } else {
+        showErrorToast('Đăng nhập thất bại. Vui lòng thử lại.', undefined, 4000);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -85,12 +129,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         </p>
       </div>
 
-      <LoginCard variant="elevated" className="w-full shadow-lg backdrop-blur-md">
+      <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
         {/* Login Form */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         {/* Email Field */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-primary-700 mb-1">
+          <label htmlFor="email" className="block text-md font-medium text-primary-700 mb-1">
             {getContent('auth.login.email')}
           </label>
           <input
@@ -98,6 +142,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             type="email"
             value={formData.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
+            onInvalid={(e) => {
+              e.preventDefault();
+              const email = (e.target as HTMLInputElement).value.trim();
+              if (!email) {
+                showErrorToast('Vui lòng nhập email', undefined, 4000);
+              } else if (!email.includes('@')) {
+                showErrorToast(`Email '${email}' thiếu ký tự "@"`, undefined, 4000);
+              } else {
+                showErrorToast('Vui lòng nhập email hợp lệ', undefined, 4000);
+              }
+            }}
+            onInput={(e) => {
+              // Clear custom validity when user starts typing
+              (e.target as HTMLInputElement).setCustomValidity('');
+            }}
             className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
               errors.email ? 'border-error-500 bg-error-50' : 'border-neutral-300 bg-white'
             }`}
@@ -112,7 +171,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
         {/* Password Field */}
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-primary-700 mb-1">
+          <label htmlFor="password" className="block text-md font-medium text-primary-700 mb-1">
             {getContent('auth.login.password')}
           </label>
           <div className="relative">
@@ -121,6 +180,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
+              onInvalid={(e) => {
+                e.preventDefault();
+                showErrorToast('Vui lòng nhập mật khẩu', undefined, 4000);
+              }}
+              onInput={(e) => {
+                // Clear custom validity when user starts typing
+                (e.target as HTMLInputElement).setCustomValidity('');
+              }}
               className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
                 errors.password ? 'border-error-500 bg-error-50' : 'border-neutral-300 bg-white'
               }`}
@@ -226,7 +293,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
       {/* Sign Up Link */}
       <div className="text-center mt-8">
-        <p className="text-sm text-neutral-600">
+        <div className="text-sm text-neutral-600">
           {getContent('auth.login.noAccount')}{' '}
           <a 
             href="#register" 
@@ -234,9 +301,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           >
             {getContent('auth.login.signUp')}
           </a>
-        </p>
+        </div>
       </div>
-    </LoginCard>
+    </Card>
     </div>
   );
 };

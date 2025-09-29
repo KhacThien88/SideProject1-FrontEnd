@@ -83,7 +83,7 @@ export const LoginHero: React.FC = () => {
       startViewTransition(() => {
         setCurrentSectionIndex((prev) => (prev + 1) % landingSections.length);
       });
-    }, 4500); // Display time for each section
+    }, 4000); // Display time for each section
 
     return () => clearInterval(interval);
   }, [landingSections.length, startViewTransition]);

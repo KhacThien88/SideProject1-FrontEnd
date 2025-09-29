@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from '../../../../hooks/useTranslation';
+import { useRouter } from '../../../../components/Router';
 import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
 import { useToast } from '../../../../contexts/ToastContext';
@@ -10,6 +11,7 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
+  const { navigate } = useRouter();
   const { showErrorToast, showSuccessToast } = useToast();
   const [formData, setFormData] = useState({
     email: '',
@@ -296,8 +298,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         <div className="text-sm text-neutral-600">
           {getContent('auth.login.noAccount')}{' '}
           <a 
-            href="#register" 
-            className="text-primary-600 hover:text-primary-500 font-medium transition-colors focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1 rounded"
+            href="/register" 
+            onClick={(e) => { e.preventDefault(); navigate('/register'); }}
+            className="text-primary-600 hover:text-primary-500 font-medium transition-colors focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1 rounded cursor-pointer"
           >
             {getContent('auth.login.signUp')}
           </a>

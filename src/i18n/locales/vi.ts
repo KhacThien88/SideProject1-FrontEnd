@@ -311,6 +311,31 @@ export const vi: ContentTaxonomy = {
       noAccount: 'Chưa có tài khoản?',
       signUp: 'Đăng ký',
       or: 'hoặc'
+    },
+    register: {
+      title: 'Tạo tài khoản',
+      subtitle: 'mới',
+      welcomeSubtitle: 'Tham gia cộng đồng TalentFit AI ngay hôm nay',
+      fullName: 'Họ và tên',
+      fullNamePlaceholder: 'Nhập họ và tên của bạn',
+      email: 'Địa chỉ Email',
+      emailPlaceholder: 'Nhập địa chỉ email',
+      phone: 'Số điện thoại',
+      phonePlaceholder: 'Nhập số điện thoại',
+      role: 'Vai trò',
+      candidate: 'Ứng viên',
+      recruiter: 'Nhà tuyển dụng',
+      password: 'Mật khẩu',
+      passwordPlaceholder: 'Nhập mật khẩu (ít nhất 6 ký tự)',
+      confirmPassword: 'Xác nhận mật khẩu',
+      confirmPasswordPlaceholder: 'Nhập lại mật khẩu',
+      acceptTerms: 'Tôi đồng ý với',
+      termsOfService: 'Điều khoản sử dụng',
+      privacyPolicy: 'Chính sách bảo mật',
+      registerButton: 'Đăng ký',
+      registering: 'Đang đăng ký...',
+      hasAccount: 'Đã có tài khoản?',
+      loginLink: 'Đăng nhập ngay'
     }
   },
 

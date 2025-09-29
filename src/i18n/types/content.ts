@@ -157,6 +157,31 @@ export interface ContentTaxonomy {
       signUp: string;
       or: string;
     };
+    register: {
+      title: string;
+      subtitle: string;
+      welcomeSubtitle: string;
+      fullName: string;
+      fullNamePlaceholder: string;
+      email: string;
+      emailPlaceholder: string;
+      phone: string;
+      phonePlaceholder: string;
+      role: string;
+      candidate: string;
+      recruiter: string;
+      password: string;
+      passwordPlaceholder: string;
+      confirmPassword: string;
+      confirmPasswordPlaceholder: string;
+      acceptTerms: string;
+      termsOfService: string;
+      privacyPolicy: string;
+      registerButton: string;
+      registering: string;
+      hasAccount: string;
+      loginLink: string;
+    };
   };
   
   // Common

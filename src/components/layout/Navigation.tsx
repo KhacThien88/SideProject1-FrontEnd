@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sparkles, Zap } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useRouter } from '../Router';
 import { Button } from '../ui/Button';
 import { LanguageToggle } from '../ui/LanguageToggle';
 import { cn } from '../../utils/cn';
 
 export const Navigation: React.FC = () => {
   const { getContent } = useTranslation();
+  const { navigate } = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -113,6 +115,7 @@ export const Navigation: React.FC = () => {
               variant="tertiary" 
               size="md" 
               className="hover-lift focus-ring touch-target font-semibold"
+              onClick={() => navigate('/login')}
             >
               {getContent('nav.login')}
             </Button>
@@ -121,6 +124,7 @@ export const Navigation: React.FC = () => {
               variant="primary" 
               size="md" 
               className="hover-lift shadow-brand-md hover:shadow-brand-lg focus-ring touch-target font-semibold bg-brand-gradient-primary"
+              onClick={() => navigate('/register')}
             >
               <Sparkles className="w-4 h-4 mr-2" />
               {getContent('nav.signup')}
@@ -192,6 +196,7 @@ export const Navigation: React.FC = () => {
               size="lg" 
               className="w-full hover-lift animate-slide-up touch-target font-semibold" 
               style={{animationDelay: '0.4s'}}
+              onClick={() => navigate('/login')}
             >
               {getContent('nav.login')}
             </Button>
@@ -200,6 +205,7 @@ export const Navigation: React.FC = () => {
               size="lg" 
               className="w-full hover-lift shadow-brand-md animate-slide-up touch-target font-semibold bg-brand-gradient-primary" 
               style={{animationDelay: '0.5s'}}
+              onClick={() => navigate('/register')}
             >
               <Sparkles className="w-5 h-5 mr-2" />
               {getContent('nav.signup')}

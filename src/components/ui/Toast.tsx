@@ -53,7 +53,7 @@ export const Toast: React.FC<ToastProps> = ({
   type = 'info',
   title,
   message,
-  duration = 2000,
+  duration = 3000,
   onClose,
   pauseOnHover = true,
   showProgress = true,
@@ -106,9 +106,15 @@ export const Toast: React.FC<ToastProps> = ({
   useEffect(() => {
     if (!showProgress || duration <= 0) return;
 
+    let animationId: number | null = null;
     const startTime = Date.now();
+    
     const animateProgress = () => {
-      if (isPaused) return;
+      if (isPaused) {
+        // Continue animation loop even when paused
+        animationId = requestAnimationFrame(animateProgress);
+        return;
+      }
       
       const elapsed = Date.now() - startTime;
       const remaining = Math.max(0, duration - elapsed);
@@ -117,12 +123,19 @@ export const Toast: React.FC<ToastProps> = ({
       setProgress(progressPercent);
       
       if (remaining > 0 && isVisible) {
-        requestAnimationFrame(animateProgress);
+        animationId = requestAnimationFrame(animateProgress);
       }
     };
     
+    // Start animation immediately
     animateProgress();
-  }, [duration, isPaused, showProgress, isVisible]);
+    
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, [duration, showProgress, isVisible]); // Removed isPaused from dependencies
 
   const handleClose = () => {
     setIsVisible(false);

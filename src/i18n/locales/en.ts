@@ -313,6 +313,31 @@ export const en: ContentTaxonomy = {
       noAccount: "Don't have an account?",
       signUp: 'Sign up',
       or: 'or'
+    },
+    register: {
+      title: 'Create',
+      subtitle: 'Account',
+      welcomeSubtitle: 'Join TalentFit AI Community Today',
+      fullName: 'Full Name',
+      fullNamePlaceholder: 'Enter your full name',
+      email: 'Email Address',
+      emailPlaceholder: 'Enter your email address',
+      phone: 'Phone Number',
+      phonePlaceholder: 'Enter your phone number',
+      role: 'Role',
+      candidate: 'Candidate',
+      recruiter: 'Recruiter',
+      password: 'Password',
+      passwordPlaceholder: 'Enter password (at least 6 characters)',
+      confirmPassword: 'Confirm Password',
+      confirmPasswordPlaceholder: 'Re-enter your password',
+      acceptTerms: 'I agree with',
+      termsOfService: 'Terms of Service',
+      privacyPolicy: 'Privacy Policy',
+      registerButton: 'Sign Up',
+      registering: 'Signing up...',
+      hasAccount: 'Already have an account?',
+      loginLink: 'Sign in now'
     }
   },
 

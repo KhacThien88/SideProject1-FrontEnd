@@ -54,17 +54,7 @@ export interface ContentTaxonomy {
     };
   };
 
-  // Login Hero sections
-  loginHero: {
-    sections: {
-      name: string;
-      title: string;
-      description: string;
-      metric: string;
-      features: string[];
-    }[];
-    trustIndicators: string[];
-  };
+
   
   // Features
   features: {
@@ -181,6 +171,16 @@ export interface ContentTaxonomy {
         networkError: string;
         loginFailed: string;
       };
+      hero: {
+        sections: {
+          name: string;
+          title: string;
+          description: string;
+          metric: string;
+          features: string[];
+        }[];
+        trustIndicators: string[];
+      };
     };
     register: {
       title: string;
@@ -207,36 +207,36 @@ export interface ContentTaxonomy {
       registering: string;
       hasAccount: string;
       loginLink: string;
-    };
-    toast: {
-      // Validation messages
-      fullNameRequired: string;
-      fullNameMinLength: string;
-      emailRequired: string;
-      emailMissingAt: string;
-      emailStartsWithAt: string;
-      emailMissingDomain: string;
-      emailMissingTLD: string;
-      emailInvalid: string;
-      passwordRequired: string;
-      passwordMinLength: string;
-      confirmPasswordRequired: string;
-      confirmPasswordMismatch: string;
-      phoneInvalid: string;
-      termsRequired: string;
-      
-      // Success messages
-      registerSuccess: string;
-      registerSuccessSubtitle: string;
-      
-      // Error messages
-      registerFailed: string;
-      emailExists: string;
-      emailExistsSubtitle: string;
-      networkError: string;
-      networkErrorSubtitle: string;
-      generalError: string;
-      generalErrorSubtitle: string;
+      toast: {
+        // Validation messages
+        fullNameRequired: string;
+        fullNameMinLength: string;
+        emailRequired: string;
+        emailMissingAt: string;
+        emailStartsWithAt: string;
+        emailMissingDomain: string;
+        emailMissingTLD: string;
+        emailInvalid: string;
+        passwordRequired: string;
+        passwordMinLength: string;
+        confirmPasswordRequired: string;
+        confirmPasswordMismatch: string;
+        phoneInvalid: string;
+        termsRequired: string;
+        
+        // Success messages
+        registerSuccess: string;
+        registerSuccessSubtitle: string;
+        
+        // Error messages
+        registerFailed: string;
+        emailExists: string;
+        emailExistsSubtitle: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+        generalError: string;
+        generalErrorSubtitle: string;
+      };
     };
   };
   

@@ -73,51 +73,7 @@ export const en: ContentTaxonomy = {
     },
   },
 
-  loginHero: {
-    sections: [
-      {
-        name: 'Hero',
-        title: 'TalentFit AI',
-        description: 'Find the perfect job with AI - Fast, Accurate, Effective',
-        metric: 'AI-Powered',
-        features: ['10,000+ trusted users', '95% AI accuracy', '10s fast processing']
-      },
-      {
-        name: 'Value Proposition',
-        title: 'Core Values',
-        description: 'Smart CV analysis and job matching platform',
-        metric: '95% Accuracy',
-        features: ['Automated CV analysis', 'Advanced matching algorithm', 'Deep insights']
-      },
-      {
-        name: 'Features Showcase',
-        title: 'Outstanding Features',
-        description: 'Advanced AI technology for candidates and recruiters',
-        metric: 'Multi-Platform',
-        features: ['Upload CV (PDF/Word)', 'Smart job matching', 'Direct application']
-      },
-      {
-        name: 'How It Works',
-        title: 'Workflow Process',
-        description: 'Simple, fast and efficient in 3 steps',
-        metric: '3 Steps',
-        features: ['Upload CV', 'AI Analysis', 'Job Matching']
-      },
-      {
-        name: 'Statistics',
-        title: 'Impressive Statistics',
-        description: 'Numbers proving the quality and credibility of the platform',
-        metric: '10K+ Users',
-        features: ['High success rate', 'Positive feedback', 'Global coverage']
-      }
-    ],
-    trustIndicators: [
-      '10,000+ trusted users',
-      '95% AI accuracy',
-      '10s fast processing'
-    ]
-  },
-  
+
   features: {
     title: 'Powerful Features for Modern Recruitment',
     subtitle: 'Everything you need to streamline your hiring process with AI-powered tools',
@@ -370,6 +326,50 @@ export const en: ContentTaxonomy = {
         invalidCredentials: 'Email or password is incorrect',
         networkError: 'Network connection error. Please try again.',
         loginFailed: 'Login failed. Please try again.'
+      },
+      hero: {
+        sections: [
+          {
+            name: 'Hero',
+            title: 'TalentFit AI',
+            description: 'Find the perfect job with AI - Fast, Accurate, Effective',
+            metric: 'AI-Powered',
+            features: ['10,000+ trusted users', '95% AI accuracy', '10s fast processing']
+          },
+          {
+            name: 'Value Proposition',
+            title: 'Core Values',
+            description: 'Smart CV analysis and job matching platform',
+            metric: '95% Accuracy',
+            features: ['Automated CV analysis', 'Advanced matching algorithm', 'Deep insights']
+          },
+          {
+            name: 'Features Showcase',
+            title: 'Outstanding Features',
+            description: 'Advanced AI technology for candidates and recruiters',
+            metric: 'Multi-Platform',
+            features: ['Upload CV (PDF/Word)', 'Smart job matching', 'Direct application']
+          },
+          {
+            name: 'How It Works',
+            title: 'Workflow Process',
+            description: 'Simple, fast and efficient in 3 steps',
+            metric: '3 Steps',
+            features: ['Upload CV', 'AI Analysis', 'Job Matching']
+          },
+          {
+            name: 'Statistics',
+            title: 'Impressive Statistics',
+            description: 'Numbers proving the quality and credibility of the platform',
+            metric: '10K+ Users',
+            features: ['High success rate', 'Positive feedback', 'Global coverage']
+          }
+        ],
+        trustIndicators: [
+          '10,000+ trusted users',
+          '95% AI accuracy',
+          '10s fast processing'
+        ]
       }
     },
     register: {
@@ -396,37 +396,37 @@ export const en: ContentTaxonomy = {
       registerButton: 'Sign Up',
       registering: 'Signing up...',
       hasAccount: 'Already have an account?',
-      loginLink: 'Sign in now'
-    },
-    toast: {
-      // Validation messages
-      fullNameRequired: 'Please enter your full name',
-      fullNameMinLength: 'Please enter full name (at least 2 characters)',
-      emailRequired: 'Please enter email',
-      emailMissingAt: 'missing "@" character',
-      emailStartsWithAt: 'Email cannot start with "@"',
-      emailMissingDomain: 'missing domain after "@"',
-      emailMissingTLD: 'Email missing domain (e.g., .com, .org)',
-      emailInvalid: 'Invalid email format',
-      passwordRequired: 'Please enter password',
-      passwordMinLength: 'Password must be at least 6 characters',
-      confirmPasswordRequired: 'Please confirm password',
-      confirmPasswordMismatch: 'Password confirmation does not match',
-      phoneInvalid: 'Invalid phone number',
-      termsRequired: 'Please agree to the terms of service',
-      
-      // Success messages
-      registerSuccess: 'Registration successful!',
-      registerSuccessSubtitle: 'Welcome to TalentFit AI',
-      
-      // Error messages
-      registerFailed: 'Registration failed',
-      emailExists: 'Email already exists',
-      emailExistsSubtitle: 'Please choose a different email',
-      networkError: 'Network connection error',
-      networkErrorSubtitle: 'Please try again later',
-      generalError: 'Registration failed',
-      generalErrorSubtitle: 'Please try again later'
+      loginLink: 'Sign in now',
+      toast: {
+        // Validation messages
+        fullNameRequired: 'Please enter your full name',
+        fullNameMinLength: 'Please enter full name (at least 2 characters)',
+        emailRequired: 'Please enter email',
+        emailMissingAt: 'missing "@" character',
+        emailStartsWithAt: 'Email cannot start with "@"',
+        emailMissingDomain: 'missing domain after "@"',
+        emailMissingTLD: 'Email missing domain (e.g., .com, .org)',
+        emailInvalid: 'Invalid email format',
+        passwordRequired: 'Please enter password',
+        passwordMinLength: 'Password must be at least 6 characters',
+        confirmPasswordRequired: 'Please confirm password',
+        confirmPasswordMismatch: 'Password confirmation does not match',
+        phoneInvalid: 'Invalid phone number',
+        termsRequired: 'Please agree to the terms of service',
+        
+        // Success messages
+        registerSuccess: 'Registration successful!',
+        registerSuccessSubtitle: 'Welcome to TalentFit AI',
+        
+        // Error messages
+        registerFailed: 'Registration failed',
+        emailExists: 'Email already exists',
+        emailExistsSubtitle: 'Please choose a different email',
+        networkError: 'Network connection error',
+        networkErrorSubtitle: 'Please try again later',
+        generalError: 'Registration failed',
+        generalErrorSubtitle: 'Please try again later'
+      }
     }
   },
 

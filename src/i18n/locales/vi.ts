@@ -10,7 +10,7 @@ export const vi: ContentTaxonomy = {
   },
   
   hero: {
-    headline: 'AI Resume Analyzer & Job Match Platform',
+    headline: 'Nền tảng phân tích CV & Gợi ý Việc làm',
     subtitle: 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả',
     ctaButtons: {
       uploadCV: 'Tải CV ngay',
@@ -73,51 +73,7 @@ export const vi: ContentTaxonomy = {
     },
   },
 
-  loginHero: {
-    sections: [
-      {
-        name: 'Hero',
-        title: 'TalentFit AI',
-        description: 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả',
-        metric: 'AI-Powered',
-        features: ['10,000+ người dùng tin tưởng', '95% độ chính xác AI', '10s xử lý nhanh chóng']
-      },
-      {
-        name: 'Value Proposition',
-        title: 'Giá trị cốt lõi',
-        description: 'Nền tảng phân tích CV và ghép đôi việc làm thông minh',
-        metric: '95% Accuracy',
-        features: ['Phân tích CV tự động', 'Matching algorithm tiên tiến', 'Insights sâu sắc']
-      },
-      {
-        name: 'Features Showcase',
-        title: 'Tính năng nổi bật',
-        description: 'Công nghệ AI tiên tiến cho ứng viên và nhà tuyển dụng',
-        metric: 'Multi-Platform',
-        features: ['Upload CV (PDF/Word)', 'Job matching thông minh', 'Apply trực tiếp']
-      },
-      {
-        name: 'How It Works',
-        title: 'Quy trình làm việc',
-        description: 'Đơn giản, nhanh chóng và hiệu quả trong 3 bước',
-        metric: '3 Steps',
-        features: ['Upload CV', 'AI Analysis', 'Job Matching']
-      },
-      {
-        name: 'Statistics',
-        title: 'Thống kê ấn tượng',
-        description: 'Con số chứng minh chất lượng và uy tín của nền tảng',
-        metric: '10K+ Users',
-        features: ['Tỷ lệ thành công cao', 'Feedback tích cực', 'Phủ sóng toàn cầu']
-      }
-    ],
-    trustIndicators: [
-      '10,000+ người dùng tin tưởng',
-      '95% độ chính xác AI',
-      '10s xử lý nhanh chóng'
-    ]
-  },
-  
+
   features: {
     title: 'Tính năng mạnh mẽ cho tuyển dụng hiện đại',
     subtitle: 'Mọi thứ bạn cần để tối ưu hóa quy trình tuyển dụng với công cụ AI',
@@ -368,6 +324,50 @@ export const vi: ContentTaxonomy = {
         invalidCredentials: 'Email hoặc mật khẩu không chính xác',
         networkError: 'Lỗi kết nối mạng. Vui lòng thử lại.',
         loginFailed: 'Đăng nhập thất bại. Vui lòng thử lại.'
+      },
+      hero: {
+        sections: [
+          {
+            name: 'Hero',
+            title: 'TalentFit AI',
+            description: 'Tìm việc làm phù hợp với AI - Nhanh, Chính xác, Hiệu quả',
+            metric: 'Công cụ AI mạnh mẽ',
+            features: ['10,000+ người dùng tin tưởng', '95% độ chính xác AI', '10s xử lý nhanh chóng']
+          },
+          {
+            name: 'Value Proposition',
+            title: 'Giá trị cốt lõi',
+            description: 'Nền tảng phân tích CV và gợi ý việc làm thông minh',
+            metric: '95% độ chính xác',
+            features: ['Phân tích CV tự động', 'Thuật toán tiên tiến', 'Cái nhìn sâu sắc']
+          },
+          {
+            name: 'Features Showcase',
+            title: 'Tính năng nổi bật',
+            description: 'Công nghệ AI tiên tiến cho ứng viên và nhà tuyển dụng',
+            metric: 'Multi-Platform',
+            features: ['Tải lên CV (PDF/Word)', 'Gợi ý việc làm thông minh', 'Nộp đơn trực tiếp']
+          },
+          {
+            name: 'How It Works',
+            title: 'Quy trình làm việc',
+            description: 'Đơn giản, nhanh chóng và hiệu quả trong 3 bước',
+            metric: '3 Bước',
+            features: ['Tải lên CV', 'Phân tích bằng AI', 'Gợi ý việc làm']
+          },
+          {
+            name: 'Statistics',
+            title: 'Thống kê ấn tượng',
+            description: 'Con số chứng minh chất lượng và uy tín của nền tảng',
+            metric: '10K+ người dùng',
+            features: ['Tỷ lệ thành công cao', 'Phản hồi tích cực', 'Phủ sóng toàn cầu']
+          }
+        ],
+        trustIndicators: [
+          '10,000+ người dùng tin tưởng',
+          '95% độ chính xác AI',
+          '10s xử lý nhanh chóng'
+        ]
       }
     },
     register: {
@@ -394,37 +394,37 @@ export const vi: ContentTaxonomy = {
       registerButton: 'Đăng ký',
       registering: 'Đang đăng ký...',
       hasAccount: 'Đã có tài khoản?',
-      loginLink: 'Đăng nhập ngay'
-    },
-    toast: {
-      // Validation messages
-      fullNameRequired: 'Vui lòng nhập họ và tên',
-      fullNameMinLength: 'Vui lòng nhập họ tên (ít nhất 2 ký tự)',
-      emailRequired: 'Vui lòng nhập email',
-      emailMissingAt: 'thiếu ký tự "@"',
-      emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
-      emailMissingDomain: 'thiếu tên miền sau "@"',
-      emailMissingTLD: 'Email thiếu tên miền (ví dụ: .com, .vn)',
-      emailInvalid: 'Định dạng email không hợp lệ',
-      passwordRequired: 'Vui lòng nhập mật khẩu',
-      passwordMinLength: 'Mật khẩu phải có ít nhất 6 ký tự',
-      confirmPasswordRequired: 'Vui lòng xác nhận mật khẩu',
-      confirmPasswordMismatch: 'Mật khẩu xác nhận không khớp',
-      phoneInvalid: 'Số điện thoại không hợp lệ',
-      termsRequired: 'Vui lòng đồng ý với điều khoản sử dụng',
-      
-      // Success messages
-      registerSuccess: 'Đăng ký thành công!',
-      registerSuccessSubtitle: 'Chào mừng bạn đến với TalentFit AI',
-      
-      // Error messages
-      registerFailed: 'Đăng ký thất bại',
-      emailExists: 'Email đã được sử dụng',
-      emailExistsSubtitle: 'Vui lòng chọn email khác',
-      networkError: 'Lỗi kết nối mạng',
-      networkErrorSubtitle: 'Vui lòng thử lại sau',
-      generalError: 'Đăng ký thất bại',
-      generalErrorSubtitle: 'Vui lòng thử lại sau'
+      loginLink: 'Đăng nhập ngay',
+      toast: {
+        // Validation messages
+        fullNameRequired: 'Vui lòng nhập họ và tên',
+        fullNameMinLength: 'Vui lòng nhập họ tên (ít nhất 2 ký tự)',
+        emailRequired: 'Vui lòng nhập email',
+        emailMissingAt: 'thiếu ký tự "@"',
+        emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
+        emailMissingDomain: 'thiếu tên miền sau "@"',
+        emailMissingTLD: 'Email thiếu tên miền (ví dụ: .com, .vn)',
+        emailInvalid: 'Định dạng email không hợp lệ',
+        passwordRequired: 'Vui lòng nhập mật khẩu',
+        passwordMinLength: 'Mật khẩu phải có ít nhất 6 ký tự',
+        confirmPasswordRequired: 'Vui lòng xác nhận mật khẩu',
+        confirmPasswordMismatch: 'Mật khẩu xác nhận không khớp',
+        phoneInvalid: 'Số điện thoại không hợp lệ',
+        termsRequired: 'Vui lòng đồng ý với điều khoản sử dụng',
+        
+        // Success messages
+        registerSuccess: 'Đăng ký thành công!',
+        registerSuccessSubtitle: 'Chào mừng bạn đến với TalentFit AI',
+        
+        // Error messages
+        registerFailed: 'Đăng ký thất bại',
+        emailExists: 'Email đã được sử dụng',
+        emailExistsSubtitle: 'Vui lòng chọn email khác',
+        networkError: 'Lỗi kết nối mạng',
+        networkErrorSubtitle: 'Vui lòng thử lại sau',
+        generalError: 'Đăng ký thất bại',
+        generalErrorSubtitle: 'Vui lòng thử lại sau'
+      }
     }
   },
 

@@ -46,48 +46,48 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
     // Validate full name
     if (!formData.fullName || formData.fullName.trim().length < 2) {
-      showErrorToast(getContent('auth.toast.fullNameMinLength'));
-      newErrors.fullName = getContent('auth.toast.fullNameMinLength');
+      showErrorToast(getContent('auth.register.toast.fullNameMinLength'));
+      newErrors.fullName = getContent('auth.register.toast.fullNameMinLength');
       hasErrors = true;
     }
 
     // Validate email
     if (!formData.email || formData.email.trim() === '') {
-      showErrorToast(getContent('auth.toast.emailRequired'));
-      newErrors.email = getContent('auth.toast.emailRequired');
+      showErrorToast(getContent('auth.register.toast.emailRequired'));
+      newErrors.email = getContent('auth.register.toast.emailRequired');
       hasErrors = true;
     } else {
       const email = formData.email.trim();
       if (!email.includes('@')) {
-        showErrorToast(`Email '${email}' ${getContent('auth.toast.emailMissingAt')}`);
-        newErrors.email = getContent('auth.toast.emailInvalid');
+        showErrorToast(`Email '${email}' ${getContent('auth.register.toast.emailMissingAt')}`);
+        newErrors.email = getContent('auth.register.toast.emailInvalid');
         hasErrors = true;
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
         if (email.startsWith('@')) {
-          showErrorToast(getContent('auth.toast.emailStartsWithAt'));
+          showErrorToast(getContent('auth.register.toast.emailStartsWithAt'));
         } else if (email.endsWith('@')) {
-          showErrorToast(`Email '${email}' ${getContent('auth.toast.emailMissingDomain')}`);
+          showErrorToast(`Email '${email}' ${getContent('auth.register.toast.emailMissingDomain')}`);
         } else if (!email.includes('.') || email.split('@')[1]?.split('.').length < 2) {
-          showErrorToast(getContent('auth.toast.emailMissingTLD'));
+          showErrorToast(getContent('auth.register.toast.emailMissingTLD'));
         } else {
-          showErrorToast(getContent('auth.toast.emailInvalid'));
+          showErrorToast(getContent('auth.register.toast.emailInvalid'));
         }
-        newErrors.email = getContent('auth.toast.emailInvalid');
+        newErrors.email = getContent('auth.register.toast.emailInvalid');
         hasErrors = true;
       }
     }
 
     // Validate password
     if (!formData.password || formData.password.length < 6) {
-      showErrorToast(getContent('auth.toast.passwordMinLength'));
-      newErrors.password = getContent('auth.toast.passwordMinLength');
+      showErrorToast(getContent('auth.register.toast.passwordMinLength'));
+      newErrors.password = getContent('auth.register.toast.passwordMinLength');
       hasErrors = true;
     }
 
     // Validate confirm password
     if (formData.password !== formData.confirmPassword) {
-      showErrorToast(getContent('auth.toast.passwordMismatch'));
-      newErrors.confirmPassword = getContent('auth.toast.passwordMismatch');
+      showErrorToast(getContent('auth.register.toast.confirmPasswordMismatch'));
+      newErrors.confirmPassword = getContent('auth.register.toast.confirmPasswordMismatch');
       hasErrors = true;
     }
 
@@ -95,16 +95,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     if (formData.phone && formData.phone.trim() !== '') {
       const phoneRegex = /^[+]?[0-9\s\-\(\)]{8,}$/;
       if (!phoneRegex.test(formData.phone.trim())) {
-        showErrorToast(getContent('auth.toast.phoneInvalid'));
-        newErrors.phone = getContent('auth.toast.phoneInvalid');
+        showErrorToast(getContent('auth.register.toast.phoneInvalid'));
+        newErrors.phone = getContent('auth.register.toast.phoneInvalid');
         hasErrors = true;
       }
     }
 
     // Validate terms acceptance
     if (!formData.acceptTerms) {
-      showErrorToast(getContent('auth.toast.termsRequired'));
-      newErrors.acceptTerms = getContent('auth.toast.termsRequired');
+      showErrorToast(getContent('auth.register.toast.termsRequired'));
+      newErrors.acceptTerms = getContent('auth.register.toast.termsRequired');
       hasErrors = true;
     }
 
@@ -122,7 +122,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     try {
       if (onSubmit) {
         await onSubmit(formData);
-        showSuccessToast(getContent('auth.toast.registrationSuccess'), getContent('auth.toast.welcomeMessage'));
+        showSuccessToast(getContent('auth.register.toast.registerSuccess'), getContent('auth.register.toast.registerSuccessSubtitle'));
       } else {
         // Simulate API call
         await new Promise((resolve, reject) => {
@@ -139,18 +139,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           }, 2000);
         });
         
-        showSuccessToast(getContent('auth.toast.registrationSuccess'), getContent('auth.toast.welcomeMessage'));
+        showSuccessToast(getContent('auth.register.toast.registerSuccess'), getContent('auth.register.toast.registerSuccessSubtitle'));
       }
     } catch (err: any) {
       console.error('Registration error:', err);
       
       const errorMessage = err.message || '';
       if (errorMessage.includes('email already exists')) {
-        showErrorToast(getContent('auth.toast.emailExists'), getContent('auth.toast.emailExistsDescription'), 4000);
+        showErrorToast(getContent('auth.register.toast.emailExists'), getContent('auth.register.toast.emailExistsSubtitle'), 4000);
       } else if (errorMessage.includes('network')) {
-        showErrorToast(getContent('auth.toast.networkError'), getContent('auth.toast.networkErrorDescription'), 4000);
+        showErrorToast(getContent('auth.register.toast.networkError'), getContent('auth.register.toast.networkErrorSubtitle'), 4000);
       } else {
-        showErrorToast(getContent('auth.toast.registrationFailed'), getContent('auth.toast.registrationFailedDescription'), 4000);
+        showErrorToast(getContent('auth.register.toast.registerFailed'), getContent('auth.register.toast.generalErrorSubtitle'), 4000);
       }
     } finally {
       setIsLoading(false);
@@ -204,9 +204,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   e.preventDefault();
                   const name = (e.target as HTMLInputElement).value.trim();
                   if (!name) {
-                    showErrorToast(getContent('auth.toast.fullNameRequired'));
+                    showErrorToast(getContent('auth.register.toast.fullNameRequired'));
                   } else if (name.length < 2) {
-                    showErrorToast(getContent('auth.toast.fullNameMinLength'));
+                    showErrorToast(getContent('auth.register.toast.fullNameMinLength'));
                   }
                 }}
                 onInput={(e) => {
@@ -243,11 +243,11 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   e.preventDefault();
                   const email = (e.target as HTMLInputElement).value.trim();
                   if (!email) {
-                    showErrorToast(getContent('auth.toast.emailRequired'));
+                    showErrorToast(getContent('auth.register.toast.emailRequired'));
                   } else if (!email.includes('@')) {
-                    showErrorToast(`Email '${email}' ${getContent('auth.toast.emailMissingAt')}`);
+                    showErrorToast(`Email '${email}' ${getContent('auth.register.toast.emailMissingAt')}`);
                   } else {
-                    showErrorToast(getContent('auth.toast.emailInvalid'));
+                    showErrorToast(getContent('auth.register.toast.emailInvalid'));
                   }
                 }}
                 onInput={(e) => {
@@ -287,7 +287,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   e.preventDefault();
                   const phone = (e.target as HTMLInputElement).value.trim();
                   if (phone && !/^[+]?[0-9\s\-\(\)]{8,}$/.test(phone)) {
-                    showErrorToast(getContent('auth.toast.phoneInvalid'));
+                    showErrorToast(getContent('auth.register.toast.phoneInvalid'));
                   }
                 }}
                 onInput={(e) => {
@@ -395,9 +395,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     e.preventDefault();
                     const password = (e.target as HTMLInputElement).value;
                     if (!password) {
-                      showErrorToast(getContent('auth.toast.passwordRequired'));
+                      showErrorToast(getContent('auth.register.toast.passwordRequired'));
                     } else if (password.length < 6) {
-                      showErrorToast(getContent('auth.toast.passwordMinLength'));
+                      showErrorToast(getContent('auth.register.toast.passwordMinLength'));
                     }
                   }}
                   onInput={(e) => {
@@ -444,9 +444,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     e.preventDefault();
                     const confirmPassword = (e.target as HTMLInputElement).value;
                     if (!confirmPassword) {
-                      showErrorToast(getContent('auth.toast.confirmPasswordRequired'));
+                      showErrorToast(getContent('auth.register.toast.confirmPasswordRequired'));
                     } else if (confirmPassword !== formData.password) {
-                      showErrorToast(getContent('auth.toast.passwordMismatch'));
+                      showErrorToast(getContent('auth.register.toast.confirmPasswordMismatch'));
                     }
                   }}
                   onInput={(e) => {
@@ -486,7 +486,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 e.preventDefault();
                 const checkbox = e.target as HTMLInputElement;
                 if (!checkbox.checked) {
-                  showErrorToast(getContent('auth.toast.termsRequired'));
+                  showErrorToast(getContent('auth.register.toast.termsRequired'));
                 }
               }}
               onInput={(e) => {

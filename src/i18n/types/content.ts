@@ -239,7 +239,170 @@ export interface ContentTaxonomy {
       };
     };
   };
+
+  // Dashboard
+  dashboard: {
+    sidebar: {
+      navigation: {
+        dashboard: string;
+        resumeAnalyzer: string;
+        candidates: string;
+        jobPostings: string;
+        analytics: string;
+        settings: string;
+      };
+      collapse: string;
+      expand: string;
+      hoverHint: string;
+    };
+    header: {
+      title: string;
+      subtitle: string;
+      description: string;
+      search: {
+        placeholder: string;
+        fullPlaceholder: string;
+      };
+      user: {
+        name: string;
+        role: string;
+      };
+      actions: {
+        logout: string;
+      };
+    };
+    metrics: {
+      totalResumes: {
+        title: string;
+        description: string;
+      };
+      activeCandidates: {
+        title: string;
+        description: string;
+      };
+      accuracy: {
+        title: string;
+        description: string;
+      };
+      processingSpeed: {
+        title: string;
+        description: string;
+      };
+    };
+    processingQueue: {
+      title: string;
+      subtitle: string;
+      viewAll: string;
+      total: string;
+      states: {
+        pending: string;
+        processing: string;
+        completed: string;
+        error: string;
+      };
+      progress: string;
+    };
+    recentResumes: {
+      title: string;
+      subtitle: string;
+      viewAll: string;
+      total: string;
+      score: string;
+      match: string;
+    };
+    monthlyApplications: {
+      title: string;
+      subtitle: string;
+      growth: string;
+      trend: string;
+    };
+    skillsChart: {
+      title: string;
+      subtitle: string;
+      skills: string;
+      description: string;
+    };
+    scoreDistribution: {
+      title: string;
+      subtitle: string;
+      averageScore: string;
+      highScores: string;
+      totalAnalyzed: string;
+      legend: {
+        resumes: string;
+        resume: string;
+      };
+      ranges: {
+        poor: string;
+        fair: string;
+        good: string;
+        excellent: string;
+      };
+    };
+  };
   
+  // Footer
+  footer: {
+    company: {
+      description: string;
+      tagline: string;
+    };
+    newsletter: {
+      title: string;
+      subtitle: string;
+      placeholder: string;
+      agreement: string;
+    };
+    links: {
+      product: {
+        title: string;
+        items: {
+          cvAnalysis: string;
+          jobMatching: string;
+          careerInsights: string;
+          skillAssessment: string;
+        };
+      };
+      company: {
+        title: string;
+        items: {
+          about: string;
+          team: string;
+          news: string;
+          careers: string;
+          partners: string;
+        };
+      };
+      support: {
+        title: string;
+        items: {
+          helpCenter: string;
+          userGuide: string;
+          apiDocs: string;
+          contactSupport: string;
+          bugReport: string;
+        };
+      };
+      legal: {
+        title: string;
+        items: {
+          privacy: string;
+          terms: string;
+          cookies: string;
+          gdpr: string;
+        };
+      };
+    };
+    social: {
+      followUs: string;
+    };
+    bottom: {
+      copyright: string;
+      madeWith: string;
+      vietnam: string;
+    };
+  };
+
   // Common
   common: {
     loading: string;

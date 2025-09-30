@@ -430,9 +430,171 @@ export const en: ContentTaxonomy = {
     }
   },
 
+  // Dashboard
+  dashboard: {
+    sidebar: {
+      navigation: {
+        dashboard: 'Dashboard',
+        resumeAnalyzer: 'Resume Analyzer',
+        candidates: 'Candidates',
+        jobPostings: 'Job Postings',
+        analytics: 'Analytics',
+        settings: 'Settings'
+      },
+      collapse: 'Collapse sidebar',
+      expand: 'Expand sidebar',
+      hoverHint: 'Hover here to show sidebar'
+    },
+    header: {
+      title: 'TalentFit',
+      subtitle: 'AI',
+      description: 'AI-Powered CV Analysis Platform',
+      search: {
+        placeholder: 'Search...',
+        fullPlaceholder: 'Search resumes, candidates...'
+      },
+      user: {
+        name: 'John Doe',
+        role: 'Admin Dashboard'
+      },
+      actions: {
+        logout: 'Logout'
+      }
+    },
+    metrics: {
+      totalResumes: {
+        title: 'Total Resumes',
+        description: 'Total resumes processed by our AI system this month'
+      },
+      activeCandidates: {
+        title: 'Active Candidates', 
+        description: 'Qualified candidates actively seeking opportunities'
+      },
+      accuracy: {
+        title: 'Accuracy',
+        description: 'AI-powered matching accuracy across all positions'
+      },
+      processingSpeed: {
+        title: 'Processing Speed',
+        description: 'Average time to analyze and score each resume'
+      }
+    },
+    processingQueue: {
+      title: 'Processing Queue',
+      subtitle: 'items in queue',
+      viewAll: 'View All Queue',
+      total: 'total',
+      states: {
+        pending: 'Pending',
+        processing: 'Processing',
+        completed: 'Completed',
+        error: 'Error'
+      },
+      progress: 'complete'
+    },
+    recentResumes: {
+      title: 'Recent Resumes',
+      subtitle: 'Latest processed documents',
+      viewAll: 'View All Resumes',
+      total: 'total',
+      score: 'Score',
+      match: 'Match'
+    },
+    monthlyApplications: {
+      title: 'Monthly Applications',
+      subtitle: 'Application trends over time',
+      growth: 'this month',
+      trend: '6-month growth trend'
+    },
+    skillsChart: {
+      title: 'Top Skills Detected',
+      subtitle: 'Most common technical skills',
+      skills: 'Skills',
+      description: 'Most common skills across analyzed resumes'
+    },
+    scoreDistribution: {
+      title: 'Score Distribution',
+      subtitle: 'total resumes',
+      averageScore: 'Average Score',
+      highScores: 'High Scores (81+)',
+      totalAnalyzed: 'Total Analyzed',
+      legend: {
+        resumes: 'resumes',
+        resume: 'resume'
+      },
+      ranges: {
+        poor: 'Poor (0-40)',
+        fair: 'Fair (41-60)',
+        good: 'Good (61-80)',
+        excellent: 'Excellent (81-100)'
+      }
+    }
+  },
+
+  footer: {
+    company: {
+      description: 'Leading AI-powered CV analysis platform, connecting recruiters with suitable candidates through advanced AI technology.',
+      tagline: 'AI-Powered CV Analysis Platform'
+    },
+    newsletter: {
+      title: 'Newsletter',
+      subtitle: 'Get the latest updates on AI and recruitment trends',
+      placeholder: 'Enter your email',
+      agreement: 'By subscribing, you agree to our privacy policy.'
+    },
+    links: {
+      product: {
+        title: 'Product',
+        items: {
+          cvAnalysis: 'CV Analysis',
+          jobMatching: 'Job Matching',
+          careerInsights: 'Career Insights',
+          skillAssessment: 'Skill Assessment'
+        }
+      },
+      company: {
+        title: 'Company',
+        items: {
+          about: 'About Us',
+          team: 'Our Team',
+          news: 'News',
+          careers: 'Careers',
+          partners: 'Partners'
+        }
+      },
+      support: {
+        title: 'Support',
+        items: {
+          helpCenter: 'Help Center',
+          userGuide: 'User Guide',
+          apiDocs: 'API Documentation',
+          contactSupport: 'Contact Support',
+          bugReport: 'Bug Report'
+        }
+      },
+      legal: {
+        title: 'Legal',
+        items: {
+          privacy: 'Privacy Policy',
+          terms: 'Terms of Service',
+          cookies: 'Cookie Policy',
+          gdpr: 'GDPR Compliance'
+        }
+      }
+    },
+    social: {
+      followUs: 'Follow us'
+    },
+    bottom: {
+      copyright: 'All rights reserved.',
+      madeWith: 'Made with',
+      vietnam: 'in Vietnam'
+    }
+  },
+
   common: {
     loading: 'Loading...',
-    error: 'An error occurred',
+    error: 'Error',
     success: 'Success',
     cancel: 'Cancel',
     confirm: 'Confirm',
@@ -444,7 +606,7 @@ export const en: ContentTaxonomy = {
     previous: 'Previous',
     close: 'Close',
     open: 'Open',
-    viewMore: 'View more',
-    viewLess: 'View less',
-  },
+    viewMore: 'View More',
+    viewLess: 'View Less'
+  }
 };

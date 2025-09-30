@@ -428,9 +428,173 @@ export const vi: ContentTaxonomy = {
     }
   },
 
+
+
+  // Dashboard
+  dashboard: {
+    sidebar: {
+      navigation: {
+        dashboard: 'Bảng điều khiển',
+        resumeAnalyzer: 'Phân tích CV',
+        candidates: 'Ứng viên',
+        jobPostings: 'Đăng tuyển',
+        analytics: 'Phân tích',
+        settings: 'Cài đặt'
+      },
+      collapse: 'Thu gọn thanh bên',
+      expand: 'Mở rộng thanh bên',
+      hoverHint: 'Di chuột vào đây để hiện thanh bên'
+    },
+    header: {
+      title: 'TalentFit',
+      subtitle: 'AI',
+      description: 'Nền tảng phân tích CV bằng AI',
+      search: {
+        placeholder: 'Tìm kiếm...',
+        fullPlaceholder: 'Tìm kiếm CV, ứng viên...'
+      },
+      user: {
+        name: 'Nguyễn Văn A',
+        role: 'Quản trị viên'
+      },
+      actions: {
+        logout: 'Đăng xuất'
+      }
+    },
+    metrics: {
+      totalResumes: {
+        title: 'Tổng CV',
+        description: 'Tổng số CV được xử lý bởi hệ thống AI trong tháng này'
+      },
+      activeCandidates: {
+        title: 'Ứng viên hoạt động', 
+        description: 'Ứng viên có trình độ đang tìm kiếm cơ hội việc làm'
+      },
+      accuracy: {
+        title: 'Độ chính xác',
+        description: 'Độ chính xác khớp việc làm bằng AI trên tất cả vị trí'
+      },
+      processingSpeed: {
+        title: 'Tốc độ xử lý',
+        description: 'Thời gian trung bình để phân tích và chấm điểm mỗi CV'
+      }
+    },
+    processingQueue: {
+      title: 'Hàng đợi xử lý',
+      subtitle: 'mục trong hàng đợi',
+      viewAll: 'Xem tất cả hàng đợi',
+      total: 'tổng',
+      states: {
+        pending: 'Chờ xử lý',
+        processing: 'Đang xử lý',
+        completed: 'Hoàn thành',
+        error: 'Lỗi'
+      },
+      progress: 'hoàn thành'
+    },
+    recentResumes: {
+      title: 'CV gần đây',
+      subtitle: 'Tài liệu được xử lý gần đây nhất',
+      viewAll: 'Xem tất cả CV',
+      total: 'tổng',
+      score: 'Điểm',
+      match: 'Khớp'
+    },
+    monthlyApplications: {
+      title: 'Ứng tuyển hàng tháng',
+      subtitle: 'Xu hướng ứng tuyển theo thời gian',
+      growth: 'tháng này',
+      trend: 'Xu hướng tăng trưởng 6 tháng'
+    },
+    skillsChart: {
+      title: 'Kỹ năng hàng đầu',
+      subtitle: 'Kỹ năng kỹ thuật phổ biến nhất',
+      skills: 'Kỹ năng',
+      description: 'Kỹ năng phổ biến nhất trong số CV đã phân tích'
+    },
+    scoreDistribution: {
+      title: 'Phân bố điểm số',
+      subtitle: 'tổng CV',
+      averageScore: 'Điểm trung bình',
+      highScores: 'Điểm cao (81+)',
+      totalAnalyzed: 'Tổng đã phân tích',
+      legend: {
+        resumes: 'CV',
+        resume: 'CV'
+      },
+      ranges: {
+        poor: 'Kém (0-40)',
+        fair: 'Khá (41-60)',
+        good: 'Tốt (61-80)',
+        excellent: 'Xuất sắc (81-100)'
+      }
+    }
+  },
+
+  footer: {
+    company: {
+      description: 'Nền tảng phân tích CV thông minh hàng đầu, giúp kết nối nhà tuyển dụng với ứng viên phù hợp thông qua công nghệ AI tiên tiến.',
+      tagline: 'Nền tảng Phân tích CV bằng AI'
+    },
+    newsletter: {
+      title: 'Bản tin',
+      subtitle: 'Nhận thông tin mới nhất về AI và xu hướng tuyển dụng',
+      placeholder: 'Nhập email của bạn',
+      agreement: 'Bằng việc đăng ký, bạn đồng ý với chính sách bảo mật của chúng tôi.'
+    },
+    links: {
+      product: {
+        title: 'Sản phẩm',
+        items: {
+          cvAnalysis: 'Phân tích CV',
+          jobMatching: 'Ghép đôi công việc',
+          careerInsights: 'Thông tin nghề nghiệp',
+          skillAssessment: 'Đánh giá kỹ năng'
+        }
+      },
+      company: {
+        title: 'Công ty',
+        items: {
+          about: 'Về chúng tôi',
+          team: 'Đội ngũ',
+          news: 'Tin tức',
+          careers: 'Tuyển dụng',
+          partners: 'Đối tác'
+        }
+      },
+      support: {
+        title: 'Hỗ trợ',
+        items: {
+          helpCenter: 'Trung tâm trợ giúp',
+          userGuide: 'Hướng dẫn sử dụng',
+          apiDocs: 'Tài liệu API',
+          contactSupport: 'Liên hệ hỗ trợ',
+          bugReport: 'Báo cáo lỗi'
+        }
+      },
+      legal: {
+        title: 'Pháp lý',
+        items: {
+          privacy: 'Chính sách bảo mật',
+          terms: 'Điều khoản dịch vụ',
+          cookies: 'Chính sách Cookie',
+          gdpr: 'Tuân thủ GDPR'
+        }
+      }
+    },
+    social: {
+      followUs: 'Theo dõi chúng tôi'
+    },
+    bottom: {
+      copyright: 'Tất cả quyền được bảo lưu.',
+      madeWith: 'Được tạo với',
+      vietnam: 'tại Việt Nam'
+    }
+  },
+
   common: {
     loading: 'Đang tải...',
-    error: 'Có lỗi xảy ra',
+    error: 'Lỗi',
     success: 'Thành công',
     cancel: 'Hủy',
     confirm: 'Xác nhận',
@@ -439,10 +603,10 @@ export const vi: ContentTaxonomy = {
     delete: 'Xóa',
     back: 'Quay lại',
     next: 'Tiếp theo',
-    previous: 'Trước đó',
+    previous: 'Trước',
     close: 'Đóng',
     open: 'Mở',
     viewMore: 'Xem thêm',
-    viewLess: 'Thu gọn',
-  },
+    viewLess: 'Xem ít hơn'
+  }
 };

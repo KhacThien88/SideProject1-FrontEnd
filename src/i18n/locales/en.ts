@@ -430,17 +430,70 @@ export const en: ContentTaxonomy = {
     }
   },
 
+  // Pages - Dynamic content based on current page
+  pages: {
+    dashboard: {
+      subscription: 'Dashboard Overview',
+      header: {
+        title: 'TalentFit',
+        subtitle: 'AI',
+        description: 'AI-Powered CV Analysis Platform'
+      }
+    },
+    cvAnalysis: {
+      subscription: 'CV Analysis',
+      header: {
+        title: 'CV',
+        subtitle: 'Analysis',
+        description: 'Upload and analyze your CV with AI-powered insights'
+      }
+    },
+    candidates: {
+      subscription: 'Candidate Management',
+      header: {
+        title: 'Candidate',
+        subtitle: 'Management',
+        description: 'Manage job profiles and requirements for resume analysis.'
+      }
+    },
+    jobPostings: {
+      subscription: 'Job Management',
+      header: {
+        title: 'Job',
+        subtitle: 'Postings',
+        description: 'Create and manage job postings and requirements'
+      }
+    },
+    analytics: {
+      subscription: 'Analytics Dashboard',
+      header: {
+        title: 'Analytics',
+        subtitle: 'Dashboard',
+        description: 'Comprehensive analytics and performance insights'
+      }
+    },
+    settings: {
+      subscription: 'System Settings',
+      header: {
+        title: 'System',
+        subtitle: 'Settings',
+        description: 'Configure system preferences and account settings'
+      }
+    }
+  },
+
   // Dashboard
   dashboard: {
     sidebar: {
       navigation: {
         dashboard: 'Dashboard',
-        resumeAnalyzer: 'Resume Analyzer',
+        cvAnalysis: 'CV Analysis',
         candidates: 'Candidates',
         jobPostings: 'Job Postings',
         analytics: 'Analytics',
         settings: 'Settings'
       },
+      subscription: 'Dashboard Overview',
       collapse: 'Collapse sidebar',
       expand: 'Expand sidebar',
       hoverHint: 'Hover here to show sidebar'

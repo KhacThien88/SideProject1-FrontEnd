@@ -240,17 +240,70 @@ export interface ContentTaxonomy {
     };
   };
 
+  // Pages - Dynamic content based on current page
+  pages: {
+    dashboard: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    cvAnalysis: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    candidates: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    jobPostings: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    analytics: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    settings: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+  };
+
   // Dashboard
   dashboard: {
     sidebar: {
       navigation: {
         dashboard: string;
-        resumeAnalyzer: string;
+        cvAnalysis: string;
         candidates: string;
         jobPostings: string;
         analytics: string;
         settings: string;
       };
+      subscription: string;
       collapse: string;
       expand: string;
       hoverHint: string;

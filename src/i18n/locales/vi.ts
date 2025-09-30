@@ -430,17 +430,70 @@ export const vi: ContentTaxonomy = {
 
 
 
+  // Pages - Dynamic content based on current page
+  pages: {
+    dashboard: {
+      subscription: 'Bảng tổng quan',
+      header: {
+        title: 'TalentFit',
+        subtitle: 'AI',
+        description: 'Nền tảng phân tích CV bằng AI'
+      }
+    },
+    cvAnalysis: {
+      subscription: 'Phân tích CV',
+      header: {
+        title: 'Phân tích',
+        subtitle: 'CV',
+        description: 'Tải lên và phân tích CV với thông tin chi tiết từ AI'
+      }
+    },
+    candidates: {
+      subscription: 'Quản lý ứng viên',
+      header: {
+        title: 'Quản lý',
+        subtitle: 'ứng viên',
+        description: 'Quản lý và theo dõi hồ sơ ứng viên và đơn ứng tuyển'
+      }
+    },
+    jobPostings: {
+      subscription: 'Quản lý công việc',
+      header: {
+        title: 'Đăng tin',
+        subtitle: 'tuyển dụng',
+        description: 'Quản lý hồ sơ công việc và yêu cầu cho phân tích CV'
+      }
+    },
+    analytics: {
+      subscription: 'Bảng phân tích',
+      header: {
+        title: 'Phân tích',
+        subtitle: 'dữ liệu',
+        description: 'Phân tích toàn diện và thông tin hiệu suất chi tiết'
+      }
+    },
+    settings: {
+      subscription: 'Cài đặt hệ thống',
+      header: {
+        title: 'Cài đặt',
+        subtitle: 'hệ thống',
+        description: 'Cấu hình tùy chọn hệ thống và cài đặt tài khoản'
+      }
+    }
+  },
+
   // Dashboard
   dashboard: {
     sidebar: {
       navigation: {
         dashboard: 'Bảng điều khiển',
-        resumeAnalyzer: 'Phân tích CV',
+        cvAnalysis: 'Phân tích CV',
         candidates: 'Ứng viên',
         jobPostings: 'Đăng tuyển',
         analytics: 'Phân tích',
         settings: 'Cài đặt'
       },
+      subscription: 'Tổng quan Dashboard',
       collapse: 'Thu gọn thanh bên',
       expand: 'Mở rộng thanh bên',
       hoverHint: 'Di chuột vào đây để hiện thanh bên'

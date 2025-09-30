@@ -592,6 +592,116 @@ export const en: ContentTaxonomy = {
     }
   },
 
+  cvAnalysis: {
+    title: 'CV Analysis',
+    subtitle: 'Upload and analyze your CV to get detailed insights',
+    navigation: {
+      back: 'Back'
+    },
+    upload: {
+      title: 'Upload your CV files',
+      subtitle: 'Drag and drop your files here, or click to select',
+      selectFiles: 'Select Files',
+      uploadedFiles: 'Uploaded Files',
+      addMore: 'Add More',
+      dragDrop: 'Drop files here',
+      formats: 'Supported formats: PDF, DOC, DOCX',
+      maxSize: 'Maximum file size: 10MB',
+      maxFiles: 'Maximum files: 3',
+      errors: {
+        sizeTooLarge: 'File size exceeds limit',
+        invalidFormat: 'File type not supported',
+        tooManyFiles: 'Too many files selected',
+        uploadFailed: 'Upload failed'
+      }
+    },
+    preview: {
+      fileInfo: 'File Information',
+      actions: 'Actions',
+      startAnalysis: 'Start Analysis',
+      uploadAnother: 'Upload Another File',
+      zoom: 'Zoom',
+      rotate: 'Rotate',
+      fullscreen: 'Fullscreen',
+      download: 'Download'
+    },
+    progress: {
+      title: 'Analyzing Your CV',
+      stages: {
+        upload: {
+          label: 'Uploading',
+          description: 'Uploading your CV to our secure servers'
+        },
+        extract: {
+          label: 'Extracting',
+          description: 'Extracting text and data from your document'
+        },
+        analyze: {
+          label: 'Analyzing',
+          description: 'Analyzing your skills, experience, and qualifications'
+        },
+        complete: {
+          label: 'Complete',
+          description: 'Analysis completed successfully'
+        }
+      },
+      estimatedTime: 'Estimated time',
+      elapsed: 'Elapsed',
+      cancel: 'Cancel',
+      pause: 'Pause',
+      resume: 'Resume',
+      retry: 'Retry'
+    },
+    results: {
+      title: 'Analysis Results',
+      overview: {
+        title: 'Overview',
+        metrics: {
+          experience: 'Years of Experience',
+          skills: 'Skills Identified',
+          education: 'Education Level',
+          matchScore: 'Match Score'
+        },
+        insights: {
+          strengths: 'Strengths',
+          improvements: 'Areas for Improvement'
+        }
+      },
+      skills: {
+        title: 'Skills',
+        technical: 'Technical Skills',
+        soft: 'Soft Skills',
+        languages: 'Languages',
+        showMore: 'Show more',
+        showLess: 'Show less'
+      },
+      experience: {
+        title: 'Experience',
+        position: 'Position',
+        company: 'Company',
+        duration: 'Duration'
+      },
+      education: {
+        title: 'Education',
+        degree: 'Degree',
+        institution: 'Institution',
+        year: 'Year'
+      },
+      suggestions: {
+        title: 'Suggestions',
+        strengths: 'Strengths',
+        improvements: 'Improvement Areas'
+      },
+      export: {
+        pdf: 'Export PDF',
+        data: 'Export Data',
+        print: 'Print',
+        share: 'Share'
+      },
+      newAnalysis: 'New Analysis'
+    }
+  },
+
   common: {
     loading: 'Loading...',
     error: 'Error',

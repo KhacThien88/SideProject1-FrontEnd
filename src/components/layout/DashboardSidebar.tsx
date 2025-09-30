@@ -46,8 +46,8 @@ export const DashboardSidebar: React.FC = () => {
       key: 'resume-analyzer',
       label: t.dashboard.sidebar.navigation.resumeAnalyzer,
       icon: FileSearch,
-      href: '/dashboard/resume-analyzer',
-      isActive: currentPath === '/dashboard/resume-analyzer',
+      href: '/cv-analysis',
+      isActive: currentPath === '/cv-analysis',
       color: 'secondary'
     },
     {

@@ -592,6 +592,116 @@ export const vi: ContentTaxonomy = {
     }
   },
 
+  cvAnalysis: {
+    title: 'Phân tích CV',
+    subtitle: 'Tải lên và phân tích CV của bạn để nhận được thông tin chi tiết',
+    navigation: {
+      back: 'Quay lại'
+    },
+    upload: {
+      title: 'Tải lên các tệp CV của bạn',
+      subtitle: 'Kéo và thả tệp của bạn vào đây, hoặc nhấp để chọn',
+      selectFiles: 'Chọn tệp',
+      uploadedFiles: 'Tệp đã tải lên',
+      addMore: 'Thêm tệp',
+      dragDrop: 'Thả tệp vào đây',
+      formats: 'Định dạng hỗ trợ: PDF, DOC, DOCX',
+      maxSize: 'Kích thước tệp tối đa: 10MB',
+      maxFiles: 'Số tệp tối đa: 3',
+      errors: {
+        sizeTooLarge: 'Kích thước tệp vượt quá giới hạn',
+        invalidFormat: 'Định dạng tệp không được hỗ trợ',
+        tooManyFiles: 'Quá nhiều tệp được chọn',
+        uploadFailed: 'Tải lên thất bại'
+      }
+    },
+    preview: {
+      fileInfo: 'Thông tin tệp',
+      actions: 'Hành động',
+      startAnalysis: 'Bắt đầu phân tích',
+      uploadAnother: 'Tải lên tệp khác',
+      zoom: 'Phóng to/thu nhỏ',
+      rotate: 'Xoay',
+      fullscreen: 'Toàn màn hình',
+      download: 'Tải xuống'
+    },
+    progress: {
+      title: 'Đang phân tích CV của bạn',
+      stages: {
+        upload: {
+          label: 'Đang tải lên',
+          description: 'Tải CV của bạn lên máy chủ bảo mật của chúng tôi'
+        },
+        extract: {
+          label: 'Đang trích xuất',
+          description: 'Trích xuất văn bản và dữ liệu từ tài liệu của bạn'
+        },
+        analyze: {
+          label: 'Đang phân tích',
+          description: 'Phân tích kỹ năng, kinh nghiệm và bằng cấp của bạn'
+        },
+        complete: {
+          label: 'Hoàn thành',
+          description: 'Phân tích hoàn thành thành công'
+        }
+      },
+      estimatedTime: 'Thời gian ước tính',
+      elapsed: 'Đã trôi qua',
+      cancel: 'Hủy',
+      pause: 'Tạm dừng',
+      resume: 'Tiếp tục',
+      retry: 'Thử lại'
+    },
+    results: {
+      title: 'Kết quả phân tích',
+      overview: {
+        title: 'Tổng quan',
+        metrics: {
+          experience: 'Năm kinh nghiệm',
+          skills: 'Kỹ năng đã xác định',
+          education: 'Trình độ học vấn',
+          matchScore: 'Điểm phù hợp'
+        },
+        insights: {
+          strengths: 'Điểm mạnh',
+          improvements: 'Lĩnh vực cần cải thiện'
+        }
+      },
+      skills: {
+        title: 'Kỹ năng',
+        technical: 'Kỹ năng kỹ thuật',
+        soft: 'Kỹ năng mềm',
+        languages: 'Ngôn ngữ',
+        showMore: 'Hiển thị thêm',
+        showLess: 'Hiển thị ít hơn'
+      },
+      experience: {
+        title: 'Kinh nghiệm',
+        position: 'Vị trí',
+        company: 'Công ty',
+        duration: 'Thời gian'
+      },
+      education: {
+        title: 'Học vấn',
+        degree: 'Bằng cấp',
+        institution: 'Trường học',
+        year: 'Năm'
+      },
+      suggestions: {
+        title: 'Đề xuất',
+        strengths: 'Điểm mạnh',
+        improvements: 'Lĩnh vực cần cải thiện'
+      },
+      export: {
+        pdf: 'Xuất PDF',
+        data: 'Xuất dữ liệu',
+        print: 'In',
+        share: 'Chia sẻ'
+      },
+      newAnalysis: 'Phân tích mới'
+    }
+  },
+
   common: {
     loading: 'Đang tải...',
     error: 'Lỗi',

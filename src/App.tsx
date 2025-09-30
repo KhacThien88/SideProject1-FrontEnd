@@ -5,6 +5,7 @@ import { Login } from './pages/Auth/Login';
 import { Register } from './pages/Auth/Register';
 import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
+import { CVAnalysis } from './pages/CVAnalysis';
 
 function App() {
   // Determine initial route based on current URL
@@ -16,11 +17,13 @@ function App() {
     if (hash === '#register') return '/register';
     if (hash === '#login') return '/login';
     if (hash === '#dashboard') return '/dashboard';
+    if (hash === '#cv-analysis') return '/cv-analysis';
     
     // Check pathname
     if (path === '/register') return '/register';
     if (path === '/login') return '/login';
     if (path === '/dashboard') return '/dashboard';
+    if (path === '/cv-analysis') return '/cv-analysis';
     if (path === '/') return '/';
     
     // Default to login for auth pages
@@ -35,6 +38,7 @@ function App() {
           <Route path="/login" component={Login} exact />
           <Route path="/register" component={Register} exact />
           <Route path="/dashboard" component={Dashboard} exact />
+          <Route path="/cv-analysis" component={CVAnalysis} exact />
         </RouterProvider>
       </ToastProvider>
     </LanguageProvider>

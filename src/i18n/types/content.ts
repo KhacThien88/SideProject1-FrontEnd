@@ -240,17 +240,70 @@ export interface ContentTaxonomy {
     };
   };
 
+  // Pages - Dynamic content based on current page
+  pages: {
+    dashboard: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    cvAnalysis: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    candidates: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    jobPostings: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    analytics: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    settings: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+  };
+
   // Dashboard
   dashboard: {
     sidebar: {
       navigation: {
         dashboard: string;
-        resumeAnalyzer: string;
+        cvAnalysis: string;
         candidates: string;
         jobPostings: string;
         analytics: string;
         settings: string;
       };
+      subscription: string;
       collapse: string;
       expand: string;
       hoverHint: string;
@@ -400,117 +453,6 @@ export interface ContentTaxonomy {
       copyright: string;
       madeWith: string;
       vietnam: string;
-    };
-  };
-
-  // CV Analysis
-  cvAnalysis: {
-    title: string;
-    subtitle: string;
-    navigation: {
-      back: string;
-    };
-    upload: {
-      title: string;
-      subtitle: string;
-      selectFiles: string;
-      uploadedFiles: string;
-      addMore: string;
-      dragDrop: string;
-      formats: string;
-      maxSize: string;
-      maxFiles: string;
-      errors: {
-        sizeTooLarge: string;
-        invalidFormat: string;
-        tooManyFiles: string;
-        uploadFailed: string;
-      };
-    };
-    preview: {
-      fileInfo: string;
-      actions: string;
-      startAnalysis: string;
-      uploadAnother: string;
-      zoom: string;
-      rotate: string;
-      fullscreen: string;
-      download: string;
-    };
-    progress: {
-      title: string;
-      stages: {
-        upload: {
-          label: string;
-          description: string;
-        };
-        extract: {
-          label: string;
-          description: string;
-        };
-        analyze: {
-          label: string;
-          description: string;
-        };
-        complete: {
-          label: string;
-          description: string;
-        };
-      };
-      estimatedTime: string;
-      elapsed: string;
-      cancel: string;
-      pause: string;
-      resume: string;
-      retry: string;
-    };
-    results: {
-      title: string;
-      overview: {
-        title: string;
-        metrics: {
-          experience: string;
-          skills: string;
-          education: string;
-          matchScore: string;
-        };
-        insights: {
-          strengths: string;
-          improvements: string;
-        };
-      };
-      skills: {
-        title: string;
-        technical: string;
-        soft: string;
-        languages: string;
-        showMore: string;
-        showLess: string;
-      };
-      experience: {
-        title: string;
-        position: string;
-        company: string;
-        duration: string;
-      };
-      education: {
-        title: string;
-        degree: string;
-        institution: string;
-        year: string;
-      };
-      suggestions: {
-        title: string;
-        strengths: string;
-        improvements: string;
-      };
-      export: {
-        pdf: string;
-        data: string;
-        print: string;
-        share: string;
-      };
-      newAnalysis: string;
     };
   };
 

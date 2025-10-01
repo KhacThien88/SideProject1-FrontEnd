@@ -430,17 +430,70 @@ export const en: ContentTaxonomy = {
     }
   },
 
+  // Pages - Dynamic content based on current page
+  pages: {
+    dashboard: {
+      subscription: 'Dashboard Overview',
+      header: {
+        title: 'TalentFit',
+        subtitle: 'AI',
+        description: 'AI-Powered CV Analysis Platform'
+      }
+    },
+    cvAnalysis: {
+      subscription: 'CV Analysis',
+      header: {
+        title: 'CV',
+        subtitle: 'Analysis',
+        description: 'Upload and analyze your CV with AI-powered insights'
+      }
+    },
+    candidates: {
+      subscription: 'Candidate Management',
+      header: {
+        title: 'Candidate',
+        subtitle: 'Management',
+        description: 'Manage job profiles and requirements for resume analysis.'
+      }
+    },
+    jobPostings: {
+      subscription: 'Job Management',
+      header: {
+        title: 'Job',
+        subtitle: 'Postings',
+        description: 'Create and manage job postings and requirements'
+      }
+    },
+    analytics: {
+      subscription: 'Analytics Dashboard',
+      header: {
+        title: 'Analytics',
+        subtitle: 'Dashboard',
+        description: 'Comprehensive analytics and performance insights'
+      }
+    },
+    settings: {
+      subscription: 'System Settings',
+      header: {
+        title: 'System',
+        subtitle: 'Settings',
+        description: 'Configure system preferences and account settings'
+      }
+    }
+  },
+
   // Dashboard
   dashboard: {
     sidebar: {
       navigation: {
         dashboard: 'Dashboard',
-        resumeAnalyzer: 'Resume Analyzer',
+        cvAnalysis: 'CV Analysis',
         candidates: 'Candidates',
         jobPostings: 'Job Postings',
         analytics: 'Analytics',
         settings: 'Settings'
       },
+      subscription: 'Dashboard Overview',
       collapse: 'Collapse sidebar',
       expand: 'Expand sidebar',
       hoverHint: 'Hover here to show sidebar'
@@ -589,116 +642,6 @@ export const en: ContentTaxonomy = {
       copyright: 'All rights reserved.',
       madeWith: 'Made with',
       vietnam: 'in Vietnam'
-    }
-  },
-
-  cvAnalysis: {
-    title: 'CV Analysis',
-    subtitle: 'Upload and analyze your CV to get detailed insights',
-    navigation: {
-      back: 'Back'
-    },
-    upload: {
-      title: 'Upload your CV files',
-      subtitle: 'Drag and drop your files here, or click to select',
-      selectFiles: 'Select Files',
-      uploadedFiles: 'Uploaded Files',
-      addMore: 'Add More',
-      dragDrop: 'Drop files here',
-      formats: 'Supported formats: PDF, DOC, DOCX',
-      maxSize: 'Maximum file size: 10MB',
-      maxFiles: 'Maximum files: 3',
-      errors: {
-        sizeTooLarge: 'File size exceeds limit',
-        invalidFormat: 'File type not supported',
-        tooManyFiles: 'Too many files selected',
-        uploadFailed: 'Upload failed'
-      }
-    },
-    preview: {
-      fileInfo: 'File Information',
-      actions: 'Actions',
-      startAnalysis: 'Start Analysis',
-      uploadAnother: 'Upload Another File',
-      zoom: 'Zoom',
-      rotate: 'Rotate',
-      fullscreen: 'Fullscreen',
-      download: 'Download'
-    },
-    progress: {
-      title: 'Analyzing Your CV',
-      stages: {
-        upload: {
-          label: 'Uploading',
-          description: 'Uploading your CV to our secure servers'
-        },
-        extract: {
-          label: 'Extracting',
-          description: 'Extracting text and data from your document'
-        },
-        analyze: {
-          label: 'Analyzing',
-          description: 'Analyzing your skills, experience, and qualifications'
-        },
-        complete: {
-          label: 'Complete',
-          description: 'Analysis completed successfully'
-        }
-      },
-      estimatedTime: 'Estimated time',
-      elapsed: 'Elapsed',
-      cancel: 'Cancel',
-      pause: 'Pause',
-      resume: 'Resume',
-      retry: 'Retry'
-    },
-    results: {
-      title: 'Analysis Results',
-      overview: {
-        title: 'Overview',
-        metrics: {
-          experience: 'Years of Experience',
-          skills: 'Skills Identified',
-          education: 'Education Level',
-          matchScore: 'Match Score'
-        },
-        insights: {
-          strengths: 'Strengths',
-          improvements: 'Areas for Improvement'
-        }
-      },
-      skills: {
-        title: 'Skills',
-        technical: 'Technical Skills',
-        soft: 'Soft Skills',
-        languages: 'Languages',
-        showMore: 'Show more',
-        showLess: 'Show less'
-      },
-      experience: {
-        title: 'Experience',
-        position: 'Position',
-        company: 'Company',
-        duration: 'Duration'
-      },
-      education: {
-        title: 'Education',
-        degree: 'Degree',
-        institution: 'Institution',
-        year: 'Year'
-      },
-      suggestions: {
-        title: 'Suggestions',
-        strengths: 'Strengths',
-        improvements: 'Improvement Areas'
-      },
-      export: {
-        pdf: 'Export PDF',
-        data: 'Export Data',
-        print: 'Print',
-        share: 'Share'
-      },
-      newAnalysis: 'New Analysis'
     }
   },
 

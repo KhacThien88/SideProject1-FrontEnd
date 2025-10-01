@@ -33,6 +33,17 @@ export const DashboardSidebar: React.FC = () => {
   // Get current path to determine active item
   const currentPath = window.location.pathname;
 
+  // Get current page subscription based on path
+  const getCurrentPageSubscription = () => {
+    if (currentPath === '/dashboard') return t.pages.dashboard.subscription;
+    if (currentPath === '/cv-analysis') return t.pages.cvAnalysis.subscription;
+    if (currentPath === '/dashboard/candidates') return t.pages.candidates.subscription;
+    if (currentPath === '/dashboard/job-postings') return t.pages.jobPostings.subscription;
+    if (currentPath === '/dashboard/analytics') return t.pages.analytics.subscription;
+    if (currentPath === '/dashboard/settings') return t.pages.settings.subscription;
+    return t.pages.dashboard.subscription; // default
+  };
+
   const sidebarItems: SidebarItem[] = [
     {
       key: 'dashboard',
@@ -43,8 +54,8 @@ export const DashboardSidebar: React.FC = () => {
       color: 'primary'
     },
     {
-      key: 'resume-analyzer',
-      label: t.dashboard.sidebar.navigation.resumeAnalyzer,
+      key: 'cv-analysis',
+      label: t.dashboard.sidebar.navigation.cvAnalysis,
       icon: FileSearch,
       href: '/cv-analysis',
       isActive: currentPath === '/cv-analysis',
@@ -94,7 +105,7 @@ export const DashboardSidebar: React.FC = () => {
       // Khi thu gọn: ẩn luôn không hiện overlay
       setIsCollapsed(true);
       // Reset hover state với delay nhỏ để tránh flicker
-      setTimeout(() => setIsHovered(false), 500);
+      setTimeout(() => setIsHovered(false), 100);
     } else {
       // Khi mở rộng
       setIsCollapsed(false);
@@ -154,7 +165,7 @@ export const DashboardSidebar: React.FC = () => {
                       <span className="text-brand-gradient-primary bg-clip-text text-transparent">TalentFit</span>
                       <span className="text-neutral-800 ml-1">AI</span>
                     </span>
-                    <span className="text-sm text-neutral-500 font-medium truncate">Dashboard</span>
+                    <span className="text-sm text-neutral-500 font-medium truncate">{getCurrentPageSubscription()}</span>
                   </div>
                 </div>
                 

@@ -359,7 +359,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
             Company Size
           </label>
           <div className="flex flex-wrap gap-2">
-            {JOB_MATCHING_CONFIG.COMPANY_SIZES.map(({ value, label }) => (
+            {JOB_MATCHING_CONFIG.COMPANY_SIZES.map(({ value}) => (
               <Button
                 key={value}
                 variant={filters.companySize?.includes(value as any) ? "primary" : "tertiary"}

@@ -6,13 +6,39 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
+  - name: jnlp
+    image: jenkins/inbound-agent:4.14-1
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.9.1-debug
     command:
     - /busybox/cat
     tty: true
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+    volumeMounts:
+    - name: docker-config
+      mountPath: /kaniko/.docker
+  volumes:
+  - name: docker-config
+    secret:
+      secretName: docker-credentials
 '''
         }
+    }
+    options {
+        timeout(time: 30, unit: 'MINUTES')
     }
     environment {
         DOCKER_REGISTRY = 'jfrog-k8s-cmc.khacthienit.click'
@@ -24,19 +50,22 @@ spec:
         stage('Set Environment') {
             steps {
                 script {
-                    if (env.BRANCH_NAME ==~ /^dev.*$/) {
+                    echo "Branch name: ${env.BRANCH_NAME}"
+                    echo "Trimmed branch name: ${env.BRANCH_NAME.trim()}"
+                    if (env.BRANCH_NAME.trim().startsWith('dev')) {
                         env.DEPLOY_ENV = 'development'
-                    } else if (env.BRANCH_NAME ==~ /^test.*$/) {
+                    } else if (env.BRANCH_NAME.trim().startsWith('test')) {
                         env.DEPLOY_ENV = 'development'
-                    } else if (env.BRANCH_NAME ==~ /^prod.*$/) {
+                    } else if (env.BRANCH_NAME.trim().startsWith('prod')) {
                         env.DEPLOY_ENV = 'production'
                     } else {
-                        error "Branch ${env.BRANCH_NAME} does not match dev, test, or prod patterns"
+                        error "Pleases run pipeline in branch match with regex"
                     }
+                    echo "DEPLOY_ENV set to: ${env.DEPLOY_ENV}"
                 }
             }
         }
-        stage('Build and Push Docker Image') {
+        stage('Build và Push Docker Image') {
             when {
                 anyOf {
                     expression { env.DEPLOY_ENV == 'development' }
@@ -46,7 +75,10 @@ spec:
             steps {
                 container('kaniko') {
                     sh """
-                    /kaniko/executor --context . --destination ${DOCKER_IMAGE}:${COMMIT_ID}-${DEPLOY_ENV}
+                    echo "Current directory: \$(pwd)"
+                    ls -la
+                    echo "Building and pushing Docker image to ${DOCKER_IMAGE}:${COMMIT_ID}-${DEPLOY_ENV}"
+                    /kaniko/executor --context . --destination ${DOCKER_IMAGE}:${COMMIT_ID}-${DEPLOY_ENV} --verbosity debug
                     """
                 }
             }

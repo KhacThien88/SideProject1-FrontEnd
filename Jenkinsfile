@@ -16,23 +16,23 @@ spec:
       mountPath: /kaniko/.docker
   volumes:
   - name: docker-config
-    secret:
-      secretName: docker-credentials
-      items:
-      - key: config.json
-        path: config.json
+    emptyDir: {}
 '''
         }
     }
+
     options {
         timeout(time: 30, unit: 'MINUTES')
     }
+
     environment {
         DOCKER_REGISTRY = 'container-registry-k8s-cmc.khacthienit.click'
         DOCKER_IMAGE = "${DOCKER_REGISTRY}/sideproject1-frontend"
         COMMIT_ID = "${GIT_COMMIT.take(7)}"
         DEPLOY_ENV = 'production'
+        REGISTRY_CREDENTIALS = credentials('ci-registry-cred')
     }
+
     stages {
         stage('Set Environment') {
             steps {
@@ -40,6 +40,7 @@ spec:
                     echo "Branch name: ${env.BRANCH_NAME}"
                     echo "Trimmed branch name: ${env.BRANCH_NAME.trim()}"
                     def branch = env.BRANCH_NAME.trim()
+
                     if (branch.startsWith('dev')) {
                         env.DEPLOY_ENV = 'development'
                     } else if (branch.startsWith('test')) {
@@ -47,14 +48,15 @@ spec:
                     } else if (branch.startsWith('prod')) {
                         env.DEPLOY_ENV = 'production'
                     } else {
-                        error "Nhánh ${env.BRANCH_NAME} không khớp với mẫu dev, test hoặc prod"
+                        error "Build in branch match with regex"
                     }
+
                     echo "DEPLOY_ENV set to: ${env.DEPLOY_ENV}"
-                    // Kiểm tra lại biến môi trường
                     sh 'echo DEPLOY_ENV in shell: $DEPLOY_ENV'
                 }
             }
         }
+
         stage('Build và Push Docker Image') {
             when {
                 anyOf {
@@ -65,10 +67,18 @@ spec:
             steps {
                 container('kaniko') {
                     sh """
+                    echo "Tạo docker config.json cho Kaniko"
+                    mkdir -p /kaniko/.docker
+                    echo "{\\"auths\\":{\\"${DOCKER_REGISTRY}\\":{\\"username\\":\\"$REGISTRY_CREDENTIALS_USR\\",\\"password\\":\\"$REGISTRY_CREDENTIALS_PSW\\"}}}" > /kaniko/.docker/config.json
+                    cat /kaniko/.docker/config.json
+
                     echo "Current directory: \$(pwd)"
                     ls -la
+
                     echo "Building and pushing Docker image to ${DOCKER_IMAGE}:${COMMIT_ID}-${DEPLOY_ENV}"
-                    /kaniko/executor --context . --destination ${DOCKER_IMAGE}:${COMMIT_ID}-${DEPLOY_ENV} --verbosity debug
+                    /kaniko/executor --context . \
+                        --destination ${DOCKER_IMAGE}:${COMMIT_ID}-${DEPLOY_ENV} \
+                        --verbosity debug
                     """
                 }
             }

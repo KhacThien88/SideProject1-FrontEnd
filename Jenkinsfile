@@ -28,7 +28,7 @@ spec:
         DOCKER_REGISTRY = 'jfrog-k8s-cmc.khacthienit.click'
         DOCKER_IMAGE = "${DOCKER_REGISTRY}/SideProject1-FrontEnd"
         COMMIT_ID = "${GIT_COMMIT.take(7)}"
-        DEPLOY_ENV = ''
+        DEPLOY_ENV = 'production'
     }
     stages {
         stage('Set Environment') {
@@ -36,16 +36,19 @@ spec:
                 script {
                     echo "Branch name: ${env.BRANCH_NAME}"
                     echo "Trimmed branch name: ${env.BRANCH_NAME.trim()}"
-                    if (env.BRANCH_NAME.trim().startsWith('dev')) {
+                    def branch = env.BRANCH_NAME.trim()
+                    if (branch.startsWith('dev')) {
                         env.DEPLOY_ENV = 'development'
-                    } else if (env.BRANCH_NAME.trim().startsWith('test')) {
+                    } else if (branch.startsWith('test')) {
                         env.DEPLOY_ENV = 'development'
-                    } else if (env.BRANCH_NAME.trim().startsWith('prod')) {
+                    } else if (branch.startsWith('prod')) {
                         env.DEPLOY_ENV = 'production'
                     } else {
-                        error "Pleases run pipeline in branch match with regex"
+                        error "Nhánh ${env.BRANCH_NAME} không khớp với mẫu dev, test hoặc prod"
                     }
                     echo "DEPLOY_ENV set to: ${env.DEPLOY_ENV}"
+                    // Kiểm tra lại biến môi trường
+                    sh 'echo DEPLOY_ENV in shell: $DEPLOY_ENV'
                 }
             }
         }

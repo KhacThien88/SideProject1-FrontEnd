@@ -26,7 +26,7 @@ spec:
     }
 
     environment {
-        DOCKER_REGISTRY = 'container-registry-k8s-cmc.khacthienit.click'
+        DOCKER_REGISTRY = 'container-registry-k8s-cmc.khacthienit.click/sideproject1'
         DOCKER_IMAGE = "${DOCKER_REGISTRY}/sideproject1-frontend"
         COMMIT_ID = "${GIT_COMMIT.take(7)}"
         DEPLOY_ENV = 'production'

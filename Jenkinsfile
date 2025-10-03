@@ -6,27 +6,11 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: jnlp
-    image: jenkins/inbound-agent:4.14-1
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "256Mi"
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.9.1-debug
     command:
     - /busybox/cat
     tty: true
-    resources:
-      requests:
-        cpu: "500m"
-        memory: "512Mi"
-      limits:
-        cpu: "1"
-        memory: "1Gi"
     volumeMounts:
     - name: docker-config
       mountPath: /kaniko/.docker

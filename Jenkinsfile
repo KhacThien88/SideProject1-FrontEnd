@@ -25,7 +25,7 @@ spec:
         timeout(time: 30, unit: 'MINUTES')
     }
     environment {
-        DOCKER_REGISTRY = 'jfrog-k8s-cmc.khacthienit.click'
+        DOCKER_REGISTRY = 'container-registry-k8s-cmc.khacthienit.click'
         DOCKER_IMAGE = "${DOCKER_REGISTRY}/sideproject1-frontend"
         COMMIT_ID = "${GIT_COMMIT.take(7)}"
         DEPLOY_ENV = 'production'

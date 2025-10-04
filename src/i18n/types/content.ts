@@ -158,19 +158,6 @@ export interface ContentTaxonomy {
       noAccount: string;
       signUp: string;
       or: string;
-      toast: {
-        emailRequired: string;
-        emailMissingAt: string;
-        emailStartsWithAt: string;
-        emailMissingDomain: string;
-        emailMissingTLD: string;
-        emailInvalid: string;
-        passwordRequired: string;
-        loginSuccess: string;
-        invalidCredentials: string;
-        networkError: string;
-        loginFailed: string;
-      };
       hero: {
         sections: {
           name: string;
@@ -207,37 +194,23 @@ export interface ContentTaxonomy {
       registering: string;
       hasAccount: string;
       loginLink: string;
-      toast: {
-        // Validation messages
-        fullNameRequired: string;
-        fullNameMinLength: string;
-        emailRequired: string;
-        emailMissingAt: string;
-        emailStartsWithAt: string;
-        emailMissingDomain: string;
-        emailMissingTLD: string;
-        emailInvalid: string;
-        passwordRequired: string;
-        passwordMinLength: string;
-        confirmPasswordRequired: string;
-        confirmPasswordMismatch: string;
-        phoneInvalid: string;
-        termsRequired: string;
-        
-        // Success messages
-        registerSuccess: string;
-        registerSuccessSubtitle: string;
-        
-        // Error messages
-        registerFailed: string;
-        emailExists: string;
-        emailExistsSubtitle: string;
-        networkError: string;
-        networkErrorSubtitle: string;
-        generalError: string;
-        generalErrorSubtitle: string;
-      };
     };
+    forgotPassword: {
+      title: string;
+      subtitle: string;
+      sendResetLink: string;
+      sending: string;
+      backToLogin: string;
+      successTitle: string;
+      successMessage: string;
+      checkEmailMessage: string;
+      emailSentTo: string;
+      errorMessage: string;
+    };
+    googleSigningIn: string;
+    continueWithGoogle: string;
+    googleSignInSuccess: string;
+    logoutSuccess: string;
   };
 
   // Pages - Dynamic content based on current page
@@ -473,5 +446,73 @@ export interface ContentTaxonomy {
     open: string;
     viewMore: string;
     viewLess: string;
+  };
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: string;
+    strength: string;
+    strengthLevels: {
+      weak: string;
+      medium: string;
+      strong: string;
+    };
+    requirements: {
+      minLength: string;
+      uppercase: string;
+      lowercase: string;
+      number: string;
+      special: string;
+    };
+  };
+
+  // Validation messages for all form validation with toast
+  validation: {
+    // Email validation
+    emailRequired: string;
+    emailInvalid: string;
+    emailMissingAt: string;
+    emailStartsWithAt: string;
+    emailMissingDomain: string;
+    emailMissingTLD: string;
+    
+    // Password validation
+    passwordRequired: string;
+    passwordMinLength8: string;
+    passwordMissingUppercase: string;
+    passwordMissingLowercase: string;
+    passwordMissingNumber: string;
+    passwordMissingSpecial: string;
+    
+    // Confirm password validation
+    confirmPasswordRequired: string;
+    confirmPasswordMismatch: string;
+    
+    // Full name validation
+    fullNameRequired: string;
+    fullNameTooShort: string;
+    fullNameTooLong: string;
+    
+    // Phone validation
+    phoneInvalid: string;
+    
+    // Accept terms validation
+    acceptTermsRequired: string;
+    
+    // Success messages
+    loginSuccess: string;
+    registerSuccess: string;
+    welcomeMessage: string;
+    
+    // Error messages
+    invalidCredentials: string;
+    networkError: string;
+    loginFailed: string;
+    registerFailed: string;
+    emailExists: string;
+    emailExistsSubtitle: string;
+    networkErrorSubtitle: string;
+    generalError: string;
+    validationFailed: string;
   };
 }

@@ -76,7 +76,7 @@ export const LoginHero: React.FC = () => {
       <div className="absolute bottom-32 left-16 w-2 h-2 bg-white/25 rounded-full animate-bounce delay-1000"></div>
       
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 py-24 text-white">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 py-2 text-white">
         <div className="w-full flex flex-col items-center">
           {/* Main headline */}
           <h1 className="text-4xl font-bold leading-tight">

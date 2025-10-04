@@ -305,7 +305,7 @@ export const en: ContentTaxonomy = {
       password: 'Password',
       passwordPlaceholder: 'Enter your password',
       passwordRequired: 'Password is required',
-      passwordMinLength: 'Password must be at least 6 characters',
+      passwordMinLength: 'Password must be at least 8 characters',
       rememberMe: 'Remember me',
       forgotPassword: 'Forgot password?',
       loginButton: 'Sign In',
@@ -314,19 +314,6 @@ export const en: ContentTaxonomy = {
       noAccount: "Don't have an account?",
       signUp: 'Sign up',
       or: 'or',
-      toast: {
-        emailRequired: 'Please enter email',
-        emailMissingAt: 'missing "@" character',
-        emailStartsWithAt: 'Email cannot start with "@"',
-        emailMissingDomain: 'missing domain after "@"',
-        emailMissingTLD: 'Email missing domain extension (e.g., .com, .net)',
-        emailInvalid: 'Invalid email format',
-        passwordRequired: 'Please enter password',
-        loginSuccess: 'Login successful!',
-        invalidCredentials: 'Email or password is incorrect',
-        networkError: 'Network connection error. Please try again.',
-        loginFailed: 'Login failed. Please try again.'
-      },
       hero: {
         sections: [
           {
@@ -382,12 +369,12 @@ export const en: ContentTaxonomy = {
       emailPlaceholder: 'Enter your email address',
       phone: 'Phone Number',
       phonePlaceholder: 'Enter your phone number',
-      optional: '(optional)',
+      optional: 'optional',
       role: 'Role',
       candidate: 'Candidate',
       recruiter: 'Recruiter',
       password: 'Password',
-      passwordPlaceholder: 'Enter password (at least 6 characters)',
+      passwordPlaceholder: 'Enter your password',
       confirmPassword: 'Confirm Password',
       confirmPasswordPlaceholder: 'Re-enter your password',
       acceptTerms: 'I agree with',
@@ -396,38 +383,92 @@ export const en: ContentTaxonomy = {
       registerButton: 'Sign Up',
       registering: 'Signing up...',
       hasAccount: 'Already have an account?',
-      loginLink: 'Sign in now',
-      toast: {
-        // Validation messages
-        fullNameRequired: 'Please enter your full name',
-        fullNameMinLength: 'Please enter full name (at least 2 characters)',
-        emailRequired: 'Please enter email',
-        emailMissingAt: 'missing "@" character',
-        emailStartsWithAt: 'Email cannot start with "@"',
-        emailMissingDomain: 'missing domain after "@"',
-        emailMissingTLD: 'Email missing domain (e.g., .com, .org)',
-        emailInvalid: 'Invalid email format',
-        passwordRequired: 'Please enter password',
-        passwordMinLength: 'Password must be at least 6 characters',
-        confirmPasswordRequired: 'Please confirm password',
-        confirmPasswordMismatch: 'Password confirmation does not match',
-        phoneInvalid: 'Invalid phone number',
-        termsRequired: 'Please agree to the terms of service',
-        
-        // Success messages
-        registerSuccess: 'Registration successful!',
-        registerSuccessSubtitle: 'Welcome to TalentFit AI',
-        
-        // Error messages
-        registerFailed: 'Registration failed',
-        emailExists: 'Email already exists',
-        emailExistsSubtitle: 'Please choose a different email',
-        networkError: 'Network connection error',
-        networkErrorSubtitle: 'Please try again later',
-        generalError: 'Registration failed',
-        generalErrorSubtitle: 'Please try again later'
-      }
+      loginLink: 'Sign in now'
+    },
+    forgotPassword: {
+      title: 'Forgot Password',
+      subtitle: 'Enter your email and we will send you a password reset link',
+      sendResetLink: 'Send Reset Link',
+      sending: 'Sending...',
+      backToLogin: 'Back to Login',
+      successTitle: 'Email Sent',
+      successMessage: 'Password reset link has been sent',
+      checkEmailMessage: 'Please check your email to reset your password. The link will expire in 1 hour.',
+      emailSentTo: 'Email sent to',
+      errorMessage: 'Unable to send password reset email'
+    },
+    googleSigningIn: 'Signing in...',
+    continueWithGoogle: 'Continue with Google',
+    googleSignInSuccess: 'Google sign-in successful!',
+    logoutSuccess: 'Logged out successfully'
+  },
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: 'Password Requirements',
+    strength: 'Strength:',
+    strengthLevels: {
+      weak: 'Weak',
+      medium: 'Medium',
+      strong: 'Strong'
+    },
+    requirements: {
+      minLength: 'At least 8 characters',
+      uppercase: 'At least 1 uppercase letter (A-Z)',
+      lowercase: 'At least 1 lowercase letter (a-z)',
+      number: 'At least 1 number (0-9)',
+      special: 'At least 1 special character (@, #, $, etc.)'
     }
+  },
+
+  // Validation messages for all form validation with toast
+  validation: {
+    // Email validation
+    emailRequired: 'Please enter email',
+    emailInvalid: 'Invalid email format', 
+    emailMissingAt: 'missing "@" character',
+    emailStartsWithAt: 'Email cannot start with "@"',
+    emailMissingDomain: 'missing domain after "@"',
+    emailMissingTLD: 'Email missing domain extension (e.g., .com, .net)',
+    
+    // Password validation
+    passwordRequired: 'Please enter password',
+    passwordMinLength8: 'Password must be at least 8 characters',
+    passwordMissingUppercase: 'Password missing uppercase letter',
+    passwordMissingLowercase: 'Password missing lowercase letter', 
+    passwordMissingNumber: 'Password missing number',
+    passwordMissingSpecial: 'Password missing special character',
+    
+    // Confirm password validation
+    confirmPasswordRequired: 'Please confirm password',
+    confirmPasswordMismatch: 'Password confirmation does not match',
+    
+    // Full name validation
+    fullNameRequired: 'Please enter your full name',
+    fullNameTooShort: 'Name too short (at least 2 characters)',
+    fullNameTooLong: 'Name too long (maximum 50 characters)',
+    
+    // Phone validation
+    phoneInvalid: 'Invalid phone number',
+    
+    // Accept terms validation
+    acceptTermsRequired: 'Please agree to the terms of service',
+    
+    // Success messages
+    loginSuccess: 'Login successful!',
+    registerSuccess: 'Registration successful!',
+    welcomeMessage: 'Welcome to TalentFit AI',
+    
+    // Error messages
+    invalidCredentials: 'Email or password is incorrect',
+    networkError: 'Network connection error. Please try again.',
+    loginFailed: 'Login failed. Please try again.',
+    registerFailed: 'Registration failed',
+    emailExists: 'Email already exists',
+    emailExistsSubtitle: 'Please choose a different email',
+    networkErrorSubtitle: 'Network connection error',
+    generalError: 'Please try again later',
+    validationFailed: 'Please check your information',
   },
 
   // Pages - Dynamic content based on current page

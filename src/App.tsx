@@ -1,8 +1,10 @@
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { AuthProvider } from './contexts/auth/AuthContext';
 import { RouterProvider, Route } from './components/Router';
 import { Login } from './pages/Auth/Login';
 import { Register } from './pages/Auth/Register';
+import { ForgotPassword } from './pages/Auth/ForgotPassword';
 import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
@@ -17,6 +19,7 @@ function App() {
     // Check hash first for compatibility
     if (hash === '#register') return '/register';
     if (hash === '#login') return '/login';
+    if (hash === '#forgot-password') return '/forgot-password';
     if (hash === '#dashboard') return '/dashboard';
     if (hash === '#cv-analysis') return '/cv-analysis';
     if (hash.startsWith('#job/')) return hash.replace('#', '');
@@ -24,6 +27,7 @@ function App() {
     // Check pathname
     if (path === '/register') return '/register';
     if (path === '/login') return '/login';
+    if (path === '/forgot-password') return '/forgot-password';
     if (path === '/dashboard') return '/dashboard';
     if (path === '/cv-analysis') return '/cv-analysis';
     if (path.startsWith('/job/')) return path;
@@ -36,14 +40,17 @@ function App() {
   return (
     <LanguageProvider>
       <ToastProvider>
-        <RouterProvider initialRoute={getInitialRoute()}>
-          <Route path="/" component={Landing} exact />
-          <Route path="/login" component={Login} exact />
-          <Route path="/register" component={Register} exact />
-          <Route path="/dashboard" component={Dashboard} exact />
-          <Route path="/cv-analysis" component={CVAnalysis} exact />
-          <Route path="/job/" component={JobDetailPage} exact={false} />
-        </RouterProvider>
+        <AuthProvider>
+          <RouterProvider initialRoute={getInitialRoute()}>
+            <Route path="/" component={Landing} exact />
+            <Route path="/login" component={Login} exact />
+            <Route path="/register" component={Register} exact />
+            <Route path="/forgot-password" component={ForgotPassword} exact />
+            <Route path="/dashboard" component={Dashboard} exact />
+            <Route path="/cv-analysis" component={CVAnalysis} exact />
+            <Route path="/job/" component={JobDetailPage} exact={false} />
+          </RouterProvider>
+        </AuthProvider>
       </ToastProvider>
     </LanguageProvider>
   );

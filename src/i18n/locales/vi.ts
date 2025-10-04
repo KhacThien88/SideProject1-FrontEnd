@@ -312,19 +312,6 @@ export const vi: ContentTaxonomy = {
       noAccount: 'Chưa có tài khoản?',
       signUp: 'Đăng ký',
       or: 'hoặc',
-      toast: {
-        emailRequired: 'Vui lòng nhập email',
-        emailMissingAt: 'thiếu ký tự "@"',
-        emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
-        emailMissingDomain: 'thiếu tên miền sau "@"',
-        emailMissingTLD: 'Email thiếu tên miền (ví dụ: .com, .vn)',
-        emailInvalid: 'Định dạng email không hợp lệ',
-        passwordRequired: 'Vui lòng nhập mật khẩu',
-        loginSuccess: 'Đăng nhập thành công!',
-        invalidCredentials: 'Email hoặc mật khẩu không chính xác',
-        networkError: 'Lỗi kết nối mạng. Vui lòng thử lại.',
-        loginFailed: 'Đăng nhập thất bại. Vui lòng thử lại.'
-      },
       hero: {
         sections: [
           {
@@ -379,7 +366,7 @@ export const vi: ContentTaxonomy = {
       email: 'Địa chỉ Email',
       emailPlaceholder: 'Nhập địa chỉ email',
       phone: 'Số điện thoại',
-      optional: '(tùy chọn)',
+      optional: 'tùy chọn',
       phonePlaceholder: 'Nhập số điện thoại',
       role: 'Vai trò',
       candidate: 'Ứng viên',
@@ -394,38 +381,92 @@ export const vi: ContentTaxonomy = {
       registerButton: 'Đăng ký',
       registering: 'Đang đăng ký...',
       hasAccount: 'Đã có tài khoản?',
-      loginLink: 'Đăng nhập ngay',
-      toast: {
-        // Validation messages
-        fullNameRequired: 'Vui lòng nhập họ và tên',
-        fullNameMinLength: 'Vui lòng nhập họ tên (ít nhất 2 ký tự)',
-        emailRequired: 'Vui lòng nhập email',
-        emailMissingAt: 'thiếu ký tự "@"',
-        emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
-        emailMissingDomain: 'thiếu tên miền sau "@"',
-        emailMissingTLD: 'Email thiếu tên miền (ví dụ: .com, .vn)',
-        emailInvalid: 'Định dạng email không hợp lệ',
-        passwordRequired: 'Vui lòng nhập mật khẩu',
-        passwordMinLength: 'Mật khẩu phải có ít nhất 6 ký tự',
-        confirmPasswordRequired: 'Vui lòng xác nhận mật khẩu',
-        confirmPasswordMismatch: 'Mật khẩu xác nhận không khớp',
-        phoneInvalid: 'Số điện thoại không hợp lệ',
-        termsRequired: 'Vui lòng đồng ý với điều khoản sử dụng',
-        
-        // Success messages
-        registerSuccess: 'Đăng ký thành công!',
-        registerSuccessSubtitle: 'Chào mừng bạn đến với TalentFit AI',
-        
-        // Error messages
-        registerFailed: 'Đăng ký thất bại',
-        emailExists: 'Email đã được sử dụng',
-        emailExistsSubtitle: 'Vui lòng chọn email khác',
-        networkError: 'Lỗi kết nối mạng',
-        networkErrorSubtitle: 'Vui lòng thử lại sau',
-        generalError: 'Đăng ký thất bại',
-        generalErrorSubtitle: 'Vui lòng thử lại sau'
-      }
+      loginLink: 'Đăng nhập ngay'
+    },
+    forgotPassword: {
+      title: 'Quên mật khẩu',
+      subtitle: 'Nhập email của bạn và chúng tôi sẽ gửi link đặt lại mật khẩu',
+      sendResetLink: 'Gửi link đặt lại mật khẩu',
+      sending: 'Đang gửi...',
+      backToLogin: 'Quay lại đăng nhập',
+      successTitle: 'Email đã được gửi',
+      successMessage: 'Link đặt lại mật khẩu đã được gửi',
+      checkEmailMessage: 'Vui lòng kiểm tra email của bạn để đặt lại mật khẩu. Link sẽ hết hạn sau 1 giờ.',
+      emailSentTo: 'Email đã gửi đến',
+      errorMessage: 'Không thể gửi email đặt lại mật khẩu'
+    },
+    googleSigningIn: 'Đang đăng nhập...',
+    continueWithGoogle: 'Đăng nhập với Google',
+    googleSignInSuccess: 'Đăng nhập Google thành công!',
+    logoutSuccess: 'Đăng xuất thành công'
+  },
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: 'Yêu cầu mật khẩu',
+    strength: 'Độ mạnh:',
+    strengthLevels: {
+      weak: 'Yếu',
+      medium: 'Trung bình', 
+      strong: 'Mạnh'
+    },
+    requirements: {
+      minLength: 'Tối thiểu 8 ký tự',
+      uppercase: 'Có ít nhất 1 chữ in hoa (A-Z)',
+      lowercase: 'Có ít nhất 1 chữ thường (a-z)',
+      number: 'Có ít nhất 1 số (0-9)',
+      special: 'Có ít nhất 1 ký tự đặc biệt (@, #, $, etc.)'
     }
+  },
+
+  // Validation messages for all form validation with toast
+  validation: {
+    // Email validation
+    emailRequired: 'Vui lòng nhập email',
+    emailInvalid: 'Định dạng email không hợp lệ',
+    emailMissingAt: 'Email thiếu ký tự "@"',
+    emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
+    emailMissingDomain: 'Email thiếu tên miền sau "@"',
+    emailMissingTLD: 'Email thiếu phần mở rộng (ví dụ: .com, .vn)',
+    
+    // Password validation
+    passwordRequired: 'Vui lòng nhập mật khẩu',
+    passwordMinLength8: 'Mật khẩu phải có ít nhất 8 ký tự',
+    passwordMissingUppercase: 'Mật khẩu thiếu chữ cái viết hoa',
+    passwordMissingLowercase: 'Mật khẩu thiếu chữ cái viết thường',
+    passwordMissingNumber: 'Mật khẩu thiếu chữ số',
+    passwordMissingSpecial: 'Mật khẩu thiếu ký tự đặc biệt',
+    
+    // Confirm password validation
+    confirmPasswordRequired: 'Vui lòng xác nhận mật khẩu',
+    confirmPasswordMismatch: 'Mật khẩu xác nhận không trùng khớp',
+    
+    // Full name validation
+    fullNameRequired: 'Vui lòng nhập họ và tên',
+    fullNameTooShort: 'Họ tên quá ngắn (ít nhất 2 ký tự)',
+    fullNameTooLong: 'Họ tên quá dài (tối đa 50 ký tự)',
+    
+    // Phone validation
+    phoneInvalid: 'Định dạng số điện thoại không đúng',
+    
+    // Accept terms validation
+    acceptTermsRequired: 'Vui lòng đồng ý với điều khoản sử dụng',
+    
+    // Success messages
+    loginSuccess: 'Đăng nhập thành công!',
+    registerSuccess: 'Đăng ký thành công!',
+    welcomeMessage: 'Chào mừng bạn đến với TalentFit AI',
+    
+    // Error messages  
+    invalidCredentials: 'Email hoặc mật khẩu không chính xác',
+    networkError: 'Lỗi kết nối mạng. Vui lòng thử lại.',
+    loginFailed: 'Đăng nhập thất bại. Vui lòng thử lại.',
+    registerFailed: 'Đăng ký thất bại',
+    emailExists: 'Email đã được sử dụng',
+    emailExistsSubtitle: 'Vui lòng chọn email khác',
+    networkErrorSubtitle: 'Lỗi kết nối mạng',
+    generalError: 'Vui lòng thử lại sau',
+    validationFailed: 'Có lỗi xảy ra, vui lòng kiểm tra lại thông tin'
   },
 
 

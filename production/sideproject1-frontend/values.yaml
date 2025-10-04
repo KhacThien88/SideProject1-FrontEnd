@@ -1,0 +1,55 @@
+image:
+  repository: container-registry-k8s-cmc.khacthienit.click/sideproject1/sideproject1-frontend
+  tag:
+imagePullSecrets:
+- name: dockerhub-secret
+deployments:
+- name: sideproject1-frontend
+  replicasCount: 1
+  # nodeSelector:
+  #   kubernetes.io/arch: arm64
+  prometheusEnabled: false
+  service:
+    name: sideproject1-frontend
+    HTTPPort: 80
+    health:
+      live: "/"
+      ready: "/"
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      failureThreshold: 5
+      timeoutSeconds: 3
+env:
+  ENV: prod
+  TZ: Asia/Ho_Chi_Minh
+ingress:
+  enabled: true
+  plugins: []
+  ingressClassName: nginx
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/ssl-passthrough: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    cert-manager.io/cluster-issuer: letsencrypt-dns
+  tls:
+  - hosts:
+      - sideproject1.khacthienit.click
+    secretName: sideproject1-fe
+  rules:
+  - host: sideproject1.khacthienit.click
+    paths:
+    - path: /sideproject1-frontend
+      servicePort: 80
+      serviceName: sideproject1-frontend
+resources:
+  # requests:
+  #   cpu: "500m"
+  #   memory: "1Gi"
+  limits:
+    cpu: "760m"
+    memory: "1200Mi"
+infisical:
+  enabled: false
+

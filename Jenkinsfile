@@ -50,9 +50,6 @@ spec:
                     } else {
                         error "Build in branch match with regex"
                     }
-
-                    echo "DEPLOY_ENV set to: ${env.DEPLOY_ENV}"
-                    sh 'echo DEPLOY_ENV in shell: $DEPLOY_ENV'
                 }
             }
         }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, BarChart3, TrendingUp, Target } from 'lucide-react';
+import { Zap, BarChart3, Target } from 'lucide-react';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { cn } from '../../../utils/cn';
 

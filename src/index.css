@@ -121,6 +121,10 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: none !important;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -155,9 +159,8 @@ body {
 
 /* Enhanced focus styles */
 *:focus {
-  outline: 2px solid #2368FE;
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: none;
+  outline-offset: 0;
 }
 
 /* Enhanced selection styles */
@@ -364,9 +367,59 @@ html {
   }
 }
 
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(35, 104, 254, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(35, 104, 254, 0.6), 0 0 30px rgba(18, 182, 105, 0.3);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Enhanced Animation Classes */
 .animate-fade-in {
   animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-text-glow {
+  animation: textGlow 2s ease-in-out infinite;
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .animate-bounce {
@@ -535,8 +588,8 @@ input, textarea, select {
 }
 
 input:focus, textarea:focus, select:focus {
-  outline: 2px solid #2368FE;
-  outline-offset: 2px;
+  outline: none;
+  outline-offset: 0;
   border-color: #2368FE;
 }
 
@@ -767,7 +820,7 @@ input:focus, textarea:focus, select:focus {
 
 .focus-ring:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(35, 104, 254, 0.3);
+  box-shadow: none;
 }
 
 /* Enhanced Accessibility */

@@ -167,21 +167,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
   return (
     <div className="w-full">
-      {/* Header */}
-      <div className="text-center mb-6">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent">
-            {getContent('auth.register.title')}
-          </h1>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-500 via-secondary-400/80 via-primary-500/80 to-primary-500 bg-clip-text text-transparent">
-            {getContent('auth.register.subtitle')}
-          </h1>
-        </div>
-        <p className="text-sm font-medium text-neutral-600">
-          {getContent('auth.register.welcomeSubtitle')}
-        </p>
-      </div>
-
       <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name and Email Row */}

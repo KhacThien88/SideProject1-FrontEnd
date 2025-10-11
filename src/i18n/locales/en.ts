@@ -427,6 +427,35 @@ export const en: ContentTaxonomy = {
         generalError: 'Registration failed',
         generalErrorSubtitle: 'Please try again later'
       }
+    },
+    verifyOTP: {
+      title: 'Verify your email',
+      subtitle: 'Enter the 6-digit code we sent to',
+      emailLabel: 'Email',
+      codeLabel: 'Verification code',
+      codePlaceholder: 'Enter 6-digit code',
+      timerLabel: 'Code expires in',
+      verifyButton: 'Verify',
+      verifyingButton: 'Verifying...',
+      resendButton: 'Resend',
+      resendCountdown: 'Resend in {seconds}s',
+      resendAvailable: 'Resend ({count} left)',
+      errorMessage: 'Invalid code. Please try again.',
+      successMessage: 'Verification successful',
+      successSubtitle: 'Redirecting to sign in...',
+      toast: {
+        verificationSuccess: 'Verification successful!',
+        verificationSuccessSubtitle: 'Your email has been verified',
+        verificationFailed: 'Verification failed',
+        verificationFailedSubtitle: 'Please check your code and try again',
+        resendSuccess: 'New code sent',
+        resendSuccessSubtitle: 'Please check your email',
+        invalidCode: 'Invalid verification code',
+        codeExpired: 'Code has expired',
+        tooManyAttempts: 'Too many failed attempts',
+        networkError: 'Network connection error',
+        networkErrorSubtitle: 'Please try again later'
+      }
     }
   },
 

@@ -425,6 +425,35 @@ export const vi: ContentTaxonomy = {
         generalError: 'Đăng ký thất bại',
         generalErrorSubtitle: 'Vui lòng thử lại sau'
       }
+    },
+    verifyOTP: {
+      title: 'Xác thực email',
+      subtitle: 'Nhập mã 6 chữ số chúng tôi đã gửi đến',
+      emailLabel: 'Email',
+      codeLabel: 'Mã xác thực',
+      codePlaceholder: 'Nhập mã 6 chữ số',
+      timerLabel: 'Mã hết hạn sau',
+      verifyButton: 'Xác thực',
+      verifyingButton: 'Đang xác thực...',
+      resendButton: 'Gửi lại',
+      resendCountdown: 'Gửi lại sau {seconds}s',
+      resendAvailable: 'Gửi lại ({count} lần còn lại)',
+      errorMessage: 'Mã không hợp lệ. Vui lòng thử lại.',
+      successMessage: 'Xác thực thành công',
+      successSubtitle: 'Đang chuyển hướng đến trang đăng nhập...',
+      toast: {
+        verificationSuccess: 'Xác thực thành công!',
+        verificationSuccessSubtitle: 'Email của bạn đã được xác thực',
+        verificationFailed: 'Xác thực thất bại',
+        verificationFailedSubtitle: 'Vui lòng kiểm tra lại mã và thử lại',
+        resendSuccess: 'Mã mới đã được gửi',
+        resendSuccessSubtitle: 'Vui lòng kiểm tra email của bạn',
+        invalidCode: 'Mã xác thực không đúng',
+        codeExpired: 'Mã đã hết hạn',
+        tooManyAttempts: 'Quá nhiều lần thử sai',
+        networkError: 'Lỗi kết nối mạng',
+        networkErrorSubtitle: 'Vui lòng thử lại sau'
+      }
     }
   },
 

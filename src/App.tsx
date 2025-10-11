@@ -2,7 +2,7 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { RouterProvider, Route } from './components/Router';
 import { Login } from './pages/Auth/Login';
-import { Register } from './pages/Auth/Register';
+import { Register, VerifyOTP } from './pages/Auth/Register';
 import { Landing } from './pages/Landing';
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
     if (path === '/register') return '/register';
     if (path === '/login') return '/login';
     if (path === '/') return '/';
+    if (path === '/verify-otp') return '/verify-otp';
     
     // Default to login for auth pages
     return '/login';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/" component={Landing} exact />
           <Route path="/login" component={Login} exact />
           <Route path="/register" component={Register} exact />
+          <Route path="/verify-otp" component={VerifyOTP} exact />
         </RouterProvider>
       </ToastProvider>
     </LanguageProvider>

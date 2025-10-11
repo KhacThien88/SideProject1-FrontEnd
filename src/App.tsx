@@ -9,6 +9,8 @@ import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
 import { JobDetailPage } from './pages/JobMatching/JobDetailPage';
+import { CandidateManagement } from './pages/Candidates';
+import { Settings } from './pages/Settings';
 
 function App() {
   // Determine initial route based on current URL
@@ -22,6 +24,8 @@ function App() {
     if (hash === '#forgot-password') return '/forgot-password';
     if (hash === '#dashboard') return '/dashboard';
     if (hash === '#cv-analysis') return '/cv-analysis';
+    if (hash === '#candidates') return '/dashboard/candidates';
+    if (hash === '#settings') return '/dashboard/settings';
     if (hash.startsWith('#job/')) return hash.replace('#', '');
     
     // Check pathname
@@ -30,6 +34,8 @@ function App() {
     if (path === '/forgot-password') return '/forgot-password';
     if (path === '/dashboard') return '/dashboard';
     if (path === '/cv-analysis') return '/cv-analysis';
+    if (path === '/dashboard/candidates') return '/dashboard/candidates';
+    if (path === '/dashboard/settings') return '/dashboard/settings';
     if (path.startsWith('/job/')) return path;
     if (path === '/') return '/';
     
@@ -48,6 +54,8 @@ function App() {
             <Route path="/forgot-password" component={ForgotPassword} exact />
             <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/cv-analysis" component={CVAnalysis} exact />
+            <Route path="/dashboard/candidates" component={CandidateManagement} exact />
+            <Route path="/dashboard/settings" component={Settings} exact />
             <Route path="/job/" component={JobDetailPage} exact={false} />
           </RouterProvider>
         </AuthProvider>

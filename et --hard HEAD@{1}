@@ -1,0 +1,66 @@
+[33md7686bc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mregister-page[m[33m, [m[1;31morigin/register-page[m[33m)[m HEAD@{0}: pull origin register-page: Fast-forward
+[33m9926e11[m HEAD@{1}: checkout: moving from auth to register-page
+[33mf987ddd[m[33m ([m[1;31morigin/auth[m[33m, [m[1;32mcandidate-page[m[33m, [m[1;32mauth[m[33m)[m HEAD@{2}: checkout: moving from candidate-page to auth
+[33mf987ddd[m[33m ([m[1;31morigin/auth[m[33m, [m[1;32mcandidate-page[m[33m, [m[1;32mauth[m[33m)[m HEAD@{3}: checkout: moving from auth to candidate-page
+[33mf987ddd[m[33m ([m[1;31morigin/auth[m[33m, [m[1;32mcandidate-page[m[33m, [m[1;32mauth[m[33m)[m HEAD@{4}: commit: build: Forgot pass + update: Login, Register page toastify, error message, i18n
+[33mb464627[m[33m ([m[1;31morigin/cv-analysis-page[m[33m, [m[1;32mcv-analysis-page[m[33m)[m HEAD@{5}: checkout: moving from cv-analysis-page to auth
+[33mb464627[m[33m ([m[1;31morigin/cv-analysis-page[m[33m, [m[1;32mcv-analysis-page[m[33m)[m HEAD@{6}: commit: update: upload CV UI & build: CV Analýis result UI, Recommenđe job UI, Job detail UI
+[33m37cac8c[m HEAD@{7}: checkout: moving from resume-analyzer-page to cv-analysis-page
+[33m37cac8c[m HEAD@{8}: commit: update: upload CV UI & build: CV Analýis result UI, Recommenđe job UI, Job detail UI
+[33md8c77fa[m HEAD@{9}: checkout: moving from dashboard to resume-analyzer-page
+[33m9f81434[m[33m ([m[1;31morigin/dashboard[m[33m, [m[1;32mdashboard[m[33m)[m HEAD@{10}: commit: update: dynamic description title subtile header + subscription sidebar
+[33mba9917b[m HEAD@{11}: checkout: moving from resume-analyzer-page to dashboard
+[33md8c77fa[m HEAD@{12}: commit: build: basic UI CV-analysis
+[33mba9917b[m HEAD@{13}: checkout: moving from dashboard to resume-analyzer-page
+[33mba9917b[m HEAD@{14}: commit: build: Dashboard UI & add: i18n for Footer & fix: layout Footer & create: component DashboardSidebar + DashboardHeader
+[33m9926e11[m HEAD@{15}: checkout: moving from register-page to dashboard
+[33m9926e11[m HEAD@{16}: commit: update: i18n for Toast
+[33m5b93ba8[m HEAD@{17}: checkout: moving from login-page to register-page
+[33m5113109[m[33m ([m[1;31morigin/login-page[m[33m, [m[1;32mlogin-page[m[33m)[m HEAD@{18}: commit: update: structure login content
+[33m984c851[m HEAD@{19}: checkout: moving from register-page to login-page
+[33m5b93ba8[m HEAD@{20}: commit: update i18n for Toast
+[33m49f1b86[m HEAD@{21}: checkout: moving from login-page to register-page
+[33m984c851[m HEAD@{22}: commit: update: i18n for Toast
+[33mb5dea3d[m HEAD@{23}: checkout: moving from register-page to login-page
+[33m49f1b86[m HEAD@{24}: commit: update: i18n for Toastify
+[33m83a7f67[m HEAD@{25}: checkout: moving from dashboard to register-page
+[33m83a7f67[m HEAD@{26}: checkout: moving from register-page to dashboard
+[33m83a7f67[m HEAD@{27}: checkout: moving from login-page to register-page
+[33mb5dea3d[m HEAD@{28}: commit: fix: Fix Title in vi translation
+[33m310ce0a[m HEAD@{29}: checkout: moving from register-page to login-page
+[33m83a7f67[m HEAD@{30}: commit: build: Register page + routing navigate
+[33m4d44c57[m HEAD@{31}: reset: moving to HEAD
+[33m4d44c57[m HEAD@{32}: checkout: moving from login-page to register-page
+[33m310ce0a[m HEAD@{33}: commit: fix: Toastify
+[33m4d44c57[m HEAD@{34}: reset: moving to HEAD
+[33m4d44c57[m HEAD@{35}: checkout: moving from register-page to login-page
+[33m4d44c57[m HEAD@{36}: checkout: moving from login-page to register-page
+[33m4d44c57[m HEAD@{37}: checkout: moving from register-page to login-page
+[33m4d44c57[m HEAD@{38}: checkout: moving from login-page to register-page
+[33m4d44c57[m HEAD@{39}: commit: update: React Toastify
+[33m9261cf1[m HEAD@{40}: commit: Login page UI
+[33m3f79036[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m HEAD@{41}: reset: moving to HEAD
+[33m3f79036[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m HEAD@{42}: reset: moving to HEAD
+[33m3f79036[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m HEAD@{43}: checkout: moving from register-page to login-page
+[33m3f79036[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m HEAD@{44}: checkout: moving from login-page to register-page
+[33m3f79036[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m HEAD@{45}: checkout: moving from register-page to login-page
+[33m3f79036[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m HEAD@{46}: checkout: moving from login-page to register-page
+[33m2e27a91[m HEAD@{47}: checkout: moving from landing-page to login-page
+[33mf11aa93[m[33m ([m[1;32mlanding-page[m[33m)[m HEAD@{48}: checkout: moving from login-page to landing-page
+[33m2e27a91[m HEAD@{49}: checkout: moving from dev to login-page
+[33m3f79036[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m HEAD@{50}: checkout: moving from login-page to dev
+[33m2e27a91[m HEAD@{51}: checkout: moving from main to login-page
+[33m92d544e[m[33m ([m[1;32mmain[m[33m)[m HEAD@{52}: commit (initial): first commit
+[33m2e27a91[m HEAD@{53}: checkout: moving from main to login-page
+[33m14bfd88[m HEAD@{54}: commit (initial): first commit
+[33m2e27a91[m HEAD@{55}: checkout: moving from main to login-page
+[33m2e27a91[m HEAD@{56}: checkout: moving from login-page to main
+[33m2e27a91[m HEAD@{57}: checkout: moving from main to login-page
+[33m2e27a91[m HEAD@{58}: commit: Resume analyzer page
+[33m8ebb312[m HEAD@{59}: commit: fix responsive for Login & Register page
+[33m720ec95[m HEAD@{60}: commit: Register UI
+[33me15fd5b[m HEAD@{61}: commit: Fix LoginPage: Show pass button && Register UI
+[33mba75bdd[m HEAD@{62}: commit: Login page UI
+[33mdbea9e7[m HEAD@{63}: commit: Base config + Login page
+[33m87bdb8a[m HEAD@{64}: commit: Initial project structure
+[33m5c04b7b[m HEAD@{65}: clone: from https://github.com/KhacThien88/SideProject1-FrontEnd.git

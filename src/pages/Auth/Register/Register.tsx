@@ -1,10 +1,12 @@
 import React from 'react';
 import { useOnReveal } from '../../../hooks/useOnReveal';
+import { useTranslation } from '../../../hooks/useTranslation';
 import { RegisterForm } from './components/RegisterForm';
 import { LoginHero } from '../Login/components/LoginHero';
 
 export const Register: React.FC = () => {
   useOnReveal('.reveal');
+  const { getContent } = useTranslation();
 
   return (
     <div className="min-h-screen lg:h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex lg:overflow-hidden">
@@ -16,11 +18,11 @@ export const Register: React.FC = () => {
         <div className="w-full max-w-xl md:max-w-2xl reveal">
           {/* Page heading in theme area */}
           <div className="text-center mb-6">
-            <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-primary-500 via-primary-500/85 to-secondary-500 bg-clip-text text-transparent">
-              Create Account
+            <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-primary-500 via-primary-500/85 to-secondary-500 bg-clip-text text-transparent leading-tight" style={{ lineHeight: '1.2', paddingBottom: '0.1em' }}>
+              {getContent('auth.register.title')}
             </h1>
             <p className="mt-2 text-sm font-medium text-neutral-600">
-              Join TalentFit AI Community Today
+              {getContent('auth.register.welcomeSubtitle')}
             </p>
           </div>
 

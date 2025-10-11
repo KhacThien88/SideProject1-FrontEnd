@@ -3,7 +3,8 @@ import { useOnReveal } from '../../../../hooks/useOnReveal';
 import { useRouter } from '../../../../components/Router';
 import { useToast } from '../../../../contexts/ToastContext';
 import { useTranslation } from '../../../../hooks/useTranslation';
-import { LanguageToggle } from '../../../../components/common/LanguageToggle';
+import { useAuth } from '../../../../contexts/auth/AuthContext';
+import { createFocusEffect } from '../../../../utils/focusEffects';
 import { ShieldCheck, Send, Mail, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 
 const OTP_LENGTH = 6;
@@ -14,6 +15,7 @@ export const VerifyOTP: React.FC = () => {
   const { navigate } = useRouter();
   const { showErrorToast, showSuccessToast } = useToast();
   const { getContent } = useTranslation();
+  const { verifyOTP, resendOTP } = useAuth();
 
   const [otpDigits, setOtpDigits] = useState<string[]>(Array(OTP_LENGTH).fill(''));
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -95,15 +97,11 @@ export const VerifyOTP: React.FC = () => {
     if (isSubmitting || code.length !== OTP_LENGTH) return;
     setIsSubmitting(true);
     setHasError(false);
-    
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1200));
-      
-      // Simulate verification failure for demo
-      if (code === '123456') {
-        throw new Error('Invalid OTP');
-      }
-      
+      // Use real API call
+      await verifyOTP(email, code);
+
       showSuccessToast(getContent('auth.verifyOTP.toast.verificationSuccess'), getContent('auth.verifyOTP.toast.verificationSuccessSubtitle'));
       setTimeout(() => navigate('/login', 'slide-left'), 600);
     } catch (error) {
@@ -115,16 +113,22 @@ export const VerifyOTP: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [isSubmitting, navigate, showErrorToast, showSuccessToast, getContent]);
+  }, [isSubmitting, navigate, showErrorToast, showSuccessToast, getContent, verifyOTP, email]);
 
   const handleResend = async () => {
     if (!canResend) return;
-    showSuccessToast(getContent('auth.verifyOTP.toast.resendSuccess'), getContent('auth.verifyOTP.toast.resendSuccessSubtitle'));
-    setResendCount((c) => c + 1);
-    setRemaining(RESEND_SECONDS);
-    // reset OTP fields
-    setOtpDigits(Array(OTP_LENGTH).fill(''));
-    inputRefs.current[0]?.focus();
+    
+    try {
+      await resendOTP(email);
+      showSuccessToast(getContent('auth.verifyOTP.toast.resendSuccess'), getContent('auth.verifyOTP.toast.resendSuccessSubtitle'));
+      setResendCount((c) => c + 1);
+      setRemaining(RESEND_SECONDS);
+      // reset OTP fields
+      setOtpDigits(Array(OTP_LENGTH).fill(''));
+      inputRefs.current[0]?.focus();
+    } catch (error) {
+      showErrorToast(getContent('auth.verifyOTP.toast.resendFailed'), getContent('auth.verifyOTP.toast.resendFailedSubtitle'));
+    }
   };
 
   // Debounced auto-submit when enough digits
@@ -175,11 +179,6 @@ export const VerifyOTP: React.FC = () => {
 
   return (
     <div className="min-h-screen lg:h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex lg:overflow-hidden">
-      {/* Language Toggle */}
-      <div className="absolute top-4 right-4 z-50">
-        <LanguageToggle />
-      </div>
-      
       {/* Right content area with inner gradient like Register */}
       <div className="flex-1 flex items-center justify-center px-4 py-10 sm:px-6 lg:px-10 lg:py-8 bg-gradient-to-br from-secondary-600/20 to-primary-600/20">
         {/* Gradient border card */}
@@ -230,9 +229,9 @@ export const VerifyOTP: React.FC = () => {
                     onKeyDown={(e) => handleKeyDown(idx, e)}
                     onPaste={handlePaste}
                     onFocus={(e) => (e.target as HTMLInputElement).select()}
-                    className={`otp-input-ultra w-12 h-14 sm:w-16 sm:h-18 text-center text-xl sm:text-2xl font-semibold font-mono border rounded-2xl bg-white shadow-sm disabled:opacity-70 ${
-                      hasError ? 'border-red-300 bg-red-50 text-red-600' : 'border-gray-200'
-                    }`}
+                           className={`w-12 h-14 sm:w-16 sm:h-18 text-center text-xl sm:text-2xl font-semibold font-mono border rounded-2xl bg-white shadow-sm disabled:opacity-70 ${
+                             hasError ? 'border-red-300 bg-red-50 text-red-600' : 'border-gray-200'
+                           } ${createFocusEffect.input('md', 'primary')}`}
                     disabled={isSubmitting}
                   />
                 ))}
@@ -251,7 +250,7 @@ export const VerifyOTP: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting || otpDigits.join('').length !== OTP_LENGTH}
-                  className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:outline-none focus:ring-0 focus:shadow-primary-500/30 focus:shadow-lg flex items-center justify-center gap-2"
+                         className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -269,7 +268,7 @@ export const VerifyOTP: React.FC = () => {
                   type="button"
                   onClick={handleResend}
                   disabled={!canResend}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-2xl font-medium transition-all duration-200 border ${canResend ? 'text-primary-600 border-primary-300 hover:bg-primary-50' : 'text-neutral-400 border-neutral-200 cursor-not-allowed'}`}
+                         className={`flex items-center gap-2 px-4 py-3 rounded-2xl font-medium transition-all duration-200 border ${canResend ? 'text-primary-600 border-primary-300 hover:bg-primary-50' : 'text-neutral-400 border-neutral-200 cursor-not-allowed'} ${canResend ? createFocusEffect.input('md', 'primary') : ''}`}
                 >
                   <Send className="w-4 h-4" />
                   {canResend ? getContent('auth.verifyOTP.resendAvailable').replace('{count}', (3 - resendCount).toString()) : getContent('auth.verifyOTP.resendCountdown').replace('{seconds}', remaining.toString())}

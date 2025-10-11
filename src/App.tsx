@@ -1,5 +1,6 @@
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { AuthProvider } from './contexts/auth/AuthContext';
 import { RouterProvider, Route } from './components/Router';
 import { Login } from './pages/Auth/Login';
 import { Register, VerifyOTP } from './pages/Auth/Register';
@@ -28,12 +29,14 @@ function App() {
   return (
     <LanguageProvider>
       <ToastProvider>
-        <RouterProvider initialRoute={getInitialRoute()}>
-          <Route path="/" component={Landing} exact />
-          <Route path="/login" component={Login} exact />
-          <Route path="/register" component={Register} exact />
-          <Route path="/verify-otp" component={VerifyOTP} exact />
-        </RouterProvider>
+        <AuthProvider>
+          <RouterProvider initialRoute={getInitialRoute()}>
+            <Route path="/" component={Landing} exact />
+            <Route path="/login" component={Login} exact />
+            <Route path="/register" component={Register} exact />
+            <Route path="/verify-otp" component={VerifyOTP} exact />
+          </RouterProvider>
+        </AuthProvider>
       </ToastProvider>
     </LanguageProvider>
   );

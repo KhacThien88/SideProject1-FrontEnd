@@ -373,8 +373,8 @@ export const en: ContentTaxonomy = {
       }
     },
     register: {
-      title: 'Create',
-      subtitle: 'Account',
+      title: 'Create Account',
+      subtitle: 'new',
       welcomeSubtitle: 'Join TalentFit AI Community Today',
       fullName: 'Full Name',
       fullNamePlaceholder: 'Enter your full name',
@@ -408,7 +408,11 @@ export const en: ContentTaxonomy = {
         emailMissingTLD: 'Email missing domain (e.g., .com, .org)',
         emailInvalid: 'Invalid email format',
         passwordRequired: 'Please enter password',
-        passwordMinLength: 'Password must be at least 6 characters',
+        passwordMinLength: 'Password must be at least 8 characters',
+        passwordUppercase: 'Password must contain at least 1 uppercase letter',
+        passwordLowercase: 'Password must contain at least 1 lowercase letter',
+        passwordNumbers: 'Password must contain at least 1 number',
+        passwordSpecialChar: 'Password must contain at least 1 special character (!@#$%^&*)',
         confirmPasswordRequired: 'Please confirm password',
         confirmPasswordMismatch: 'Password confirmation does not match',
         phoneInvalid: 'Invalid phone number',

@@ -2,6 +2,19 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
 @import 'react-toastify/dist/ReactToastify.css';
 
+/* Vietnamese text rendering fix */
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fix for Vietnamese diacritics */
+h1, h2, h3, h4, h5, h6, p, span, div {
+  line-height: 1.2;
+  padding-bottom: 0.1em;
+}
+
 @import "tailwindcss";
 
 /* Enhanced Tailwind v4 inline theme with improved color system */

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { useRouter } from '../../../../components/Router';
 import { useToast } from '../../../../contexts/ToastContext';
+import { useAuth } from '../../../../contexts/auth/AuthContext';
 import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
+import { createFocusEffect } from '../../../../utils/focusEffects';
 import { Eye, EyeOff, User, Mail, Phone, Shield, CheckCircle, Star, BriefcaseBusiness } from 'lucide-react';
 
 interface RegisterFormProps {
@@ -24,6 +26,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
   const { navigate } = useRouter();
   const { showErrorToast, showSuccessToast } = useToast();
+  const { register } = useAuth();
   
   const [formData, setFormData] = useState<RegisterFormData>({
     email: '',
@@ -78,10 +81,34 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     }
 
     // Validate password
-    if (!formData.password || formData.password.length < 6) {
+    if (!formData.password || formData.password.length < 8) {
       showErrorToast(getContent('auth.register.toast.passwordMinLength'));
       newErrors.password = getContent('auth.register.toast.passwordMinLength');
       hasErrors = true;
+    } else {
+      // Check for password strength requirements
+      const hasUpperCase = /[A-Z]/.test(formData.password);
+      const hasLowerCase = /[a-z]/.test(formData.password);
+      const hasNumbers = /\d/.test(formData.password);
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
+      
+      if (!hasUpperCase) {
+        showErrorToast(getContent('auth.register.toast.passwordUppercase'));
+        newErrors.password = getContent('auth.register.toast.passwordUppercase');
+        hasErrors = true;
+      } else if (!hasLowerCase) {
+        showErrorToast(getContent('auth.register.toast.passwordLowercase'));
+        newErrors.password = getContent('auth.register.toast.passwordLowercase');
+        hasErrors = true;
+      } else if (!hasNumbers) {
+        showErrorToast(getContent('auth.register.toast.passwordNumbers'));
+        newErrors.password = getContent('auth.register.toast.passwordNumbers');
+        hasErrors = true;
+      } else if (!hasSpecialChar) {
+        showErrorToast(getContent('auth.register.toast.passwordSpecialChar'));
+        newErrors.password = getContent('auth.register.toast.passwordSpecialChar');
+        hasErrors = true;
+      }
     }
 
     // Validate confirm password
@@ -124,31 +151,39 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         await onSubmit(formData);
         showSuccessToast(getContent('auth.register.toast.registerSuccess'), getContent('auth.register.toast.registerSuccessSubtitle'));
       } else {
-        // Simulate API call
-        await new Promise((resolve, reject) => {
-          setTimeout(() => {
-            // Simulate different scenarios for testing
-            const email = formData.email.toLowerCase();
-            if (email === 'test@exists.com') {
-              reject(new Error('email already exists'));
-            } else if (email === 'network@error.com') {
-              reject(new Error('network error'));
-            } else {
-              resolve(true);
-            }
-          }, 2000);
-        });
+        // Use real API call
+        const registerData = {
+          email: formData.email.trim(),
+          password: formData.password,
+          confirm_password: formData.confirmPassword,
+          full_name: formData.fullName.trim(),
+          phone: formData.phone?.trim() || undefined,
+          role: formData.role,
+        };
         
-        showSuccessToast(getContent('auth.register.toast.registerSuccess'), getContent('auth.register.toast.registerSuccessSubtitle'));
+        await register(registerData);
+        
+        // Registration successful, navigate to OTP verification
+        showSuccessToast(
+          getContent('auth.register.toast.registerSuccess'), 
+          getContent('auth.register.toast.registerSuccessSubtitle')
+        );
+        
+        // Navigate to OTP verification page with email
+        setTimeout(() => {
+          navigate('/verify-otp', 'slide-left');
+        }, 1500);
       }
     } catch (err: any) {
       console.error('Registration error:', err);
       
       const errorMessage = err.message || '';
-      if (errorMessage.includes('email already exists')) {
+      if (errorMessage.includes('email already exists') || errorMessage.includes('email đã được sử dụng')) {
         showErrorToast(getContent('auth.register.toast.emailExists'), getContent('auth.register.toast.emailExistsSubtitle'), 4000);
-      } else if (errorMessage.includes('network')) {
+      } else if (errorMessage.includes('network') || errorMessage.includes('kết nối')) {
         showErrorToast(getContent('auth.register.toast.networkError'), getContent('auth.register.toast.networkErrorSubtitle'), 4000);
+      } else if (errorMessage.includes('password') || errorMessage.includes('mật khẩu')) {
+        showErrorToast(getContent('auth.register.toast.passwordWeak'), getContent('auth.register.toast.passwordWeakSubtitle'), 4000);
       } else {
         showErrorToast(getContent('auth.register.toast.registerFailed'), getContent('auth.register.toast.generalErrorSubtitle'), 4000);
       }
@@ -198,9 +233,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   // Clear custom validity when user starts typing
                   (e.target as HTMLInputElement).setCustomValidity('');
                 }}
-                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
+                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none ${
                   errors.fullName ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
-                }`}
+                } ${createFocusEffect.input('md', 'primary')}`}
                 placeholder={getContent('auth.register.fullNamePlaceholder')}
                 disabled={isLoading}
                 required
@@ -239,9 +274,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   // Clear custom validity when user starts typing
                   (e.target as HTMLInputElement).setCustomValidity('');
                 }}
-                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
+                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none ${
                   errors.email ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
-                }`}
+                } ${createFocusEffect.email('md')}`}
                 placeholder={getContent('auth.register.emailPlaceholder')}
                 disabled={isLoading}
                 required
@@ -279,9 +314,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   // Clear custom validity when user starts typing
                   (e.target as HTMLInputElement).setCustomValidity('');
                 }}
-                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
+                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none ${
                   errors.phone ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
-                }`}
+                } ${createFocusEffect.input('md', 'primary')}`}
                 placeholder={getContent('auth.register.phonePlaceholder')}
                 disabled={isLoading}
               />
@@ -389,10 +424,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     // Clear custom validity when user starts typing
                     (e.target as HTMLInputElement).setCustomValidity('');
                   }}
-                  className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
+                  className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none ${
                     errors.password ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
-                  }`}
-                  placeholder={getContent('auth.register.passwordPlaceholder')}
+                  } ${createFocusEffect.password('md')}`}
+                  placeholder="Nhập mật khẩu (ít nhất 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt)"
                   disabled={isLoading}
                   required
                 />
@@ -438,9 +473,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     // Clear custom validity when user starts typing
                     (e.target as HTMLInputElement).setCustomValidity('');
                   }}
-                  className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
+                  className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none ${
                     errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
-                  }`}
+                  } ${createFocusEffect.password('md')}`}
                   placeholder={getContent('auth.register.confirmPasswordPlaceholder')}
                   disabled={isLoading}
                   required
@@ -509,7 +544,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            className={`w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2`}
           >
             {isLoading ? (
               <div className="flex flex-row items-center justify-center">

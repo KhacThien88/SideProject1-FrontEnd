@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Textarea, Button, FocusPresets } from '../components/ui/FocusInput';
+import { Input, Textarea, Button } from '../components/ui/FocusInput';
 import { getFocusEffectClasses, createFocusEffect } from '../utils/focusEffects';
 import { Search, Mail, Lock, Hash, Link, Eye, EyeOff } from 'lucide-react';
 

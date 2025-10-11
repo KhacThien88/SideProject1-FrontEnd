@@ -1,6 +1,8 @@
-import React, { forwardRef, InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
-import { cn } from './cn';
-import { FocusEffectConfig, getFocusEffectClasses, FocusPresets } from './focusEffects';
+import React, { forwardRef } from 'react';
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import { cn } from '../../utils/cn';
+import type { FocusEffectConfig } from '../../utils/focusEffects';
+import { getFocusEffectClasses } from '../../utils/focusEffects';
 
 // Input component props
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -271,4 +273,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button';
 
 // Export focus presets for easy access
-export { FocusPresets, getFocusEffectClasses } from './focusEffects';
+export { getFocusEffectClasses } from '../../utils/focusEffects';

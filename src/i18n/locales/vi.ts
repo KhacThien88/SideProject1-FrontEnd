@@ -826,5 +826,89 @@ export const vi: ContentTaxonomy = {
     deleteError: 'Không thể xóa hồ sơ công việc',
     deleteConfirm: 'Bạn có chắc chắn muốn xóa hồ sơ công việc này?',
     viewMatchesInfo: 'Tính năng xem kết quả khớp sẽ sớm có',
+  },
+
+  candidateMatches: {
+    title: 'Ứng Viên Phù Hợp',
+    backToJobs: 'Quay lại Tin Tuyển Dụng',
+    totalMatches: 'Tổng số khớp',
+    requiredSkills: 'Kỹ năng bắt buộc',
+    filters: 'Bộ lọc',
+    clearFilters: 'Xóa bộ lọc',
+    filterMatchScore: 'Điểm khớp',
+    filterExperience: 'Kinh nghiệm',
+    years: 'năm',
+
+    sort: {
+      matchScore: 'Điểm khớp cao nhất',
+      experience: 'Kinh nghiệm nhiều nhất',
+      appliedDate: 'Ngày ứng tuyển gần nhất',
+      name: 'Tên A-Z',
+    },
+
+    overallMatch: 'Tổng thể',
+    skillsMatch: 'Kỹ năng',
+    experience: 'Kinh nghiệm',
+    yearsExperience: 'năm kinh nghiệm',
+    matchedSkills: 'Kỹ năng khớp',
+    missingSkills: 'Kỹ năng thiếu',
+    more: 'nữa',
+    appliedOn: 'Ứng tuyển ngày',
+    downloadResume: 'Tải CV',
+    save: 'Lưu ứng viên',
+    unsave: 'Bỏ lưu',
+    saved: 'Đã lưu',
+
+    noCandidates: 'Không có ứng viên',
+    noMatches: 'Chưa có ứng viên nào phù hợp với tin tuyển dụng này',
+    noResultsFilters: 'Không tìm thấy ứng viên với bộ lọc hiện tại',
+
+    success: {
+      saveToggled: 'Cập nhật trạng thái lưu thành công',
+      resumeDownloaded: 'Tải CV thành công',
+    },
+
+    errors: {
+      loadFailed: 'Không thể tải danh sách ứng viên',
+      saveFailed: 'Không thể cập nhật trạng thái lưu',
+      downloadFailed: 'Không thể tải CV',
+      jobNotFound: 'Không tìm thấy tin tuyển dụng',
+    },
+  },
+
+  savedCandidates: {
+    title: 'Ứng Viên Đã Lưu',
+    subtitle: 'Quản lý các ứng viên đã được đánh dấu sao',
+    searchPlaceholder: 'Tìm kiếm ứng viên...',
+    filters: 'Bộ lọc',
+    clearFilters: 'Xóa bộ lọc',
+    filterMatchScore: 'Điểm khớp',
+    filterExperience: 'Kinh nghiệm',
+    filterSkillMatches: 'Số kỹ năng khớp',
+    filterLocation: 'Địa điểm',
+    filterSkills: 'Kỹ năng',
+    years: 'năm',
+
+    sort: {
+      matchScore: 'Điểm khớp cao nhất',
+      experience: 'Kinh nghiệm nhiều nhất',
+      appliedDate: 'Ngày ứng tuyển gần nhất',
+      name: 'Tên A-Z',
+    },
+
+    noCandidates: 'Không có ứng viên',
+    noSavedYet: 'Bạn chưa lưu ứng viên nào',
+    noResultsFilters: 'Không tìm thấy ứng viên với bộ lọc hiện tại',
+
+    success: {
+      saveToggled: 'Cập nhật trạng thái lưu thành công',
+      resumeDownloaded: 'Tải CV thành công',
+    },
+
+    errors: {
+      loadFailed: 'Không thể tải danh sách ứng viên',
+      saveFailed: 'Không thể cập nhật trạng thái lưu',
+      downloadFailed: 'Không thể tải CV',
+    },
   }
 };

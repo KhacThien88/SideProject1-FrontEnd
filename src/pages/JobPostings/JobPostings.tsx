@@ -4,6 +4,7 @@ import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useToast } from '../../contexts/ToastContext';
+import { useRouter } from '../../components/Router';
 import { jobPostingService } from '../../services/api/jobPosting/jobPostingService';
 import type { JobProfile, CreateJobProfileData } from '../../types/jobPosting';
 import { JobPostingCard } from './components/JobPostingCard';
@@ -12,6 +13,7 @@ import { CreateJobProfileModal } from './components/CreateJobProfileModal';
 export const JobPostings: React.FC = () => {
   const { getContent } = useTranslation();
   const { showSuccessToast, showErrorToast } = useToast();
+  const { navigate } = useRouter();
   
   const [jobProfiles, setJobProfiles] = useState<JobProfile[]>([]);
   const [filteredProfiles, setFilteredProfiles] = useState<JobProfile[]>([]);
@@ -99,9 +101,10 @@ export const JobPostings: React.FC = () => {
   };
 
   const handleViewMatches = (id: string) => {
-    // TODO: Navigate to matches page or open matches modal
-    console.log('View matches for job profile:', id);
-    showSuccessToast(getContent('jobPostings.viewMatchesInfo'));
+    console.log('Navigating to matches for job:', id);
+    const matchesUrl = `/dashboard/job-postings/${id}/matches`;
+    console.log('Navigation URL:', matchesUrl);
+    navigate(matchesUrl);
   };
 
   const handleOpenCreateModal = () => {

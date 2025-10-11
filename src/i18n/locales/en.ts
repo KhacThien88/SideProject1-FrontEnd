@@ -828,5 +828,89 @@ export const en: ContentTaxonomy = {
     deleteError: 'Failed to delete job profile',
     deleteConfirm: 'Are you sure you want to delete this job profile?',
     viewMatchesInfo: 'View matches feature coming soon',
+  },
+
+  candidateMatches: {
+    title: 'Matched Candidates',
+    backToJobs: 'Back to Job Postings',
+    totalMatches: 'Total matches',
+    requiredSkills: 'Required skills',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterExperience: 'Experience',
+    years: 'years',
+
+    sort: {
+      matchScore: 'Highest match score',
+      experience: 'Most experience',
+      appliedDate: 'Recently applied',
+      name: 'Name A-Z',
+    },
+
+    overallMatch: 'Overall',
+    skillsMatch: 'Skills',
+    experience: 'Experience',
+    yearsExperience: 'years experience',
+    matchedSkills: 'Matched skills',
+    missingSkills: 'Missing skills',
+    more: 'more',
+    appliedOn: 'Applied on',
+    downloadResume: 'Download Resume',
+    save: 'Save candidate',
+    unsave: 'Unsave',
+    saved: 'Saved',
+
+    noCandidates: 'No candidates',
+    noMatches: 'No candidates have matched with this job posting yet',
+    noResultsFilters: 'No candidates found with current filters',
+
+    success: {
+      saveToggled: 'Candidate save status updated successfully',
+      resumeDownloaded: 'Resume downloaded successfully',
+    },
+
+    errors: {
+      loadFailed: 'Failed to load candidates',
+      saveFailed: 'Failed to update save status',
+      downloadFailed: 'Failed to download resume',
+      jobNotFound: 'Job posting not found',
+    },
+  },
+
+  savedCandidates: {
+    title: 'Saved Candidates',
+    subtitle: 'Manage your starred candidates',
+    searchPlaceholder: 'Search candidates...',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterExperience: 'Experience',
+    filterSkillMatches: 'Skill matches count',
+    filterLocation: 'Location',
+    filterSkills: 'Skills',
+    years: 'years',
+
+    sort: {
+      matchScore: 'Highest match score',
+      experience: 'Most experience',
+      appliedDate: 'Recently applied',
+      name: 'Name A-Z',
+    },
+
+    noCandidates: 'No candidates',
+    noSavedYet: 'You haven\'t saved any candidates yet',
+    noResultsFilters: 'No candidates found with current filters',
+
+    success: {
+      saveToggled: 'Candidate save status updated successfully',
+      resumeDownloaded: 'Resume downloaded successfully',
+    },
+
+    errors: {
+      loadFailed: 'Failed to load candidates',
+      saveFailed: 'Failed to update save status',
+      downloadFailed: 'Failed to download resume',
+    },
   }
 };

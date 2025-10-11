@@ -642,4 +642,90 @@ export interface ContentTaxonomy {
     deleteConfirm: string;
     viewMatchesInfo: string;
   };
+
+  // Candidate Matches
+  candidateMatches: {
+    title: string;
+    backToJobs: string;
+    totalMatches: string;
+    requiredSkills: string;
+    filters: string;
+    clearFilters: string;
+    filterMatchScore: string;
+    filterExperience: string;
+    years: string;
+
+    sort: {
+      matchScore: string;
+      experience: string;
+      appliedDate: string;
+      name: string;
+    };
+
+    overallMatch: string;
+    skillsMatch: string;
+    experience: string;
+    yearsExperience: string;
+    matchedSkills: string;
+    missingSkills: string;
+    more: string;
+    appliedOn: string;
+    downloadResume: string;
+    save: string;
+    unsave: string;
+    saved: string;
+
+    noCandidates: string;
+    noMatches: string;
+    noResultsFilters: string;
+
+    success: {
+      saveToggled: string;
+      resumeDownloaded: string;
+    };
+
+    errors: {
+      loadFailed: string;
+      saveFailed: string;
+      downloadFailed: string;
+      jobNotFound: string;
+    };
+  };
+
+  // Saved Candidates
+  savedCandidates: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    filters: string;
+    clearFilters: string;
+    filterMatchScore: string;
+    filterExperience: string;
+    filterSkillMatches: string;
+    filterLocation: string;
+    filterSkills: string;
+    years: string;
+
+    sort: {
+      matchScore: string;
+      experience: string;
+      appliedDate: string;
+      name: string;
+    };
+
+    noCandidates: string;
+    noSavedYet: string;
+    noResultsFilters: string;
+
+    success: {
+      saveToggled: string;
+      resumeDownloaded: string;
+    };
+
+    errors: {
+      loadFailed: string;
+      saveFailed: string;
+      downloadFailed: string;
+    };
+  };
 }

@@ -9,9 +9,10 @@ import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
 import { JobDetailPage } from './pages/JobMatching/JobDetailPage';
-import { CandidateManagement } from './pages/Candidates';
+import { SavedCandidates } from './pages/Candidates';
 import { Settings } from './pages/Settings';
 import { JobPostings } from './pages/JobPostings';
+import { JobMatches } from './pages/JobMatches';
 
 function App() {
   // Determine initial route based on current URL
@@ -39,6 +40,7 @@ function App() {
     if (path === '/dashboard/candidates') return '/dashboard/candidates';
     if (path === '/dashboard/settings') return '/dashboard/settings';
     if (path === '/dashboard/job-postings') return '/dashboard/job-postings';
+    if (path.startsWith('/dashboard/job-postings/') && path.includes('/matches')) return path;
     if (path.startsWith('/job/')) return path;
     if (path === '/') return '/';
     
@@ -55,11 +57,13 @@ function App() {
             <Route path="/login" component={Login} exact />
             <Route path="/register" component={Register} exact />
             <Route path="/forgot-password" component={ForgotPassword} exact />
-            <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/cv-analysis" component={CVAnalysis} exact />
-            <Route path="/dashboard/candidates" component={CandidateManagement} exact />
+            {/* More specific routes first */}
+            <Route path="/dashboard/job-postings/" component={JobMatches} exact={false} />
             <Route path="/dashboard/job-postings" component={JobPostings} exact />
+            <Route path="/dashboard/candidates" component={SavedCandidates} exact />
             <Route path="/dashboard/settings" component={Settings} exact />
+            <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/job/" component={JobDetailPage} exact={false} />
           </RouterProvider>
         </AuthProvider>

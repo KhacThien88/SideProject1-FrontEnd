@@ -598,4 +598,48 @@ export interface ContentTaxonomy {
       language: string;
     };
   };
+
+  // Job Postings
+  jobPostings: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    createJobProfile: string;
+    editJobProfile: string;
+    jobProfile: string;
+    jobTitle: string;
+    jobTitlePlaceholder: string;
+    description: string;
+    descriptionPlaceholder: string;
+    experienceLevel: string;
+    experience: string;
+    years: string;
+    requiredSkills: string;
+    preferredSkills: string;
+    addSkillPlaceholder: string;
+    add: string;
+    noSkillsAdded: string;
+    activeMatches: string;
+    viewMatches: string;
+    edit: string;
+    delete: string;
+    cancel: string;
+    saving: string;
+    saveChanges: string;
+    createProfile: string;
+    more: string;
+    noJobsTitle: string;
+    noJobsSubtitle: string;
+    createFirstJob: string;
+    noResultsTitle: string;
+    noResultsSubtitle: string;
+    loadError: string;
+    createSuccess: string;
+    updateSuccess: string;
+    deleteSuccess: string;
+    saveError: string;
+    deleteError: string;
+    deleteConfirm: string;
+    viewMatchesInfo: string;
+  };
 }

@@ -469,7 +469,88 @@ export const vi: ContentTaxonomy = {
     validationFailed: 'Có lỗi xảy ra, vui lòng kiểm tra lại thông tin'
   },
 
-
+  // Settings
+  settings: {
+    title: 'Cài đặt',
+    saveChanges: 'Lưu thay đổi',
+    saving: 'Đang lưu...',
+    saveSuccess: 'Đã lưu cài đặt thành công',
+    saveError: 'Lưu cài đặt thất bại',
+    loadError: 'Không thể tải cài đặt',
+    
+    tabs: {
+      profile: 'Hồ sơ',
+      notifications: 'Thông báo',
+      privacy: 'Bảo mật & Riêng tư',
+      data: 'Quản lý dữ liệu',
+      appearance: 'Giao diện',
+    },
+    
+    profile: {
+      title: 'Thông tin cá nhân',
+      fullName: 'Họ và tên',
+      email: 'Địa chỉ Email',
+      company: 'Công ty',
+      role: 'Vai trò',
+      changePassword: 'Đổi mật khẩu',
+      cancelPasswordChange: 'Hủy đổi mật khẩu',
+      currentPassword: 'Mật khẩu hiện tại',
+      newPassword: 'Mật khẩu mới',
+      confirmPassword: 'Xác nhận mật khẩu mới',
+      roles: {
+        hrManager: 'Quản lý nhân sự',
+        recruiter: 'Nhân viên tuyển dụng',
+        talentAcquisition: 'Chuyên viên tuyển dụng',
+        admin: 'Quản trị viên',
+      },
+    },
+    
+    notifications: {
+      emailAlerts: 'Thông báo Email',
+      emailAlertsDesc: 'Nhận thông báo qua email cho các cập nhật quan trọng',
+      pushNotifications: 'Thông báo đẩy',
+      pushNotificationsDesc: 'Nhận thông báo đẩy trên trình duyệt',
+      weeklyReports: 'Báo cáo hàng tuần',
+      weeklyReportsDesc: 'Tóm tắt hàng tuần về phân tích tuyển dụng của bạn',
+      analysisComplete: 'Phân tích hoàn tất',
+      analysisCompleteDesc: 'Thông báo khi phân tích hồ sơ hoàn tất',
+    },
+    
+    privacy: {
+      dataRetention: 'Thời gian lưu trữ dữ liệu',
+      dataRetentionDesc: 'Chúng tôi nên lưu trữ CV của bạn trong bao lâu?',
+      shareAnalytics: 'Chia sẻ dữ liệu phân tích ẩn danh',
+      shareAnalyticsDesc: 'Giúp chúng tôi cải thiện bằng cách chia sẻ dữ liệu sử dụng ẩn danh',
+      autoDelete: 'Tự động xóa dữ liệu cũ',
+      autoDeleteDesc: 'Tự động xóa dữ liệu sau thời gian lưu trữ',
+      days30: '30 ngày',
+      days60: '60 ngày',
+      days90: '90 ngày',
+      days180: '180 ngày',
+      days365: '365 ngày',
+    },
+    
+    data: {
+      export: 'Xuất dữ liệu',
+      exportDesc: 'Tải xuống tất cả dữ liệu của bạn dưới định dạng JSON',
+      import: 'Nhập dữ liệu',
+      importDesc: 'Nhập dữ liệu từ các bản sao lưu trước đó',
+      dangerZone: 'Vùng nguy hiểm',
+      reset: 'Đặt lại cài đặt',
+      resetDesc: 'Đặt lại tất cả cài đặt về giá trị mặc định',
+      delete: 'Xóa tất cả dữ liệu',
+      deleteDesc: 'Xóa vĩnh viễn tất cả dữ liệu của bạn',
+      exportSuccess: 'Đã xuất dữ liệu thành công',
+      importSuccess: 'Đã nhập dữ liệu thành công',
+      resetConfirm: 'Bạn có chắc chắn muốn đặt lại tất cả cài đặt về mặc định? Hành động này không thể hoàn tác.',
+      deleteConfirm: 'Bạn có chắc chắn muốn XÓA TẤT CẢ dữ liệu của bạn? Hành động này là VĨNH VIỄN và không thể hoàn tác.',
+      deleteDoubleConfirm: 'Điều này sẽ xóa vĩnh viễn tất cả dữ liệu của bạn bao gồm CV, kết quả phân tích và cài đặt. Gõ DELETE để xác nhận.',
+    },
+    
+    appearance: {
+      language: 'Ngôn ngữ',
+    },
+  },
 
   // Pages - Dynamic content based on current page
   pages: {

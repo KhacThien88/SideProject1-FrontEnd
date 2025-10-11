@@ -10,6 +10,7 @@ import { DataManagementTab } from './components/DataManagementTab';
 import { AppearanceTab } from './components/AppearanceTab';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { useToast } from '../../contexts/ToastContext';
+import { useTranslation } from '../../hooks/useTranslation';
 import { settingsService } from '../../services/api/settings/settingsService';
 import type { SettingsData, SettingsTab } from '../../types/settings';
 
@@ -19,6 +20,7 @@ export const Settings: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const { showSuccessToast, showErrorToast } = useToast();
+  const { changeLanguage, getContent } = useTranslation();
 
   // Load settings on mount
   useEffect(() => {
@@ -31,7 +33,7 @@ export const Settings: React.FC = () => {
       const data = await settingsService.getSettings();
       setSettings(data);
     } catch (error) {
-      showErrorToast('Failed to load settings');
+      showErrorToast(getContent('settings.loadError'));
       console.error('Error loading settings:', error);
     } finally {
       setIsLoading(false);
@@ -43,6 +45,9 @@ export const Settings: React.FC = () => {
 
     try {
       setIsSaving(true);
+      
+      // Store the new language if changing appearance
+      const newLanguage = activeTab === 'appearance' ? settings.appearance.language : null;
       
       // Update based on active tab
       switch (activeTab) {
@@ -57,12 +62,25 @@ export const Settings: React.FC = () => {
           break;
         case 'appearance':
           await settingsService.updateAppearance(settings.appearance);
+          // Apply language change when saving appearance settings
+          changeLanguage(settings.appearance.language);
           break;
       }
 
-      showSuccessToast('Settings saved successfully');
+      // Wait a bit for language change to complete, then show toast in NEW language
+      if (newLanguage) {
+        setTimeout(() => {
+          // Get the success message in the NEW language
+          const successMsg = newLanguage === 'vi' 
+            ? 'Đã lưu cài đặt thành công' 
+            : 'Settings saved successfully';
+          showSuccessToast(successMsg);
+        }, 100);
+      } else {
+        showSuccessToast(getContent('settings.saveSuccess'));
+      }
     } catch (error) {
-      showErrorToast('Failed to save settings');
+      showErrorToast(getContent('settings.saveError'));
       console.error('Error saving settings:', error);
     } finally {
       setIsSaving(false);
@@ -80,9 +98,9 @@ export const Settings: React.FC = () => {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showSuccessToast('Data exported successfully');
+      showSuccessToast(getContent('settings.data.exportSuccess'));
     } catch (error) {
-      showErrorToast('Failed to export data');
+      showErrorToast(getContent('settings.saveError'));
       console.error('Error exporting data:', error);
     }
   };
@@ -99,9 +117,9 @@ export const Settings: React.FC = () => {
           try {
             const data = JSON.parse(e.target?.result as string);
             console.log('Imported data:', data);
-            showSuccessToast('Data imported successfully');
+            showSuccessToast(getContent('settings.data.importSuccess'));
           } catch (error) {
-            showErrorToast('Invalid file format');
+            showErrorToast(getContent('settings.saveError'));
           }
         };
         reader.readAsText(file);
@@ -111,36 +129,32 @@ export const Settings: React.FC = () => {
   };
 
   const handleResetSettings = async () => {
-    if (window.confirm('Are you sure you want to reset all settings to default? This action cannot be undone.')) {
+    if (window.confirm(getContent('settings.data.resetConfirm'))) {
       try {
         await settingsService.resetSettings();
         await loadSettings();
-        showSuccessToast('Settings reset successfully');
+        showSuccessToast(getContent('settings.saveSuccess'));
       } catch (error) {
-        showErrorToast('Failed to reset settings');
+        showErrorToast(getContent('settings.saveError'));
         console.error('Error resetting settings:', error);
       }
     }
   };
 
   const handleDeleteAllData = async () => {
-    const confirmed = window.confirm(
-      'Are you sure you want to delete ALL your data? This action is PERMANENT and cannot be undone.'
-    );
+    const confirmed = window.confirm(getContent('settings.data.deleteConfirm'));
     
     if (confirmed) {
-      const doubleConfirm = window.confirm(
-        'This will permanently delete all your data including resumes, analysis results, and settings. Type DELETE to confirm.'
-      );
+      const doubleConfirm = window.confirm(getContent('settings.data.deleteDoubleConfirm'));
       
       if (doubleConfirm) {
         try {
           await settingsService.deleteAllData();
-          showSuccessToast('All data deleted successfully');
+          showSuccessToast(getContent('settings.saveSuccess'));
           // Redirect to login or home
           window.location.href = '/login';
         } catch (error) {
-          showErrorToast('Failed to delete data');
+          showErrorToast(getContent('settings.saveError'));
           console.error('Error deleting data:', error);
         }
       }
@@ -167,16 +181,6 @@ export const Settings: React.FC = () => {
         
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-7xl mx-auto px-6 py-8">
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-2">
-                Settings
-              </h1>
-              <p className="text-neutral-600">
-                Manage your account preferences and application settings.
-              </p>
-            </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Sidebar */}
               <div className="lg:col-span-1">
@@ -191,13 +195,13 @@ export const Settings: React.FC = () => {
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-neutral-200/50">
                   {/* Tab Title & Save Button */}
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-semibold text-neutral-900">
-                      {activeTab === 'profile' && 'Profile'}
-                      {activeTab === 'notifications' && 'Notifications'}
-                      {activeTab === 'privacy' && 'Privacy & Security'}
-                      {activeTab === 'data' && 'Data Management'}
-                      {activeTab === 'appearance' && 'Appearance'}
-                    </h2>
+                    <div className="text-3xl font-semibold text-neutral-900">
+                      {activeTab === 'profile' && getContent('settings.tabs.profile')}
+                      {activeTab === 'notifications' && getContent('settings.tabs.notifications')}
+                      {activeTab === 'privacy' && getContent('settings.tabs.privacy')}
+                      {activeTab === 'data' && getContent('settings.tabs.data')}
+                      {activeTab === 'appearance' && getContent('settings.tabs.appearance')}
+                    </div>
 
                     {activeTab !== 'data' && (
                       <button
@@ -208,12 +212,12 @@ export const Settings: React.FC = () => {
                         {isSaving ? (
                           <>
                             <LoadingSpinner size="sm" variant="neutral" />
-                            <span>Saving...</span>
+                            <span>{getContent('settings.saving')}</span>
                           </>
                         ) : (
                           <>
                             <Save className="w-4 h-4" />
-                            <span>Save Changes</span>
+                            <span>{getContent('settings.saveChanges')}</span>
                           </>
                         )}
                       </button>

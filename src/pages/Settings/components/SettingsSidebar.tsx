@@ -1,6 +1,7 @@
 import React from 'react';
 import { User, Bell, Lock, Database, Palette } from 'lucide-react';
 import type { SettingsTab } from '../../../types/settings';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface SettingsSidebarProps {
   activeTab: SettingsTab;
@@ -8,12 +9,14 @@ interface SettingsSidebarProps {
 }
 
 export const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onTabChange }) => {
+  const { getContent } = useTranslation();
+  
   const tabs = [
-    { id: 'profile' as const, label: 'Profile', icon: User },
-    { id: 'notifications' as const, label: 'Notifications', icon: Bell },
-    { id: 'privacy' as const, label: 'Privacy & Security', icon: Lock },
-    { id: 'data' as const, label: 'Data Management', icon: Database },
-    { id: 'appearance' as const, label: 'Appearance', icon: Palette },
+    { id: 'profile' as const, label: getContent('settings.tabs.profile'), icon: User },
+    { id: 'notifications' as const, label: getContent('settings.tabs.notifications'), icon: Bell },
+    { id: 'privacy' as const, label: getContent('settings.tabs.privacy'), icon: Lock },
+    { id: 'data' as const, label: getContent('settings.tabs.data'), icon: Database },
+    { id: 'appearance' as const, label: getContent('settings.tabs.appearance'), icon: Palette },
   ];
 
   return (

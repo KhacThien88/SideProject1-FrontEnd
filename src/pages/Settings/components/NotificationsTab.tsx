@@ -1,5 +1,6 @@
 import React from 'react';
 import type { NotificationSettings } from '../../../types/settings';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface NotificationsTabProps {
   settings: NotificationSettings;
@@ -7,26 +8,28 @@ interface NotificationsTabProps {
 }
 
 export const NotificationsTab: React.FC<NotificationsTabProps> = ({ settings, onUpdate }) => {
+  const { getContent } = useTranslation();
+  
   const notifications = [
     {
       key: 'emailAlerts' as const,
-      title: 'Email Alerts',
-      description: 'Receive email notifications for important updates',
+      title: getContent('settings.notifications.emailAlerts'),
+      description: getContent('settings.notifications.emailAlertsDesc'),
     },
     {
       key: 'pushNotifications' as const,
-      title: 'Push Notifications',
-      description: 'Get push notifications in your browser',
+      title: getContent('settings.notifications.pushNotifications'),
+      description: getContent('settings.notifications.pushNotificationsDesc'),
     },
     {
       key: 'weeklyReports' as const,
-      title: 'Weekly Reports',
-      description: 'Weekly summary of your recruitment analytics',
+      title: getContent('settings.notifications.weeklyReports'),
+      description: getContent('settings.notifications.weeklyReportsDesc'),
     },
     {
       key: 'analysisComplete' as const,
-      title: 'Analysis Complete',
-      description: 'Notification when resume analysis is complete',
+      title: getContent('settings.notifications.analysisComplete'),
+      description: getContent('settings.notifications.analysisCompleteDesc'),
     },
   ];
 

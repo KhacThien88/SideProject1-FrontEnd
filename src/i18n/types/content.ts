@@ -515,4 +515,87 @@ export interface ContentTaxonomy {
     generalError: string;
     validationFailed: string;
   };
+
+  // Settings
+  settings: {
+    title: string;
+    saveChanges: string;
+    saving: string;
+    saveSuccess: string;
+    saveError: string;
+    loadError: string;
+    
+    tabs: {
+      profile: string;
+      notifications: string;
+      privacy: string;
+      data: string;
+      appearance: string;
+    };
+    
+    profile: {
+      title: string;
+      fullName: string;
+      email: string;
+      company: string;
+      role: string;
+      changePassword: string;
+      cancelPasswordChange: string;
+      currentPassword: string;
+      newPassword: string;
+      confirmPassword: string;
+      roles: {
+        hrManager: string;
+        recruiter: string;
+        talentAcquisition: string;
+        admin: string;
+      };
+    };
+    
+    notifications: {
+      emailAlerts: string;
+      emailAlertsDesc: string;
+      pushNotifications: string;
+      pushNotificationsDesc: string;
+      weeklyReports: string;
+      weeklyReportsDesc: string;
+      analysisComplete: string;
+      analysisCompleteDesc: string;
+    };
+    
+    privacy: {
+      dataRetention: string;
+      dataRetentionDesc: string;
+      shareAnalytics: string;
+      shareAnalyticsDesc: string;
+      autoDelete: string;
+      autoDeleteDesc: string;
+      days30: string;
+      days60: string;
+      days90: string;
+      days180: string;
+      days365: string;
+    };
+    
+    data: {
+      export: string;
+      exportDesc: string;
+      import: string;
+      importDesc: string;
+      dangerZone: string;
+      reset: string;
+      resetDesc: string;
+      delete: string;
+      deleteDesc: string;
+      exportSuccess: string;
+      importSuccess: string;
+      resetConfirm: string;
+      deleteConfirm: string;
+      deleteDoubleConfirm: string;
+    };
+    
+    appearance: {
+      language: string;
+    };
+  };
 }

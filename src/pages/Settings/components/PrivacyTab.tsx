@@ -1,5 +1,6 @@
 import React from 'react';
 import type { PrivacySettings } from '../../../types/settings';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface PrivacyTabProps {
   settings: PrivacySettings;
@@ -7,33 +8,35 @@ interface PrivacyTabProps {
 }
 
 export const PrivacyTab: React.FC<PrivacyTabProps> = ({ settings, onUpdate }) => {
+  const { getContent } = useTranslation();
+  
   return (
     <div className="space-y-8">
       {/* Data Retention Period */}
       <div>
-        <div className="font-semibold text-neutral-900 mb-2">Data Retention Period</div>
+        <div className="font-semibold text-neutral-900 mb-2">{getContent('settings.privacy.dataRetention')}</div>
         <div className="text-sm text-neutral-600 mb-4">
-          How long should we keep your uploaded resumes?
+          {getContent('settings.privacy.dataRetentionDesc')}
         </div>
         <select
           value={settings.dataRetentionPeriod}
           onChange={(e) => onUpdate({ dataRetentionPeriod: e.target.value as PrivacySettings['dataRetentionPeriod'] })}
           className="w-full px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
         >
-          <option value="30">30 days</option>
-          <option value="60">60 days</option>
-          <option value="90">90 days</option>
-          <option value="180">180 days</option>
-          <option value="365">365 days</option>
+          <option value="30">{getContent('settings.privacy.days30')}</option>
+          <option value="60">{getContent('settings.privacy.days60')}</option>
+          <option value="90">{getContent('settings.privacy.days90')}</option>
+          <option value="180">{getContent('settings.privacy.days180')}</option>
+          <option value="365">{getContent('settings.privacy.days365')}</option>
         </select>
       </div>
 
       {/* Share Anonymous Analytics */}
       <div className="flex items-center justify-between py-4 border-b border-neutral-200">
         <div className="flex-1">
-          <div className="font-medium text-neutral-900">Share Anonymous Analytics</div>
+          <div className="font-medium text-neutral-900">{getContent('settings.privacy.shareAnalytics')}</div>
           <div className="text-sm text-neutral-600 mt-1">
-            Help us improve by sharing anonymous usage data
+            {getContent('settings.privacy.shareAnalyticsDesc')}
           </div>
         </div>
         
@@ -51,9 +54,9 @@ export const PrivacyTab: React.FC<PrivacyTabProps> = ({ settings, onUpdate }) =>
       {/* Auto-delete Old Data */}
       <div className="flex items-center justify-between py-4">
         <div className="flex-1">
-          <div className="font-medium text-neutral-900">Auto-delete Old Data</div>
+          <div className="font-medium text-neutral-900">{getContent('settings.privacy.autoDelete')}</div>
           <div className="text-sm text-neutral-600 mt-1">
-            Automatically delete data after retention period
+            {getContent('settings.privacy.autoDeleteDesc')}
           </div>
         </div>
         

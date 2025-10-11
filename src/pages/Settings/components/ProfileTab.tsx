@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import type { UserProfile } from '../../../types/settings';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface ProfileTabProps {
   profile: UserProfile;
@@ -8,6 +9,7 @@ interface ProfileTabProps {
 }
 
 export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => {
+  const { getContent } = useTranslation();
   const [formData, setFormData] = useState(profile);
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const [passwords, setPasswords] = useState({
@@ -39,7 +41,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
-            Full Name
+            {getContent('settings.profile.fullName')}
           </label>
           <input
             type="text"
@@ -51,7 +53,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
 
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
-            Email Address
+            {getContent('settings.profile.email')}
           </label>
           <input
             type="email"
@@ -63,7 +65,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
 
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
-            Company
+            {getContent('settings.profile.company')}
           </label>
           <input
             type="text"
@@ -75,17 +77,17 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
 
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
-            Role
+            {getContent('settings.profile.role')}
           </label>
           <select
             value={formData.role}
             onChange={(e) => handleChange('role', e.target.value)}
             className="w-full px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
           >
-            <option value="HR Manager">HR Manager</option>
-            <option value="Recruiter">Recruiter</option>
-            <option value="Talent Acquisition">Talent Acquisition</option>
-            <option value="Admin">Admin</option>
+            <option value="HR Manager">{getContent('settings.profile.roles.hrManager')}</option>
+            <option value="Recruiter">{getContent('settings.profile.roles.recruiter')}</option>
+            <option value="Talent Acquisition">{getContent('settings.profile.roles.talentAcquisition')}</option>
+            <option value="Admin">{getContent('settings.profile.roles.admin')}</option>
           </select>
         </div>
       </div>
@@ -96,21 +98,21 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
           onClick={() => setShowPasswordChange(!showPasswordChange)}
           className="text-primary-600 hover:text-primary-700 font-medium text-sm"
         >
-          {showPasswordChange ? 'Cancel Password Change' : 'Change Password'}
+          {showPasswordChange ? getContent('settings.profile.cancelPasswordChange') : getContent('settings.profile.changePassword')}
         </button>
 
         {showPasswordChange && (
           <div className="mt-4 space-y-4">
             <div className="relative">
               <label className="block text-sm font-medium text-neutral-700 mb-2">
-                Current Password
+                {getContent('settings.profile.currentPassword')}
               </label>
               <input
                 type={showPassword.current ? 'text' : 'password'}
                 value={passwords.current}
                 onChange={(e) => handlePasswordChange('current', e.target.value)}
                 className="w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                placeholder="Enter current password"
+                placeholder={getContent('settings.profile.currentPassword')}
               />
               <button
                 type="button"
@@ -123,14 +125,14 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
 
             <div className="relative">
               <label className="block text-sm font-medium text-neutral-700 mb-2">
-                New Password
+                {getContent('settings.profile.newPassword')}
               </label>
               <input
                 type={showPassword.new ? 'text' : 'password'}
                 value={passwords.new}
                 onChange={(e) => handlePasswordChange('new', e.target.value)}
                 className="w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                placeholder="Enter new password"
+                placeholder={getContent('settings.profile.newPassword')}
               />
               <button
                 type="button"
@@ -143,14 +145,14 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
 
             <div className="relative">
               <label className="block text-sm font-medium text-neutral-700 mb-2">
-                Confirm New Password
+                {getContent('settings.profile.confirmPassword')}
               </label>
               <input
                 type={showPassword.confirm ? 'text' : 'password'}
                 value={passwords.confirm}
                 onChange={(e) => handlePasswordChange('confirm', e.target.value)}
                 className="w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                placeholder="Confirm new password"
+                placeholder={getContent('settings.profile.confirmPassword')}
               />
               <button
                 type="button"

@@ -471,6 +471,89 @@ export const en: ContentTaxonomy = {
     validationFailed: 'Please check your information',
   },
 
+  // Settings
+  settings: {
+    title: 'Settings',
+    saveChanges: 'Save Changes',
+    saving: 'Saving...',
+    saveSuccess: 'Settings saved successfully',
+    saveError: 'Failed to save settings',
+    loadError: 'Failed to load settings',
+    
+    tabs: {
+      profile: 'Profile',
+      notifications: 'Notifications',
+      privacy: 'Privacy & Security',
+      data: 'Data Management',
+      appearance: 'Appearance',
+    },
+    
+    profile: {
+      title: 'Profile Information',
+      fullName: 'Full Name',
+      email: 'Email Address',
+      company: 'Company',
+      role: 'Role',
+      changePassword: 'Change Password',
+      cancelPasswordChange: 'Cancel Password Change',
+      currentPassword: 'Current Password',
+      newPassword: 'New Password',
+      confirmPassword: 'Confirm New Password',
+      roles: {
+        hrManager: 'HR Manager',
+        recruiter: 'Recruiter',
+        talentAcquisition: 'Talent Acquisition',
+        admin: 'Admin',
+      },
+    },
+    
+    notifications: {
+      emailAlerts: 'Email Alerts',
+      emailAlertsDesc: 'Receive email notifications for important updates',
+      pushNotifications: 'Push Notifications',
+      pushNotificationsDesc: 'Get push notifications in your browser',
+      weeklyReports: 'Weekly Reports',
+      weeklyReportsDesc: 'Weekly summary of your recruitment analytics',
+      analysisComplete: 'Analysis Complete',
+      analysisCompleteDesc: 'Notification when resume analysis is complete',
+    },
+    
+    privacy: {
+      dataRetention: 'Data Retention Period',
+      dataRetentionDesc: 'How long should we keep your uploaded resumes?',
+      shareAnalytics: 'Share Anonymous Analytics',
+      shareAnalyticsDesc: 'Help us improve by sharing anonymous usage data',
+      autoDelete: 'Auto-delete Old Data',
+      autoDeleteDesc: 'Automatically delete data after retention period',
+      days30: '30 days',
+      days60: '60 days',
+      days90: '90 days',
+      days180: '180 days',
+      days365: '365 days',
+    },
+    
+    data: {
+      export: 'Export Data',
+      exportDesc: 'Download all your data in JSON format',
+      import: 'Import Data',
+      importDesc: 'Import data from previous backups',
+      dangerZone: 'Danger Zone',
+      reset: 'Reset Settings',
+      resetDesc: 'Reset all settings to default values',
+      delete: 'Delete All Data',
+      deleteDesc: 'Permanently delete all your data',
+      exportSuccess: 'Data exported successfully',
+      importSuccess: 'Data imported successfully',
+      resetConfirm: 'Are you sure you want to reset all settings to default? This action cannot be undone.',
+      deleteConfirm: 'Are you sure you want to delete ALL your data? This action is PERMANENT and cannot be undone.',
+      deleteDoubleConfirm: 'This will permanently delete all your data including resumes, analysis results, and settings. Type DELETE to confirm.',
+    },
+    
+    appearance: {
+      language: 'Language',
+    },
+  },
+
   // Pages - Dynamic content based on current page
   pages: {
     dashboard: {

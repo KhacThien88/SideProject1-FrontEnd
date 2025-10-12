@@ -250,7 +250,7 @@ export const SavedCandidates: React.FC = () => {
               <Button
                 variant='tertiary'
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 py-3 rounded-xl border ${
+                className={`flex items-center gap-2 px-4 py-3 rounded-xl  ${
                   showFilters || hasActiveFilters
                     ? 'bg-primary-50 border-primary-300 text-primary-700'
                     : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50'

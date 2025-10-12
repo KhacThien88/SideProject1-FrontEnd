@@ -11,6 +11,7 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react';
+import { Card } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
 import type { CandidateMatch } from '../../../types/candidateMatch';
 import { useTranslation } from '../../../hooks/useTranslation';
@@ -38,7 +39,7 @@ export const CandidateMatchCard: React.FC<CandidateMatchCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-neutral-200 p-6 hover:shadow-lg transition-all duration-200">
+    <Card variant="default" hover={true} className="bg-white backdrop-blur-sm group p-6">
       {/* Header: Avatar + Basic Info + Match Score */}
       <div className="flex items-start gap-4 mb-4">
         {/* Avatar */}
@@ -46,9 +47,9 @@ export const CandidateMatchCard: React.FC<CandidateMatchCardProps> = ({
           <img
             src={candidate.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(candidate.candidateName)}&background=random`}
             alt={candidate.candidateName}
-            className="w-16 h-16 rounded-full object-cover border-2 border-neutral-200"
+            className="w-16 h-16 rounded-full object-cover border-2 border-neutral-200 shadow-md group-hover:shadow-lg transition-shadow"
           />
-          <div className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold ${getMatchScoreColor(candidate.matchScore)}`}>
+          <div className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold shadow-sm ${getMatchScoreColor(candidate.matchScore)}`}>
             {candidate.matchScore}
           </div>
         </div>
@@ -183,9 +184,11 @@ export const CandidateMatchCard: React.FC<CandidateMatchCardProps> = ({
       <div className="flex items-center gap-2">
         <Button
           onClick={() => onDownloadResume(candidate.resumeUrl)}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 transition-all text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
+          variant="secondary"
+          size="md"
+          className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
         >
-          <Download className="w-4 h-4" />
+          <Download className="w-4 h-4 mr-2" />
           {getContent('candidateMatches.downloadResume')}
         </Button>
 
@@ -201,6 +204,6 @@ export const CandidateMatchCard: React.FC<CandidateMatchCardProps> = ({
           <Star className={`w-4 h-4 ${candidate.isSaved ? 'fill-current' : ''}`} />
         </button>
       </div>
-    </div>
+    </Card>
   );
 };

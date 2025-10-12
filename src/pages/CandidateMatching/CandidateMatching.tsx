@@ -6,6 +6,7 @@ import {
   Target,
   X
 } from 'lucide-react';
+import { Card } from '../../components/ui/Card';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
 import Footer from '../../components/layout/Footer';
@@ -232,10 +233,10 @@ export const JobMatches: React.FC = () => {
             </Button>
 
             {/* Job Header */}
-            <div className="bg-gradient-to-br from-white via-primary-50/20 to-secondary-50/20 rounded-2xl border border-neutral-200 shadow-md p-6 mb-8">
+            <Card variant="default" hover={true} className="bg-white backdrop-blur-sm group mb-8 p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-2">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-primary-600 via-secondary-500 via-primary-500 to-secondary-600 bg-clip-text text-transparent mb-2">
                     {jobProfile.title}
                   </h2>
                   <div className="flex flex-wrap gap-4 text-sm text-neutral-600">
@@ -250,10 +251,10 @@ export const JobMatches: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-secondary-600 via-primary-500/60 via-secondary-500/60 to-primary-600 bg-clip-text text-transparent">
                     {filteredCandidates.length}
                   </div>
-                  <div className="text-sm font-medium text-neutral-600">
+                  <div className="text-sm font-semibold text-neutral-600">
                     {getContent('candidateMatches.totalMatches')}
                   </div>
                 </div>
@@ -275,7 +276,7 @@ export const JobMatches: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </div>
+            </Card>
 
             {/* Filters Bar */}
             <div className="flex items-center gap-4 mb-6">

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
+import Footer from '../../components/layout/Footer';
 import { CandidateMatchCard } from './components/CandidateMatchCard';
 import type { CandidateMatch, MatchFilters, MatchSortOption } from '../../types/candidateMatch';
 import { candidateMatchService } from '../../services/api/candidateMatch/candidateMatchService';
@@ -401,9 +402,9 @@ export const JobMatches: React.FC = () => {
             {filteredCandidates.length === 0 ? (
               <div className="bg-white rounded-2xl border border-neutral-200 p-12 text-center">
                 <Users className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                <h4 className="text-lg font-semibold text-neutral-900 mb-2">
                   {getContent('candidateMatches.noCandidates')}
-                </h3>
+                </h4>
                 <p className="text-neutral-600">
                   {hasActiveFilters
                     ? getContent('candidateMatches.noResultsFilters')
@@ -432,6 +433,9 @@ export const JobMatches: React.FC = () => {
               </div>
             )}
           </div>
+          
+          {/* Footer */}
+          <Footer />
         </main>
       </div>
     </div>

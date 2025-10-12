@@ -12,7 +12,7 @@ import { JobDetailPage } from './pages/JobMatching/JobDetailPage';
 import { SavedCandidates } from './pages/Candidates';
 import { Settings } from './pages/Settings';
 import { JobPostings } from './pages/JobPostings';
-import { JobMatches } from './pages/JobMatches';
+import { JobMatches } from './pages/CandidateMatching';
 
 function App() {
   // Determine initial route based on current URL

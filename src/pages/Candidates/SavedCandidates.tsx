@@ -7,13 +7,14 @@ import {
 } from 'lucide-react';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
-import { CandidateMatchCard } from '../JobMatches/components/CandidateMatchCard';
+import { CandidateMatchCard } from '../CandidateMatching/components/CandidateMatchCard';
 import type { CandidateMatch, MatchFilters, MatchSortOption } from '../../types/candidateMatch';
 import { candidateMatchService } from '../../services/api/candidateMatch/candidateMatchService';
 import { jobPostingService } from '../../services/api/jobPosting/jobPostingService';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useToast } from '../../contexts/ToastContext';
 import { useRouter } from '../../components/Router';
+import Footer from '../../components/layout/Footer';
 
 export const SavedCandidates: React.FC = () => {
   const { getContent } = useTranslation();
@@ -442,9 +443,9 @@ export const SavedCandidates: React.FC = () => {
             {filteredCandidates.length === 0 ? (
               <div className="bg-white rounded-2xl border border-neutral-200 p-12 text-center">
                 <Users className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                <h4 className="text-lg font-semibold bg-gradient-to-br from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent mb-2">
                   {getContent('savedCandidates.noCandidates')}
-                </h3>
+                </h4>
                 <p className="text-neutral-600">
                   {hasActiveFilters
                     ? getContent('savedCandidates.noResultsFilters')
@@ -473,8 +474,13 @@ export const SavedCandidates: React.FC = () => {
               </div>
             )}
           </div>
+          
+          {/* Footer */}
+          <Footer />
         </main>
       </div>
+    
     </div>
+    
   );
 };

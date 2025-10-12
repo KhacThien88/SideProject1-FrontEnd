@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Plus, Briefcase } from 'lucide-react';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
+import Footer from '../../components/layout/Footer';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useToast } from '../../contexts/ToastContext';
 import { useRouter } from '../../components/Router';
@@ -212,6 +213,9 @@ export const JobPostings: React.FC = () => {
               editingProfile={editingProfile}
             />
           </div>
+          
+          {/* Footer */}
+          <Footer />
         </main>
       </div>
     </div>

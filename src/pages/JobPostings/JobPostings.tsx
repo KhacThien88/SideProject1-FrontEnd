@@ -182,8 +182,8 @@ export const JobPostings: React.FC = () => {
             {/* No Search Results */}
             {!isLoading && filteredProfiles.length === 0 && searchQuery && (
               <div className="text-center py-20">
-                <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Search className="w-10 h-10 text-neutral-400" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-10 h-10 text-white" />
                 </div>
                 <div className="text-xl font-semibold text-neutral-900 mb-2">
                   {getContent('jobPostings.noResultsTitle')}

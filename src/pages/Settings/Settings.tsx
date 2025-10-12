@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Save } from 'lucide-react';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
+import { Layout } from '../../components/common/Layout';
+import { Container } from '../../components/common/Container';
+import { Card } from '../../components/ui/Card';
+import { Button } from '../../components/ui/Button';
 import { SettingsSidebar } from './components/SettingsSidebar';
 import { ProfileTab } from './components/ProfileTab';
 import { NotificationsTab } from './components/NotificationsTab';
@@ -13,6 +17,7 @@ import { useToast } from '../../contexts/ToastContext';
 import { useTranslation } from '../../hooks/useTranslation';
 import { settingsService } from '../../services/api/settings/settingsService';
 import type { SettingsData, SettingsTab } from '../../types/settings';
+import Footer from '../../components/layout/Footer';
 
 export const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
@@ -163,120 +168,134 @@ export const Settings: React.FC = () => {
 
   if (isLoading || !settings) {
     return (
-      <div className="flex h-screen">
-        <DashboardSidebar />
-        <div className="flex-1 flex items-center justify-center">
-          <LoadingSpinner size="lg" />
+      <Layout className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">
+        <div className="flex min-h-screen">
+          <DashboardSidebar />
+          <div className="flex-1 flex items-center justify-center">
+            <LoadingSpinner size="lg" />
+          </div>
         </div>
-      </div>
+        
+      </Layout>
     );
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-primary-50/30 via-white to-secondary-50/30">
-      <DashboardSidebar />
-      
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <DashboardHeader />
+    <Layout className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">
+      <div className="flex min-h-screen">
+        <DashboardSidebar />
         
-        <main className="flex-1 overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              {/* Sidebar */}
-              <div className="lg:col-span-1">
-                <SettingsSidebar 
-                  activeTab={activeTab}
-                  onTabChange={setActiveTab}
-                />
-              </div>
-
-              {/* Content */}
-              <div className="lg:col-span-3">
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-neutral-200/50">
-                  {/* Tab Title & Save Button */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="text-3xl font-semibold text-neutral-900">
-                      {activeTab === 'profile' && getContent('settings.tabs.profile')}
-                      {activeTab === 'notifications' && getContent('settings.tabs.notifications')}
-                      {activeTab === 'privacy' && getContent('settings.tabs.privacy')}
-                      {activeTab === 'data' && getContent('settings.tabs.data')}
-                      {activeTab === 'appearance' && getContent('settings.tabs.appearance')}
-                    </div>
-
-                    {activeTab !== 'data' && (
-                      <button
-                        onClick={handleSaveChanges}
-                        disabled={isSaving}
-                        className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isSaving ? (
-                          <>
-                            <LoadingSpinner size="sm" variant="neutral" />
-                            <span>{getContent('settings.saving')}</span>
-                          </>
-                        ) : (
-                          <>
-                            <Save className="w-4 h-4" />
-                            <span>{getContent('settings.saveChanges')}</span>
-                          </>
-                        )}
-                      </button>
-                    )}
+        <div className="flex-1 flex flex-col min-w-0">
+          <DashboardHeader />
+          
+          <main className="flex-1 overflow-auto">
+            <div className="py-8">
+              <Container maxWidth="2xl">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                  {/* Sidebar */}
+                  <div className="lg:col-span-1">
+                    <Card className="p-0 overflow-hidden">
+                      <SettingsSidebar 
+                        activeTab={activeTab}
+                        onTabChange={setActiveTab}
+                      />
+                    </Card>
                   </div>
 
-                  {/* Tab Content */}
-                  <div>
-                    {activeTab === 'profile' && (
-                      <ProfileTab
-                        profile={settings.profile}
-                        onUpdate={async (updates) => {
-                          setSettings(prev => prev ? { ...prev, profile: { ...prev.profile, ...updates } } : null);
-                        }}
-                      />
-                    )}
+                  {/* Content */}
+                  <div className="lg:col-span-3">
+                    <Card className="p-8">
+                      {/* Tab Title & Save Button */}
+                      <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-3xl font-semibold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                          {activeTab === 'profile' && getContent('settings.tabs.profile')}
+                          {activeTab === 'notifications' && getContent('settings.tabs.notifications')}
+                          {activeTab === 'privacy' && getContent('settings.tabs.privacy')}
+                          {activeTab === 'data' && getContent('settings.tabs.data')}
+                          {activeTab === 'appearance' && getContent('settings.tabs.appearance')}
+                        </h3>
 
-                    {activeTab === 'notifications' && (
-                      <NotificationsTab
-                        settings={settings.notifications}
-                        onUpdate={(updates) => {
-                          setSettings(prev => prev ? { ...prev, notifications: { ...prev.notifications, ...updates } } : null);
-                        }}
-                      />
-                    )}
+                        {activeTab !== 'data' && (
+                          <Button
+                            onClick={handleSaveChanges}
+                            disabled={isSaving}
+                            variant="primary"
+                            size="md"
+                            className="flex items-center gap-2"
+                          >
+                            {isSaving ? (
+                              <>
+                                <LoadingSpinner size="sm" variant="neutral" />
+                                <span>{getContent('settings.saving')}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Save className="w-4 h-4" />
+                                <span>{getContent('settings.saveChanges')}</span>
+                              </>
+                            )}
+                          </Button>
+                        )}
+                      </div>
 
-                    {activeTab === 'privacy' && (
-                      <PrivacyTab
-                        settings={settings.privacy}
-                        onUpdate={(updates) => {
-                          setSettings(prev => prev ? { ...prev, privacy: { ...prev.privacy, ...updates } } : null);
-                        }}
-                      />
-                    )}
+                      {/* Tab Content */}
+                      <div>
+                        {activeTab === 'profile' && (
+                          <ProfileTab
+                            profile={settings.profile}
+                            onUpdate={async (updates) => {
+                              setSettings(prev => prev ? { ...prev, profile: { ...prev.profile, ...updates } } : null);
+                            }}
+                          />
+                        )}
 
-                    {activeTab === 'data' && (
-                      <DataManagementTab
-                        onExport={handleExportData}
-                        onImport={handleImportData}
-                        onReset={handleResetSettings}
-                        onDeleteAll={handleDeleteAllData}
-                      />
-                    )}
+                        {activeTab === 'notifications' && (
+                          <NotificationsTab
+                            settings={settings.notifications}
+                            onUpdate={(updates) => {
+                              setSettings(prev => prev ? { ...prev, notifications: { ...prev.notifications, ...updates } } : null);
+                            }}
+                          />
+                        )}
 
-                    {activeTab === 'appearance' && (
-                      <AppearanceTab
-                        settings={settings.appearance}
-                        onUpdate={(updates) => {
-                          setSettings(prev => prev ? { ...prev, appearance: { ...prev.appearance, ...updates } } : null);
-                        }}
-                      />
-                    )}
+                        {activeTab === 'privacy' && (
+                          <PrivacyTab
+                            settings={settings.privacy}
+                            onUpdate={(updates) => {
+                              setSettings(prev => prev ? { ...prev, privacy: { ...prev.privacy, ...updates } } : null);
+                            }}
+                          />
+                        )}
+
+                        {activeTab === 'data' && (
+                          <DataManagementTab
+                            onExport={handleExportData}
+                            onImport={handleImportData}
+                            onReset={handleResetSettings}
+                            onDeleteAll={handleDeleteAllData}
+                          />
+                        )}
+
+                        {activeTab === 'appearance' && (
+                          <AppearanceTab
+                            settings={settings.appearance}
+                            onUpdate={(updates) => {
+                              setSettings(prev => prev ? { ...prev, appearance: { ...prev.appearance, ...updates } } : null);
+                            }}
+                          />
+                        )}
+                      </div>
+                    </Card>
                   </div>
                 </div>
-              </div>
+              </Container>    
             </div>
-          </div>
-        </main>
+            <div className="mt-50">
+              <Footer />
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };

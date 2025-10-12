@@ -20,7 +20,7 @@ export const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onT
   ];
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-soft border border-neutral-200/50">
+    <div className="p-4">
       <div className="space-y-2">
         {tabs.map((tab) => {
           const Icon = tab.icon;

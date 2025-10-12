@@ -1,5 +1,7 @@
 import React from 'react';
 import { Briefcase, Clock, Users, Eye, Edit, Trash2, MoreVertical } from 'lucide-react';
+import { Card } from '../../../components/ui/Card';
+import { Button } from '../../../components/ui/Button';
 import type { JobProfile } from '../../../types/jobPosting';
 import { useTranslation } from '../../../hooks/useTranslation';
 
@@ -49,12 +51,12 @@ export const JobPostingCard: React.FC<JobPostingCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-neutral-200 p-6 hover:shadow-lg transition-all duration-200">
+    <Card variant="default" hover={true} className="bg-white backdrop-blur-sm group p-6">
       {/* Header with Icon and Menu */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
-            <Briefcase className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 flex-shrink-0">
+            <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <div>
             <div className="font-semibold text-neutral-900 text-lg">{jobProfile.title}</div>
@@ -162,20 +164,24 @@ export const JobPostingCard: React.FC<JobPostingCardProps> = ({
 
       {/* Actions */}
       <div className="flex items-center gap-3 pt-4 border-t border-neutral-200">
-        <button
+        <Button
           onClick={() => onViewMatches(jobProfile.id)}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-neutral-300 rounded-xl hover:bg-neutral-50 transition-all text-sm font-medium text-neutral-700"
+          variant="tertiary"
+          size="md"
+          className="flex-1"
         >
-          <Eye className="w-4 h-4" />
+          <Eye className="w-4 h-4 mr-2" />
           {getContent('jobPostings.viewMatches')}
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => onEdit(jobProfile.id)}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:shadow-lg transition-all text-sm font-medium"
+          variant="secondary"
+          size="md"
+          className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
         >
-          <Edit className="w-4 h-4" />
+          <Edit className="w-4 h-4 mr-2" />
           {getContent('jobPostings.edit')}
-        </button>
+        </Button>
         <button
           onClick={() => onDelete(jobProfile.id)}
           className="p-2.5 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
@@ -183,6 +189,6 @@ export const JobPostingCard: React.FC<JobPostingCardProps> = ({
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
-    </div>
+    </Card>
   );
 };

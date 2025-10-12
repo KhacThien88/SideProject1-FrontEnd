@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Plus, Briefcase } from 'lucide-react';
+import { Layout } from '../../components/common/Layout';
+import { Container } from '../../components/common/Container';
+import { Button } from '../../components/ui/Button';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
 import { useTranslation } from '../../hooks/useTranslation';
@@ -8,6 +11,7 @@ import { jobPostingService } from '../../services/api/jobPosting/jobPostingServi
 import type { JobProfile, CreateJobProfileData } from '../../types/jobPosting';
 import { JobPostingCard } from './components/JobPostingCard';
 import { CreateJobProfileModal } from './components/CreateJobProfileModal';
+import Footer from '../../components/layout/Footer';
 
 export const JobPostings: React.FC = () => {
   const { getContent } = useTranslation();
@@ -110,34 +114,39 @@ export const JobPostings: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-primary-50/30 via-white to-secondary-50/30">
-      <DashboardSidebar />
-      
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <DashboardHeader />
-        
-        <main className="flex-1 overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {/* Search and Create */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={getContent('jobPostings.searchPlaceholder')}
-                  className="w-full pl-12 pr-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                />
-              </div>
-              <button
-                onClick={handleOpenCreateModal}
-                className="px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:shadow-lg transition-all flex items-center gap-2 font-medium whitespace-nowrap"
-              >
-                <Plus className="w-5 h-5" />
-                {getContent('jobPostings.createJobProfile')}
-              </button>
-            </div>
+    <Layout className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">
+      <div className="flex flex-col min-h-screen">
+        <div className="flex flex-1 overflow-hidden">
+          <DashboardSidebar />
+          
+          <div className="flex-1 flex flex-col min-w-0">
+            <DashboardHeader />
+            
+            <main className="flex-1 overflow-auto">
+              <div className="py-8">
+                <Container maxWidth="2xl">
+                  {/* Search and Create */}
+                  <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                    <div className="flex-1 relative">
+                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder={getContent('jobPostings.searchPlaceholder')}
+                        className="w-full pl-12 pr-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                      />
+                    </div>
+                    <Button
+                      onClick={handleOpenCreateModal}
+                      variant="secondary"
+                      size="md"
+                      className="whitespace-nowrap bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-lg"
+                    >
+                      <Plus className="w-5 h-5 mr-2" />
+                      {getContent('jobPostings.createJobProfile')}
+                    </Button>
+                  </div>
 
             {/* Loading State */}
             {isLoading && (
@@ -158,13 +167,15 @@ export const JobPostings: React.FC = () => {
                 <div className="text-neutral-600 mb-6">
                   {getContent('jobPostings.noJobsSubtitle')}
                 </div>
-                <button
+                <Button
                   onClick={handleOpenCreateModal}
-                  className="px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:shadow-lg transition-all inline-flex items-center gap-2 font-medium"
+                  variant="secondary"
+                  size="md"
+                  className="shadow-lg bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
                 >
-                  <Plus className="w-5 h-5" />
+                  <Plus className="w-5 h-5 mr-2" />
                   {getContent('jobPostings.createFirstJob')}
-                </button>
+                </Button>
               </div>
             )}
 
@@ -208,9 +219,15 @@ export const JobPostings: React.FC = () => {
               onSubmit={handleCreateOrUpdate}
               editingProfile={editingProfile}
             />
+                </Container>
+              </div>
+            </main>
+            <div className="mt-10">
+            <Footer />
           </div>
-        </main>
+          </div>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };

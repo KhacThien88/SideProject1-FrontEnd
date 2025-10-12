@@ -221,19 +221,21 @@ export const JobMatches: React.FC = () => {
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-7xl mx-auto p-8">
             {/* Back Button */}
-            <button
+            <Button
               onClick={() => navigate('/dashboard/job-postings')}
-              className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 mb-6 transition-colors"
+              variant="tertiary"
+              size="md"
+              className="mb-6 group"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
               {getContent('candidateMatches.backToJobs')}
-            </button>
+            </Button>
 
             {/* Job Header */}
-            <div className="bg-white rounded-2xl border border-neutral-200 p-6 mb-8">
+            <div className="bg-gradient-to-br from-white via-primary-50/20 to-secondary-50/20 rounded-2xl border border-neutral-200 shadow-md p-6 mb-8">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent mb-2">
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-2">
                     {jobProfile.title}
                   </h2>
                   <div className="flex flex-wrap gap-4 text-sm text-neutral-600">
@@ -248,10 +250,10 @@ export const JobMatches: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold text-primary-600">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                     {filteredCandidates.length}
                   </div>
-                  <div className="text-sm text-neutral-500">
+                  <div className="text-sm font-medium text-neutral-600">
                     {getContent('candidateMatches.totalMatches')}
                   </div>
                 </div>
@@ -259,14 +261,14 @@ export const JobMatches: React.FC = () => {
               
               {/* Required Skills */}
               <div>
-                <div className="text-sm font-medium text-neutral-700 mb-2">
+                <div className="text-sm font-semibold text-neutral-800 mb-3">
                   {getContent('candidateMatches.requiredSkills')}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {jobProfile.requiredSkills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1 bg-primary-100 text-primary-700 rounded-lg text-sm font-medium"
+                      className="px-3 py-1.5 bg-gradient-to-r from-primary-100 to-secondary-100 text-primary-700 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition-shadow"
                     >
                       {skill}
                     </span>
@@ -279,18 +281,18 @@ export const JobMatches: React.FC = () => {
             <div className="flex items-center gap-4 mb-6">
               {/* Filter Button */}
               <Button
-                variant='tertiary'
+                variant={showFilters || hasActiveFilters ? 'secondary' : 'tertiary'}
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 py-3 rounded-xl border transition-all ${
+                className={`relative ${
                   showFilters || hasActiveFilters
-                    ? 'bg-primary-50 border-primary-300 text-primary-700'
-                    : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50'
+                    ? 'bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white border-transparent shadow-md'
+                    : ''
                 }`}
               >
-                <Filter className="w-5 h-5" />
+                <Filter className="w-5 h-5 mr-2" />
                 {getContent('candidateMatches.filters')}
                 {hasActiveFilters && (
-                  <span className="w-2 h-2 bg-primary-500 rounded-full"></span>
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>
                 )}
               </Button>
 
@@ -298,7 +300,7 @@ export const JobMatches: React.FC = () => {
               <select
                 value={sortOption}
                 onChange={(e) => setSortOption(e.target.value as MatchSortOption)}
-                className="px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="px-4 py-3 border border-neutral-300 rounded-xl bg-white font-medium text-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all hover:border-primary-300 hover:bg-primary-50/30 cursor-pointer shadow-sm"
               >
                 <option value="matchScore">{getContent('candidateMatches.sort.matchScore')}</option>
                 <option value="experience">{getContent('candidateMatches.sort.experience')}</option>
@@ -309,15 +311,15 @@ export const JobMatches: React.FC = () => {
 
             {/* Filters Panel */}
             {showFilters && (
-              <div className="bg-white rounded-2xl border border-neutral-200 p-6 mb-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-neutral-900">
+              <div className="bg-gradient-to-br from-white via-primary-50/30 to-secondary-50/30 rounded-2xl border border-neutral-200 shadow-lg p-6 mb-6 animate-slide-down">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                     {getContent('candidateMatches.filters')}
                   </h3>
                   {hasActiveFilters && (
                     <button
                       onClick={clearFilters}
-                      className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1"
+                      className="text-sm font-medium text-primary-600 hover:text-primary-700 flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-primary-50 transition-all"
                     >
                       <X className="w-4 h-4" />
                       {getContent('candidateMatches.clearFilters')}
@@ -327,11 +329,16 @@ export const JobMatches: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {/* Match Score Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
-                      {getContent('candidateMatches.filterMatchScore')}: {filters.minMatchScore}% - {filters.maxMatchScore}%
+                  <div className="bg-white rounded-xl p-4 border border-neutral-200 hover:border-primary-300 transition-all">
+                    <label className="block text-sm font-semibold text-neutral-800 mb-3">
+                      {getContent('candidateMatches.filterMatchScore')}
                     </label>
-                    <div className="space-y-2">
+                    <div className="text-center mb-3">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                        {filters.minMatchScore}% - {filters.maxMatchScore}%
+                      </span>
+                    </div>
+                    <div className="space-y-3">
                       <input
                         type="range"
                         min="0"
@@ -340,7 +347,7 @@ export const JobMatches: React.FC = () => {
                         onChange={(e) =>
                           setFilters({ ...filters, minMatchScore: parseInt(e.target.value) })
                         }
-                        className="w-full"
+                        className="w-full accent-primary-500"
                       />
                       <input
                         type="range"
@@ -350,17 +357,22 @@ export const JobMatches: React.FC = () => {
                         onChange={(e) =>
                           setFilters({ ...filters, maxMatchScore: parseInt(e.target.value) })
                         }
-                        className="w-full"
+                        className="w-full accent-secondary-500"
                       />
                     </div>
                   </div>
 
                   {/* Experience Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
-                      {getContent('candidateMatches.filterExperience')}: {filters.experienceYears?.min || 0} - {filters.experienceYears?.max || 20} {getContent('candidateMatches.years')}
+                  <div className="bg-white rounded-xl p-4 border border-neutral-200 hover:border-primary-300 transition-all">
+                    <label className="block text-sm font-semibold text-neutral-800 mb-3">
+                      {getContent('candidateMatches.filterExperience')}
                     </label>
-                    <div className="space-y-2">
+                    <div className="text-center mb-3">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                        {filters.experienceYears?.min || 0} - {filters.experienceYears?.max || 20} {getContent('candidateMatches.years')}
+                      </span>
+                    </div>
+                    <div className="space-y-3">
                       <input
                         type="range"
                         min="0"
@@ -375,7 +387,7 @@ export const JobMatches: React.FC = () => {
                             } 
                           })
                         }
-                        className="w-full"
+                        className="w-full accent-primary-500"
                       />
                       <input
                         type="range"
@@ -391,7 +403,7 @@ export const JobMatches: React.FC = () => {
                             } 
                           })
                         }
-                        className="w-full"
+                        className="w-full accent-secondary-500"
                       />
                     </div>
                   </div>
@@ -436,7 +448,9 @@ export const JobMatches: React.FC = () => {
           </div>
           
           {/* Footer */}
+          <div className="mt-10">
           <Footer />
+          </div>
         </main>
       </div>
     </div>

@@ -248,24 +248,26 @@ export const SavedCandidates: React.FC = () => {
 
               {/* Filter Button */}
               <Button
-                variant='tertiary'
+                variant={showFilters || hasActiveFilters ? 'secondary' : 'tertiary'}
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 py-3 rounded-xl  ${
+                className={`relative ${
                   showFilters || hasActiveFilters
-                    ? 'bg-primary-50 border-primary-300 text-primary-700'
-                    : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50'
+                    ? 'bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white border-transparent shadow-md'
+                    : ''
                 }`}
               >
-                <Filter className="w-5 h-5" />
+                <Filter className="w-5 h-5 mr-2" />
                 {getContent('savedCandidates.filters')}
-                {hasActiveFilters && <span className="w-2 h-2 bg-primary-500 rounded-full"></span>}
+                {hasActiveFilters && (
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>
+                )}
               </Button>
 
               {/* Sort */}
               <select
                 value={sortOption}
                 onChange={(e) => setSortOption(e.target.value as MatchSortOption)}
-                className="px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="px-4 py-3 border border-neutral-300 rounded-xl bg-white font-medium text-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all hover:border-primary-300 hover:bg-primary-50/30 cursor-pointer shadow-sm"
               >
                 <option value="matchScore">{getContent('savedCandidates.sort.matchScore')}</option>
                 <option value="experience">{getContent('savedCandidates.sort.experience')}</option>
@@ -276,15 +278,15 @@ export const SavedCandidates: React.FC = () => {
 
             {/* Filters Panel */}
             {showFilters && (
-              <div className="bg-white rounded-2xl border border-neutral-200 p-6 mb-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-neutral-900">
+              <div className="bg-gradient-to-br from-white via-primary-50/30 to-secondary-50/30 rounded-2xl border border-neutral-200 shadow-lg p-6 mb-6 animate-slide-down">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                     {getContent('savedCandidates.filters')}
                   </h3>
                   {hasActiveFilters && (
                     <button
                       onClick={clearFilters}
-                      className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1"
+                      className="text-sm font-medium text-primary-600 hover:text-primary-700 flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-primary-50 transition-all"
                     >
                       <X className="w-4 h-4" />
                       {getContent('savedCandidates.clearFilters')}
@@ -294,11 +296,16 @@ export const SavedCandidates: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {/* Match Score Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
-                      {getContent('savedCandidates.filterMatchScore')}: {filters.minMatchScore}% - {filters.maxMatchScore}%
+                  <div className="bg-white rounded-xl p-4 border border-neutral-200 hover:border-primary-300 transition-all">
+                    <label className="block text-sm font-semibold text-neutral-800 mb-3">
+                      {getContent('savedCandidates.filterMatchScore')}
                     </label>
-                    <div className="space-y-2">
+                    <div className="text-center mb-3">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                        {filters.minMatchScore}% - {filters.maxMatchScore}%
+                      </span>
+                    </div>
+                    <div className="space-y-3">
                       <input
                         type="range"
                         min="0"
@@ -307,7 +314,7 @@ export const SavedCandidates: React.FC = () => {
                         onChange={(e) =>
                           setFilters({ ...filters, minMatchScore: parseInt(e.target.value) })
                         }
-                        className="w-full"
+                        className="w-full accent-primary-500"
                       />
                       <input
                         type="range"
@@ -317,17 +324,22 @@ export const SavedCandidates: React.FC = () => {
                         onChange={(e) =>
                           setFilters({ ...filters, maxMatchScore: parseInt(e.target.value) })
                         }
-                        className="w-full"
+                        className="w-full accent-secondary-500"
                       />
                     </div>
                   </div>
 
                   {/* Experience Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
-                      {getContent('savedCandidates.filterExperience')}: {filters.experienceYears?.min || 0} - {filters.experienceYears?.max || 20} {getContent('savedCandidates.years')}
+                  <div className="bg-white rounded-xl p-4 border border-neutral-200 hover:border-primary-300 transition-all">
+                    <label className="block text-sm font-semibold text-neutral-800 mb-3">
+                      {getContent('savedCandidates.filterExperience')}
                     </label>
-                    <div className="space-y-2">
+                    <div className="text-center mb-3">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                        {filters.experienceYears?.min || 0} - {filters.experienceYears?.max || 20} {getContent('savedCandidates.years')}
+                      </span>
+                    </div>
+                    <div className="space-y-3">
                       <input
                         type="range"
                         min="0"
@@ -342,7 +354,7 @@ export const SavedCandidates: React.FC = () => {
                             },
                           })
                         }
-                        className="w-full"
+                        className="w-full accent-primary-500"
                       />
                       <input
                         type="range"
@@ -358,24 +370,29 @@ export const SavedCandidates: React.FC = () => {
                             },
                           })
                         }
-                        className="w-full"
+                        className="w-full accent-secondary-500"
                       />
                     </div>
                   </div>
 
                   {/* Skill Matches Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
-                      {getContent('savedCandidates.filterSkillMatches')}: {minSkillMatches} - {maxSkillMatches}
+                  <div className="bg-white rounded-xl p-4 border border-neutral-200 hover:border-primary-300 transition-all">
+                    <label className="block text-sm font-semibold text-neutral-800 mb-3">
+                      {getContent('savedCandidates.filterSkillMatches')}
                     </label>
-                    <div className="space-y-2">
+                    <div className="text-center mb-3">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                        {minSkillMatches} - {maxSkillMatches}
+                      </span>
+                    </div>
+                    <div className="space-y-3">
                       <input
                         type="range"
                         min="0"
                         max="20"
                         value={minSkillMatches}
                         onChange={(e) => setMinSkillMatches(parseInt(e.target.value))}
-                        className="w-full"
+                        className="w-full accent-primary-500"
                       />
                       <input
                         type="range"
@@ -383,19 +400,19 @@ export const SavedCandidates: React.FC = () => {
                         max="20"
                         value={maxSkillMatches}
                         onChange={(e) => setMaxSkillMatches(parseInt(e.target.value))}
-                        className="w-full"
+                        className="w-full accent-secondary-500"
                       />
                     </div>
                   </div>
 
                   {/* Location Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <div className="bg-white rounded-xl p-4 border border-neutral-200 hover:border-primary-300 transition-all">
+                    <label className="block text-sm font-semibold text-neutral-800 mb-3">
                       {getContent('savedCandidates.filterLocation')}
                     </label>
-                    <div className="space-y-2 max-h-32 overflow-y-auto">
+                    <div className="space-y-2 max-h-32 overflow-y-auto custom-scrollbar">
                       {uniqueLocations.map((location) => (
-                        <label key={location} className="flex items-center gap-2 cursor-pointer">
+                        <label key={location} className="flex items-center gap-2 cursor-pointer group hover:bg-primary-50 p-2 rounded-lg transition-colors">
                           <input
                             type="checkbox"
                             checked={filters.location?.includes(location)}
@@ -414,13 +431,13 @@ export const SavedCandidates: React.FC = () => {
                   </div>
 
                   {/* Skills Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <div className="bg-white rounded-xl p-4 border border-neutral-200 hover:border-primary-300 transition-all md:col-span-2 lg:col-span-4">
+                    <label className="block text-sm font-semibold text-neutral-800 mb-3">
                       {getContent('savedCandidates.filterSkills')}
                     </label>
-                    <div className="space-y-2 max-h-32 overflow-y-auto">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 max-h-32 overflow-y-auto custom-scrollbar">
                       {allSkills.slice(0, 10).map((skill) => (
-                        <label key={skill} className="flex items-center gap-2 cursor-pointer">
+                        <label key={skill} className="flex items-center gap-2 cursor-pointer group hover:bg-primary-50 p-2 rounded-lg transition-colors">
                           <input
                             type="checkbox"
                             checked={filters.skills?.includes(skill)}
@@ -430,9 +447,9 @@ export const SavedCandidates: React.FC = () => {
                                 : (filters.skills || []).filter((s) => s !== skill);
                               setFilters({ ...filters, skills: newSkills });
                             }}
-                            className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                            className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500 accent-primary-500"
                           />
-                          <span className="text-sm text-neutral-700">{skill}</span>
+                          <span className="text-sm text-neutral-700 group-hover:text-primary-700 transition-colors">{skill}</span>
                         </label>
                       ))}
                     </div>
@@ -444,8 +461,8 @@ export const SavedCandidates: React.FC = () => {
             {/* Candidates Grid */}
             {filteredCandidates.length === 0 ? (
               <div className="bg-white rounded-2xl border border-neutral-200 p-12 text-center">
-                <Users className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
-                <h4 className="text-lg font-semibold bg-gradient-to-br from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent mb-2">
+                <Users className="w-16 h-16 rounded-2xl p-2 bg-gradient-to-b from-primary-500 to-secondary-500 text-white mx-auto mb-4" />
+                <h4 className="text-lg font-semibold text-neutral-800 mb-2">
                   {getContent('savedCandidates.noCandidates')}
                 </h4>
                 <p className="text-neutral-600">
@@ -478,7 +495,9 @@ export const SavedCandidates: React.FC = () => {
           </div>
           
           {/* Footer */}
+          <div className="mt-30">
           <Footer />
+          </div>
         </main>
       </div>
     

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Plus } from 'lucide-react';
+import { Button } from '../../../components/ui/Button';
 import type { JobProfile, CreateJobProfileData, ExperienceLevel } from '../../../types/jobPosting';
 import { useTranslation } from '../../../hooks/useTranslation';
 
@@ -177,14 +178,16 @@ export const CreateJobProfileModal: React.FC<CreateJobProfileModalProps> = ({
                 placeholder={getContent('jobPostings.addSkillPlaceholder')}
                 className="flex-1 px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
               />
-              <button
+              <Button
                 type="button"
                 onClick={handleAddRequiredSkill}
-                className="px-4 py-2.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:shadow-lg transition-all flex items-center gap-2"
+                variant="secondary"
+                size="sm"
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-4 h-4 mr-2" />
                 {getContent('jobPostings.add')}
-              </button>
+              </Button>
             </div>
             <div className="flex flex-wrap gap-2">
               {requiredSkills.map((skill) => (
@@ -222,14 +225,16 @@ export const CreateJobProfileModal: React.FC<CreateJobProfileModalProps> = ({
                 placeholder={getContent('jobPostings.addSkillPlaceholder')}
                 className="flex-1 px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
               />
-              <button
+              <Button
                 type="button"
                 onClick={handleAddPreferredSkill}
-                className="px-4 py-2.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:shadow-lg transition-all flex items-center gap-2"
+                variant="secondary"
+                size="sm"
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-4 h-4 mr-2" />
                 {getContent('jobPostings.add')}
-              </button>
+              </Button>
             </div>
             <div className="flex flex-wrap gap-2">
               {preferredSkills.map((skill) => (
@@ -255,24 +260,28 @@ export const CreateJobProfileModal: React.FC<CreateJobProfileModalProps> = ({
 
           {/* Actions */}
           <div className="flex gap-3 pt-4 border-t border-neutral-200">
-            <button
+            <Button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border border-neutral-300 text-neutral-700 rounded-xl hover:bg-neutral-50 transition-all font-medium"
+              variant="tertiary"
+              size="md"
+              className="flex-1"
             >
               {getContent('jobPostings.cancel')}
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
               disabled={isSubmitting || !title.trim() || !description.trim() || requiredSkills.length === 0}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:shadow-lg transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              variant="secondary"
+              size="md"
+              className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
             >
               {isSubmitting
                 ? getContent('jobPostings.saving')
                 : editingProfile
                 ? getContent('jobPostings.saveChanges')
                 : getContent('jobPostings.createProfile')}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

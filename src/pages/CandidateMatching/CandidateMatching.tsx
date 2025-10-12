@@ -279,6 +279,7 @@ export const JobMatches: React.FC = () => {
             <div className="flex items-center gap-4 mb-6">
               {/* Filter Button */}
               <Button
+                variant='tertiary'
                 onClick={() => setShowFilters(!showFilters)}
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl border transition-all ${
                   showFilters || hasActiveFilters

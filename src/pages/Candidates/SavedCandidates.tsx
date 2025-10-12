@@ -15,6 +15,7 @@ import { useTranslation } from '../../hooks/useTranslation';
 import { useToast } from '../../contexts/ToastContext';
 import { useRouter } from '../../components/Router';
 import Footer from '../../components/layout/Footer';
+import { Button } from '../../components/ui/Button';
 
 export const SavedCandidates: React.FC = () => {
   const { getContent } = useTranslation();
@@ -246,9 +247,10 @@ export const SavedCandidates: React.FC = () => {
               </div>
 
               {/* Filter Button */}
-              <button
+              <Button
+                variant='tertiary'
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 py-3 rounded-xl border transition-all ${
+                className={`flex items-center gap-2 px-4 py-3 rounded-xl border ${
                   showFilters || hasActiveFilters
                     ? 'bg-primary-50 border-primary-300 text-primary-700'
                     : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50'
@@ -257,7 +259,7 @@ export const SavedCandidates: React.FC = () => {
                 <Filter className="w-5 h-5" />
                 {getContent('savedCandidates.filters')}
                 {hasActiveFilters && <span className="w-2 h-2 bg-primary-500 rounded-full"></span>}
-              </button>
+              </Button>
 
               {/* Sort */}
               <select

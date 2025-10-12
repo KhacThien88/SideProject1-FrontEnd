@@ -2,6 +2,7 @@ import React from 'react';
 import { Briefcase, Clock, Users, Eye, Edit, Trash2, MoreVertical } from 'lucide-react';
 import type { JobProfile } from '../../../types/jobPosting';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { Button } from '../../../components/ui/Button';
 
 interface JobPostingCardProps {
   jobProfile: JobProfile;
@@ -162,26 +163,29 @@ export const JobPostingCard: React.FC<JobPostingCardProps> = ({
 
       {/* Actions */}
       <div className="flex items-center gap-3 pt-4 border-t border-neutral-200">
-        <button
+        <Button
+          variant="tertiary"
           onClick={() => onViewMatches(jobProfile.id)}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-neutral-300 rounded-xl hover:bg-neutral-50 transition-all text-sm font-medium text-neutral-700"
+          className="bg-primary-50 flex-1 flex items-center justify-center gap-2 px-4 py-2.5 border border-neutral-300 rounded-xl hover:bg-primary-100 transition-all text-sm font-medium text-primary-700"
         >
           <Eye className="w-4 h-4" />
           {getContent('jobPostings.viewMatches')}
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="primary"
           onClick={() => onEdit(jobProfile.id)}
           className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl hover:shadow-lg transition-all text-sm font-medium"
         >
           <Edit className="w-4 h-4" />
           {getContent('jobPostings.edit')}
-        </button>
-        <button
+        </Button>
+        <Button 
+          variant="tertiary"
           onClick={() => onDelete(jobProfile.id)}
           className="p-2.5 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
         >
           <Trash2 className="w-4 h-4" />
-        </button>
+        </Button>
       </div>
     </div>
   );

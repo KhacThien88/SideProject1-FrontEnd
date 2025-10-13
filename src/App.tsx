@@ -3,7 +3,8 @@ import { ToastProvider } from './contexts/ToastContext';
 import { AuthProvider } from './contexts/auth/AuthContext';
 import { RouterProvider, Route } from './components/Router';
 import { Login } from './pages/Auth/Login';
-import { ForgotPassword } from './pages/Auth/ForgotPassword';
+import { ForgotPassword } from './pages/Auth/ForgotPassword/ForgotPassword';
+import { ResetPassword } from './pages/Auth/ResetPassword/ResetPassword';
 import { Register, VerifyOTP } from './pages/Auth/Register';
 import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
@@ -20,6 +21,7 @@ function App() {
     if (hash === '#register') return '/register';
     if (hash === '#login') return '/login';
     if (hash === '#forgot-password') return '/forgot-password';
+    if (hash.startsWith('#reset-password')) return '/reset-password';
     if (hash === '#dashboard') return '/dashboard';
     if (hash === '#cv-analysis') return '/cv-analysis';
     if (hash.startsWith('#job/')) return hash.replace('#', '');
@@ -29,6 +31,7 @@ function App() {
     if (path === '/login') return '/login';
     if (path === '/forgot-password') return '/forgot-password';
     if (path === '/dashboard') return '/dashboard';
+    if (path === '/reset-password') return '/reset-password';
     if (path === '/cv-analysis') return '/cv-analysis';
     if (path.startsWith('/job/')) return path;
     if (path === '/') return '/';
@@ -47,6 +50,7 @@ function App() {
             <Route path="/login" component={Login} exact />
             <Route path="/register" component={Register} exact />
             <Route path="/forgot-password" component={ForgotPassword} exact />
+            <Route path="/reset-password" component={ResetPassword} exact />
             <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/cv-analysis" component={CVAnalysis} exact />
             <Route path="/job/" component={JobDetailPage} exact={false} />

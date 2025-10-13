@@ -4,6 +4,7 @@ import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
 import { useToast } from '../../../../contexts/ToastContext';
 import { useAuth } from '../../../../contexts/auth/AuthContext';
+import { AuthApiService, ApiErrorHandler, TokenManager } from '../../../../services/api/authService';
 import { createFocusEffect } from '../../../../utils/focusEffects';
 
 // Google Identity Services types
@@ -28,7 +29,7 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
   const { showErrorToast, showSuccessToast } = useToast();
-  const { login, googleLogin, isLoading: authLoading } = useAuth();
+  const { login, isLoading: authLoading } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -39,6 +40,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const googleBtnContainerRef = useRef<HTMLDivElement | null>(null);
+  // removed in-place forgot/reset UI; use dedicated pages
   const googleButtonRenderedRef = useRef(false);
 
   const waitForGsiReady = async (timeoutMs: number = 5000): Promise<void> => {
@@ -75,7 +77,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         use_fedcm_for_prompt: false, // force pure popup to avoid FedCM/CORS issues during local dev
         callback: async (response: any) => {
           try {
-            await googleLogin(response.credential);
+            const tokenResponse = await AuthApiService.googleAuth(response.credential);
+            TokenManager.storeTokens({
+              access_token: tokenResponse.access_token,
+              refresh_token: tokenResponse.refresh_token,
+              expires_in: tokenResponse.expires_in,
+            });
             showSuccessToast(getContent('auth.login.toast.loginSuccess'));
           } catch (error: any) {
             console.error('Google login error:', error);
@@ -124,6 +131,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // No hash-based forgot/reset here anymore
 
   const validateForm = () => {
     let hasErrors = false;
@@ -222,7 +231,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       </div>
 
       <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
-        {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Email Field */}
         <div>
@@ -326,7 +334,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             </label>
           </div>
           <a 
-            href="#forgot-password" 
+            href="/forgot-password" 
+            onClick={(e) => {
+              e.preventDefault();
+              window.history.pushState({}, '', '/forgot-password');
+              window.dispatchEvent(new PopStateEvent('popstate'));
+            }}
             className={`text-sm font-medium text-primary-600 hover:text-primary-500 transition-colors rounded ${createFocusEffect.input('sm', 'primary')}`}
           >
             {getContent('auth.login.forgotPassword')}

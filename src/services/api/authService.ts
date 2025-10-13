@@ -232,7 +232,7 @@ export class AuthApiService {
    */
   static async forgotPassword(email: string): Promise<ApiResponse> {
     try {
-      const response = await apiClient.post<ApiResponse>('/auth/forgot-password', email);
+      const response = await apiClient.post<ApiResponse>('/auth/forgot-password', { email });
       return response;
     } catch (error) {
       console.error('Forgot password error:', error);

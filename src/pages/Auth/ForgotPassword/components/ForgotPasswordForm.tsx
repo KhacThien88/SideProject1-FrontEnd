@@ -149,18 +149,18 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSubmit
     <div className="w-full mb-4">
       {/* Header */}
       <div className="text-center mb-6">
-        <div className="flex items-center justify-center gap-2">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent" style={{ lineHeight: '1.3'}}>
-            {getContent('auth.forgotPassword.title')}
-          </h1>
-        </div>
-      </div>
-
-      <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
-        <p className="text-sm text-neutral-600 mb-6 text-center">
+        <h1
+          className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-500 bg-clip-text text-transparent"
+          style={{ lineHeight: '1.2' }}
+        >
+          {getContent('auth.forgotPassword.title')}
+        </h1>
+        <p className="mt-2 text-sm md:text-base text-neutral-600 max-w-lg mx-auto">
           {getContent('auth.forgotPassword.subtitle')}
         </p>
+      </div>
 
+      <Card variant="default" className="w-full shadow-xl backdrop-blur-md p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-5" noValidate>
           {/* Email Field */}
           <div className="relative">
@@ -191,7 +191,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSubmit
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white rounded-2xl p-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
           >
             {isLoading ? (
               <div className="flex items-center justify-center space-x-2">
@@ -214,7 +214,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSubmit
           <button
             type="button"
             onClick={() => navigate('/login')}
-            className="w-full flex items-center justify-center gap-2 text-primary-600 hover:text-primary-700 font-medium transition-colors duration-200"
+            className="w-full flex items-center justify-center gap-2 text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200"
           >
             <ArrowLeft className="w-4 h-4" />
             {getContent('auth.forgotPassword.backToLogin')}

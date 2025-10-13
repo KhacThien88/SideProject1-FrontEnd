@@ -163,6 +163,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         
         await register(registerData);
         
+        // Store email for OTP verification
+        localStorage.setItem('pendingVerificationEmail', formData.email.trim());
+        
         // Registration successful, navigate to OTP verification
         showSuccessToast(
           getContent('auth.register.toast.registerSuccess'), 
@@ -434,7 +437,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-primary-600 transition-colors duration-200"
+                  className="password-toggle-btn absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-primary-600 transition-colors duration-200 focus:outline-none"
                   disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -483,7 +486,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-primary-600 transition-colors duration-200"
+                  className="password-toggle-btn absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-primary-600 transition-colors duration-200 focus:outline-none"
                   disabled={isLoading}
                 >
                   {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}

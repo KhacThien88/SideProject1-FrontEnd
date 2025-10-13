@@ -22,11 +22,34 @@ export const VerifyOTP: React.FC = () => {
   const [remaining, setRemaining] = useState<number>(RESEND_SECONDS);
   const [resendCount, setResendCount] = useState<number>(0);
   const [hasError, setHasError] = useState(false);
-  const [email] = useState<string>('user@example.com'); // TODO: Get from props/context
+  const [email, setEmail] = useState<string>('test@example.com');
   const inputRefs = useRef<Array<HTMLInputElement | null>>(Array(OTP_LENGTH).fill(null));
 
   useEffect(() => {
     inputRefs.current[0]?.focus();
+  }, []);
+
+  // Get email from localStorage or URL params
+  useEffect(() => {
+    // Try to get from localStorage first
+    const storedEmail = localStorage.getItem('pendingVerificationEmail');
+    
+    if (storedEmail) {
+      setEmail(storedEmail);
+      return;
+    }
+
+    // Try to get from URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailParam = urlParams.get('email');
+    
+    if (emailParam) {
+      setEmail(emailParam);
+      localStorage.setItem('pendingVerificationEmail', emailParam);
+      return;
+    }
+
+    // Keep default email for testing
   }, []);
 
   // countdown timer with clamp
@@ -101,6 +124,9 @@ export const VerifyOTP: React.FC = () => {
     try {
       // Use real API call
       await verifyOTP(email, code);
+
+      // Clear stored email after successful verification
+      localStorage.removeItem('pendingVerificationEmail');
 
       showSuccessToast(getContent('auth.verifyOTP.toast.verificationSuccess'), getContent('auth.verifyOTP.toast.verificationSuccessSubtitle'));
       setTimeout(() => navigate('/login', 'slide-left'), 600);
@@ -177,6 +203,7 @@ export const VerifyOTP: React.FC = () => {
     );
   };
 
+  
   return (
     <div className="min-h-screen lg:h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex lg:overflow-hidden">
       {/* Right content area with inner gradient like Register */}

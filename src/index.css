@@ -174,9 +174,46 @@ body {
   border-radius: 4px;
 }
 
+/* Remove focus outline for eye toggle buttons */
+button[type="button"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Specific styles for password toggle buttons */
+button[type="button"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove all focus styles for eye toggle buttons */
+.absolute.inset-y-0.right-0 button:focus,
+.absolute.inset-y-0.right-0 button:focus-visible,
+.absolute.inset-y-0.right-0 button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Specific styles for password toggle buttons */
+.password-toggle-btn:focus,
+.password-toggle-btn:focus-visible,
+.password-toggle-btn:active,
+.password-toggle-btn:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
 /* Enhanced selection styles */
 ::selection {
-  background: linear-gradient(135deg, #2368FE, #12B669);
+  background: #3B82F6;
+  color: white;
+}
+
+::-moz-selection {
+  background: #3B82F6;
   color: white;
 }
 
@@ -930,6 +967,17 @@ input, textarea, select {
   font-size: inherit;
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Text selection in input fields */
+input::selection, textarea::selection, select::selection {
+  background: #3B82F6;
+  color: white;
+}
+
+input::-moz-selection, textarea::-moz-selection, select::-moz-selection {
+  background: #3B82F6;
+  color: white;
 }
 
 input:focus, textarea:focus, select:focus {

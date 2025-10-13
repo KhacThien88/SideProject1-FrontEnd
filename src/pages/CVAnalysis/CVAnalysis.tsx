@@ -5,7 +5,6 @@ import { Layout } from '../../components/common/Layout';
 import { Container } from '../../components/common/Container';
 
 import { useToast } from '../../contexts/ToastContext';
-import Footer from '../../components/layout/Footer';
 
 // Import extracted components
 import { UploadSection } from '../../components/common/Upload/UploadSection';
@@ -295,9 +294,6 @@ export const CVAnalysis: React.FC = () => {
               </Container>
             </div>
           </main>
-          
-          {/* Footer */}
-          <Footer />
         </div>
       </div>
     </Layout>

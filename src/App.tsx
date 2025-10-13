@@ -10,6 +10,7 @@ import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
 import { JobDetailPage } from './pages/JobMatching/JobDetailPage';
 import { SavedCandidates } from './pages/Candidates';
+import { SavedJobs } from './pages/SavedJobs';
 import { Settings } from './pages/Settings';
 import { JobPostings } from './pages/JobPostings';
 import { JobMatches } from './pages/CandidateMatching';
@@ -27,6 +28,7 @@ function App() {
     if (hash === '#dashboard') return '/dashboard';
     if (hash === '#cv-analysis') return '/cv-analysis';
     if (hash === '#candidates') return '/dashboard/candidates';
+  if (hash === '#saved-jobs') return '/dashboard/saved-jobs';
     if (hash === '#settings') return '/dashboard/settings';
     if (hash === '#job-postings') return '/dashboard/job-postings';
     if (hash.startsWith('#job/')) return hash.replace('#', '');
@@ -38,6 +40,7 @@ function App() {
     if (path === '/dashboard') return '/dashboard';
     if (path === '/cv-analysis') return '/cv-analysis';
     if (path === '/dashboard/candidates') return '/dashboard/candidates';
+  if (path === '/dashboard/saved-jobs') return '/dashboard/saved-jobs';
     if (path === '/dashboard/settings') return '/dashboard/settings';
     if (path === '/dashboard/job-postings') return '/dashboard/job-postings';
     if (path.startsWith('/dashboard/job-postings/') && path.includes('/matches')) return path;
@@ -62,6 +65,7 @@ function App() {
             <Route path="/dashboard/job-postings/" component={JobMatches} exact={false} />
             <Route path="/dashboard/job-postings" component={JobPostings} exact />
             <Route path="/dashboard/candidates" component={SavedCandidates} exact />
+            <Route path="/dashboard/saved-jobs" component={SavedJobs} exact />
             <Route path="/dashboard/settings" component={Settings} exact />
             <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/job/" component={JobDetailPage} exact={false} />

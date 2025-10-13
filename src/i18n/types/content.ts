@@ -239,6 +239,14 @@ export interface ContentTaxonomy {
         description: string;
       };
     };
+    savedJobs: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
     jobPostings: {
       subscription: string;
       header: {
@@ -272,6 +280,7 @@ export interface ContentTaxonomy {
         dashboard: string;
         cvAnalysis: string;
         candidates: string;
+        savedJobs: string;
         jobPostings: string;
         analytics: string;
         settings: string;
@@ -726,6 +735,54 @@ export interface ContentTaxonomy {
       loadFailed: string;
       saveFailed: string;
       downloadFailed: string;
+    };
+  };
+
+  // Saved Jobs
+  savedJobs: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    filters: string;
+    clearFilters: string;
+    filterMatchScore: string;
+    filterSalary: string;
+    filterJobType: string;
+    filterLocation: string;
+    filterRemoteOnly: string;
+    salaryAny: string;
+    savedAt: string;
+    resultsCount: string;
+    noSavedYet: string;
+    noSavedDescription: string;
+    noResultsFilters: string;
+
+    sort: {
+      matchScore: string;
+      recent: string;
+      salaryHigh: string;
+      salaryLow: string;
+      company: string;
+    };
+
+    actions: {
+      refresh: string;
+      applyTitle: string;
+      applyMessage: string;
+      shareMessage: string;
+    };
+
+    success: {
+      removed: string;
+      refreshed: string;
+      shareTitle: string;
+      shareCopied: string;
+    };
+
+    errors: {
+      loadFailed: string;
+      removeFailed: string;
+      shareFailed: string;
     };
   };
 }

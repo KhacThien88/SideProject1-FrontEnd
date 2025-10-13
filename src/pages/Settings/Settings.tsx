@@ -17,7 +17,6 @@ import { useToast } from '../../contexts/ToastContext';
 import { useTranslation } from '../../hooks/useTranslation';
 import { settingsService } from '../../services/api/settings/settingsService';
 import type { SettingsData, SettingsTab } from '../../types/settings';
-import Footer from '../../components/layout/Footer';
 
 export const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
@@ -289,9 +288,6 @@ export const Settings: React.FC = () => {
                   </div>
                 </div>
               </Container>    
-            </div>
-            <div className="mt-50">
-              <Footer />
             </div>
           </main>
         </div>

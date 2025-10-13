@@ -122,6 +122,13 @@ export interface SavedJob extends Job {
   userTags?: string[];
 }
 
+export interface SavedJobItem extends JobMatchResult {
+  savedAt: string;
+  isSaved: boolean;
+  notes?: string;
+  userTags?: string[];
+}
+
 // Application tracking
 export interface JobApplication {
   id: string;

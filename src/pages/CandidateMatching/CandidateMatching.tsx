@@ -9,7 +9,6 @@ import {
 import { Card } from '../../components/ui/Card';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
-import Footer from '../../components/layout/Footer';
 import { CandidateMatchCard } from './components/CandidateMatchCard';
 import type { CandidateMatch, MatchFilters, MatchSortOption } from '../../types/candidateMatch';
 import { candidateMatchService } from '../../services/api/candidateMatch/candidateMatchService';
@@ -254,7 +253,7 @@ export const JobMatches: React.FC = () => {
                   <div className="text-4xl font-bold bg-gradient-to-r from-secondary-600 via-primary-500/60 via-secondary-500/60 to-primary-600 bg-clip-text text-transparent">
                     {filteredCandidates.length}
                   </div>
-                  <div className="text-sm font-semibold text-neutral-600">
+                  <div className="text-sm font-semibold text-neutral-800">
                     {getContent('candidateMatches.totalMatches')}
                   </div>
                 </div>
@@ -446,11 +445,6 @@ export const JobMatches: React.FC = () => {
                 ))}
               </div>
             )}
-          </div>
-          
-          {/* Footer */}
-          <div className="mt-10">
-          <Footer />
           </div>
         </main>
       </div>

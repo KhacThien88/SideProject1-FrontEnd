@@ -14,7 +14,6 @@ import { jobPostingService } from '../../services/api/jobPosting/jobPostingServi
 import { useTranslation } from '../../hooks/useTranslation';
 import { useToast } from '../../contexts/ToastContext';
 import { useRouter } from '../../components/Router';
-import Footer from '../../components/layout/Footer';
 import { Button } from '../../components/ui/Button';
 
 export const SavedCandidates: React.FC = () => {
@@ -492,11 +491,6 @@ export const SavedCandidates: React.FC = () => {
                 ))}
               </div>
             )}
-          </div>
-          
-          {/* Footer */}
-          <div className="mt-30">
-          <Footer />
           </div>
         </main>
       </div>

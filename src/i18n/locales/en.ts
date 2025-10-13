@@ -580,6 +580,14 @@ export const en: ContentTaxonomy = {
         description: 'Manage job profiles and requirements for resume analysis.'
       }
     },
+    savedJobs: {
+      subscription: 'Saved Jobs',
+      header: {
+        title: 'Saved',
+        subtitle: 'Jobs',
+        description: 'Review and manage the roles you bookmarked for later.'
+      }
+    },
     jobPostings: {
       subscription: 'Job Management',
       header: {
@@ -613,6 +621,7 @@ export const en: ContentTaxonomy = {
         dashboard: 'Dashboard',
         cvAnalysis: 'CV Analysis',
         candidates: 'Candidates',
+        savedJobs: 'Saved Jobs',
         jobPostings: 'Job Postings',
         analytics: 'Analytics',
         settings: 'Settings'
@@ -911,6 +920,53 @@ export const en: ContentTaxonomy = {
       loadFailed: 'Failed to load candidates',
       saveFailed: 'Failed to update save status',
       downloadFailed: 'Failed to download resume',
+    },
+  },
+
+  savedJobs: {
+    title: 'Saved Jobs',
+    subtitle: 'Keep track of roles you love and revisit them anytime.',
+    searchPlaceholder: 'Search saved jobs...',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterSalary: 'Salary range',
+    filterJobType: 'Job type',
+    filterLocation: 'Location',
+    filterRemoteOnly: 'Remote only',
+    salaryAny: 'Any',
+    savedAt: 'Saved',
+    resultsCount: 'Showing {count} of {total} saved jobs',
+    noSavedYet: 'You haven\'t saved any jobs yet',
+    noSavedDescription: 'Bookmark interesting opportunities to see them listed here.',
+    noResultsFilters: 'No saved jobs match the current filters',
+
+    sort: {
+      matchScore: 'Best match first',
+      recent: 'Recently saved',
+      salaryHigh: 'Highest salary',
+      salaryLow: 'Lowest salary',
+      company: 'Company A-Z',
+    },
+
+    actions: {
+      refresh: 'Refresh list',
+      applyTitle: 'Application',
+      applyMessage: 'We\'ll redirect you to the application page.',
+      shareMessage: 'Check out the {jobTitle} role at {companyName}!'
+    },
+
+    success: {
+      removed: 'Job removed from saved list',
+      refreshed: 'Saved jobs refreshed',
+      shareTitle: 'Link copied',
+      shareCopied: 'Job link copied to clipboard',
+    },
+
+    errors: {
+      loadFailed: 'Failed to load saved jobs',
+      removeFailed: 'Failed to update saved jobs',
+      shareFailed: 'Unable to share this job',
     },
   }
 };

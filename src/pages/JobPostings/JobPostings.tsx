@@ -5,7 +5,6 @@ import { Container } from '../../components/common/Container';
 import { Button } from '../../components/ui/Button';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
-import Footer from '../../components/layout/Footer';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useToast } from '../../contexts/ToastContext';
 import { useRouter } from '../../components/Router';
@@ -225,9 +224,6 @@ export const JobPostings: React.FC = () => {
                 </Container>
               </div>
             </main>
-            <div className="mt-10">
-            <Footer />
-          </div>
           </div>
         </div>
       </div>

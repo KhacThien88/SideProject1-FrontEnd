@@ -578,6 +578,14 @@ export const vi: ContentTaxonomy = {
         description: 'Quản lý và theo dõi hồ sơ ứng viên và đơn ứng tuyển'
       }
     },
+    savedJobs: {
+      subscription: 'Việc làm đã lưu',
+      header: {
+        title: 'Việc làm',
+        subtitle: 'đã lưu',
+        description: 'Xem lại và quản lý những cơ hội bạn đã đánh dấu.'
+      }
+    },
     jobPostings: {
       subscription: 'Quản lý công việc',
       header: {
@@ -611,6 +619,7 @@ export const vi: ContentTaxonomy = {
         dashboard: 'Bảng điều khiển',
         cvAnalysis: 'Phân tích CV',
         candidates: 'Ứng viên',
+        savedJobs: 'Việc làm đã lưu',
         jobPostings: 'Đăng tuyển',
         analytics: 'Phân tích',
         settings: 'Cài đặt'
@@ -909,6 +918,53 @@ export const vi: ContentTaxonomy = {
       loadFailed: 'Không thể tải danh sách ứng viên',
       saveFailed: 'Không thể cập nhật trạng thái lưu',
       downloadFailed: 'Không thể tải CV',
+    },
+  },
+
+  savedJobs: {
+    title: 'Việc Làm Đã Lưu',
+    subtitle: 'Theo dõi các vị trí yêu thích và quay lại bất cứ lúc nào.',
+    searchPlaceholder: 'Tìm kiếm việc làm đã lưu...',
+    filters: 'Bộ lọc',
+    clearFilters: 'Xóa bộ lọc',
+    filterMatchScore: 'Điểm phù hợp',
+    filterSalary: 'Khoảng lương',
+    filterJobType: 'Loại công việc',
+    filterLocation: 'Địa điểm',
+    filterRemoteOnly: 'Chỉ hiển thị công việc remote',
+    salaryAny: 'Bất kỳ',
+    savedAt: 'Đã lưu',
+    resultsCount: 'Hiển thị {count}/{total} việc làm đã lưu',
+    noSavedYet: 'Bạn chưa lưu việc làm nào',
+    noSavedDescription: 'Hãy đánh dấu các cơ hội phù hợp để quản lý tại đây.',
+    noResultsFilters: 'Không có việc làm nào phù hợp với bộ lọc hiện tại',
+
+    sort: {
+      matchScore: 'Điểm phù hợp cao nhất',
+      recent: 'Lưu gần đây nhất',
+      salaryHigh: 'Lương cao nhất',
+      salaryLow: 'Lương thấp nhất',
+      company: 'Công ty A-Z',
+    },
+
+    actions: {
+      refresh: 'Làm mới danh sách',
+      applyTitle: 'Ứng tuyển',
+      applyMessage: 'Chúng tôi sẽ chuyển bạn đến trang ứng tuyển.',
+      shareMessage: 'Tham khảo vị trí {jobTitle} tại {companyName} nhé!'
+    },
+
+    success: {
+      removed: 'Đã xóa việc làm khỏi danh sách lưu',
+      refreshed: 'Đã làm mới danh sách việc làm đã lưu',
+      shareTitle: 'Đã sao chép liên kết',
+      shareCopied: 'Đường dẫn công việc đã được sao chép vào clipboard',
+    },
+
+    errors: {
+      loadFailed: 'Không thể tải danh sách việc làm đã lưu',
+      removeFailed: 'Không thể cập nhật danh sách đã lưu',
+      shareFailed: 'Không thể chia sẻ việc làm này',
     },
   }
 };

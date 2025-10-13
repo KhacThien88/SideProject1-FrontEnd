@@ -6,6 +6,7 @@ import {
   FileSearch, 
   Users, 
   Briefcase, 
+  Bookmark,
   BarChart3, 
   Settings, 
   ChevronLeft,
@@ -38,6 +39,7 @@ export const DashboardSidebar: React.FC = () => {
     if (currentPath === '/dashboard') return t.pages.dashboard.subscription;
     if (currentPath === '/cv-analysis') return t.pages.cvAnalysis.subscription;
     if (currentPath === '/dashboard/candidates') return t.pages.candidates.subscription;
+  if (currentPath === '/dashboard/saved-jobs') return t.pages.savedJobs.subscription;
     if (currentPath === '/dashboard/job-postings') return t.pages.jobPostings.subscription;
     if (currentPath === '/dashboard/analytics') return t.pages.analytics.subscription;
     if (currentPath === '/dashboard/settings') return t.pages.settings.subscription;
@@ -68,6 +70,14 @@ export const DashboardSidebar: React.FC = () => {
       href: '/dashboard/candidates',
       isActive: currentPath === '/dashboard/candidates',
       badge: '12',
+      color: 'accent'
+    },
+    {
+      key: 'saved-jobs',
+      label: t.dashboard.sidebar.navigation.savedJobs,
+      icon: Bookmark,
+      href: '/dashboard/saved-jobs',
+      isActive: currentPath === '/dashboard/saved-jobs',
       color: 'accent'
     },
     {

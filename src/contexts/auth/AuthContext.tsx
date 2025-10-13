@@ -83,6 +83,7 @@ interface AuthContextType extends AuthState {
   // Actions
   register: (userData: any) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
+  googleLogin: (googleToken: string) => Promise<void>;
   verifyOTP: (email: string, otpCode: string) => Promise<void>;
   resendOTP: (email: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -218,6 +219,34 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // Google Login function
+  const googleLogin = async (googleToken: string): Promise<void> => {
+    dispatch({ type: 'AUTH_START' });
+    
+    try {
+      const response = await AuthApiService.googleAuth(googleToken);
+      
+      // Store tokens
+      TokenManager.storeTokens(response);
+      
+      dispatch({
+        type: 'AUTH_SUCCESS',
+        payload: {
+          user: response.user,
+          tokens: {
+            access_token: response.access_token,
+            refresh_token: response.refresh_token,
+            expires_in: response.expires_in,
+          },
+        },
+      });
+    } catch (error) {
+      const errorMessage = ApiErrorHandler.handleError(error);
+      dispatch({ type: 'AUTH_FAILURE', payload: errorMessage });
+      throw error;
+    }
+  };
+
   // Verify OTP function
   const verifyOTP = async (email: string, otpCode: string): Promise<void> => {
     dispatch({ type: 'AUTH_START' });
@@ -318,6 +347,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     ...state,
     register,
     login,
+    googleLogin,
     verifyOTP,
     resendOTP,
     logout,

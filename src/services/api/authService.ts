@@ -10,7 +10,7 @@ import type {
 } from '../../types/auth';
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 const API_TIMEOUT = 10000; // 10 seconds
 
 // HTTP Client with error handling
@@ -217,9 +217,16 @@ export class AuthApiService {
    */
   static async googleAuth(googleToken: string): Promise<GoogleAuthResponse> {
     try {
-      const response = await apiClient.post<GoogleAuthResponse>('/auth/google-auth', {
-        google_token: googleToken,
-      });
+      const response = await apiClient.post<GoogleAuthResponse>(
+        '/auth/google-auth',
+        {
+          google_token: googleToken,
+        },
+        {
+          'X-Google-Client-Id': (import.meta as any)?.env?.VITE_GOOGLE_CLIENT_ID || '',
+          'X-Page-Origin': (typeof window !== 'undefined' ? window.location.origin : ''),
+        }
+      );
       return response;
     } catch (error) {
       console.error('Google auth error:', error);

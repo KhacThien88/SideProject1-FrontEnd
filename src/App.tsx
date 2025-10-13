@@ -3,8 +3,8 @@ import { ToastProvider } from './contexts/ToastContext';
 import { AuthProvider } from './contexts/auth/AuthContext';
 import { RouterProvider, Route } from './components/Router';
 import { Login } from './pages/Auth/Login';
-import { Register } from './pages/Auth/Register';
 import { ForgotPassword } from './pages/Auth/ForgotPassword';
+import { Register, VerifyOTP } from './pages/Auth/Register';
 import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
@@ -32,6 +32,7 @@ function App() {
     if (path === '/cv-analysis') return '/cv-analysis';
     if (path.startsWith('/job/')) return path;
     if (path === '/') return '/';
+    if (path === '/verify-otp') return '/verify-otp';
     
     // Default to login for auth pages
     return '/login';
@@ -49,6 +50,7 @@ function App() {
             <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/cv-analysis" component={CVAnalysis} exact />
             <Route path="/job/" component={JobDetailPage} exact={false} />
+            <Route path="/verify-otp" component={VerifyOTP} exact />
           </RouterProvider>
         </AuthProvider>
       </ToastProvider>

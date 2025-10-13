@@ -365,6 +365,35 @@ export interface ContentTaxonomy {
         excellent: string;
       };
     };
+    verifyOTP: {
+      title: string;
+      subtitle: string;
+      emailLabel: string;
+      codeLabel: string;
+      codePlaceholder: string;
+      timerLabel: string;
+      verifyButton: string;
+      verifyingButton: string;
+      resendButton: string;
+      resendCountdown: string;
+      resendAvailable: string;
+      errorMessage: string;
+      successMessage: string;
+      successSubtitle: string;
+      toast: {
+        verificationSuccess: string;
+        verificationSuccessSubtitle: string;
+        verificationFailed: string;
+        verificationFailedSubtitle: string;
+        resendSuccess: string;
+        resendSuccessSubtitle: string;
+        invalidCode: string;
+        codeExpired: string;
+        tooManyAttempts: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+      };
+    };
   };
   
   // Footer

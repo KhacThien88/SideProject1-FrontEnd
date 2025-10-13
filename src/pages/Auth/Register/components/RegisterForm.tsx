@@ -2,13 +2,15 @@ import React, { useState, useRef } from 'react';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { useRouter } from '../../../../components/Router';
 import { useToast } from '../../../../contexts/ToastContext';
+import { useAuth } from '../../../../contexts/auth/AuthContext';
 import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
 import { ValidationInput } from '../../../../components/ui/ValidationInput';
 import { PasswordRequirements } from '../../../../components/ui/PasswordRequirements';
 import { useValidation } from '../../../../hooks/useValidation';
 import { registerSchema } from '../../../../utils/validation/schemas';
-import { User, Mail, Phone, Shield, CheckCircle, Star, BriefcaseBusiness } from 'lucide-react';
+import { createFocusEffect } from '../../../../utils/focusEffects';
+import { Eye, EyeOff, User, Mail, Phone, Shield, CheckCircle, Star, BriefcaseBusiness } from 'lucide-react';
 
 interface RegisterFormProps {
   onSubmit?: (data: RegisterFormData) => void;
@@ -28,6 +30,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
   const { navigate } = useRouter();
   const { showErrorToast, showSuccessToast } = useToast();
+  const { register } = useAuth();
   
   // Use validation hook
   const { 
@@ -90,11 +93,36 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         break;
     }
 
-    setBlurErrors(prev => ({
-      ...prev,
-      [fieldName]: errorMessage
-    }));
-  };
+    // Validate password
+    if (!formData.password || formData.password.length < 8) {
+      showErrorToast(getContent('auth.register.toast.passwordMinLength'));
+      newErrors.password = getContent('auth.register.toast.passwordMinLength');
+      hasErrors = true;
+    } else {
+      // Check for password strength requirements
+      const hasUpperCase = /[A-Z]/.test(formData.password);
+      const hasLowerCase = /[a-z]/.test(formData.password);
+      const hasNumbers = /\d/.test(formData.password);
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
+      
+      if (!hasUpperCase) {
+        showErrorToast(getContent('auth.register.toast.passwordUppercase'));
+        newErrors.password = getContent('auth.register.toast.passwordUppercase');
+        hasErrors = true;
+      } else if (!hasLowerCase) {
+        showErrorToast(getContent('auth.register.toast.passwordLowercase'));
+        newErrors.password = getContent('auth.register.toast.passwordLowercase');
+        hasErrors = true;
+      } else if (!hasNumbers) {
+        showErrorToast(getContent('auth.register.toast.passwordNumbers'));
+        newErrors.password = getContent('auth.register.toast.passwordNumbers');
+        hasErrors = true;
+      } else if (!hasSpecialChar) {
+        showErrorToast(getContent('auth.register.toast.passwordSpecialChar'));
+        newErrors.password = getContent('auth.register.toast.passwordSpecialChar');
+        hasErrors = true;
+      }
+    }
 
   // Function to clear blur error when user starts typing
   const clearBlurError = (fieldName: keyof RegisterFormData) => {
@@ -158,34 +186,42 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         await onSubmit(values as RegisterFormData);
         showSuccessToast(getContent('validation.registerSuccess'), getContent('validation.welcomeMessage'));
       } else {
-        // Simulate API call
-        await new Promise((resolve, reject) => {
-          setTimeout(() => {
-            // Simulate different scenarios for testing
-            const email = values.email.toLowerCase();
-            if (email === 'test@exists.com') {
-              reject(new Error('email already exists'));
-            } else if (email === 'network@error.com') {
-              reject(new Error('network error'));
-            } else {
-              resolve(true);
-            }
-          }, 2000);
-        });
+        // Use real API call
+        const registerData = {
+          email: formData.email.trim(),
+          password: formData.password,
+          confirm_password: formData.confirmPassword,
+          full_name: formData.fullName.trim(),
+          phone: formData.phone?.trim() || undefined,
+          role: formData.role,
+        };
         
-        showSuccessToast(getContent('validation.registerSuccess'), getContent('validation.welcomeMessage'));
+        await register(registerData);
         
-        // Navigate to login after successful registration
-        navigate('/login');
+        // Store email for OTP verification
+        localStorage.setItem('pendingVerificationEmail', formData.email.trim());
+        
+        // Registration successful, navigate to OTP verification
+        showSuccessToast(
+          getContent('auth.register.toast.registerSuccess'), 
+          getContent('auth.register.toast.registerSuccessSubtitle')
+        );
+        
+        // Navigate to OTP verification page with email
+        setTimeout(() => {
+          navigate('/verify-otp', 'slide-left');
+        }, 1500);
       }
     } catch (err: any) {
       console.error('Registration error:', err);
       
       const errorMessage = err.message || '';
-      if (errorMessage.includes('email already exists')) {
-        showErrorToast(getContent('validation.error.emailExists'), getContent('validation.error.emailExistsSubtitle'), 4000);
-      } else if (errorMessage.includes('network')) {
-        showErrorToast(getContent('validation.error.networkErrorSubtitle'), getContent('validation.error.generalError'), 4000);
+      if (errorMessage.includes('email already exists') || errorMessage.includes('email đã được sử dụng')) {
+        showErrorToast(getContent('auth.register.toast.emailExists'), getContent('auth.register.toast.emailExistsSubtitle'), 4000);
+      } else if (errorMessage.includes('network') || errorMessage.includes('kết nối')) {
+        showErrorToast(getContent('auth.register.toast.networkError'), getContent('auth.register.toast.networkErrorSubtitle'), 4000);
+      } else if (errorMessage.includes('password') || errorMessage.includes('mật khẩu')) {
+        showErrorToast(getContent('auth.register.toast.passwordWeak'), getContent('auth.register.toast.passwordWeakSubtitle'), 4000);
       } else {
         showErrorToast(getContent('validation.error.registerFailed'), getContent('validation.error.generalError'), 4000);
       }
@@ -199,21 +235,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
   return (
     <div className="w-full">
-      {/* Header */}
-      <div className="text-center mb-6">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent">
-            {getContent('auth.register.title')}
-          </h1>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-secondary-500 via-secondary-400/80 via-primary-500/80 to-primary-500 bg-clip-text text-transparent">
-            {getContent('auth.register.subtitle')}
-          </h1>
-        </div>
-        <p className="text-sm font-medium text-neutral-600">
-          {getContent('auth.register.welcomeSubtitle')}
-        </p>
-      </div>
-
       <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
         <form onSubmit={handleSubmit} className="space-y-4" noValidate>
           {/* Name and Email Row */}
@@ -229,8 +250,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   setValue('fullName', e.target.value);
                   clearBlurError('fullName');
                 }}
-                onBlur={() => handleBlurValidation('fullName', values.fullName)}
-                validation={errors.fullName}
+                onInput={(e) => {
+                  // Clear custom validity when user starts typing
+                  (e.target as HTMLInputElement).setCustomValidity('');
+                }}
+                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none ${
+                  errors.fullName ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
+                } ${createFocusEffect.input('md', 'primary')}`}
                 placeholder={getContent('auth.register.fullNamePlaceholder')}
                 autoComplete="name"
                 disabled={isLoading}
@@ -255,8 +281,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   setValue('email', e.target.value);
                   clearBlurError('email');
                 }}
-                onBlur={() => handleBlurValidation('email', values.email)}
-                validation={errors.email}
+                onInput={(e) => {
+                  // Clear custom validity when user starts typing
+                  (e.target as HTMLInputElement).setCustomValidity('');
+                }}
+                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none ${
+                  errors.email ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
+                } ${createFocusEffect.email('md')}`}
                 placeholder={getContent('auth.register.emailPlaceholder')}
                 autoComplete="email"
                 disabled={isLoading}
@@ -274,19 +305,40 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           {/* Phone and Role Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Phone Field (Optional) */}
-            <ValidationInput
-              id="phone"
-              type="tel"
-              label={`${getContent('auth.register.phone')} (${getContent('auth.register.optional')})`}
-              value={values.phone || ''}
-              onChange={(e) => setValue('phone', e.target.value)}
-              onBlur={() => setFieldTouched('phone')}
-              validation={errors.phone}
-              placeholder={getContent('auth.register.phonePlaceholder')}
-              autoComplete="tel"
-              disabled={isLoading}
-              icon={<Phone className="w-4 h-4" />}
-            />
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-primary-700 mb-1">
+                <div className="flex flex-row items-center gap-2">
+                  <Phone className="w-4 h-4" />
+                  {getContent('auth.register.phone')}
+                  <span className="text-neutral-400 text-sm">{getContent('auth.register.optional')}</span>
+                </div>
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
+                onInvalid={(e) => {
+                  e.preventDefault();
+                  const phone = (e.target as HTMLInputElement).value.trim();
+                  if (phone && !/^[+]?[0-9\s\-\(\)]{8,}$/.test(phone)) {
+                    showErrorToast(getContent('auth.register.toast.phoneInvalid'));
+                  }
+                }}
+                onInput={(e) => {
+                  // Clear custom validity when user starts typing
+                  (e.target as HTMLInputElement).setCustomValidity('');
+                }}
+                className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none ${
+                  errors.phone ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
+                } ${createFocusEffect.input('md', 'primary')}`}
+                placeholder={getContent('auth.register.phonePlaceholder')}
+                disabled={isLoading}
+              />
+              {errors.phone && (
+                <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+              )}
+            </div>
 
             {/* Role Selection */}
             <div>
@@ -388,6 +440,44 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 <div className="text-xs text-red-500 mt-1">
                   {blurErrors.password}
                 </div>
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  onInvalid={(e) => {
+                    e.preventDefault();
+                    const password = (e.target as HTMLInputElement).value;
+                    if (!password) {
+                      showErrorToast(getContent('auth.register.toast.passwordRequired'));
+                    } else if (password.length < 6) {
+                      showErrorToast(getContent('auth.register.toast.passwordMinLength'));
+                    }
+                  }}
+                  onInput={(e) => {
+                    // Clear custom validity when user starts typing
+                    (e.target as HTMLInputElement).setCustomValidity('');
+                  }}
+                  className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none ${
+                    errors.password ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
+                  } ${createFocusEffect.password('md')}`}
+                  placeholder="Nhập mật khẩu (ít nhất 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt)"
+                  disabled={isLoading}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="password-toggle-btn absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-primary-600 transition-colors duration-200 focus:outline-none"
+                  disabled={isLoading}
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
               )}
             </div>              {/* Password Requirements Popup */}
               <PasswordRequirements 
@@ -420,6 +510,44 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 <div className="text-xs text-red-500 mt-1">
                   {blurErrors.confirmPassword}
                 </div>
+              </label>
+              <div className="relative">
+                <input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  value={formData.confirmPassword}
+                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  onInvalid={(e) => {
+                    e.preventDefault();
+                    const confirmPassword = (e.target as HTMLInputElement).value;
+                    if (!confirmPassword) {
+                      showErrorToast(getContent('auth.register.toast.confirmPasswordRequired'));
+                    } else if (confirmPassword !== formData.password) {
+                      showErrorToast(getContent('auth.register.toast.confirmPasswordMismatch'));
+                    }
+                  }}
+                  onInput={(e) => {
+                    // Clear custom validity when user starts typing
+                    (e.target as HTMLInputElement).setCustomValidity('');
+                  }}
+                  className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none ${
+                    errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
+                  } ${createFocusEffect.password('md')}`}
+                  placeholder={getContent('auth.register.confirmPasswordPlaceholder')}
+                  disabled={isLoading}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="password-toggle-btn absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-primary-600 transition-colors duration-200 focus:outline-none"
+                  disabled={isLoading}
+                >
+                  {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
+              {errors.confirmPassword && (
+                <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
               )}
             </div>  
           </div>
@@ -467,7 +595,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            className={`w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2`}
           >
             {isLoading ? (
               <div className="flex flex-row items-center justify-center">

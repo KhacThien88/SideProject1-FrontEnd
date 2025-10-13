@@ -1,16 +1,99 @@
-import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import type { 
-  AuthContextType, 
-  LoginCredentials, 
-  RegisterData, 
-  User 
-} from './authTypes';
-import { authReducer, initialAuthState } from './authReducer';
-import { authService } from '../../services/auth/authService';
-import { tokenService } from '../../services/auth/tokenService';
-import { useToast } from '../ToastContext';
-import { useTranslation } from '../../hooks/useTranslation';
+import type { AuthState, AuthUser, AuthTokens } from '../../types/auth';
+import { AuthApiService, TokenManager, ApiErrorHandler } from '../../services/api/authService';
+
+// Auth Action Types
+type AuthAction =
+  | { type: 'AUTH_START' }
+  | { type: 'AUTH_SUCCESS'; payload: { user: AuthUser; tokens: AuthTokens } }
+  | { type: 'AUTH_FAILURE'; payload: string }
+  | { type: 'AUTH_LOGOUT' }
+  | { type: 'AUTH_CLEAR_ERROR' }
+  | { type: 'AUTH_UPDATE_USER'; payload: AuthUser };
+
+// Initial Auth State
+const initialState: AuthState = {
+  user: null,
+  tokens: null,
+  isAuthenticated: false,
+  isLoading: true,
+  error: null,
+};
+
+// Auth Reducer
+const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+  switch (action.type) {
+    case 'AUTH_START':
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+
+    case 'AUTH_SUCCESS':
+      return {
+        ...state,
+        user: action.payload.user,
+        tokens: action.payload.tokens,
+        isAuthenticated: true,
+        isLoading: false,
+        error: null,
+      };
+
+    case 'AUTH_FAILURE':
+      return {
+        ...state,
+        user: null,
+        tokens: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: action.payload,
+      };
+
+    case 'AUTH_LOGOUT':
+      return {
+        ...state,
+        user: null,
+        tokens: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+      };
+
+    case 'AUTH_CLEAR_ERROR':
+      return {
+        ...state,
+        error: null,
+      };
+
+    case 'AUTH_UPDATE_USER':
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// Auth Context Type
+interface AuthContextType extends AuthState {
+  // Actions
+  register: (userData: any) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
+  verifyOTP: (email: string, otpCode: string) => Promise<void>;
+  resendOTP: (email: string) => Promise<void>;
+  logout: () => Promise<void>;
+  refreshToken: () => Promise<void>;
+  clearError: () => void;
+  updateUser: (user: AuthUser) => void;
+  
+  // Utilities
+  getAuthHeader: () => Record<string, string> | null;
+  isTokenExpired: () => boolean;
+}
 
 // Create Auth Context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,274 +105,227 @@ interface AuthProviderProps {
 
 // Auth Provider Component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, initialAuthState);
-  const { showErrorToast, showSuccessToast } = useToast();
-  const { getContent } = useTranslation();
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Initialize auth state on app start
-  const initializeAuth = useCallback(async () => {
-    dispatch({ type: 'AUTH_INIT_START' });
-
-    try {
-      // Check if user has valid tokens
-      if (tokenService.isAuthenticated()) {
-        // Try to get current user info from server
-        const response = await authService.getCurrentUser();
-        
-        dispatch({
-          type: 'AUTH_INIT_SUCCESS',
-          payload: {
-            user: response.user,
-            isAuthenticated: true
-          }
-        });
-      } else {
-        // No valid tokens, user is not authenticated
-        tokenService.clearTokens();
-        dispatch({
-          type: 'AUTH_INIT_SUCCESS',
-          payload: {
-            user: null,
-            isAuthenticated: false
-          }
-        });
-      }
-    } catch (error) {
-      // Failed to validate user, clear tokens and set as unauthenticated
-      tokenService.clearTokens();
-      dispatch({
-        type: 'AUTH_INIT_SUCCESS',
-        payload: {
-          user: null,
-          isAuthenticated: false
-        }
-      });
-    }
-  }, []);
-
-  // Setup token refresh interval
+  // Initialize auth state from stored tokens
   useEffect(() => {
-    let refreshInterval: number;
+    const initializeAuth = async () => {
+      try {
+        const accessToken = TokenManager.getAccessToken();
+        const refreshToken = TokenManager.getRefreshToken();
 
-    if (state.isAuthenticated && state.user) {
-      // Refresh token every 14 minutes (tokens typically expire after 15 minutes)
-      refreshInterval = setInterval(() => {
-        refreshToken();
-      }, 14 * 60 * 1000);
-    }
+        if (!accessToken || !refreshToken) {
+          dispatch({ type: 'AUTH_FAILURE', payload: 'No stored tokens' });
+          return;
+        }
 
-    return () => {
-      if (refreshInterval) {
-        clearInterval(refreshInterval);
+        if (TokenManager.isTokenExpired()) {
+          // Try to refresh token
+          try {
+            const tokenResponse = await AuthApiService.refreshToken(refreshToken);
+            TokenManager.storeTokens(tokenResponse);
+            
+            const userResponse = await AuthApiService.getCurrentUser(tokenResponse.access_token);
+            
+            dispatch({
+              type: 'AUTH_SUCCESS',
+              payload: {
+                user: userResponse,
+                tokens: {
+                  access_token: tokenResponse.access_token,
+                  refresh_token: tokenResponse.refresh_token,
+                  expires_in: tokenResponse.expires_in,
+                },
+              },
+            });
+          } catch (refreshError) {
+            // Refresh failed, clear tokens
+            TokenManager.clearTokens();
+            dispatch({ type: 'AUTH_FAILURE', payload: 'Session expired' });
+          }
+        } else {
+          // Token is still valid, get user info
+          try {
+            const userResponse = await AuthApiService.getCurrentUser(accessToken);
+            
+            dispatch({
+              type: 'AUTH_SUCCESS',
+              payload: {
+                user: userResponse,
+                tokens: {
+                  access_token: accessToken,
+                  refresh_token: refreshToken,
+                  expires_in: 0, // We don't store expiry time, so set to 0
+                },
+              },
+            });
+          } catch (userError) {
+            // User fetch failed, clear tokens
+            TokenManager.clearTokens();
+            dispatch({ type: 'AUTH_FAILURE', payload: 'Invalid session' });
+          }
+        }
+      } catch (error) {
+        console.error('Auth initialization error:', error);
+        dispatch({ type: 'AUTH_FAILURE', payload: 'Failed to initialize auth' });
       }
     };
-  }, [state.isAuthenticated]);
 
-  // Initialize auth state on mount
-  useEffect(() => {
     initializeAuth();
-  }, [initializeAuth]);
+  }, []);
 
-  // Login function
-  const login = async (credentials: LoginCredentials): Promise<void> => {
+  // Register function
+  const register = async (userData: any): Promise<void> => {
+    dispatch({ type: 'AUTH_START' });
+    
     try {
-      dispatch({ type: 'AUTH_START' });
-
-      const response = await authService.login(credentials);
+      await AuthApiService.register(userData);
       
-      // Store tokens securely
-      tokenService.setTokens({
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
-        expiresIn: response.expiresIn,
-        expiresAt: Date.now() + (response.expiresIn * 1000)
-      });
-
-      dispatch({
-        type: 'AUTH_SUCCESS',
-        payload: {
-          user: response.user,
-          isAuthenticated: true
-        }
-      });
-
-      showSuccessToast(getContent('validation.loginSuccess'));
-    } catch (error: any) {
-      dispatch({
-        type: 'AUTH_ERROR',
-        payload: error.message || getContent('validation.loginFailed')
-      });
-      
-      showErrorToast(
-        error.message || getContent('validation.loginFailed')
-      );
+      // Registration successful, but user needs to verify email
+      dispatch({ type: 'AUTH_FAILURE', payload: 'Please verify your email' });
+    } catch (error) {
+      const errorMessage = ApiErrorHandler.handleError(error);
+      dispatch({ type: 'AUTH_FAILURE', payload: errorMessage });
       throw error;
     }
   };
 
-  // Register function
-  const register = async (data: RegisterData): Promise<void> => {
+  // Login function
+  const login = async (email: string, password: string): Promise<void> => {
+    dispatch({ type: 'AUTH_START' });
+    
     try {
-      dispatch({ type: 'AUTH_START' });
-
-      const response = await authService.register(data);
+      const response = await AuthApiService.login({ email, password });
       
-      // Store tokens securely
-      tokenService.setTokens({
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
-        expiresIn: response.expiresIn,
-        expiresAt: Date.now() + (response.expiresIn * 1000)
-      });
-
+      // Store tokens
+      TokenManager.storeTokens(response);
+      
       dispatch({
         type: 'AUTH_SUCCESS',
         payload: {
           user: response.user,
-          isAuthenticated: true
-        }
+          tokens: {
+            access_token: response.access_token,
+            refresh_token: response.refresh_token,
+            expires_in: response.expires_in,
+          },
+        },
       });
+    } catch (error) {
+      const errorMessage = ApiErrorHandler.handleError(error);
+      dispatch({ type: 'AUTH_FAILURE', payload: errorMessage });
+      throw error;
+    }
+  };
 
-      showSuccessToast(getContent('validation.registerSuccess'));
-    } catch (error: any) {
-      dispatch({
-        type: 'AUTH_ERROR',
-        payload: error.message || getContent('validation.registerFailed')
-      });
+  // Verify OTP function
+  const verifyOTP = async (email: string, otpCode: string): Promise<void> => {
+    dispatch({ type: 'AUTH_START' });
+    
+    try {
+      await AuthApiService.verifyOTP({ email, otp_code: otpCode });
       
-      showErrorToast(
-        error.message || getContent('validation.registerFailed')
-      );
+      // OTP verified successfully
+      dispatch({ type: 'AUTH_CLEAR_ERROR' });
+    } catch (error) {
+      const errorMessage = ApiErrorHandler.handleError(error);
+      dispatch({ type: 'AUTH_FAILURE', payload: errorMessage });
+      throw error;
+    }
+  };
+
+  // Resend OTP function
+  const resendOTP = async (email: string): Promise<void> => {
+    try {
+      await AuthApiService.resendOTP(email);
+    } catch (error) {
+      const errorMessage = ApiErrorHandler.handleError(error);
+      dispatch({ type: 'AUTH_FAILURE', payload: errorMessage });
       throw error;
     }
   };
 
   // Logout function
   const logout = async (): Promise<void> => {
+    dispatch({ type: 'AUTH_START' });
+    
     try {
-      // Call logout endpoint to invalidate tokens on server
-      await authService.logout();
+      const accessToken = TokenManager.getAccessToken();
+      if (accessToken) {
+        await AuthApiService.logout(accessToken);
+      }
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      // Always clear local auth state regardless of server response
-      clearAuth();
-      showSuccessToast(getContent('auth.logoutSuccess'));
-    }
-  };
-
-  // Clear auth state locally
-  const clearAuth = () => {
-    tokenService.clearTokens();
-    dispatch({ type: 'AUTH_LOGOUT' });
-  };
-
-  // Google Sign In with OAuth service
-  const googleSignIn = async (): Promise<void> => {
-    try {
-      dispatch({ type: 'AUTH_START' });
-
-      // Use Google OAuth service for sign-in
-      const { googleOAuthService } = await import('../../services/auth/googleOAuthService');
-      const response = await googleOAuthService.signIn();
-      
-      // Store tokens securely
-      tokenService.setTokens({
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
-        expiresIn: response.expiresIn,
-        expiresAt: Date.now() + (response.expiresIn * 1000)
-      });
-
-      dispatch({
-        type: 'AUTH_SUCCESS',
-        payload: {
-          user: response.user,
-          isAuthenticated: true
-        }
-      });
-
-      showSuccessToast(getContent('auth.googleSignInSuccess'));
-    } catch (error: any) {
-      dispatch({
-        type: 'AUTH_ERROR',
-        payload: error.message || 'Google sign-in failed'
-      });
-      
-      showErrorToast(error.message || 'Google sign-in failed');
-      throw error;
+      // Clear tokens regardless of API call success
+      TokenManager.clearTokens();
+      dispatch({ type: 'AUTH_LOGOUT' });
     }
   };
 
   // Refresh token function
   const refreshToken = async (): Promise<void> => {
     try {
-      const response = await authService.refreshToken();
-      
-      // Update stored tokens
-      tokenService.setTokens({
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
-        expiresIn: response.expiresIn,
-        expiresAt: Date.now() + (response.expiresIn * 1000)
-      });
-
-      // Update user if provided in refresh response
-      if (response.user) {
-        dispatch({
-          type: 'UPDATE_USER',
-          payload: response.user
-        });
+      const refreshTokenValue = TokenManager.getRefreshToken();
+      if (!refreshTokenValue) {
+        throw new Error('No refresh token available');
       }
+
+      const response = await AuthApiService.refreshToken(refreshTokenValue);
+      TokenManager.storeTokens(response);
+      
+      dispatch({
+        type: 'AUTH_SUCCESS',
+        payload: {
+          user: response.user,
+          tokens: {
+            access_token: response.access_token,
+            refresh_token: response.refresh_token,
+            expires_in: response.expires_in,
+          },
+        },
+      });
     } catch (error) {
-      console.error('Token refresh failed:', error);
-      // If refresh fails, logout user
-      clearAuth();
+      // Refresh failed, logout user
+      TokenManager.clearTokens();
+      dispatch({ type: 'AUTH_LOGOUT' });
       throw error;
     }
   };
 
-  // Update user function
-  const updateUser = (userData: Partial<User>): void => {
-    dispatch({
-      type: 'UPDATE_USER',
-      payload: userData
-    });
-  };
-
   // Clear error function
   const clearError = (): void => {
-    dispatch({ type: 'CLEAR_ERROR' });
+    dispatch({ type: 'AUTH_CLEAR_ERROR' });
+  };
+
+  // Update user function
+  const updateUser = (user: AuthUser): void => {
+    dispatch({ type: 'AUTH_UPDATE_USER', payload: user });
+  };
+
+  // Get auth header function
+  const getAuthHeader = (): Record<string, string> | null => {
+    return TokenManager.getAuthHeader();
   };
 
   // Check if token is expired
   const isTokenExpired = (): boolean => {
-    return tokenService.isTokenExpired();
-  };
-
-  // Check if user has specific role(s)
-  const hasRole = (role: string | string[]): boolean => {
-    if (!state.user) return false;
-
-    if (Array.isArray(role)) {
-      return role.includes(state.user.role);
-    }
-    
-    return state.user.role === role;
+    return TokenManager.isTokenExpired();
   };
 
   // Context value
   const contextValue: AuthContextType = {
     ...state,
-    login,
     register,
+    login,
+    verifyOTP,
+    resendOTP,
     logout,
-    googleSignIn,
     refreshToken,
-    updateUser,
     clearError,
+    updateUser,
+    getAuthHeader,
     isTokenExpired,
-    hasRole,
   };
 
   return (
@@ -299,13 +335,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
-// Hook to use auth context
+// Custom hook to use auth context
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
+  
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
+  
   return context;
 };
 
-export default AuthProvider;
+// Export AuthContext for advanced usage
+export { AuthContext };

@@ -53,6 +53,8 @@ export interface ContentTaxonomy {
       };
     };
   };
+
+
   
   // Features
   features: {
@@ -132,6 +134,139 @@ export interface ContentTaxonomy {
       description: string;
       icon: string;
     }[];
+  };
+
+  // Authentication
+  auth: {
+    login: {
+      title: string;
+      subtitle: string;
+      welcomeSubtitle: string;
+      email: string;
+      emailPlaceholder: string;
+      emailRequired: string;
+      emailInvalid: string;
+      password: string;
+      passwordPlaceholder: string;
+      passwordRequired: string;
+      passwordMinLength: string;
+      rememberMe: string;
+      forgotPassword: string;
+      loginButton: string;
+      loggingIn: string;
+      googleLogin: string;
+      noAccount: string;
+      signUp: string;
+      or: string;
+      toast: {
+        emailRequired: string;
+        emailMissingAt: string;
+        emailStartsWithAt: string;
+        emailMissingDomain: string;
+        emailMissingTLD: string;
+        emailInvalid: string;
+        passwordRequired: string;
+        loginSuccess: string;
+        invalidCredentials: string;
+        networkError: string;
+        loginFailed: string;
+      };
+      hero: {
+        sections: {
+          name: string;
+          title: string;
+          description: string;
+          metric: string;
+          features: string[];
+        }[];
+        trustIndicators: string[];
+      };
+    };
+    register: {
+      title: string;
+      subtitle: string;
+      welcomeSubtitle: string;
+      fullName: string;
+      fullNamePlaceholder: string;
+      email: string;
+      emailPlaceholder: string;
+      phone: string;
+      phonePlaceholder: string;
+      optional: string;
+      role: string;
+      candidate: string;
+      recruiter: string;
+      password: string;
+      passwordPlaceholder: string;
+      confirmPassword: string;
+      confirmPasswordPlaceholder: string;
+      acceptTerms: string;
+      termsOfService: string;
+      privacyPolicy: string;
+      registerButton: string;
+      registering: string;
+      hasAccount: string;
+      loginLink: string;
+      toast: {
+        // Validation messages
+        fullNameRequired: string;
+        fullNameMinLength: string;
+        emailRequired: string;
+        emailMissingAt: string;
+        emailStartsWithAt: string;
+        emailMissingDomain: string;
+        emailMissingTLD: string;
+        emailInvalid: string;
+        passwordRequired: string;
+        passwordMinLength: string;
+        confirmPasswordRequired: string;
+        confirmPasswordMismatch: string;
+        phoneInvalid: string;
+        termsRequired: string;
+        
+        // Success messages
+        registerSuccess: string;
+        registerSuccessSubtitle: string;
+        
+        // Error messages
+        registerFailed: string;
+        emailExists: string;
+        emailExistsSubtitle: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+        generalError: string;
+        generalErrorSubtitle: string;
+      };
+    };
+    verifyOTP: {
+      title: string;
+      subtitle: string;
+      emailLabel: string;
+      codeLabel: string;
+      codePlaceholder: string;
+      timerLabel: string;
+      verifyButton: string;
+      verifyingButton: string;
+      resendButton: string;
+      resendCountdown: string;
+      resendAvailable: string;
+      errorMessage: string;
+      successMessage: string;
+      successSubtitle: string;
+      toast: {
+        verificationSuccess: string;
+        verificationSuccessSubtitle: string;
+        verificationFailed: string;
+        verificationFailedSubtitle: string;
+        resendSuccess: string;
+        resendSuccessSubtitle: string;
+        invalidCode: string;
+        codeExpired: string;
+        tooManyAttempts: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+      };
+    };
   };
   
   // Common

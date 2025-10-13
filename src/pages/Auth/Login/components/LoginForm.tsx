@@ -1,13 +1,25 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
 import { useToast } from '../../../../contexts/ToastContext';
-import { useRouter } from '../../../../components/Router';
-import { ValidationInput } from '../../../../components/ui/ValidationInput';
-import { useValidation } from '../../../../hooks/useValidation';
-import { loginSchema } from '../../../../utils/validation/schemas';
-import { GoogleSignInButton } from '../../../../components/auth/GoogleSignInButton';
+import { useAuth } from '../../../../contexts/auth/AuthContext';
+import { createFocusEffect } from '../../../../utils/focusEffects';
+
+// Google Identity Services types
+declare global {
+  interface Window {
+    google: {
+      accounts: {
+        id: {
+          initialize: (config: any) => void;
+          renderButton: (parent: HTMLElement, options?: any) => void;
+          prompt: () => void;
+        };
+      };
+    };
+  }
+}
 
 interface LoginFormProps {
   onSubmit?: (email: string, password: string, rememberMe: boolean) => void;
@@ -16,121 +28,156 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
   const { showErrorToast, showSuccessToast } = useToast();
-  const { navigate } = useRouter();
-  
-  // Use validation hook without real-time toast (only on form submit)
-  const { 
-    values, 
-    errors, 
-    setValue, 
-    setFieldTouched,
-  } = useValidation(loginSchema, {
+  const { login, googleLogin, isLoading: authLoading } = useAuth();
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
-    rememberMe: false,
-  }, {
-    validateOnChange: true,
-    validateOnBlur: true,
-    debounceMs: 300,
+    rememberMe: false
   });
-
   const [isLoading, setIsLoading] = useState(false);
-  const [blurErrors, setBlurErrors] = useState<Record<string, string | null>>({});
-  const isSubmittingRef = useRef(false);
+  const isLoadingAny = isLoading || authLoading;
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const googleBtnContainerRef = useRef<HTMLDivElement | null>(null);
+  const googleButtonRenderedRef = useRef(false);
 
-  // Function to handle blur validation for required fields only
-  const handleBlurValidation = (fieldName: 'email' | 'password', value: any) => {
-    setFieldTouched(fieldName);
-    
-    let errorMessage = null;
-
-    switch (fieldName) {
-      case 'email':
-        if (!value || value.trim() === '') {
-          errorMessage = getContent('validation.emailRequired');
+  const waitForGsiReady = async (timeoutMs: number = 5000): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const start = Date.now();
+      const check = () => {
+        if (typeof window !== 'undefined' && (window as any)?.google?.accounts?.id) {
+          resolve();
+          return;
         }
-        break;
-      case 'password':
-        if (!value || value.trim() === '') {
-          errorMessage = getContent('validation.passwordRequired');
+        if (Date.now() - start > timeoutMs) {
+          reject(new Error('Google Identity Services not loaded'));
+          return;
         }
-        break;
-    }
-
-    setBlurErrors(prev => ({
-      ...prev,
-      [fieldName]: errorMessage
-    }));
+        setTimeout(check, 100);
+      };
+      check();
+    });
   };
 
-  // Function to clear blur error when user starts typing
-  const clearBlurError = (fieldName: 'email' | 'password') => {
-    if (blurErrors[fieldName]) {
-      setBlurErrors(prev => ({
-        ...prev,
-        [fieldName]: null
-      }));
+  // Initialize and render the official Google button (user must click it to open popup)
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      
+      // Wait for GSI script readiness
+      await waitForGsiReady(7000);
+
+      // Initialize Google Sign In (popup). FedCM disabled for local dev
+      console.log('[Google Sign-In:init] client_id, origin:', import.meta.env.VITE_GOOGLE_CLIENT_ID, window.location.origin);
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || 'your-google-client-id',
+        ux_mode: 'popup',
+        use_fedcm_for_prompt: false, // force pure popup to avoid FedCM/CORS issues during local dev
+        callback: async (response: any) => {
+          try {
+            await googleLogin(response.credential);
+            showSuccessToast(getContent('auth.login.toast.loginSuccess'));
+          } catch (error: any) {
+            console.error('Google login error:', error);
+            showErrorToast(error.message || getContent('auth.login.toast.loginError'));
+          } finally {
+            setIsLoading(false);
+          }
+        }
+      });
+
+      // Render button into visible container; user click triggers popup
+      const parent = googleBtnContainerRef.current;
+      if (!parent) {
+        throw new Error('Google button container not found');
+      }
+      // Clear previous render if any
+      parent.innerHTML = '';
+      // Calculate a balanced width for the Google button
+      const computedWidth = Math.min(360, Math.max(240, parent.clientWidth || 320));
+      window.google.accounts.id.renderButton(parent, {
+        type: 'standard',
+        theme: 'outline',
+        size: 'large',
+        text: 'signin_with',
+        shape: 'pill',
+        logo_alignment: 'left',
+        width: computedWidth,
+      });
+      googleButtonRenderedRef.current = true;
+      setIsLoading(false);
+    } catch (error: any) {
+      console.error('Google Sign In error:', error);
+      showErrorToast(error.message || getContent('auth.login.toast.loginError'));
+      setIsLoading(false);
     }
+  };
+
+  // Render Google button on mount so user can click directly
+  useEffect(() => {
+    (async () => {
+      try {
+        await handleGoogleSignIn();
+      } catch {
+        // ignore, handled in handler
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const validateForm = () => {
+    let hasErrors = false;
+
+    // Kiểm tra email với các trường hợp cụ thể
+    if (!formData.email || formData.email.trim() === '') {
+      showErrorToast(getContent('auth.login.toast.emailRequired'));
+      hasErrors = true;
+    } else {
+      const email = formData.email.trim();
+      // Kiểm tra có chứa @ không
+      if (!email.includes('@')) {
+        showErrorToast(`Email '${email}' ${getContent('auth.login.toast.emailMissingAt')}`);
+        hasErrors = true;
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+        // Kiểm tra các trường hợp cụ thể khác
+        if (email.startsWith('@')) {
+          showErrorToast(getContent('auth.login.toast.emailStartsWithAt'));
+        } else if (email.endsWith('@')) {
+          showErrorToast(`Email '${email}' ${getContent('auth.login.toast.emailMissingDomain')}`);
+        } else if (!email.includes('.') || email.split('@')[1]?.split('.').length < 2) {
+          showErrorToast(getContent('auth.login.toast.emailMissingTLD'));
+        } else {
+          showErrorToast(getContent('auth.login.toast.emailInvalid'));
+        }
+        hasErrors = true;
+      }
+    }
+
+    // Kiểm tra password
+    if (!formData.password || formData.password.trim() === '') {
+      showErrorToast(getContent('auth.login.toast.passwordRequired'));
+      hasErrors = true;
+    }
+
+    return !hasErrors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Set submitting flag để tránh báo lỗi blur
-    isSubmittingRef.current = true;
-    
-    // Clear all blur errors on submit
-    setBlurErrors({});
-    
-    // Simple validation - chỉ check required fields với i18n trực tiếp
-    const validationErrors: string[] = [];
-    
-    if (!values.email || values.email.trim() === '') {
-      validationErrors.push(getContent('validation.emailRequired'));
-    }
-    
-    if (!values.password || values.password.trim() === '') {
-      validationErrors.push(getContent('validation.passwordRequired'));
-    }
-    
-    // Nếu có lỗi, hiện toast và return
-    if (validationErrors.length > 0) {
-      validationErrors.forEach((error, index) => {
-        setTimeout(() => {
-          showErrorToast(error);
-        }, index * 100);
-      });
-      isSubmittingRef.current = false;
-      return;
-    }
+    if (!validateForm()) return;
     
     setIsLoading(true);
     
     try {
-      // Handle custom onSubmit or default behavior
+      // Handle custom onSubmit or use AuthContext
       if (onSubmit) {
-        await onSubmit(values.email, values.password, values.rememberMe || false);
-        showSuccessToast(getContent('validation.loginSuccess'), getContent('validation.welcomeMessage'));
+        await onSubmit(formData.email, formData.password, formData.rememberMe);
+        showSuccessToast(getContent('auth.login.toast.loginSuccess'));
       } else {
-        // Default simulation với error handling
-        await new Promise((resolve, reject) => {
-          setTimeout(() => {
-            // Simulate different error cases for testing
-            const email = values.email.toLowerCase();
-            if (email === 'error@test.com') {
-              reject(new Error('invalid credentials'));
-            } else if (email === 'network@test.com') {
-              reject(new Error('network error'));
-            } else {
-              resolve(true);
-            }
-          }, 1500);
-        });
-        
-        showSuccessToast(getContent('validation.loginSuccess'), getContent('validation.welcomeMessage'));
-        
-        // Navigate to dashboard after successful login
-        navigate('/dashboard');
+        // Use AuthContext for real API call
+        await login(formData.email, formData.password);
+        showSuccessToast(getContent('auth.login.toast.loginSuccess'));
       }
     } catch (err: any) {
       console.error('Login error:', err);
@@ -138,22 +185,27 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       // Hiển thị lỗi cụ thể dựa trên loại lỗi
       const errorMessage = err.message || '';
       if (errorMessage.includes('invalid credentials')) {
-        showErrorToast(getContent('validation.error.invalidCredentials'));
+        showErrorToast(getContent('auth.login.toast.invalidCredentials'));
       } else if (errorMessage.includes('network')) {
-        showErrorToast(getContent('validation.error.networkError'));
+        showErrorToast(getContent('auth.login.toast.networkError'));
       } else {
-        showErrorToast(getContent('validation.error.loginFailed'));
+        showErrorToast(getContent('auth.login.toast.loginFailed'));
       }
     } finally {
       setIsLoading(false);
-      isSubmittingRef.current = false;
     }
   };
 
-
+  const handleInputChange = (field: string, value: string | boolean) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
 
   return (
-    <div className="w-full mb-4">
+    <div className="w-full">
       {/* Header Outside Card */}
       <div className="text-center mb-6">
         <div className="flex items-center justify-center gap-2">
@@ -171,28 +223,41 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
       <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
         {/* Login Form */}
-      <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      <form onSubmit={handleSubmit} className="space-y-5">
         {/* Email Field */}
-        <div className="relative">
-          <ValidationInput
+        <div>
+          <label htmlFor="email" className="block text-md font-medium text-primary-700 mb-1">
+            {getContent('auth.login.email')}
+          </label>
+          <input
             id="email"
             type="email"
-            label={getContent('auth.login.email')}
-            value={values.email}
-            onChange={(e) => {
-              setValue('email', e.target.value);
-              clearBlurError('email');
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+            onInvalid={(e) => {
+              e.preventDefault();
+              const email = (e.target as HTMLInputElement).value.trim();
+              if (!email) {
+                showErrorToast(getContent('auth.login.toast.emailRequired'));
+              } else if (!email.includes('@')) {
+                showErrorToast(`Email '${email}' ${getContent('auth.login.toast.emailMissingAt')}`);
+              } else {
+                showErrorToast(getContent('auth.login.toast.emailInvalid'));
+              }
             }}
-            onBlur={() => handleBlurValidation('email', values.email)}
-            validation={errors.email}
+            onInput={(e) => {
+              // Clear custom validity when user starts typing
+              (e.target as HTMLInputElement).setCustomValidity('');
+            }}
+            className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 ${
+              errors.email ? 'border-error-500 bg-error-50' : 'border-neutral-300 bg-white'
+            } ${createFocusEffect.email('md')}`}
             placeholder={getContent('auth.login.emailPlaceholder')}
-            autoComplete="email"
-            disabled={isLoading}
+            disabled={isLoadingAny}
+            required
           />
-          {blurErrors.email && (
-            <div className="text-xs text-red-500 mt-1">
-              {blurErrors.email}
-            </div>
+          {errors.email && (
+            <p className="mt-1 text-sm text-error-600">{errors.email}</p>
           )}
         </div>
 
@@ -215,18 +280,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                 // Clear custom validity when user starts typing
                 (e.target as HTMLInputElement).setCustomValidity('');
               }}
-              className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none focus:border-primary-500 ${
+              className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 ${
                 errors.password ? 'border-error-500 bg-error-50' : 'border-neutral-300 bg-white'
-              }`}
+              } ${createFocusEffect.password('md')}`}
               placeholder={getContent('auth.login.passwordPlaceholder')}
-              disabled={isLoading}
+              disabled={isLoadingAny}
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="password-toggle-btn absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-primary-600 transition-colors duration-200 focus:outline-none"
-              disabled={isLoading}
+              disabled={isLoadingAny}
             >
               {showPassword ? (
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -251,41 +316,42 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             <input
               id="remember-me"
               type="checkbox"
-              checked={values.rememberMe || false}
-              onChange={(e) => setValue('rememberMe', e.target.checked)}
-              className="h-4 w-4 text-primary-600 focus:outline-none border-neutral-300 rounded"
-              disabled={isLoading}
+              checked={formData.rememberMe}
+              onChange={(e) => handleInputChange('rememberMe', e.target.checked)}
+              className="h-4 w-4 text-primary-600 border-neutral-300 rounded focus:outline-none"
+              disabled={isLoadingAny}
             />
-            <label htmlFor="remember-me" className="ml-2 text-sm font-medium text-neutral-700">
+            <label htmlFor="remember-me" className="ml-2 text-sm text-neutral-700">
               {getContent('auth.login.rememberMe')}
             </label>
           </div>
-          <button
-            type="button"
-            onClick={() => navigate('/forgot-password')}
-            className="text-sm font-medium text-primary-600 hover:text-primary-500 transition-colors focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1 rounded"
+          <a 
+            href="#forgot-password" 
+            className={`text-sm font-medium text-primary-600 hover:text-primary-500 transition-colors rounded ${createFocusEffect.input('sm', 'primary')}`}
           >
             {getContent('auth.login.forgotPassword')}
-          </button>
+          </a>
         </div>
 
-        {/* Login Button */}
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-gradient-to-r from-primary-100/95 to-secondary-50/95 hover:from-primary-100/90 hover:to-secondary-100/80 rounded-2xl p-3 border border-neutral-200/70 hover:border-primary-200/60 shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
-        >
-          <span className="font-medium text-primary-800">
-            {isLoading ? (
-              <div className="flex items-center justify-center">
-                <LoadingSpinner size="sm" variant="neutral" className="mr-2" />
-                {getContent('auth.login.loggingIn')}
-              </div>
-            ) : (
-              getContent('auth.login.loginButton')
-            )}
-          </span>
-        </button>
+        {/* Login Button (match Google button width) */}
+        <div className="w-full flex items-center justify-center" style={{ width: '100%', maxWidth: 380, margin: '0 auto' }}>
+          <button
+            type="submit"
+            disabled={isLoadingAny}
+            className={`w-full bg-gradient-to-r from-primary-100/95 to-secondary-50/95 hover:from-primary-100/90 hover:to-secondary-100/80 rounded-2xl p-3 border border-neutral-200/70 hover:border-primary-200/60 shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${createFocusEffect.input('md', 'primary')}`}
+          >
+            <span className="font-medium text-primary-800">
+              {isLoadingAny ? (
+                <div className="flex items-center justify-center">
+                  <LoadingSpinner size="sm" variant="neutral" className="mr-2" />
+                  {getContent('auth.login.loggingIn')}
+                </div>
+              ) : (
+                getContent('auth.login.loginButton')
+              )}
+            </span>
+          </button>
+        </div>
 
         {/* Divider */}
         <div className="relative">
@@ -299,22 +365,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           </div>
         </div>
 
-        {/* Google Login Button */}
-        <GoogleSignInButton
-          theme="outline"
-          size="large"
-          text="signin_with"
-          width={400}
-          disabled={isLoading}
-          onSuccess={() => {
-            showSuccessToast(getContent('auth.login.googleSuccessMessage'));
-            navigate('/dashboard');
-          }}
-          onError={(error) => {
-            showErrorToast(error);
-          }}
-          className="w-full"
-        />
+        {/* Google Login Official Button (rendered by GIS) */}
+        <div className="w-full flex items-center justify-center">
+          <div
+            ref={googleBtnContainerRef}
+            className="flex items-center justify-center"
+            style={{ width: '100%', maxWidth: 380 }}
+          />
+        </div>
       </form>
 
       {/* Sign Up Link */}
@@ -328,7 +386,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               window.location.hash = '#register';
               window.location.reload();
             }}
-            className="text-primary-600 hover:text-primary-500 font-medium transition-colors focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1 rounded"
+            className={`text-primary-600 hover:text-primary-500 font-medium transition-colors rounded ${createFocusEffect.input('sm', 'primary')}`}
           >
             {getContent('auth.login.signUp')}
           </a>

@@ -394,37 +394,70 @@ export const vi: ContentTaxonomy = {
       registerButton: 'Đăng ký',
       registering: 'Đang đăng ký...',
       hasAccount: 'Đã có tài khoản?',
-      loginLink: 'Đăng nhập ngay'
+      loginLink: 'Đăng nhập ngay',
+      toast: {
+        // Validation messages
+        fullNameRequired: 'Vui lòng nhập họ và tên',
+        fullNameMinLength: 'Vui lòng nhập họ tên (ít nhất 2 ký tự)',
+        emailRequired: 'Vui lòng nhập email',
+        emailMissingAt: 'thiếu ký tự "@"',
+        emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
+        emailMissingDomain: 'thiếu tên miền sau "@"',
+        emailMissingTLD: 'Email thiếu tên miền (ví dụ: .com, .vn)',
+        emailInvalid: 'Định dạng email không hợp lệ',
+        passwordRequired: 'Vui lòng nhập mật khẩu',
+        passwordMinLength: 'Mật khẩu phải có ít nhất 8 ký tự',
+        passwordUppercase: 'Mật khẩu phải có ít nhất 1 chữ hoa',
+        passwordLowercase: 'Mật khẩu phải có ít nhất 1 chữ thường',
+        passwordNumbers: 'Mật khẩu phải có ít nhất 1 chữ số',
+        passwordSpecialChar: 'Mật khẩu phải có ít nhất 1 ký tự đặc biệt (!@#$%^&*)',
+        confirmPasswordRequired: 'Vui lòng xác nhận mật khẩu',
+        confirmPasswordMismatch: 'Mật khẩu xác nhận không khớp',
+        phoneInvalid: 'Số điện thoại không hợp lệ',
+        termsRequired: 'Vui lòng đồng ý với điều khoản sử dụng',
+        
+        // Success messages
+        registerSuccess: 'Đăng ký thành công!',
+        registerSuccessSubtitle: 'Chào mừng bạn đến với TalentFit AI',
+        
+        // Error messages
+        registerFailed: 'Đăng ký thất bại',
+        emailExists: 'Email đã được sử dụng',
+        emailExistsSubtitle: 'Vui lòng chọn email khác',
+        networkError: 'Lỗi kết nối mạng',
+        networkErrorSubtitle: 'Vui lòng thử lại sau',
+        generalError: 'Đăng ký thất bại',
+        generalErrorSubtitle: 'Vui lòng thử lại sau'
+      }
     },
-    toast: {
-      // Validation messages
-      fullNameRequired: 'Vui lòng nhập họ và tên',
-      fullNameMinLength: 'Vui lòng nhập họ tên (ít nhất 2 ký tự)',
-      emailRequired: 'Vui lòng nhập email',
-      emailMissingAt: 'thiếu ký tự "@"',
-      emailStartsWithAt: 'Email không thể bắt đầu bằng "@"',
-      emailMissingDomain: 'thiếu tên miền sau "@"',
-      emailMissingTLD: 'Email thiếu tên miền (ví dụ: .com, .vn)',
-      emailInvalid: 'Định dạng email không hợp lệ',
-      passwordRequired: 'Vui lòng nhập mật khẩu',
-      passwordMinLength: 'Mật khẩu phải có ít nhất 6 ký tự',
-      confirmPasswordRequired: 'Vui lòng xác nhận mật khẩu',
-      confirmPasswordMismatch: 'Mật khẩu xác nhận không khớp',
-      phoneInvalid: 'Số điện thoại không hợp lệ',
-      termsRequired: 'Vui lòng đồng ý với điều khoản sử dụng',
-      
-      // Success messages
-      registerSuccess: 'Đăng ký thành công!',
-      registerSuccessSubtitle: 'Chào mừng bạn đến với TalentFit AI',
-      
-      // Error messages
-      registerFailed: 'Đăng ký thất bại',
-      emailExists: 'Email đã được sử dụng',
-      emailExistsSubtitle: 'Vui lòng chọn email khác',
-      networkError: 'Lỗi kết nối mạng',
-      networkErrorSubtitle: 'Vui lòng thử lại sau',
-      generalError: 'Đăng ký thất bại',
-      generalErrorSubtitle: 'Vui lòng thử lại sau'
+    verifyOTP: {
+      title: 'Xác thực email',
+      subtitle: 'Nhập mã 6 chữ số chúng tôi đã gửi đến',
+      emailLabel: 'Email',
+      codeLabel: 'Mã xác thực',
+      codePlaceholder: 'Nhập mã 6 chữ số',
+      timerLabel: 'Mã hết hạn sau',
+      verifyButton: 'Xác thực',
+      verifyingButton: 'Đang xác thực...',
+      resendButton: 'Gửi lại',
+      resendCountdown: 'Gửi lại sau {seconds}s',
+      resendAvailable: 'Gửi lại ({count} lần còn lại)',
+      errorMessage: 'Mã không hợp lệ. Vui lòng thử lại.',
+      successMessage: 'Xác thực thành công',
+      successSubtitle: 'Đang chuyển hướng đến trang đăng nhập...',
+      toast: {
+        verificationSuccess: 'Xác thực thành công!',
+        verificationSuccessSubtitle: 'Email của bạn đã được xác thực',
+        verificationFailed: 'Xác thực thất bại',
+        verificationFailedSubtitle: 'Vui lòng kiểm tra lại mã và thử lại',
+        resendSuccess: 'Mã mới đã được gửi',
+        resendSuccessSubtitle: 'Vui lòng kiểm tra email của bạn',
+        invalidCode: 'Mã xác thực không đúng',
+        codeExpired: 'Mã đã hết hạn',
+        tooManyAttempts: 'Quá nhiều lần thử sai',
+        networkError: 'Lỗi kết nối mạng',
+        networkErrorSubtitle: 'Vui lòng thử lại sau'
+      }
     }
   },
 

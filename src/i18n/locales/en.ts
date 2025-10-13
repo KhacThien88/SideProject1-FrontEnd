@@ -373,8 +373,8 @@ export const en: ContentTaxonomy = {
       }
     },
     register: {
-      title: 'Create',
-      subtitle: 'Account',
+      title: 'Create Account',
+      subtitle: 'new',
       welcomeSubtitle: 'Join TalentFit AI Community Today',
       fullName: 'Full Name',
       fullNamePlaceholder: 'Enter your full name',
@@ -396,37 +396,70 @@ export const en: ContentTaxonomy = {
       registerButton: 'Sign Up',
       registering: 'Signing up...',
       hasAccount: 'Already have an account?',
-      loginLink: 'Sign in now'
+      loginLink: 'Sign in now',
+      toast: {
+        // Validation messages
+        fullNameRequired: 'Please enter your full name',
+        fullNameMinLength: 'Please enter full name (at least 2 characters)',
+        emailRequired: 'Please enter email',
+        emailMissingAt: 'missing "@" character',
+        emailStartsWithAt: 'Email cannot start with "@"',
+        emailMissingDomain: 'missing domain after "@"',
+        emailMissingTLD: 'Email missing domain (e.g., .com, .org)',
+        emailInvalid: 'Invalid email format',
+        passwordRequired: 'Please enter password',
+        passwordMinLength: 'Password must be at least 8 characters',
+        passwordUppercase: 'Password must contain at least 1 uppercase letter',
+        passwordLowercase: 'Password must contain at least 1 lowercase letter',
+        passwordNumbers: 'Password must contain at least 1 number',
+        passwordSpecialChar: 'Password must contain at least 1 special character (!@#$%^&*)',
+        confirmPasswordRequired: 'Please confirm password',
+        confirmPasswordMismatch: 'Password confirmation does not match',
+        phoneInvalid: 'Invalid phone number',
+        termsRequired: 'Please agree to the terms of service',
+        
+        // Success messages
+        registerSuccess: 'Registration successful!',
+        registerSuccessSubtitle: 'Welcome to TalentFit AI',
+        
+        // Error messages
+        registerFailed: 'Registration failed',
+        emailExists: 'Email already exists',
+        emailExistsSubtitle: 'Please choose a different email',
+        networkError: 'Network connection error',
+        networkErrorSubtitle: 'Please try again later',
+        generalError: 'Registration failed',
+        generalErrorSubtitle: 'Please try again later'
+      }
     },
-    toast: {
-      // Validation messages
-      fullNameRequired: 'Please enter your full name',
-      fullNameMinLength: 'Please enter full name (at least 2 characters)',
-      emailRequired: 'Please enter email',
-      emailMissingAt: 'missing "@" character',
-      emailStartsWithAt: 'Email cannot start with "@"',
-      emailMissingDomain: 'missing domain after "@"',
-      emailMissingTLD: 'Email missing domain (e.g., .com, .org)',
-      emailInvalid: 'Invalid email format',
-      passwordRequired: 'Please enter password',
-      passwordMinLength: 'Password must be at least 6 characters',
-      confirmPasswordRequired: 'Please confirm password',
-      confirmPasswordMismatch: 'Password confirmation does not match',
-      phoneInvalid: 'Invalid phone number',
-      termsRequired: 'Please agree to the terms of service',
-      
-      // Success messages
-      registerSuccess: 'Registration successful!',
-      registerSuccessSubtitle: 'Welcome to TalentFit AI',
-      
-      // Error messages
-      registerFailed: 'Registration failed',
-      emailExists: 'Email already exists',
-      emailExistsSubtitle: 'Please choose a different email',
-      networkError: 'Network connection error',
-      networkErrorSubtitle: 'Please try again later',
-      generalError: 'Registration failed',
-      generalErrorSubtitle: 'Please try again later'
+    verifyOTP: {
+      title: 'Verify your email',
+      subtitle: 'Enter the 6-digit code we sent to',
+      emailLabel: 'Email',
+      codeLabel: 'Verification code',
+      codePlaceholder: 'Enter 6-digit code',
+      timerLabel: 'Code expires in',
+      verifyButton: 'Verify',
+      verifyingButton: 'Verifying...',
+      resendButton: 'Resend',
+      resendCountdown: 'Resend in {seconds}s',
+      resendAvailable: 'Resend ({count} left)',
+      errorMessage: 'Invalid code. Please try again.',
+      successMessage: 'Verification successful',
+      successSubtitle: 'Redirecting to sign in...',
+      toast: {
+        verificationSuccess: 'Verification successful!',
+        verificationSuccessSubtitle: 'Your email has been verified',
+        verificationFailed: 'Verification failed',
+        verificationFailedSubtitle: 'Please check your code and try again',
+        resendSuccess: 'New code sent',
+        resendSuccessSubtitle: 'Please check your email',
+        invalidCode: 'Invalid verification code',
+        codeExpired: 'Code has expired',
+        tooManyAttempts: 'Too many failed attempts',
+        networkError: 'Network connection error',
+        networkErrorSubtitle: 'Please try again later'
+      }
     }
   },
 

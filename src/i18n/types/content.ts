@@ -207,36 +207,65 @@ export interface ContentTaxonomy {
       registering: string;
       hasAccount: string;
       loginLink: string;
+      toast: {
+        // Validation messages
+        fullNameRequired: string;
+        fullNameMinLength: string;
+        emailRequired: string;
+        emailMissingAt: string;
+        emailStartsWithAt: string;
+        emailMissingDomain: string;
+        emailMissingTLD: string;
+        emailInvalid: string;
+        passwordRequired: string;
+        passwordMinLength: string;
+        confirmPasswordRequired: string;
+        confirmPasswordMismatch: string;
+        phoneInvalid: string;
+        termsRequired: string;
+        
+        // Success messages
+        registerSuccess: string;
+        registerSuccessSubtitle: string;
+        
+        // Error messages
+        registerFailed: string;
+        emailExists: string;
+        emailExistsSubtitle: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+        generalError: string;
+        generalErrorSubtitle: string;
+      };
     };
-    toast: {
-      // Validation messages
-      fullNameRequired: string;
-      fullNameMinLength: string;
-      emailRequired: string;
-      emailMissingAt: string;
-      emailStartsWithAt: string;
-      emailMissingDomain: string;
-      emailMissingTLD: string;
-      emailInvalid: string;
-      passwordRequired: string;
-      passwordMinLength: string;
-      confirmPasswordRequired: string;
-      confirmPasswordMismatch: string;
-      phoneInvalid: string;
-      termsRequired: string;
-      
-      // Success messages
-      registerSuccess: string;
-      registerSuccessSubtitle: string;
-      
-      // Error messages
-      registerFailed: string;
-      emailExists: string;
-      emailExistsSubtitle: string;
-      networkError: string;
-      networkErrorSubtitle: string;
-      generalError: string;
-      generalErrorSubtitle: string;
+    verifyOTP: {
+      title: string;
+      subtitle: string;
+      emailLabel: string;
+      codeLabel: string;
+      codePlaceholder: string;
+      timerLabel: string;
+      verifyButton: string;
+      verifyingButton: string;
+      resendButton: string;
+      resendCountdown: string;
+      resendAvailable: string;
+      errorMessage: string;
+      successMessage: string;
+      successSubtitle: string;
+      toast: {
+        verificationSuccess: string;
+        verificationSuccessSubtitle: string;
+        verificationFailed: string;
+        verificationFailedSubtitle: string;
+        resendSuccess: string;
+        resendSuccessSubtitle: string;
+        invalidCode: string;
+        codeExpired: string;
+        tooManyAttempts: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+      };
     };
   };
   

@@ -1,4 +1,4 @@
-import React, { useState, useTransition, createContext, useContext } from 'react';
+import React, { useState, useTransition, createContext, useContext, useEffect } from 'react';
 import { addTransitionType } from '../hooks/useViewTransition';
 
 interface RouterContextType {
@@ -37,6 +37,8 @@ export const RouterProvider: React.FC<RouterProviderProps> = ({
     
     startTransition(() => {
       setCurrentRoute(route);
+      // Update browser URL
+      window.history.pushState({}, '', route);
     });
   };
 
@@ -47,8 +49,28 @@ export const RouterProvider: React.FC<RouterProviderProps> = ({
     
     startTransition(() => {
       setCurrentRoute(route);
+      // Update browser URL
+      window.history.pushState({}, '', route);
     });
   };
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      setCurrentRoute(path);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Set initial URL state
+  useEffect(() => {
+    if (currentRoute !== window.location.pathname) {
+      window.history.replaceState({}, '', currentRoute);
+    }
+  }, []);
 
   return (
     <RouterContext.Provider 
@@ -85,4 +107,41 @@ export const Route: React.FC<RouteProps> = ({
   if (!matches) return null;
   
   return <Component />;
+};
+
+// Link component for navigation
+interface LinkProps {
+  to: string;
+  children: React.ReactNode;
+  className?: string;
+  transitionType?: string;
+  replace?: boolean;
+}
+
+export const Link: React.FC<LinkProps> = ({ 
+  to, 
+  children, 
+  className, 
+  transitionType}) => {
+  const { navigate, currentRoute } = useRouter();
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (currentRoute !== to) {
+      navigate(to, transitionType);
+    }
+  };
+
+  const isActive = currentRoute === to;
+
+  return (
+    <a
+      href={to}
+      onClick={handleClick}
+      className={`${className || ''} ${isActive ? 'router-link-active' : ''}`}
+      data-active={isActive}
+    >
+      {children}
+    </a>
+  );
 };

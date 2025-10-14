@@ -217,12 +217,36 @@ export class AuthApiService {
    */
   static async googleAuth(googleToken: string): Promise<GoogleAuthResponse> {
     try {
-      const response = await apiClient.post<GoogleAuthResponse>('/auth/google-auth', {
+      const response = await apiClient.post<any>('/auth/google-auth', {
         google_token: googleToken,
       });
+      // Handle backend flow that returns 202 with { detail: 'ROLE_SELECTION_REQUIRED' }
+      if (response && typeof response === 'object' && 'detail' in response && response.detail === 'ROLE_SELECTION_REQUIRED') {
+        // Throw a special error so upper layers can navigate to role selection
+        throw new Error('ROLE_SELECTION_REQUIRED');
+      }
       return response;
     } catch (error) {
       console.error('Google auth error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Complete Google registration with role selection
+   */
+  static async completeGoogleRegistration(userData: {
+    googleToken: string;
+    role: 'candidate' | 'recruiter';
+  }): Promise<TokenResponse> {
+    try {
+      const response = await apiClient.post<TokenResponse>('/auth/google-complete-registration', {
+        google_token: userData.googleToken,
+        role: userData.role,
+      });
+      return response;
+    } catch (error) {
+      console.error('Complete Google registration error:', error);
       throw error;
     }
   }
@@ -232,7 +256,10 @@ export class AuthApiService {
    */
   static async forgotPassword(email: string): Promise<ApiResponse> {
     try {
-      const response = await apiClient.post<ApiResponse>('/auth/forgot-password', { email });
+      const response = await apiClient.post<ApiResponse>(
+        '/auth/forgot-password',
+        { email }
+      );
       return response;
     } catch (error) {
       console.error('Forgot password error:', error);
@@ -245,10 +272,10 @@ export class AuthApiService {
    */
   static async resetPassword(token: string, newPassword: string): Promise<ApiResponse> {
     try {
-      const response = await apiClient.post<ApiResponse>('/auth/reset-password', {
-        token,
-        new_password: newPassword,
-      });
+      const response = await apiClient.post<ApiResponse>(
+        '/auth/reset-password',
+        { token, new_password: newPassword }
+      );
       return response;
     } catch (error) {
       console.error('Reset password error:', error);
@@ -391,6 +418,18 @@ export class ApiErrorHandler {
       
       if (message.includes('otp')) {
         return 'Mã OTP không đúng hoặc đã hết hạn.';
+      }
+      
+      if (message.includes('token') && message.includes('invalid')) {
+        return 'Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.';
+      }
+      
+      if (message.includes('token') && message.includes('expired')) {
+        return 'Liên kết đặt lại mật khẩu đã hết hạn. Vui lòng yêu cầu liên kết mới.';
+      }
+      
+      if (message.includes('user not found')) {
+        return 'Không tìm thấy tài khoản với email này.';
       }
       
       return error.message;

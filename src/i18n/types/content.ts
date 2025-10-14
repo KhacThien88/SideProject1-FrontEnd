@@ -136,6 +136,12 @@ export interface ContentTaxonomy {
     }[];
   };
 
+  // Validation
+  validation: {
+    emailRequired: string;
+    emailInvalid: string;
+  };
+
   // Authentication
   auth: {
     login: {
@@ -158,6 +164,22 @@ export interface ContentTaxonomy {
       noAccount: string;
       signUp: string;
       or: string;
+      toast: {
+        emailRequired: string;
+        emailMissingAt: string;
+        emailStartsWithAt: string;
+        emailMissingDomain: string;
+        emailMissingTLD: string;
+        emailInvalid: string;
+        passwordRequired: string;
+        loginSuccess: string;
+        loginError: string;
+        loginFailed: string;
+        invalidCredentials: string;
+        networkError: string;
+        googleNotLoaded: string;
+        googleContainerNotFound: string;
+      };
       hero: {
         sections: {
           name: string;
@@ -188,12 +210,42 @@ export interface ContentTaxonomy {
       confirmPassword: string;
       confirmPasswordPlaceholder: string;
       acceptTerms: string;
+      and: string;
       termsOfService: string;
       privacyPolicy: string;
       registerButton: string;
       registering: string;
       hasAccount: string;
       loginLink: string;
+      toast: {
+        fullNameRequired: string;
+        fullNameMinLength: string;
+        emailRequired: string;
+        emailMissingAt: string;
+        emailStartsWithAt: string;
+        emailMissingDomain: string;
+        emailMissingTLD: string;
+        emailInvalid: string;
+        passwordRequired: string;
+        passwordMinLength: string;
+        passwordUppercase: string;
+        passwordLowercase: string;
+        passwordNumbers: string;
+        passwordSpecialChar: string;
+        confirmPasswordRequired: string;
+        confirmPasswordMismatch: string;
+        phoneInvalid: string;
+        termsRequired: string;
+        registerSuccess: string;
+        registerSuccessSubtitle: string;
+        registerFailed: string;
+        emailExists: string;
+        emailExistsSubtitle: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+        generalError: string;
+        generalErrorSubtitle: string;
+      };
     };
     forgotPassword: {
       title: string;
@@ -206,11 +258,107 @@ export interface ContentTaxonomy {
       checkEmailMessage: string;
       emailSentTo: string;
       errorMessage: string;
+      toast: {
+        success: string;
+        failed: string;
+        emailNotFound: string;
+        networkError: string;
+        emailInvalid: string;
+      };
+    };
+    resetPassword: {
+      title: string;
+      subtitle: string;
+      token: string;
+      tokenPlaceholder: string;
+      newPassword: string;
+      newPasswordPlaceholder: string;
+      confirmPassword: string;
+      confirmPasswordPlaceholder: string;
+      passwordValid: string;
+      submit: string;
+      submitting: string;
+      backToLogin: string;
+      toast: {
+        invalidToken: string;
+        passwordMinLength: string;
+        passwordUppercase: string;
+        passwordLowercase: string;
+        passwordNumbers: string;
+        passwordSpecialChar: string;
+        confirmPasswordMismatch: string;
+        success: string;
+        failed: string;
+        invalidOrExpiredToken: string;
+        passwordTooWeak: string;
+        networkError: string;
+        generalError: string;
+      };
+    };
+    verifyOTP: {
+      title: string;
+      subtitle: string;
+      emailLabel: string;
+      codeLabel: string;
+      codePlaceholder: string;
+      timerLabel: string;
+      verifyButton: string;
+      verifyingButton: string;
+      resendButton: string;
+      resendCountdown: string;
+      resendAvailable: string;
+      errorMessage: string;
+      successMessage: string;
+      successSubtitle: string;
+      toast: {
+        verificationSuccess: string;
+        verificationSuccessSubtitle: string;
+        verificationFailed: string;
+        verificationFailedSubtitle: string;
+        resendSuccess: string;
+        resendSuccessSubtitle: string;
+        resendFailed: string;
+        resendFailedSubtitle: string;
+        invalidCode: string;
+        codeExpired: string;
+        tooManyAttempts: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+      };
     };
     googleSigningIn: string;
     continueWithGoogle: string;
     googleSignInSuccess: string;
     logoutSuccess: string;
+    roleSelection: {
+      title: string;
+      subtitle: string;
+      pleaseSelectRole: string;
+      registrationSuccess: string;
+      registrationFailed: string;
+      completing: string;
+      continueButton: string;
+      backToLogin: string;
+      helpText: string;
+      candidate: {
+        title: string;
+        description: string;
+        features: {
+          uploadCV: string;
+          jobMatching: string;
+          applyJobs: string;
+        };
+      };
+      recruiter: {
+        title: string;
+        description: string;
+        features: {
+          postJobs: string;
+          searchCandidates: string;
+          manageApplications: string;
+        };
+      };
+    };
   };
 
   // Pages - Dynamic content based on current page
@@ -365,35 +513,7 @@ export interface ContentTaxonomy {
         excellent: string;
       };
     };
-    verifyOTP: {
-      title: string;
-      subtitle: string;
-      emailLabel: string;
-      codeLabel: string;
-      codePlaceholder: string;
-      timerLabel: string;
-      verifyButton: string;
-      verifyingButton: string;
-      resendButton: string;
-      resendCountdown: string;
-      resendAvailable: string;
-      errorMessage: string;
-      successMessage: string;
-      successSubtitle: string;
-      toast: {
-        verificationSuccess: string;
-        verificationSuccessSubtitle: string;
-        verificationFailed: string;
-        verificationFailedSubtitle: string;
-        resendSuccess: string;
-        resendSuccessSubtitle: string;
-        invalidCode: string;
-        codeExpired: string;
-        tooManyAttempts: string;
-        networkError: string;
-        networkErrorSubtitle: string;
-      };
-    };
+
   };
   
   // Footer
@@ -475,6 +595,18 @@ export interface ContentTaxonomy {
     open: string;
     viewMore: string;
     viewLess: string;
+    toast: {
+      linkCopied: string;
+      jobSaved: string;
+      jobSavedSubtitle: string;
+      filesAddedSuccess: string;
+      noFilesReady: string;
+      analysisSuccess: string;
+      networkError: string;
+      networkErrorSubtitle: string;
+      genericError: string;
+      genericErrorSubtitle: string;
+    };
   };
 
   // Password Requirements component
@@ -493,55 +625,5 @@ export interface ContentTaxonomy {
       number: string;
       special: string;
     };
-  };
-
-  // Validation messages for all form validation with toast
-  validation: {
-    // Email validation
-    emailRequired: string;
-    emailInvalid: string;
-    emailMissingAt: string;
-    emailStartsWithAt: string;
-    emailMissingDomain: string;
-    emailMissingTLD: string;
-    
-    // Password validation
-    passwordRequired: string;
-    passwordMinLength8: string;
-    passwordMissingUppercase: string;
-    passwordMissingLowercase: string;
-    passwordMissingNumber: string;
-    passwordMissingSpecial: string;
-    
-    // Confirm password validation
-    confirmPasswordRequired: string;
-    confirmPasswordMismatch: string;
-    
-    // Full name validation
-    fullNameRequired: string;
-    fullNameTooShort: string;
-    fullNameTooLong: string;
-    
-    // Phone validation
-    phoneInvalid: string;
-    
-    // Accept terms validation
-    acceptTermsRequired: string;
-    
-    // Success messages
-    loginSuccess: string;
-    registerSuccess: string;
-    welcomeMessage: string;
-    
-    // Error messages
-    invalidCredentials: string;
-    networkError: string;
-    loginFailed: string;
-    registerFailed: string;
-    emailExists: string;
-    emailExistsSubtitle: string;
-    networkErrorSubtitle: string;
-    generalError: string;
-    validationFailed: string;
   };
 }

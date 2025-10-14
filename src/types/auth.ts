@@ -54,6 +54,7 @@ export interface GoogleAuthRequest {
 }
 
 export interface GoogleAuthResponse {
+  status: string;
   access_token: string;
   refresh_token: string;
   token_type: string;
@@ -99,4 +100,9 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+}
+
+export interface GoogleRegistrationData {
+  googleToken: string;
+  role: 'candidate' | 'recruiter';
 }

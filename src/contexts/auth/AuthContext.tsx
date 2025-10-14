@@ -83,6 +83,8 @@ interface AuthContextType extends AuthState {
   // Actions
   register: (userData: any) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
+  googleSignIn: (credential: string) => Promise<void>;
+  completeGoogleRegistration: (userData: GoogleRegistrationData) => Promise<void>;
   verifyOTP: (email: string, otpCode: string) => Promise<void>;
   resendOTP: (email: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -93,6 +95,18 @@ interface AuthContextType extends AuthState {
   // Utilities
   getAuthHeader: () => Record<string, string> | null;
   isTokenExpired: () => boolean;
+  isInitialized: boolean;
+  hasRole: (roles: string | string[]) => boolean;
+}
+
+// Google Registration Data interface
+interface GoogleRegistrationData {
+  email: string;
+  name: string;
+  googleId: string;
+  avatar?: string;
+  role: 'candidate' | 'recruiter';
+  googleToken: string;
 }
 
 // Create Auth Context
@@ -111,10 +125,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
+        // Skip auth initialization entirely on role-selection page for new Google users
+        const currentPath = window.location.pathname;
+        const currentHash = window.location.hash;
+        const isRoleSelectionRoute = currentPath === '/role-selection' || currentHash === '#role-selection';
+        if (isRoleSelectionRoute) {
+          dispatch({ type: 'AUTH_FAILURE', payload: '' });
+          return;
+        }
+
         const accessToken = TokenManager.getAccessToken();
         const refreshToken = TokenManager.getRefreshToken();
 
-        if (!accessToken || !refreshToken) {
+        if ((!accessToken || !refreshToken)) {
           dispatch({ type: 'AUTH_FAILURE', payload: 'No stored tokens' });
           return;
         }
@@ -218,6 +241,71 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // Google Sign In function
+  const googleSignIn = async (credential: string): Promise<void> => {
+    dispatch({ type: 'AUTH_START' });
+    
+    try {
+      const response = await AuthApiService.googleAuth(credential);
+      
+      // Store tokens for existing user
+      TokenManager.storeTokens(response);
+      
+      dispatch({
+        type: 'AUTH_SUCCESS',
+        payload: {
+          user: response.user,
+          tokens: {
+            access_token: response.access_token,
+            refresh_token: response.refresh_token,
+            expires_in: response.expires_in,
+          },
+        },
+      });
+    } catch (error: any) {
+      // Check if this is a role selection required error (HTTP 202)
+      if (error?.message?.includes('ROLE_SELECTION_REQUIRED')) {
+        dispatch({ type: 'AUTH_FAILURE', payload: '' });
+        throw new Error('ROLE_SELECTION_REQUIRED');
+      }
+      
+      const errorMessage = ApiErrorHandler.handleError(error);
+      dispatch({ type: 'AUTH_FAILURE', payload: errorMessage });
+      throw error;
+    }
+  };
+
+  // Complete Google Registration function
+  const completeGoogleRegistration = async (userData: GoogleRegistrationData): Promise<void> => {
+    dispatch({ type: 'AUTH_START' });
+    
+    try {
+      const response = await AuthApiService.completeGoogleRegistration({
+        googleToken: userData.googleToken,
+        role: userData.role,
+      });
+      
+      // Store tokens
+      TokenManager.storeTokens(response);
+      
+      dispatch({
+        type: 'AUTH_SUCCESS',
+        payload: {
+          user: response.user,
+          tokens: {
+            access_token: response.access_token,
+            refresh_token: response.refresh_token,
+            expires_in: response.expires_in,
+          },
+        },
+      });
+    } catch (error: any) {
+      const errorMessage = ApiErrorHandler.handleError(error);
+      dispatch({ type: 'AUTH_FAILURE', payload: errorMessage });
+      throw error;
+    }
+  };
+
   // Verify OTP function
   const verifyOTP = async (email: string, otpCode: string): Promise<void> => {
     dispatch({ type: 'AUTH_START' });
@@ -313,11 +401,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return TokenManager.isTokenExpired();
   };
 
+  // Check if user has specific role(s)
+  const hasRole = (roles: string | string[]): boolean => {
+    if (!state.user?.role) return false;
+    
+    if (typeof roles === 'string') {
+      return state.user.role === roles;
+    }
+    
+    return roles.includes(state.user.role);
+  };
+
   // Context value
   const contextValue: AuthContextType = {
     ...state,
     register,
     login,
+    googleSignIn,
+    completeGoogleRegistration,
     verifyOTP,
     resendOTP,
     logout,
@@ -326,6 +427,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     updateUser,
     getAuthHeader,
     isTokenExpired,
+    isInitialized: !state.isLoading,
+    hasRole,
   };
 
   return (

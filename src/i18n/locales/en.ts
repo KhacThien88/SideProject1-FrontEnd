@@ -303,7 +303,7 @@ export const en: ContentTaxonomy = {
       emailRequired: 'Email is required',
       emailInvalid: 'Invalid email format',
       password: 'Password',
-      passwordPlaceholder: 'Enter your password',
+      passwordPlaceholder: 'Enter password (at least 8 characters, with uppercase, lowercase, numbers and special characters)',
       passwordRequired: 'Password is required',
       passwordMinLength: 'Password must be at least 8 characters',
       rememberMe: 'Remember me',
@@ -314,6 +314,22 @@ export const en: ContentTaxonomy = {
       noAccount: "Don't have an account?",
       signUp: 'Sign up',
       or: 'or',
+      toast: {
+        emailRequired: 'Please enter email',
+        emailMissingAt: 'missing "@" character',
+        emailStartsWithAt: 'Email cannot start with "@"',
+        emailMissingDomain: 'missing domain after "@"',
+        emailMissingTLD: 'Email missing domain (e.g: .com, .net)',
+        emailInvalid: 'Invalid email format',
+        passwordRequired: 'Please enter password',
+        loginSuccess: 'Login successful!',
+        loginError: 'Login failed',
+        loginFailed: 'Login failed. Please try again.',
+        invalidCredentials: 'Invalid email or password',
+        networkError: 'Network connection error. Please try again.',
+        googleNotLoaded: 'Google Identity Services not loaded',
+        googleContainerNotFound: 'Google button container not found'
+      },
       hero: {
         sections: [
           {
@@ -359,6 +375,54 @@ export const en: ContentTaxonomy = {
         ]
       }
     },
+    forgotPassword: {
+      title: 'Forgot Password',
+      subtitle: 'Enter your email address. We will send a password reset link to your inbox.',
+      sendResetLink: 'Send reset link',
+      sending: 'Sending...',
+      successTitle: 'Email Sent!',
+      successMessage: 'Please check your email inbox.',
+      checkEmailMessage: 'We have sent an email with a password reset link. Please also check your spam folder.',
+      emailSentTo: 'Email sent to',
+      backToLogin: 'Back to sign in',
+      errorMessage: 'Unable to send password reset email',
+      toast: {
+        success: 'Password reset email has been sent',
+        failed: 'An error occurred while sending password reset email. Please try again.',
+        emailNotFound: 'This email is not registered. Please check again or create a new account.',
+        networkError: 'Network connection is unstable. Please try again.',
+        emailInvalid: 'Invalid email format. Please check again.'
+      }
+    },
+    resetPassword: {
+      title: 'Reset Password',
+      subtitle: 'Enter your new password for your account.',
+      token: 'Token',
+      tokenPlaceholder: 'Paste token from email',
+      newPassword: 'New Password',
+      newPasswordPlaceholder: 'At least 8 characters',
+      confirmPassword: 'Confirm Password',
+      confirmPasswordPlaceholder: 'Re-enter your password',
+      passwordValid: 'Password is valid',
+      submit: 'Reset password',
+      submitting: 'Processing...',
+      backToLogin: 'Back to sign in',
+      toast: {
+        invalidToken: 'Invalid token',
+        passwordMinLength: 'Password must be at least 8 characters',
+        passwordUppercase: 'Password must contain at least one uppercase letter',
+        passwordLowercase: 'Password must contain at least one lowercase letter',
+        passwordNumbers: 'Password must contain at least one number',
+        passwordSpecialChar: 'Password must contain at least one special character (!@#$%^&*...)',
+        confirmPasswordMismatch: 'Password confirmation does not match',
+        success: 'Password reset successful',
+        failed: 'Password reset failed',
+        invalidOrExpiredToken: 'The password reset link is invalid or has expired. Please request a new link.',
+        passwordTooWeak: 'Password must be at least 8 characters. Please choose a stronger password.',
+        networkError: 'Network connection is unstable. Please try again.',
+        generalError: 'An error occurred while resetting password. Please try again.'
+      }
+    },
     register: {
       title: 'Create Account',
       subtitle: 'new',
@@ -378,6 +442,7 @@ export const en: ContentTaxonomy = {
       confirmPassword: 'Confirm Password',
       confirmPasswordPlaceholder: 'Re-enter your password',
       acceptTerms: 'I agree with',
+      and: 'and',
       termsOfService: 'Terms of Service',
       privacyPolicy: 'Privacy Policy',
       registerButton: 'Sign Up',
@@ -404,11 +469,11 @@ export const en: ContentTaxonomy = {
         confirmPasswordMismatch: 'Password confirmation does not match',
         phoneInvalid: 'Invalid phone number',
         termsRequired: 'Please agree to the terms of service',
-        
+
         // Success messages
         registerSuccess: 'Registration successful!',
         registerSuccessSubtitle: 'Welcome to TalentFit AI',
-        
+
         // Error messages
         registerFailed: 'Registration failed',
         emailExists: 'Email already exists',
@@ -441,13 +506,53 @@ export const en: ContentTaxonomy = {
         verificationFailedSubtitle: 'Please check your code and try again',
         resendSuccess: 'New code sent',
         resendSuccessSubtitle: 'Please check your email',
+        resendFailed: 'Failed to resend code',
+        resendFailedSubtitle: 'Please try again later',
         invalidCode: 'Invalid verification code',
         codeExpired: 'Code has expired',
         tooManyAttempts: 'Too many failed attempts',
         networkError: 'Network connection error',
         networkErrorSubtitle: 'Please try again later'
       }
+    },
+    googleSigningIn: 'Signing in with Google...',
+    continueWithGoogle: 'Continue with Google',
+    googleSignInSuccess: 'Google sign-in successful',
+    logoutSuccess: 'Logout successful',
+    roleSelection: {
+      title: 'Choose Your Role',
+      subtitle: 'Select how you want to use TalentFit AI',
+      pleaseSelectRole: 'Please select a role to continue',
+      registrationSuccess: 'Registration completed successfully!',
+      registrationFailed: 'Registration failed. Please try again.',
+      completing: 'Completing registration...',
+      continueButton: 'Continue',
+      backToLogin: 'Back to Login',
+      helpText: 'You can change your role later in account settings',
+      candidate: {
+        title: 'Job Seeker',
+        description: 'Looking for your next career opportunity',
+        features: {
+          uploadCV: 'Upload and analyze your CV',
+          jobMatching: 'Get personalized job recommendations',
+          applyJobs: 'Apply to jobs with one click'
+        }
+      },
+      recruiter: {
+        title: 'Recruiter',
+        description: 'Hiring talent for your organization',
+        features: {
+          postJobs: 'Post job openings',
+          searchCandidates: 'Search and filter candidates',
+          manageApplications: 'Manage applications and interviews'
+        }
+      }
     }
+  },
+
+  validation: {
+    emailRequired: 'Email is required',
+    emailInvalid: 'Invalid email format',
   },
 
   common: {
@@ -465,6 +570,259 @@ export const en: ContentTaxonomy = {
     close: 'Close',
     open: 'Open',
     viewMore: 'View More',
-    viewLess: 'View Less'
+    viewLess: 'View Less',
+    toast: {
+      // General
+      linkCopied: 'Link copied to clipboard',
+      
+      // Job
+      jobSaved: 'Job saved',
+      jobSavedSubtitle: '{jobTitle} added to saved jobs',
+
+      // CV
+      filesAddedSuccess: '{count} file(s) added successfully',
+      noFilesReady: 'No files ready for analysis',
+      analysisSuccess: 'Analysis completed successfully!',
+      
+      // Network & Generic Errors
+      networkError: 'Network connection error',
+      networkErrorSubtitle: 'Please check your connection and try again',
+      genericError: 'An unexpected error occurred',
+      genericErrorSubtitle: 'Please try again later',
+    }
+  },
+
+  // Pages - Dynamic content based on current page
+  pages: {
+    dashboard: {
+      subscription: 'Dashboard',
+      header: {
+        title: 'Dashboard',
+        subtitle: 'Overview',
+        description: 'Manage your recruitment activities'
+      }
+    },
+    cvAnalysis: {
+      subscription: 'CV Analysis',
+      header: {
+        title: 'CV Analysis',
+        subtitle: 'AI-Powered',
+        description: 'Analyze resumes with artificial intelligence'
+      }
+    },
+    candidates: {
+      subscription: 'Candidates',
+      header: {
+        title: 'Candidates',
+        subtitle: 'Management',
+        description: 'Manage candidate profiles and applications'
+      }
+    },
+    jobPostings: {
+      subscription: 'Job Postings',
+      header: {
+        title: 'Job Postings',
+        subtitle: 'Management',
+        description: 'Create and manage job listings'
+      }
+    },
+    analytics: {
+      subscription: 'Analytics',
+      header: {
+        title: 'Analytics',
+        subtitle: 'Insights',
+        description: 'Track performance and metrics'
+      }
+    },
+    settings: {
+      subscription: 'Settings',
+      header: {
+        title: 'Settings',
+        subtitle: 'Configuration',
+        description: 'Manage your account and preferences'
+      }
+    }
+  },
+
+  // Dashboard
+  dashboard: {
+    sidebar: {
+      navigation: {
+        dashboard: 'Dashboard',
+        cvAnalysis: 'CV Analysis',
+        candidates: 'Candidates',
+        jobPostings: 'Job Postings',
+        analytics: 'Analytics',
+        settings: 'Settings'
+      },
+      subscription: 'Subscription',
+      collapse: 'Collapse',
+      expand: 'Expand',
+      hoverHint: 'Hover to expand'
+    },
+    header: {
+      title: 'Dashboard',
+      subtitle: 'Welcome back',
+      description: 'Here\'s what\'s happening with your recruitment',
+      search: {
+        placeholder: 'Search...',
+        fullPlaceholder: 'Search candidates, jobs, or anything...'
+      },
+      user: {
+        name: 'User',
+        role: 'Role'
+      },
+      actions: {
+        logout: 'Logout'
+      }
+    },
+    metrics: {
+      totalResumes: {
+        title: 'Total Resumes',
+        description: 'Resumes analyzed this month'
+      },
+      activeCandidates: {
+        title: 'Active Candidates',
+        description: 'Currently in pipeline'
+      },
+      accuracy: {
+        title: 'AI Accuracy',
+        description: 'Analysis accuracy rate'
+      },
+      processingSpeed: {
+        title: 'Processing Speed',
+        description: 'Average processing time'
+      }
+    },
+    processingQueue: {
+      title: 'Processing Queue',
+      subtitle: 'Current analysis status',
+      viewAll: 'View All',
+      total: 'Total',
+      states: {
+        pending: 'Pending',
+        processing: 'Processing',
+        completed: 'Completed',
+        error: 'Error'
+      },
+      progress: 'Progress'
+    },
+    recentResumes: {
+      title: 'Recent Resumes',
+      subtitle: 'Latest analyzed resumes',
+      viewAll: 'View All',
+      total: 'Total',
+      score: 'Score',
+      match: 'Match'
+    },
+    monthlyApplications: {
+      title: 'Monthly Applications',
+      subtitle: 'Application trends',
+      growth: 'Growth',
+      trend: 'Trend'
+    },
+    skillsChart: {
+      title: 'Skills Distribution',
+      subtitle: 'Most common skills',
+      skills: 'Skills',
+      description: 'Skills found in resumes'
+    },
+    scoreDistribution: {
+      title: 'Score Distribution',
+      subtitle: 'Resume quality scores',
+      averageScore: 'Average Score',
+      highScores: 'High Scores',
+      totalAnalyzed: 'Total Analyzed',
+      legend: {
+        resumes: 'resumes',
+        resume: 'resume'
+      },
+      ranges: {
+        poor: 'Poor (0-40)',
+        fair: 'Fair (41-60)',
+        good: 'Good (61-80)',
+        excellent: 'Excellent (81-100)'
+      }
+    }
+  },
+
+  // Footer
+  footer: {
+    company: {
+      description: 'AI-powered recruitment platform for modern hiring',
+      tagline: 'Find the perfect match with AI'
+    },
+    newsletter: {
+      title: 'Stay Updated',
+      subtitle: 'Get the latest news and updates',
+      placeholder: 'Enter your email',
+      agreement: 'By subscribing, you agree to our Privacy Policy'
+    },
+    links: {
+      product: {
+        title: 'Product',
+        items: {
+          cvAnalysis: 'CV Analysis',
+          jobMatching: 'Job Matching',
+          careerInsights: 'Career Insights',
+          skillAssessment: 'Skill Assessment'
+        }
+      },
+      company: {
+        title: 'Company',
+        items: {
+          about: 'About Us',
+          team: 'Our Team',
+          news: 'News',
+          careers: 'Careers',
+          partners: 'Partners'
+        }
+      },
+      support: {
+        title: 'Support',
+        items: {
+          helpCenter: 'Help Center',
+          userGuide: 'User Guide',
+          apiDocs: 'API Documentation',
+          contactSupport: 'Contact Support',
+          bugReport: 'Report Bug'
+        }
+      },
+      legal: {
+        title: 'Legal',
+        items: {
+          privacy: 'Privacy Policy',
+          terms: 'Terms of Service',
+          cookies: 'Cookie Policy',
+          gdpr: 'GDPR Compliance'
+        }
+      }
+    },
+    social: {
+      followUs: 'Follow Us'
+    },
+    bottom: {
+      copyright: '© 2024 TalentFit AI. All rights reserved.',
+      madeWith: 'Made with ❤️ in',
+      vietnam: 'Vietnam'
+    }
+  },
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: 'Password Requirements',
+    strength: 'Password Strength',
+    strengthLevels: {
+      weak: 'Weak',
+      medium: 'Medium',
+      strong: 'Strong'
+    },
+    requirements: {
+      minLength: 'At least 8 characters',
+      uppercase: 'One uppercase letter',
+      lowercase: 'One lowercase letter',
+      number: 'One number',
+      special: 'One special character'
+    }
   }
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth/AuthContext';
 import { googleOAuthService } from '../../services/auth/googleOAuthService';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
@@ -57,6 +58,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   
   const { googleSignIn } = useAuth();
   const { getContent } = useTranslation();
+  const navigate = useNavigate();
 
   // Initialize Google OAuth service
   useEffect(() => {
@@ -119,10 +121,35 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
 
     try {
       // Use the auth context's googleSignIn method
-      await googleSignIn();
+      await googleSignIn(response.credential);
       
       onSuccess?.();
     } catch (err: any) {
+      // Check if user needs to select role (new user from Google)
+      if (err.message === 'ROLE_SELECTION_REQUIRED') {
+        // Decode JWT to get user info for role selection
+        try {
+          const payload = JSON.parse(atob(response.credential.split('.')[1]));
+          
+          // Navigate to role selection with user data and Google token
+          navigate('/role-selection', {
+            state: {
+              email: payload.email,
+              name: payload.name,
+              googleId: payload.sub,
+              avatar: payload.picture,
+              googleToken: response.credential, // Pass the Google token for later use
+            },
+          });
+          return;
+        } catch (decodeError) {
+          console.error('Failed to decode Google credential:', decodeError);
+          setError('Failed to process Google sign-in');
+          onError?.('Failed to process Google sign-in');
+          return;
+        }
+      }
+      
       const errorMessage = err.message || 'Google sign-in failed';
       console.error('Google sign-in error:', err);
       setError(errorMessage);
@@ -144,8 +171,8 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
       if (isInitialized) {
         await googleOAuthService.signIn();
       } else {
-        // Fallback to auth context method
-        await googleSignIn();
+        // Fallback to auth context method - need credential from Google response
+        throw new Error('Google credential not available');
       }
       onSuccess?.();
     } catch (err: any) {

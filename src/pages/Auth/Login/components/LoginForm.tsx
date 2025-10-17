@@ -13,12 +13,12 @@ declare global {
   interface Window {
     google: {
       accounts: {
-        id: {
-          initialize: (config: any) => void;
-          renderButton: (parent: HTMLElement, options?: any) => void;
-          prompt: () => void;
-          disableAutoSelect: () => void;
-          revoke: (email: string, callback: () => void) => void;
+          id: {
+            initialize: (config: any) => void;
+            renderButton: (parent: HTMLElement, options?: any) => void;
+            prompt: () => void;
+            disableAutoSelect: () => void;
+            revoke: (email: string, callback: () => void) => void;
         };
       };
     };
@@ -158,7 +158,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   // No hash-based forgot/reset here anymore
 
   const validateForm = () => {

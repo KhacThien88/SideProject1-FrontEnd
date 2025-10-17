@@ -10,7 +10,7 @@ import type {
 } from '../../types/auth';
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 const API_TIMEOUT = 10000; // 10 seconds
 
 // HTTP Client with error handling
@@ -219,12 +219,17 @@ export class AuthApiService {
     try {
       const response = await apiClient.post<any>('/auth/google-auth', {
         google_token: googleToken,
+      }, {
+        'X-Google-Client-Id': (import.meta as any)?.env?.VITE_GOOGLE_CLIENT_ID || '',
+        'X-Page-Origin': (typeof window !== 'undefined' ? window.location.origin : ''),
       });
+      
       // Handle backend flow that returns 202 with { detail: 'ROLE_SELECTION_REQUIRED' }
       if (response && typeof response === 'object' && 'detail' in response && response.detail === 'ROLE_SELECTION_REQUIRED') {
         // Throw a special error so upper layers can navigate to role selection
         throw new Error('ROLE_SELECTION_REQUIRED');
       }
+      
       return response;
     } catch (error) {
       console.error('Google auth error:', error);

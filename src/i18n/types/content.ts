@@ -136,6 +136,12 @@ export interface ContentTaxonomy {
     }[];
   };
 
+  // Validation
+  validation: {
+    emailRequired: string;
+    emailInvalid: string;
+  };
+
   // Authentication
   auth: {
     login: {
@@ -167,9 +173,12 @@ export interface ContentTaxonomy {
         emailInvalid: string;
         passwordRequired: string;
         loginSuccess: string;
+        loginError: string;
+        loginFailed: string;
         invalidCredentials: string;
         networkError: string;
-        loginFailed: string;
+        googleNotLoaded: string;
+        googleContainerNotFound: string;
       };
       hero: {
         sections: {
@@ -201,6 +210,7 @@ export interface ContentTaxonomy {
       confirmPassword: string;
       confirmPasswordPlaceholder: string;
       acceptTerms: string;
+      and: string;
       termsOfService: string;
       privacyPolicy: string;
       registerButton: string;
@@ -208,7 +218,6 @@ export interface ContentTaxonomy {
       hasAccount: string;
       loginLink: string;
       toast: {
-        // Validation messages
         fullNameRequired: string;
         fullNameMinLength: string;
         emailRequired: string;
@@ -219,16 +228,16 @@ export interface ContentTaxonomy {
         emailInvalid: string;
         passwordRequired: string;
         passwordMinLength: string;
+        passwordUppercase: string;
+        passwordLowercase: string;
+        passwordNumbers: string;
+        passwordSpecialChar: string;
         confirmPasswordRequired: string;
         confirmPasswordMismatch: string;
         phoneInvalid: string;
         termsRequired: string;
-        
-        // Success messages
         registerSuccess: string;
         registerSuccessSubtitle: string;
-        
-        // Error messages
         registerFailed: string;
         emailExists: string;
         emailExistsSubtitle: string;
@@ -236,6 +245,54 @@ export interface ContentTaxonomy {
         networkErrorSubtitle: string;
         generalError: string;
         generalErrorSubtitle: string;
+      };
+    };
+    forgotPassword: {
+      title: string;
+      subtitle: string;
+      sendResetLink: string;
+      sending: string;
+      backToLogin: string;
+      successTitle: string;
+      successMessage: string;
+      checkEmailMessage: string;
+      emailSentTo: string;
+      errorMessage: string;
+      toast: {
+        success: string;
+        failed: string;
+        emailNotFound: string;
+        networkError: string;
+        emailInvalid: string;
+      };
+    };
+    resetPassword: {
+      title: string;
+      subtitle: string;
+      token: string;
+      tokenPlaceholder: string;
+      newPassword: string;
+      newPasswordPlaceholder: string;
+      confirmPassword: string;
+      confirmPasswordPlaceholder: string;
+      passwordValid: string;
+      submit: string;
+      submitting: string;
+      backToLogin: string;
+      toast: {
+        invalidToken: string;
+        passwordMinLength: string;
+        passwordUppercase: string;
+        passwordLowercase: string;
+        passwordNumbers: string;
+        passwordSpecialChar: string;
+        confirmPasswordMismatch: string;
+        success: string;
+        failed: string;
+        invalidOrExpiredToken: string;
+        passwordTooWeak: string;
+        networkError: string;
+        generalError: string;
       };
     };
     verifyOTP: {
@@ -260,6 +317,8 @@ export interface ContentTaxonomy {
         verificationFailedSubtitle: string;
         resendSuccess: string;
         resendSuccessSubtitle: string;
+        resendFailed: string;
+        resendFailedSubtitle: string;
         invalidCode: string;
         codeExpired: string;
         tooManyAttempts: string;
@@ -267,8 +326,258 @@ export interface ContentTaxonomy {
         networkErrorSubtitle: string;
       };
     };
+    googleSigningIn: string;
+    continueWithGoogle: string;
+    googleSignInSuccess: string;
+    logoutSuccess: string;
+    roleSelection: {
+      title: string;
+      subtitle: string;
+      pleaseSelectRole: string;
+      registrationSuccess: string;
+      registrationFailed: string;
+      completing: string;
+      continueButton: string;
+      backToLogin: string;
+      helpText: string;
+      candidate: {
+        title: string;
+        description: string;
+        features: {
+          uploadCV: string;
+          jobMatching: string;
+          applyJobs: string;
+        };
+      };
+      recruiter: {
+        title: string;
+        description: string;
+        features: {
+          postJobs: string;
+          searchCandidates: string;
+          manageApplications: string;
+        };
+      };
+    };
+  };
+
+  // Pages - Dynamic content based on current page
+  pages: {
+    dashboard: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    cvAnalysis: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    candidates: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    jobPostings: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    analytics: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    settings: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+  };
+
+  // Dashboard
+  dashboard: {
+    sidebar: {
+      navigation: {
+        dashboard: string;
+        cvAnalysis: string;
+        candidates: string;
+        jobPostings: string;
+        analytics: string;
+        settings: string;
+      };
+      subscription: string;
+      collapse: string;
+      expand: string;
+      hoverHint: string;
+    };
+    header: {
+      title: string;
+      subtitle: string;
+      description: string;
+      search: {
+        placeholder: string;
+        fullPlaceholder: string;
+      };
+      user: {
+        name: string;
+        role: string;
+      };
+      actions: {
+        logout: string;
+      };
+    };
+    metrics: {
+      totalResumes: {
+        title: string;
+        description: string;
+      };
+      activeCandidates: {
+        title: string;
+        description: string;
+      };
+      accuracy: {
+        title: string;
+        description: string;
+      };
+      processingSpeed: {
+        title: string;
+        description: string;
+      };
+    };
+    processingQueue: {
+      title: string;
+      subtitle: string;
+      viewAll: string;
+      total: string;
+      states: {
+        pending: string;
+        processing: string;
+        completed: string;
+        error: string;
+      };
+      progress: string;
+    };
+    recentResumes: {
+      title: string;
+      subtitle: string;
+      viewAll: string;
+      total: string;
+      score: string;
+      match: string;
+    };
+    monthlyApplications: {
+      title: string;
+      subtitle: string;
+      growth: string;
+      trend: string;
+    };
+    skillsChart: {
+      title: string;
+      subtitle: string;
+      skills: string;
+      description: string;
+    };
+    scoreDistribution: {
+      title: string;
+      subtitle: string;
+      averageScore: string;
+      highScores: string;
+      totalAnalyzed: string;
+      legend: {
+        resumes: string;
+        resume: string;
+      };
+      ranges: {
+        poor: string;
+        fair: string;
+        good: string;
+        excellent: string;
+      };
+    };
+
   };
   
+  // Footer
+  footer: {
+    company: {
+      description: string;
+      tagline: string;
+    };
+    newsletter: {
+      title: string;
+      subtitle: string;
+      placeholder: string;
+      agreement: string;
+    };
+    links: {
+      product: {
+        title: string;
+        items: {
+          cvAnalysis: string;
+          jobMatching: string;
+          careerInsights: string;
+          skillAssessment: string;
+        };
+      };
+      company: {
+        title: string;
+        items: {
+          about: string;
+          team: string;
+          news: string;
+          careers: string;
+          partners: string;
+        };
+      };
+      support: {
+        title: string;
+        items: {
+          helpCenter: string;
+          userGuide: string;
+          apiDocs: string;
+          contactSupport: string;
+          bugReport: string;
+        };
+      };
+      legal: {
+        title: string;
+        items: {
+          privacy: string;
+          terms: string;
+          cookies: string;
+          gdpr: string;
+        };
+      };
+    };
+    social: {
+      followUs: string;
+    };
+    bottom: {
+      copyright: string;
+      madeWith: string;
+      vietnam: string;
+    };
+  };
+
   // Common
   common: {
     loading: string;
@@ -286,5 +595,35 @@ export interface ContentTaxonomy {
     open: string;
     viewMore: string;
     viewLess: string;
+    toast: {
+      linkCopied: string;
+      jobSaved: string;
+      jobSavedSubtitle: string;
+      filesAddedSuccess: string;
+      noFilesReady: string;
+      analysisSuccess: string;
+      networkError: string;
+      networkErrorSubtitle: string;
+      genericError: string;
+      genericErrorSubtitle: string;
+    };
+  };
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: string;
+    strength: string;
+    strengthLevels: {
+      weak: string;
+      medium: string;
+      strong: string;
+    };
+    requirements: {
+      minLength: string;
+      uppercase: string;
+      lowercase: string;
+      number: string;
+      special: string;
+    };
   };
 }

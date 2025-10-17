@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useRouter } from '../../../../components/Router';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
 import { useToast } from '../../../../contexts/ToastContext';
 import { useAuth } from '../../../../contexts/auth/AuthContext';
+import { AuthApiService, TokenManager } from '../../../../services/api/authService';
 import { createFocusEffect } from '../../../../utils/focusEffects';
 
 // Google Identity Services types
@@ -11,10 +13,12 @@ declare global {
   interface Window {
     google: {
       accounts: {
-        id: {
-          initialize: (config: any) => void;
-          renderButton: (parent: HTMLElement, options?: any) => void;
-          prompt: () => void;
+          id: {
+            initialize: (config: any) => void;
+            renderButton: (parent: HTMLElement, options?: any) => void;
+            prompt: () => void;
+            disableAutoSelect: () => void;
+            revoke: (email: string, callback: () => void) => void;
         };
       };
     };
@@ -28,7 +32,8 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
   const { showErrorToast, showSuccessToast } = useToast();
-  const { login, googleLogin, isLoading: authLoading } = useAuth();
+  const { login, isLoading: authLoading } = useAuth();
+  const { navigate } = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -39,6 +44,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const googleBtnContainerRef = useRef<HTMLDivElement | null>(null);
+  // removed in-place forgot/reset UI; use dedicated pages
   const googleButtonRenderedRef = useRef(false);
 
   const waitForGsiReady = async (timeoutMs: number = 5000): Promise<void> => {
@@ -75,10 +81,38 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         use_fedcm_for_prompt: false, // force pure popup to avoid FedCM/CORS issues during local dev
         callback: async (response: any) => {
           try {
-            await googleLogin(response.credential);
+            const tokenResponse = await AuthApiService.googleAuth(response.credential);
+            TokenManager.storeTokens({
+              access_token: tokenResponse.access_token,
+              refresh_token: tokenResponse.refresh_token,
+              expires_in: tokenResponse.expires_in,
+            });
             showSuccessToast(getContent('auth.login.toast.loginSuccess'));
           } catch (error: any) {
             console.error('Google login error:', error);
+            // If backend requires role selection for new Google users, redirect to role selection page
+            if (error?.message === 'ROLE_SELECTION_REQUIRED') {
+              try {
+                const parts = response.credential.split('.');
+                const payload = parts[1];
+                const padded = payload + '='.repeat((4 - payload.length % 4) % 4);
+                const decoded = atob(padded.replace(/-/g, '+').replace(/_/g, '/'));
+                const data = JSON.parse(decoded);
+
+                // Persist role selection state for custom router navigation
+                sessionStorage.setItem('roleSelectionState', JSON.stringify({
+                  email: data.email,
+                  name: data.name,
+                  googleId: data.sub,
+                  avatar: data.picture,
+                  googleToken: response.credential,
+                }));
+                navigate('/role-selection');
+                return;
+              } catch (e) {
+                console.error('Failed to decode Google credential for role selection:', e);
+              }
+            }
             showErrorToast(error.message || getContent('auth.login.toast.loginError'));
           } finally {
             setIsLoading(false);
@@ -124,22 +158,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // No hash-based forgot/reset here anymore
 
   const validateForm = () => {
     let hasErrors = false;
 
-    // Kiểm tra email với các trường hợp cụ thể
+    // Validate email with specific cases
     if (!formData.email || formData.email.trim() === '') {
       showErrorToast(getContent('auth.login.toast.emailRequired'));
       hasErrors = true;
     } else {
       const email = formData.email.trim();
-      // Kiểm tra có chứa @ không
+      // Check if contains @
       if (!email.includes('@')) {
         showErrorToast(`Email '${email}' ${getContent('auth.login.toast.emailMissingAt')}`);
         hasErrors = true;
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-        // Kiểm tra các trường hợp cụ thể khác
+        // Check other specific cases
         if (email.startsWith('@')) {
           showErrorToast(getContent('auth.login.toast.emailStartsWithAt'));
         } else if (email.endsWith('@')) {
@@ -153,7 +188,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       }
     }
 
-    // Kiểm tra password
+    // Validate password
     if (!formData.password || formData.password.trim() === '') {
       showErrorToast(getContent('auth.login.toast.passwordRequired'));
       hasErrors = true;
@@ -182,7 +217,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     } catch (err: any) {
       console.error('Login error:', err);
       
-      // Hiển thị lỗi cụ thể dựa trên loại lỗi
+      // Display specific error based on error type
       const errorMessage = err.message || '';
       if (errorMessage.includes('invalid credentials')) {
         showErrorToast(getContent('auth.login.toast.invalidCredentials'));
@@ -222,7 +257,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       </div>
 
       <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
-        {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Email Field */}
         <div>
@@ -326,7 +360,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             </label>
           </div>
           <a 
-            href="#forgot-password" 
+            href="/forgot-password" 
+            onClick={(e) => {
+              e.preventDefault();
+              window.history.pushState({}, '', '/forgot-password');
+              window.dispatchEvent(new PopStateEvent('popstate'));
+            }}
             className={`text-sm font-medium text-primary-600 hover:text-primary-500 transition-colors rounded ${createFocusEffect.input('sm', 'primary')}`}
           >
             {getContent('auth.login.forgotPassword')}

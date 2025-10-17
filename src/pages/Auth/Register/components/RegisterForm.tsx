@@ -430,7 +430,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   className={`w-full px-3 py-2 pr-12 border rounded-lg transition-colors duration-200 focus:outline-none ${
                     errors.password ? 'border-red-500 bg-red-50' : 'border-neutral-300 bg-white'
                   } ${createFocusEffect.password('md')}`}
-                  placeholder="Nhập mật khẩu (ít nhất 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt)"
+                  placeholder={getContent('auth.register.passwordPlaceholder')}
                   disabled={isLoading}
                   required
                 />
@@ -530,7 +530,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               >
                 {getContent('auth.register.termsOfService')}
               </a>
-              {' và '}
+              {' '}{getContent('auth.register.and')}{' '}
               <a 
                 href="#privacy" 
                 className="text-primary-600 hover:text-primary-500 font-medium underline"

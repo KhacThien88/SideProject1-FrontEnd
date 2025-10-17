@@ -122,7 +122,8 @@ export const Link: React.FC<LinkProps> = ({
   to, 
   children, 
   className, 
-  transitionType}) => {
+  transitionType
+}) => {
   const { navigate, currentRoute } = useRouter();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

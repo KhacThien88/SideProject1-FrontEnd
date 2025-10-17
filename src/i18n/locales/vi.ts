@@ -321,9 +321,12 @@ export const vi: ContentTaxonomy = {
         emailInvalid: 'Định dạng email không hợp lệ',
         passwordRequired: 'Vui lòng nhập mật khẩu',
         loginSuccess: 'Đăng nhập thành công!',
-        invalidCredentials: 'Email hoặc mật khẩu không chính xác',
+        loginError: 'Đăng nhập thất bại',
+        loginFailed: 'Đăng nhập thất bại. Vui lòng thử lại.',
+        invalidCredentials: 'Email hoặc mật khẩu không đúng',
         networkError: 'Lỗi kết nối mạng. Vui lòng thử lại.',
-        loginFailed: 'Đăng nhập thất bại. Vui lòng thử lại.'
+        googleNotLoaded: 'Dịch vụ Google Identity chưa được tải',
+        googleContainerNotFound: 'Không tìm thấy container cho nút Google'
       },
       hero: {
         sections: [
@@ -370,6 +373,54 @@ export const vi: ContentTaxonomy = {
         ]
       }
     },
+    forgotPassword: {
+      title: 'Quên mật khẩu',
+      subtitle: 'Nhập địa chỉ email của bạn. Chúng tôi sẽ gửi một liên kết đặt lại mật khẩu vào hộp thư của bạn.',
+      sendResetLink: 'Gửi liên kết đặt lại',
+      sending: 'Đang gửi...',
+      successTitle: 'Email đã được gửi!',
+      successMessage: 'Vui lòng kiểm tra hộp thư email của bạn.',
+      checkEmailMessage: 'Chúng tôi đã gửi một email kèm liên kết đặt lại mật khẩu. Vui lòng kiểm tra cả thư mục spam.',
+      emailSentTo: 'Email đã gửi đến',
+      backToLogin: 'Quay lại đăng nhập',
+      errorMessage: 'Không thể gửi email đặt lại mật khẩu',
+      toast: {
+        success: 'Email đặt lại mật khẩu đã được gửi',
+        failed: 'Có lỗi xảy ra khi gửi email đặt lại mật khẩu. Vui lòng thử lại.',
+        emailNotFound: 'Email này chưa được đăng ký. Vui lòng kiểm tra lại hoặc đăng ký tài khoản mới.',
+        networkError: 'Kết nối mạng không ổn định. Vui lòng thử lại.',
+        emailInvalid: 'Định dạng email không hợp lệ. Vui lòng kiểm tra lại.'
+      }
+    },
+    resetPassword: {
+      title: 'Đặt lại mật khẩu',
+      subtitle: 'Nhập mật khẩu mới cho tài khoản của bạn.',
+      token: 'Token',
+      tokenPlaceholder: 'Dán token từ email',
+      newPassword: 'Mật khẩu mới',
+      newPasswordPlaceholder: 'Ít nhất 8 ký tự',
+      confirmPassword: 'Xác nhận mật khẩu',
+      confirmPasswordPlaceholder: 'Nhập lại mật khẩu',
+      passwordValid: 'Mật khẩu hợp lệ',
+      submit: 'Đặt lại mật khẩu',
+      submitting: 'Đang xử lý...',
+      backToLogin: 'Quay lại đăng nhập',
+      toast: {
+        invalidToken: 'Token không hợp lệ',
+        passwordMinLength: 'Mật khẩu phải có ít nhất 8 ký tự',
+        passwordUppercase: 'Mật khẩu phải chứa ít nhất một chữ cái viết hoa',
+        passwordLowercase: 'Mật khẩu phải chứa ít nhất một chữ cái viết thường',
+        passwordNumbers: 'Mật khẩu phải chứa ít nhất một số',
+        passwordSpecialChar: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt (!@#$%^&*...)',
+        confirmPasswordMismatch: 'Mật khẩu xác nhận không khớp',
+        success: 'Đặt lại mật khẩu thành công',
+        failed: 'Đặt lại mật khẩu thất bại',
+        invalidOrExpiredToken: 'Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu liên kết mới.',
+        passwordTooWeak: 'Mật khẩu phải có ít nhất 8 ký tự. Vui lòng chọn mật khẩu mạnh hơn.',
+        networkError: 'Kết nối mạng không ổn định. Vui lòng thử lại.',
+        generalError: 'Có lỗi xảy ra khi đặt lại mật khẩu. Vui lòng thử lại.'
+      }
+    },
     register: {
       title: 'Tạo tài khoản',
       subtitle: 'mới',
@@ -379,16 +430,17 @@ export const vi: ContentTaxonomy = {
       email: 'Địa chỉ Email',
       emailPlaceholder: 'Nhập địa chỉ email',
       phone: 'Số điện thoại',
-      optional: '(tùy chọn)',
+      optional: 'tùy chọn',
       phonePlaceholder: 'Nhập số điện thoại',
       role: 'Vai trò',
       candidate: 'Ứng viên',
       recruiter: 'Nhà tuyển dụng',
       password: 'Mật khẩu',
-      passwordPlaceholder: 'Nhập mật khẩu (ít nhất 6 ký tự)',
+      passwordPlaceholder: 'Nhập mật khẩu (ít nhất 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt)',
       confirmPassword: 'Xác nhận mật khẩu',
       confirmPasswordPlaceholder: 'Nhập lại mật khẩu',
       acceptTerms: 'Tôi đồng ý với',
+      and: 'và',
       termsOfService: 'Điều khoản sử dụng',
       privacyPolicy: 'Chính sách bảo mật',
       registerButton: 'Đăng ký',
@@ -452,18 +504,58 @@ export const vi: ContentTaxonomy = {
         verificationFailedSubtitle: 'Vui lòng kiểm tra lại mã và thử lại',
         resendSuccess: 'Mã mới đã được gửi',
         resendSuccessSubtitle: 'Vui lòng kiểm tra email của bạn',
+        resendFailed: 'Gửi lại mã thất bại',
+        resendFailedSubtitle: 'Vui lòng thử lại sau',
         invalidCode: 'Mã xác thực không đúng',
         codeExpired: 'Mã đã hết hạn',
         tooManyAttempts: 'Quá nhiều lần thử sai',
         networkError: 'Lỗi kết nối mạng',
         networkErrorSubtitle: 'Vui lòng thử lại sau'
       }
+    },
+    googleSigningIn: 'Đang đăng nhập với Google...',
+    continueWithGoogle: 'Tiếp tục với Google',
+    googleSignInSuccess: 'Đăng nhập Google thành công',
+    logoutSuccess: 'Đăng xuất thành công',
+    roleSelection: {
+      title: 'Chọn vai trò của bạn',
+      subtitle: 'Chọn cách bạn muốn sử dụng TalentFit AI',
+      pleaseSelectRole: 'Vui lòng chọn vai trò để tiếp tục',
+      registrationSuccess: 'Đăng ký hoàn tất thành công!',
+      registrationFailed: 'Đăng ký thất bại. Vui lòng thử lại.',
+      completing: 'Đang hoàn tất đăng ký...',
+      continueButton: 'Tiếp tục',
+      backToLogin: 'Quay lại đăng nhập',
+      helpText: 'Bạn có thể thay đổi vai trò sau trong cài đặt tài khoản',
+      candidate: {
+        title: 'Người tìm việc',
+        description: 'Tìm kiếm cơ hội nghề nghiệp tiếp theo',
+        features: {
+          uploadCV: 'Tải lên và phân tích CV của bạn',
+          jobMatching: 'Nhận gợi ý việc làm cá nhân hóa',
+          applyJobs: 'Ứng tuyển việc làm chỉ với một cú click'
+        }
+      },
+      recruiter: {
+        title: 'Nhà tuyển dụng',
+        description: 'Tuyển dụng nhân tài cho tổ chức của bạn',
+        features: {
+          postJobs: 'Đăng tin tuyển dụng',
+          searchCandidates: 'Tìm kiếm và lọc ứng viên',
+          manageApplications: 'Quản lý đơn ứng tuyển và phỏng vấn'
+        }
+      }
     }
+  },
+
+  validation: {
+    emailRequired: 'Email là bắt buộc',
+    emailInvalid: 'Email không đúng định dạng',
   },
 
   common: {
     loading: 'Đang tải...',
-    error: 'Có lỗi xảy ra',
+    error: 'Lỗi',
     success: 'Thành công',
     cancel: 'Hủy',
     confirm: 'Xác nhận',
@@ -472,10 +564,263 @@ export const vi: ContentTaxonomy = {
     delete: 'Xóa',
     back: 'Quay lại',
     next: 'Tiếp theo',
-    previous: 'Trước đó',
+    previous: 'Trước',
     close: 'Đóng',
     open: 'Mở',
     viewMore: 'Xem thêm',
-    viewLess: 'Thu gọn',
+    viewLess: 'Xem ít hơn',
+    toast: {
+      // General
+      linkCopied: 'Đã sao chép liên kết',
+
+      // Job
+      jobSaved: 'Đã lưu công việc',
+      jobSavedSubtitle: '{jobTitle} đã được thêm vào danh sách đã lưu',
+
+      // CV
+      filesAddedSuccess: 'Đã thêm thành công {count} tệp',
+      noFilesReady: 'Không có tệp nào sẵn sàng để phân tích',
+      analysisSuccess: 'Phân tích hoàn tất!',
+
+      // Network & Generic Errors
+      networkError: 'Lỗi kết nối mạng',
+      networkErrorSubtitle: 'Vui lòng kiểm tra kết nối và thử lại',
+      genericError: 'Đã có lỗi không mong muốn xảy ra',
+      genericErrorSubtitle: 'Vui lòng thử lại sau',
+    }
   },
+
+  // Pages - Dynamic content based on current page
+  pages: {
+    dashboard: {
+      subscription: 'Bảng điều khiển',
+      header: {
+        title: 'Bảng điều khiển',
+        subtitle: 'Tổng quan',
+        description: 'Quản lý các hoạt động tuyển dụng của bạn'
+      }
+    },
+    cvAnalysis: {
+      subscription: 'Phân tích CV',
+      header: {
+        title: 'Phân tích CV',
+        subtitle: 'Hỗ trợ bởi AI',
+        description: 'Phân tích hồ sơ với trí tuệ nhân tạo'
+      }
+    },
+    candidates: {
+      subscription: 'Ứng viên',
+      header: {
+        title: 'Ứng viên',
+        subtitle: 'Quản lý',
+        description: 'Quản lý hồ sơ và đơn ứng tuyển của ứng viên'
+      }
+    },
+    jobPostings: {
+      subscription: 'Tin tuyển dụng',
+      header: {
+        title: 'Tin tuyển dụng',
+        subtitle: 'Quản lý',
+        description: 'Tạo và quản lý các tin tuyển dụng'
+      }
+    },
+    analytics: {
+      subscription: 'Phân tích',
+      header: {
+        title: 'Phân tích',
+        subtitle: 'Thống kê',
+        description: 'Theo dõi hiệu suất và các chỉ số'
+      }
+    },
+    settings: {
+      subscription: 'Cài đặt',
+      header: {
+        title: 'Cài đặt',
+        subtitle: 'Cấu hình',
+        description: 'Quản lý tài khoản và các tùy chọn của bạn'
+      }
+    }
+  },
+
+  // Dashboard
+  dashboard: {
+    sidebar: {
+      navigation: {
+        dashboard: 'Bảng điều khiển',
+        cvAnalysis: 'Phân tích CV',
+        candidates: 'Ứng viên',
+        jobPostings: 'Tin tuyển dụng',
+        analytics: 'Phân tích',
+        settings: 'Cài đặt'
+      },
+      subscription: 'Gói dịch vụ',
+      collapse: 'Thu gọn',
+      expand: 'Mở rộng',
+      hoverHint: 'Di chuột để mở rộng'
+    },
+    header: {
+      title: 'Bảng điều khiển',
+      subtitle: 'Chào mừng trở lại',
+      description: 'Đây là những gì đang diễn ra với hoạt động tuyển dụng của bạn',
+      search: {
+        placeholder: 'Tìm kiếm...',
+        fullPlaceholder: 'Tìm ứng viên, công việc, hoặc bất cứ điều gì...'
+      },
+      user: {
+        name: 'Người dùng',
+        role: 'Vai trò'
+      },
+      actions: {
+        logout: 'Đăng xuất'
+      }
+    },
+    metrics: {
+      totalResumes: {
+        title: 'Tổng số CV',
+        description: 'CV đã phân tích trong tháng này'
+      },
+      activeCandidates: {
+        title: 'Ứng viên tích cực',
+        description: 'Hiện đang trong quy trình'
+      },
+      accuracy: {
+        title: 'Độ chính xác AI',
+        description: 'Tỷ lệ chính xác của phân tích'
+      },
+      processingSpeed: {
+        title: 'Tốc độ xử lý',
+        description: 'Thời gian xử lý trung bình'
+      }
+    },
+    processingQueue: {
+      title: 'Hàng đợi xử lý',
+      subtitle: 'Trạng thái phân tích hiện tại',
+      viewAll: 'Xem tất cả',
+      total: 'Tổng số',
+      states: {
+        pending: 'Đang chờ',
+        processing: 'Đang xử lý',
+        completed: 'Hoàn thành',
+        error: 'Lỗi'
+      },
+      progress: 'Tiến trình'
+    },
+    recentResumes: {
+      title: 'CV gần đây',
+      subtitle: 'Các CV được phân tích mới nhất',
+      viewAll: 'Xem tất cả',
+      total: 'Tổng số',
+      score: 'Điểm',
+      match: 'Phù hợp'
+    },
+    monthlyApplications: {
+      title: 'Lượt ứng tuyển hàng tháng',
+      subtitle: 'Xu hướng ứng tuyển',
+      growth: 'Tăng trưởng',
+      trend: 'Xu hướng'
+    },
+    skillsChart: {
+      title: 'Phân bổ kỹ năng',
+      subtitle: 'Các kỹ năng phổ biến nhất',
+      skills: 'Kỹ năng',
+      description: 'Kỹ năng được tìm thấy trong CV'
+    },
+    scoreDistribution: {
+      title: 'Phân bổ điểm',
+      subtitle: 'Điểm chất lượng CV',
+      averageScore: 'Điểm trung bình',
+      highScores: 'Điểm cao',
+      totalAnalyzed: 'Tổng số đã phân tích',
+      legend: {
+        resumes: 'hồ sơ',
+        resume: 'hồ sơ'
+      },
+      ranges: {
+        poor: 'Kém (0-40)',
+        fair: 'Trung bình (41-60)',
+        good: 'Tốt (61-80)',
+        excellent: 'Xuất sắc (81-100)'
+      }
+    }
+  },
+
+  // Footer
+  footer: {
+    company: {
+      description: 'Nền tảng tuyển dụng bằng AI cho việc tuyển dụng hiện đại',
+      tagline: 'Tìm kiếm sự phù hợp hoàn hảo với AI'
+    },
+    newsletter: {
+      title: 'Luôn cập nhật',
+      subtitle: 'Nhận tin tức và cập nhật mới nhất',
+      placeholder: 'Nhập email của bạn',
+      agreement: 'Bằng cách đăng ký, bạn đồng ý với Chính sách bảo mật của chúng tôi'
+    },
+    links: {
+      product: {
+        title: 'Sản phẩm',
+        items: {
+          cvAnalysis: 'Phân tích CV',
+          jobMatching: 'Kết nối việc làm',
+          careerInsights: 'Thông tin sự nghiệp',
+          skillAssessment: 'Đánh giá kỹ năng'
+        }
+      },
+      company: {
+        title: 'Công ty',
+        items: {
+          about: 'Về chúng tôi',
+          team: 'Đội ngũ',
+          news: 'Tin tức',
+          careers: 'Tuyển dụng',
+          partners: 'Đối tác'
+        }
+      },
+      support: {
+        title: 'Hỗ trợ',
+        items: {
+          helpCenter: 'Trung tâm trợ giúp',
+          userGuide: 'Hướng dẫn sử dụng',
+          apiDocs: 'Tài liệu API',
+          contactSupport: 'Liên hệ hỗ trợ',
+          bugReport: 'Báo lỗi'
+        }
+      },
+      legal: {
+        title: 'Pháp lý',
+        items: {
+          privacy: 'Chính sách bảo mật',
+          terms: 'Điều khoản dịch vụ',
+          cookies: 'Chính sách cookie',
+          gdpr: 'Tuân thủ GDPR'
+        }
+      }
+    },
+    social: {
+      followUs: 'Theo dõi chúng tôi'
+    },
+    bottom: {
+      copyright: '© 2024 TalentFit AI. Mọi quyền được bảo lưu.',
+      madeWith: 'Làm bằng ❤️ tại',
+      vietnam: 'Việt Nam'
+    }
+  },
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: 'Yêu cầu mật khẩu',
+    strength: 'Độ mạnh mật khẩu',
+    strengthLevels: {
+      weak: 'Yếu',
+      medium: 'Trung bình',
+      strong: 'Mạnh'
+    },
+    requirements: {
+      minLength: 'Ít nhất 8 ký tự',
+      uppercase: 'Một chữ hoa',
+      lowercase: 'Một chữ thường',
+      number: 'Một chữ số',
+      special: 'Một ký tự đặc biệt'
+    }
+  }
 };

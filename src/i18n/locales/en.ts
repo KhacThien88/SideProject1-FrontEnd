@@ -303,7 +303,7 @@ export const en: ContentTaxonomy = {
       emailRequired: 'Email is required',
       emailInvalid: 'Invalid email format',
       password: 'Password',
-      passwordPlaceholder: 'Enter password (at least 8 characters, with uppercase, lowercase, numbers and special characters)',
+      passwordPlaceholder: 'Enter your password',
       passwordRequired: 'Password is required',
       passwordMinLength: 'Password must be at least 8 characters',
       rememberMe: 'Remember me',

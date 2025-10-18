@@ -32,6 +32,7 @@ import {
   generateMockJobMatchResults
 } from '../../utils/jobMatchingUtils';
 import { cn } from '../../utils/cn';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface JobDetailViewProps {
   jobId?: string;
@@ -53,20 +54,22 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
   isSaved = false,
   className
 }) => {
+  const { getContent } = useTranslation();
+  
   // Mock data for development - replace with actual data fetching
   const mockJobs = useMemo(() => generateMockJobs(1), []);
   const mockResults = useMemo(() => generateMockJobMatchResults(mockJobs), [mockJobs]);
   const result = jobMatchResult || mockResults[0];
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'requirements' | 'company' | 'similar'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'requirements' | 'company'>('overview');
 
   if (!result) {
     return (
       <div className="text-center py-12">
-        <div className="text-lg font-semibold text-neutral-900 mb-2">Job not found</div>
-        <div className="text-neutral-600 mb-4">The job you're looking for doesn't exist or has been removed.</div>
+        <div className="text-lg font-semibold text-neutral-900 mb-2">{getContent('jobs.details.jobNotFound')}</div>
+        <div className="text-neutral-600 mb-4">{getContent('jobs.details.jobNotFoundDescription')}</div>
         <Button variant="primary" onClick={onBack}>
-          Back to Results
+          {getContent('jobs.details.backToResults')}
         </Button>
       </div>
     );
@@ -80,8 +83,6 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
   const handleApply = () => onApply(job.id);
   const handleShare = () => onShare(job);
 
-  const similarJobs = useMemo(() => generateMockJobs(3), []);
-
   return (
     <div className={cn("w-full space-y-6", className)}>
       {/* Header */}
@@ -89,11 +90,11 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
         {onBack && (
           <Button variant="tertiary" onClick={onBack} className="flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" />
-            Back
+            {getContent('common.back')}
           </Button>
         )}
         <div className="flex-1">
-          <div className="text-sm text-neutral-600">Job Details</div>
+          <div className="text-sm text-neutral-600">{getContent('jobs.details.title')}</div>
           <div className="text-xl font-bold text-neutral-900">{job.title}</div>
         </div>
       </div>
@@ -133,15 +134,15 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                   <div className="flex items-center gap-3 text-xs">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4 text-neutral-500" />
-                      <span>Posted {calculateTimeAgo(job.postedDate)}</span>
+                      <span>{getContent('jobs.details.postedAgo')} {calculateTimeAgo(job.postedDate, getContent)}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Eye className="w-4 h-4 text-neutral-500" />
-                      <span>247 views</span>
+                      <span>247 {getContent('jobs.details.views')}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Users className="w-4 h-4 text-neutral-500" />
-                      <span>12 applicants</span>
+                      <span>12 {getContent('jobs.details.applicants')}</span>
                     </div>
                   </div>
                 </div>
@@ -152,10 +153,10 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                   "px-4 py-2 rounded-full text-sm font-bold",
                   scoreColorClass
                 )}>
-                  {matchScore}% match
+                  {matchScore}% {getContent('jobs.details.match')}
                 </div>
                 <span className="text-sm text-neutral-500">
-                  {getMatchScoreText(matchScore)}
+                  {getMatchScoreText(matchScore, getContent)}
                 </span>
               </div>
             </div>
@@ -165,8 +166,8 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               <Badge variant="primary" className="capitalize">
                 {job.type.replace('-', ' ')}
               </Badge>
-              {job.location.remote && <Badge variant="info">Remote</Badge>}
-              {job.location.hybrid && <Badge variant="info">Hybrid</Badge>}
+              {job.location.remote && <Badge variant="info">{getContent('jobs.details.remote')}</Badge>}
+              {job.location.hybrid && <Badge variant="info">{getContent('jobs.details.hybrid')}</Badge>}
               {job.tags.map(tag => (
                 <Badge key={tag} variant="accent" className="capitalize">
                   {tag}
@@ -179,17 +180,17 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 text-neutral-600 mb-1">
                   <DollarSign className="w-4 h-4" />
-                  <span className="text-sm font-medium">Salary</span>
+                  <span className="text-sm font-medium">{getContent('jobs.details.salary')}</span>
                 </div>
                 <div className="font-semibold text-neutral-900 text-sm">
-                  {formatSalary(job.salary.min, job.salary.max, job.salary.currency, job.salary.period)}
+                  {formatSalary(job.salary.min, job.salary.max, job.salary.currency, job.salary.period, getContent)}
                 </div>
               </div>
               
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 text-neutral-600 mb-1">
                   <Briefcase className="w-4 h-4" />
-                  <span className="text-sm font-medium">Experience</span>
+                  <span className="text-sm font-medium">{getContent('jobs.details.experience')}</span>
                 </div>
                 <div className="font-semibold text-neutral-900 text-sm">{job.requirements.experience}</div>
               </div>
@@ -198,7 +199,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                 <div className="text-center">
                   <div className="flex items-center justify-center gap-1 text-neutral-600 mb-1">
                     <Clock className="w-4 h-4" />
-                    <span className="text-sm font-medium">Deadline</span>
+                    <span className="text-sm font-medium">{getContent('jobs.details.deadline')}</span>
                   </div>
                   <div className="font-semibold text-neutral-900">
                     {new Date(job.deadline).toLocaleDateString()}
@@ -216,7 +217,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                 className="flex items-center gap-2 text-sm"
               >
                 <ExternalLink className="w-4 h-4" />
-                Apply Now
+                {getContent('jobs.details.applyNow')}
               </Button>
               
               <Button
@@ -228,7 +229,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                 )}
               >
                 <Bookmark className={cn("w-4 h-4", isSaved && "fill-current")} />
-                {isSaved ? 'Saved' : 'Save Job'}
+                {isSaved ? getContent('jobs.details.saved') : getContent('jobs.details.saveJob')}
               </Button>
               </div>
              <div className="flex items-center gap-2"> 
@@ -238,12 +239,12 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                 className="flex items-center gap-2 text-sm"
               >
                 <Share2 className="w-4 h-4" />
-                Share
+                {getContent('jobs.details.share')}
               </Button>
               
               <Button variant="tertiary" className="flex items-center gap-2 text-sm">
                 <MessageCircle className="w-4 h-4" />
-                Contact
+                {getContent('jobs.details.contact')}
               </Button>
               </div>
             </div>
@@ -254,10 +255,9 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
             <div className="border-b border-neutral-200">
               <nav className="flex">
                 {[
-                  { key: 'overview', label: 'Overview' },
-                  { key: 'requirements', label: 'Requirements' },
-                  { key: 'company', label: 'Company' },
-                  { key: 'similar', label: 'Similar Jobs' }
+                  { key: 'overview', label: getContent('jobs.details.tabs.overview') },
+                  { key: 'requirements', label: getContent('jobs.details.tabs.requirements') },
+                  { key: 'company', label: getContent('jobs.details.tabs.company') }
                 ].map(tab => (
                   <button
                     key={tab.key}
@@ -279,14 +279,14 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               {activeTab === 'overview' && (
                 <div className="space-y-6">
                   <div>
-                    <div className="text-lg font-semibold text-neutral-900 mb-3">Job Description</div>
+                    <div className="text-lg font-semibold text-neutral-900 mb-3">{getContent('jobs.details.jobDescription')}</div>
                     <div className="prose prose-neutral max-w-none">
                       <div>{job.description}</div>
                     </div>
                   </div>
                   
                   <div>
-                    <div className="text-lg font-semibold text-neutral-900 mb-3">Benefits & Perks</div>
+                    <div className="text-lg font-semibold text-neutral-900 mb-3">{getContent('jobs.details.benefitsPerks')}</div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {job.benefits.map((benefit, index) => (
                         <div key={index} className="flex items-center gap-2">
@@ -302,7 +302,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               {activeTab === 'requirements' && (
                 <div className="space-y-6">
                   <div>
-                    <div className="text-lg font-semibold text-neutral-900 mb-3">Essential Requirements</div>
+                    <div className="text-lg font-semibold text-neutral-900 mb-3">{getContent('jobs.details.essentialRequirements')}</div>
                     <ul className="space-y-2">
                       {job.requirements.essential.map((req, index) => (
                         <li key={index} className="flex items-start gap-2">
@@ -314,7 +314,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                   </div>
                   
                   <div>
-                    <div className="text-lg font-semibold text-neutral-900 mb-3">Preferred Qualifications</div>
+                    <div className="text-lg font-semibold text-neutral-900 mb-3">{getContent('jobs.details.preferredQualifications')}</div>
                     <ul className="space-y-2">
                       {job.requirements.preferred.map((req, index) => (
                         <li key={index} className="flex items-start gap-2">
@@ -326,7 +326,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                   </div>
                   
                   <div>
-                    <div className="text-lg font-semibold text-neutral-900 mb-3">Required Skills</div>
+                    <div className="text-lg font-semibold text-neutral-900 mb-3">{getContent('jobs.details.requiredSkills')}</div>
                     <div className="flex flex-wrap gap-2">
                       {highlightedSkills.map(({ skill, matched }, index) => (
                         <Badge
@@ -346,7 +346,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               {activeTab === 'company' && (
                 <div className="space-y-6">
                   <div>
-                    <div className="text-lg font-semibold text-neutral-900 mb-3">About {job.company.name}</div>
+                    <div className="text-lg font-semibold text-neutral-900 mb-3">{getContent('jobs.details.about')} {job.company.name}</div>
                     <div className="text-neutral-700">
                       {job.company.name} is a leading company in the {job.company.industry} industry. 
                       We are committed to innovation and excellence in everything we do.
@@ -355,40 +355,17 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <div className="text-sm font-medium text-neutral-700 mb-1">Industry</div>
+                      <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('jobs.details.industry')}</div>
                       <div className="text-neutral-900">{job.company.industry}</div>
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-neutral-700 mb-1">Company Size</div>
+                      <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('jobs.details.companySize')}</div>
                       <div className="text-neutral-900 capitalize">{job.company.size}</div>
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-neutral-700 mb-1">Location</div>
+                      <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('jobs.details.location')}</div>
                       <div className="text-neutral-900">{job.company.location}</div>
                     </div>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'similar' && (
-                <div className="space-y-4">
-                  <div className="text-lg font-semibold text-neutral-900">Similar Jobs</div>
-                  <div className="space-y-4">
-                    {similarJobs.map(similarJob => (
-                      <div key={similarJob.id} className="p-4 border border-neutral-200 rounded-lg hover:border-primary-300 transition-colors cursor-pointer">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <div className="font-semibold text-neutral-900">{similarJob.title}</div>
-                            <div className="text-neutral-600">{similarJob.company.name}</div>
-                            <div className="flex items-center gap-4 text-sm text-neutral-500 mt-1">
-                              <span>{similarJob.location.city}</span>
-                              <span>{formatSalary(similarJob.salary.min, similarJob.salary.max, similarJob.salary.currency, similarJob.salary.period)}</span>
-                            </div>
-                          </div>
-                          <Button variant="tertiary" size="sm">View</Button>
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </div>
               )}
@@ -400,12 +377,12 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
         <div className="space-y-6">
           {/* Match Analysis */}
           <Card className="p-6">
-            <div className="text-lg font-semibold text-neutral-900 mb-4">Match Analysis</div>
+            <div className="text-lg font-semibold text-neutral-900 mb-4">{getContent('jobs.details.matchAnalysis')}</div>
             
             <div className="space-y-4">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-neutral-700">Skills Match</span>
+                  <span className="text-sm font-medium text-neutral-700">{getContent('jobs.details.requiredSkills')}</span>
                   <span className="text-sm font-semibold text-success-600">{skillsMatch.percentage}%</span>
                 </div>
                 <div className="w-full bg-neutral-200 rounded-full h-2">
@@ -415,13 +392,13 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                   />
                 </div>
                 <div className="text-xs text-neutral-600 mt-1">
-                  {skillsMatch.matched.length} of {job.skills.length} skills matched
+                  {skillsMatch.matched.length} {getContent('jobs.details.skillsMatched').replace('{total}', job.skills.length.toString())}
                 </div>
               </div>
               
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-neutral-700">Experience</span>
+                  <span className="text-sm font-medium text-neutral-700">{getContent('jobs.details.experience')}</span>
                   <span className="text-sm font-semibold text-warning-600">{experienceMatch.score}%</span>
                 </div>
                 <div className="w-full bg-neutral-200 rounded-full h-2">
@@ -434,7 +411,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-neutral-700">Location</span>
+                  <span className="text-sm font-medium text-neutral-700">{getContent('jobs.details.location')}</span>
                   <span className="text-sm font-semibold text-primary-600">{locationMatch.score}%</span>
                 </div>
                 <div className="w-full bg-neutral-200 rounded-full h-2">
@@ -447,7 +424,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-neutral-700">Salary</span>
+                  <span className="text-sm font-medium text-neutral-700">{getContent('jobs.details.salary')}</span>
                   <span className="text-sm font-semibold text-secondary-600">{salaryMatch.score}%</span>
                 </div>
                 <div className="w-full bg-neutral-200 rounded-full h-2">
@@ -460,57 +437,57 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
             </div>
             
             <div className="mt-4 p-3 bg-neutral-50 rounded-lg">
-              <div className="text-xs font-medium text-neutral-700 mb-1">AI Analysis</div>
+              <div className="text-xs font-medium text-neutral-700 mb-1">{getContent('jobs.details.aiAnalysis')}</div>
               <div className="text-xs text-neutral-600">{overallAnalysis}</div>
             </div>
           </Card>
 
           {/* Quick Actions */}
           <Card className="p-6">
-            <div className="text-lg font-semibold text-neutral-900 mb-4">Quick Actions</div>
+            <div className="text-lg font-semibold text-neutral-900 mb-4">{getContent('jobs.details.quickActions')}</div>
             <div className="space-y-3">
               <Button variant="primary" className="w-full justify-start text-sm" onClick={handleApply}>
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Apply Now
+                {getContent('jobs.details.applyNow')}
               </Button>
               <Button variant="secondary" className="w-full justify-start text-sm" onClick={handleSave}>
                 <Bookmark className="w-4 h-4 mr-2" />
-                Save for later
+                {getContent('jobs.details.saveForLater')}
               </Button>
               <Button variant="tertiary" className="w-full justify-start text-sm">
                 <Download className="w-4 h-4 mr-2" />
-                Download JD
+                {getContent('jobs.details.downloadJD')}
               </Button>
               <Button variant="tertiary" className="w-full justify-start text-sm" onClick={handleShare}>
                 <Share2 className="w-4 h-4 mr-2" />
-                Share Job
+                {getContent('jobs.details.shareJob')}
               </Button>
             </div>
           </Card>
 
           {/* Application Tips */}
           <Card className="p-6">
-            <div className="text-lg font-semibold text-neutral-900 mb-4">Application Tips</div>
+            <div className="text-lg font-semibold text-neutral-900 mb-4">{getContent('jobs.details.applicationTips')}</div>
             <div className="space-y-3">
               <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-success-600 mt-0.5 flex-shrink-0" />
                 <div className="text-sm">
-                  <div className="font-medium text-neutral-900">Highlight matching skills</div>
-                  <div className="text-neutral-600">Emphasize your {skillsMatch.matched.slice(0, 3).join(', ')} experience</div>
+                  <div className="font-medium text-neutral-900">{getContent('jobs.details.highlightMatchingSkills')}</div>
+                  <div className="text-neutral-600">{getContent('jobs.details.emphasizeExperience')} {skillsMatch.matched.slice(0, 3).join(', ')}</div>
                 </div>
               </div>
               <div className="flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 text-warning-600 mt-0.5 flex-shrink-0" />
                 <div className="text-sm">
-                  <div className="font-medium text-neutral-900">Address skill gaps</div>
-                  <div className="text-neutral-600">Consider mentioning your learning plans for {skillsMatch.missing.slice(0, 2).join(', ')}</div>
+                  <div className="font-medium text-neutral-900">{getContent('jobs.details.addressSkillGaps')}</div>
+                  <div className="text-neutral-600">{getContent('jobs.details.considerLearningPlans')} {skillsMatch.missing.slice(0, 2).join(', ')}</div>
                 </div>
               </div>
               <div className="flex items-start gap-2">
                 <Star className="w-4 h-4 text-primary-600 mt-0.5 flex-shrink-0" />
                 <div className="text-sm">
-                  <div className="font-medium text-neutral-900">Stand out</div>
-                  <div className="text-neutral-600">Customize your application for {job.company.name}</div>
+                  <div className="font-medium text-neutral-900">{getContent('jobs.details.standOut')}</div>
+                  <div className="text-neutral-600">{getContent('jobs.details.customizeApplication')} {job.company.name}</div>
                 </div>
               </div>
             </div>

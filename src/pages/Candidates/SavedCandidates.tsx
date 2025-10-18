@@ -461,9 +461,9 @@ export const SavedCandidates: React.FC = () => {
             {filteredCandidates.length === 0 ? (
               <div className="bg-white rounded-2xl border border-neutral-200 p-12 text-center">
                 <Users className="w-16 h-16 rounded-2xl p-2 bg-gradient-to-b from-primary-500 to-secondary-500 text-white mx-auto mb-4" />
-                <h4 className="text-lg font-semibold text-neutral-800 mb-2">
+                <div className="text-2xl font-semibold text-neutral-800 mb-2">
                   {getContent('savedCandidates.noCandidates')}
-                </h4>
+                </div>
                 <p className="text-neutral-600">
                   {hasActiveFilters
                     ? getContent('savedCandidates.noResultsFilters')

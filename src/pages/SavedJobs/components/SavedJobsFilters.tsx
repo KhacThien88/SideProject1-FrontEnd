@@ -93,11 +93,11 @@ export const SavedJobsFilters: React.FC<SavedJobsFiltersProps> = ({
           <div className="text-center mb-3">
             <span className="text-lg font-semibold text-neutral-800">
               {filters.minSalary
-                ? formatSalary(filters.minSalary, undefined, 'USD')
+                ? formatSalary(filters.minSalary, undefined, 'USD', 'yearly', getContent)
                 : getContent('savedJobs.salaryAny')}{' '}
               -{' '}
               {filters.maxSalary
-                ? formatSalary(undefined, filters.maxSalary, 'USD')
+                ? formatSalary(undefined, filters.maxSalary, 'USD', 'yearly', getContent)
                 : getContent('savedJobs.salaryAny')}
             </span>
           </div>

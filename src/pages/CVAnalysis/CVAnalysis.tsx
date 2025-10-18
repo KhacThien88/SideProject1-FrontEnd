@@ -5,6 +5,7 @@ import { Layout } from '../../components/common/Layout';
 import { Container } from '../../components/common/Container';
 
 import { useToast } from '../../contexts/ToastContext';
+import { useTranslation } from '../../hooks/useTranslation';
 
 // Import extracted components
 import { UploadSection } from '../../components/common/Upload/UploadSection';
@@ -24,6 +25,7 @@ import { formatFileSize, validateFiles, generateMockAnalysisResults } from '../.
 
 export const CVAnalysis: React.FC = () => {
   const { showSuccessToast, showErrorToast, showWarningToast, showInfoToast } = useToast();
+  const { getContent } = useTranslation();
   
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [dragActive, setDragActive] = useState(false);
@@ -97,7 +99,8 @@ export const CVAnalysis: React.FC = () => {
         simulateUpload(file.id);
       });
 
-      showSuccessToast(`${valid.length} file${valid.length > 1 ? 's' : ''} added successfully`);
+      const fileWord = valid.length > 1 ? getContent('cvAnalysis.files') : getContent('cvAnalysis.file');
+      showSuccessToast(`${valid.length} ${fileWord} ${getContent('cvAnalysis.upload.filesAdded')}`);
     }
   };
 
@@ -133,7 +136,7 @@ export const CVAnalysis: React.FC = () => {
       if (file.url) {
         URL.revokeObjectURL(file.url);
       }
-      showWarningToast(`${file.name} removed`);
+      showWarningToast(`${file.name} ${getContent('cvAnalysis.upload.fileRemoved')}`);
     }
   };
 
@@ -147,12 +150,13 @@ export const CVAnalysis: React.FC = () => {
   const startAnalysis = async () => {
     const completedFiles = uploadedFiles.filter(f => f.status === 'completed');
     if (completedFiles.length === 0) {
-      showErrorToast('No files ready for analysis');
+      showErrorToast(getContent('cvAnalysis.noFilesReady'));
       return;
     }
 
     setIsProcessing(true);
-    showInfoToast(`Starting analysis for ${completedFiles.length} file${completedFiles.length > 1 ? 's' : ''}...`);
+    const fileWord = completedFiles.length > 1 ? getContent('cvAnalysis.files') : getContent('cvAnalysis.file');
+    showInfoToast(`${getContent('cvAnalysis.startingAnalysis')} ${completedFiles.length} ${fileWord}...`);
 
     // Update files to processing status
     setUploadedFiles(prev => prev.map(file => 
@@ -184,7 +188,7 @@ export const CVAnalysis: React.FC = () => {
     setAnalysisResults(results);
     setIsProcessing(false);
     setAnalysisProgress(null);
-    showSuccessToast('Analysis completed successfully!');
+    showSuccessToast(getContent('cvAnalysis.analysisCompleted'));
   };
 
   // Clear all files
@@ -196,7 +200,7 @@ export const CVAnalysis: React.FC = () => {
     });
     setUploadedFiles([]);
     setValidationErrors([]);
-    showInfoToast('All files cleared');
+    showInfoToast(getContent('cvAnalysis.allFilesCleared'));
   };
 
   // Job action handlers
@@ -204,38 +208,38 @@ export const CVAnalysis: React.FC = () => {
     setSavedJobIds(prev => {
       const isAlreadySaved = prev.includes(jobId);
       if (isAlreadySaved) {
-        showInfoToast('Job removed from saved list');
+        showInfoToast(getContent('cvAnalysis.jobRemovedFromSaved'));
         return prev.filter(id => id !== jobId);
       } else {
-        showSuccessToast('Job saved successfully');
+        showSuccessToast(getContent('cvAnalysis.jobSavedSuccessfully'));
         return [...prev, jobId];
       }
     });
-  }, [showSuccessToast, showInfoToast]);
+  }, [showSuccessToast, showInfoToast, getContent]);
 
   const handleJobApply = useCallback((jobId: string) => {
-    showInfoToast('Application', 'Redirecting to application page...');
+    showInfoToast(getContent('cvAnalysis.application'), getContent('cvAnalysis.redirectingToApplication'));
     console.log('Applying to job:', jobId);
-  }, [showInfoToast]);
+  }, [showInfoToast, getContent]);
 
   const handleJobShare = useCallback((jobId: string) => {
     console.log('Sharing job:', jobId);
     if (navigator.share) {
       navigator.share({
-        title: 'Job Opportunity',
-        text: 'Check out this job opportunity',
+        title: getContent('cvAnalysis.jobOpportunity'),
+        text: getContent('cvAnalysis.checkOutThisJob'),
         url: window.location.href
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
-      showSuccessToast('Job link copied to clipboard');
+      showSuccessToast(getContent('cvAnalysis.jobLinkCopied'));
     }
-  }, [showSuccessToast]);
+  }, [showSuccessToast, getContent]);
 
   const handleJobViewDetails = useCallback((jobId: string) => {
-    showInfoToast('Job Details', 'Opening job details...');
+    showInfoToast(getContent('cvAnalysis.jobDetails'), getContent('cvAnalysis.openingJobDetails'));
     console.log('Viewing job details:', jobId);
-  }, [showInfoToast]);
+  }, [showInfoToast, getContent]);
 
   return (
     <Layout className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">

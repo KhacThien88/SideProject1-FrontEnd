@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from '../../../components/ui/Card';
 import { CV_ANALYSIS_CONFIG } from '../../../types/cvAnalysis';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface JobSelectionSectionProps {
   selectedJobPosition: string;
@@ -11,12 +12,14 @@ export const JobSelectionSection: React.FC<JobSelectionSectionProps> = ({
   selectedJobPosition,
   onJobPositionChange
 }) => {
+  const { getContent } = useTranslation();
+  
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-lg font-semibold text-neutral-900 mb-1">Target Position</div>
-          <div className="text-sm text-neutral-600">Select the job position to analyze CV compatibility</div>
+          <div className="text-lg font-semibold text-neutral-900 mb-1">{getContent('cvAnalysis.targetPosition')}</div>
+          <div className="text-sm text-neutral-600">{getContent('cvAnalysis.targetPositionDescription')}</div>
         </div>
         <div className="min-w-0 flex-1 max-w-xs ml-6">
           <select 

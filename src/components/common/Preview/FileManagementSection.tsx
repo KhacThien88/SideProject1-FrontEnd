@@ -7,6 +7,7 @@ import { ProgressBar } from '../../ui/ProgressBar';
 import { FileText, X, RefreshCw, Eye } from 'lucide-react';
 import { CV_ANALYSIS_CONFIG } from '../../../types/cvAnalysis';
 import type { UploadedFile, FileAction, AnalysisHandler } from '../../../types/cvAnalysis';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface FileManagementSectionProps {
   uploadedFiles: UploadedFile[];
@@ -27,6 +28,8 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
   onStartAnalysis,
   formatFileSize
 }) => {
+  const { getContent } = useTranslation();
+  
   if (uploadedFiles.length === 0) {
     return null;
   }
@@ -36,7 +39,7 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
       <div className="mt-8">
         <div className="flex items-center justify-between mb-4">
           <div className="text-lg font-semibold text-neutral-900">
-            Selected Files ({uploadedFiles.length}/{CV_ANALYSIS_CONFIG.MAX_FILES})
+            {getContent('cvAnalysis.fileManagement.selectedFiles')} ({uploadedFiles.length}/{CV_ANALYSIS_CONFIG.MAX_FILES})
           </div>
           <div className="flex items-center space-x-3">
             <Button
@@ -45,7 +48,7 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
               size="sm"
               className="text-neutral-600"
             >
-              Clear All
+              {getContent('cvAnalysis.fileManagement.clearAll')}
             </Button>
             <Button
               onClick={onStartAnalysis}
@@ -54,7 +57,7 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
               className="flex items-center space-x-2 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
             >
               {isProcessing && <LoadingSpinner size="sm" />}
-              <span>{isProcessing ? 'Analyzing...' : 'Analyze Files'}</span>
+              <span>{isProcessing ? getContent('cvAnalysis.fileManagement.analyzing') : getContent('cvAnalysis.fileManagement.analyzeFiles')}</span>
             </Button>
           </div>
         </div>
@@ -85,10 +88,10 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
                     size="sm"
                     dot={file.status === 'uploading' || file.status === 'processing'}
                   >
-                    {file.status === 'completed' ? 'Ready' :
-                     file.status === 'error' ? 'Error' :
-                     file.status === 'processing' ? 'Processing' :
-                     'Uploading'}
+                    {file.status === 'completed' ? getContent('cvAnalysis.fileManagement.ready') :
+                     file.status === 'error' ? getContent('cvAnalysis.fileManagement.error') :
+                     file.status === 'processing' ? getContent('cvAnalysis.fileManagement.processing') :
+                     getContent('cvAnalysis.fileManagement.uploading')}
                   </Badge>
 
                   {/* Action Buttons */}

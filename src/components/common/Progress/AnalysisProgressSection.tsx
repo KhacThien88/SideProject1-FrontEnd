@@ -4,6 +4,7 @@ import { Badge } from '../../ui/Badge';
 import { ProgressBar } from '../../ui/ProgressBar';
 import { Clock } from 'lucide-react';
 import type { AnalysisProgress } from '../../../types/cvAnalysis';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface AnalysisProgressSectionProps {
   analysisProgress: AnalysisProgress | null;
@@ -12,6 +13,8 @@ interface AnalysisProgressSectionProps {
 export const AnalysisProgressSection: React.FC<AnalysisProgressSectionProps> = ({
   analysisProgress
 }) => {
+  const { getContent } = useTranslation();
+  
   if (!analysisProgress) {
     return null;
   }
@@ -19,12 +22,12 @@ export const AnalysisProgressSection: React.FC<AnalysisProgressSectionProps> = (
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between mb-4">
-        <div className="text-lg font-semibold text-neutral-900">Analyzing Files</div>
+        <div className="text-lg font-semibold text-neutral-900">{getContent('cvAnalysis.progress.analyzingFiles')}</div>
         <Badge variant="info" size="sm" dot>
-          {analysisProgress.stage === 'upload' ? 'Uploading' :
-           analysisProgress.stage === 'extract' ? 'Extracting' :
-           analysisProgress.stage === 'analyze' ? 'Analyzing' :
-           'Completing'}
+          {analysisProgress.stage === 'upload' ? getContent('cvAnalysis.progress.uploading') :
+           analysisProgress.stage === 'extract' ? getContent('cvAnalysis.progress.extracting') :
+           analysisProgress.stage === 'analyze' ? getContent('cvAnalysis.progress.analyzing') :
+           getContent('cvAnalysis.progress.completing')}
         </Badge>
       </div>
       
@@ -32,7 +35,7 @@ export const AnalysisProgressSection: React.FC<AnalysisProgressSectionProps> = (
         <div>
           <div className="flex justify-between text-sm mb-2">
             <span className="text-neutral-600">
-              Processing: {analysisProgress.currentFile}
+              {getContent('cvAnalysis.progress.processing')}: {analysisProgress.currentFile}
             </span>
             <span className="text-neutral-600">
               {Math.round(analysisProgress.percentage)}%
@@ -49,7 +52,7 @@ export const AnalysisProgressSection: React.FC<AnalysisProgressSectionProps> = (
         {analysisProgress.estimatedTime && (
           <div className="flex items-center text-sm text-neutral-600">
             <Clock className="w-4 h-4 mr-2" />
-            <span>Estimated time remaining: {Math.ceil(analysisProgress.estimatedTime / 1000)}s</span>
+            <span>{getContent('cvAnalysis.progress.estimatedTime')}: {Math.ceil(analysisProgress.estimatedTime / 1000)}s</span>
           </div>
         )}
       </div>

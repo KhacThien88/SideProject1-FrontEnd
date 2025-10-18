@@ -22,6 +22,7 @@ import {
   highlightMatchedSkills 
 } from '../../utils/jobMatchingUtils';
 import { cn } from '../../utils/cn';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export const JobCard: React.FC<JobCardProps> = ({
   job: jobResult,
@@ -32,6 +33,7 @@ export const JobCard: React.FC<JobCardProps> = ({
   isSaved = false,
   className
 }) => {
+  const { getContent } = useTranslation();
   const { job, matchScore, skillsMatch, locationMatch } = jobResult;
 
   const handleSave = (e: React.MouseEvent) => {
@@ -76,12 +78,12 @@ export const JobCard: React.FC<JobCardProps> = ({
             {job.tags.includes('featured') && (
               <Badge variant="accent" size="sm">
                 <Star className="w-3 h-3 mr-1" />
-                Featured
+                {getContent('jobs.card.featured')}
               </Badge>
             )}
             {job.tags.includes('urgent') && (
               <Badge variant="error" size="sm">
-                Urgent
+                {getContent('jobs.card.urgent')}
               </Badge>
             )}
           </div>
@@ -96,13 +98,13 @@ export const JobCard: React.FC<JobCardProps> = ({
               <MapPin className="w-4 h-4" />
               <span>{job.location.city}, {job.location.country}</span>
               {job.location.remote && (
-                <Badge variant="info" size="sm" className="ml-1">Remote</Badge>
+                <Badge variant="info" size="sm" className="ml-1">{getContent('jobs.card.remote')}</Badge>
               )}
             </div>
             
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
-              <span>{calculateTimeAgo(job.postedDate)}</span>
+              <span>{calculateTimeAgo(job.postedDate, getContent)}</span>
             </div>
           </div>
         </div>
@@ -113,10 +115,10 @@ export const JobCard: React.FC<JobCardProps> = ({
             "px-3 py-1 rounded-full text-sm font-semibold",
             scoreColorClass
           )}>
-            {matchScore}% match
+            {matchScore}% {getContent('jobs.card.match')}
           </div>
           <span className="text-xs text-neutral-500">
-            {getMatchScoreText(matchScore)}
+            {getMatchScoreText(matchScore, getContent)}
           </span>
         </div>
       </div>
@@ -131,7 +133,7 @@ export const JobCard: React.FC<JobCardProps> = ({
         <div className="flex items-center gap-2">
           <DollarSign className="w-4 h-4 text-neutral-500" />
           <span className="text-neutral-700">
-            {formatSalary(job.salary.min, job.salary.max, job.salary.currency, job.salary.period)}
+            {formatSalary(job.salary.min, job.salary.max, job.salary.currency, job.salary.period, getContent)}
           </span>
         </div>
         
@@ -146,7 +148,7 @@ export const JobCard: React.FC<JobCardProps> = ({
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-neutral-500" />
             <span className="text-neutral-700 capitalize">
-              {job.company.size} company
+              {job.company.size} {getContent('jobs.card.company')}
             </span>
           </div>
         )}
@@ -155,7 +157,7 @@ export const JobCard: React.FC<JobCardProps> = ({
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-neutral-500" />
             <span className="text-neutral-700">
-              {locationMatch.distance}km away
+              {locationMatch.distance}{getContent('jobs.card.away')}
             </span>
           </div>
         )}
@@ -163,7 +165,7 @@ export const JobCard: React.FC<JobCardProps> = ({
 
       {/* Skills */}
       <div className="mb-4">
-        <div className="text-sm font-medium text-neutral-700 mb-2">Required Skills:</div>
+        <div className="text-sm font-medium text-neutral-700 mb-2">{getContent('jobs.card.requiredSkills')}</div>
         <div className="flex flex-wrap gap-2">
           {highlightedSkills.slice(0, 6).map(({ skill, matched }, index) => (
             <Badge
@@ -177,14 +179,14 @@ export const JobCard: React.FC<JobCardProps> = ({
           ))}
           {job.skills.length > 6 && (
             <Badge variant="neutral" size="sm" className="opacity-70">
-              +{job.skills.length - 6} more
+              +{job.skills.length - 6} {getContent('jobs.card.more')}
             </Badge>
           )}
         </div>
         
         {skillsMatch.matched.length > 0 && (
           <div className="text-xs text-success-600 mt-1">
-            {skillsMatch.matched.length} of {job.skills.length} skills matched ({skillsMatch.percentage}%)
+            {skillsMatch.matched.length} {getContent('jobs.card.of')} {job.skills.length} {getContent('jobs.card.skillsMatched')} ({skillsMatch.percentage}%)
           </div>
         )}
       </div>
@@ -199,7 +201,7 @@ export const JobCard: React.FC<JobCardProps> = ({
             className="flex items-center gap-2"
           >
             <ExternalLink className="w-4 h-4" />
-            Apply Now
+            {getContent('jobs.card.applyNow')}
           </Button>
           
           <Button
@@ -215,7 +217,7 @@ export const JobCard: React.FC<JobCardProps> = ({
               "w-4 h-4",
               isSaved && "fill-current"
             )} />
-            {isSaved ? 'Saved' : 'Save'}
+            {isSaved ? getContent('jobs.card.saved') : getContent('jobs.card.save')}
           </Button>
         </div>
         
@@ -226,7 +228,7 @@ export const JobCard: React.FC<JobCardProps> = ({
           className="flex items-center gap-2"
         >
           <Share2 className="w-4 h-4" />
-          Share
+          {getContent('jobs.card.share')}
         </Button>
       </div>
       </Card>

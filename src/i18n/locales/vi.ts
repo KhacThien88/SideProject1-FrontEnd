@@ -616,12 +616,28 @@ export const vi: ContentTaxonomy = {
         description: 'Quản lý hồ sơ và đơn ứng tuyển của ứng viên'
       }
     },
+    savedJobs: {
+      subscription: 'Công việc đã lưu',
+      header: {
+        title: 'Công việc đã lưu',
+        subtitle: 'Bộ sưu tập',
+        description: 'Xem và quản lý các cơ hội việc làm đã lưu'
+      }
+    },
     jobPostings: {
       subscription: 'Tin tuyển dụng',
       header: {
         title: 'Tin tuyển dụng',
         subtitle: 'Quản lý',
         description: 'Tạo và quản lý các tin tuyển dụng'
+      }
+    },
+    users: {
+      subscription: 'Người dùng',
+      header: {
+        title: 'Quản lý người dùng',
+        subtitle: 'Quản trị',
+        description: 'Quản lý tất cả người dùng và vai trò của họ'
       }
     },
     analytics: {
@@ -649,7 +665,9 @@ export const vi: ContentTaxonomy = {
         dashboard: 'Bảng điều khiển',
         cvAnalysis: 'Phân tích CV',
         candidates: 'Ứng viên',
+        savedJobs: 'Công việc đã lưu',
         jobPostings: 'Tin tuyển dụng',
+        users: 'Người dùng',
         analytics: 'Phân tích',
         settings: 'Cài đặt'
       },
@@ -821,6 +839,51 @@ export const vi: ContentTaxonomy = {
       lowercase: 'Một chữ thường',
       number: 'Một chữ số',
       special: 'Một ký tự đặc biệt'
+    }
+  },
+
+  // Users Management
+  users: {
+    title: 'Quản lý người dùng',
+    subtitle: 'Quản lý tất cả người dùng và vai trò của họ',
+    addUser: 'Thêm người dùng',
+    editUser: 'Chỉnh sửa người dùng',
+    stats: {
+      totalUsers: 'Tổng người dùng',
+      candidates: 'Ứng viên',
+      recruiters: 'Nhà tuyển dụng',
+      admins: 'Quản trị viên'
+    },
+    search: {
+      placeholder: 'Tìm kiếm theo tên hoặc email...'
+    },
+    filters: {
+      allRoles: 'Tất cả vai trò',
+      allStatus: 'Tất cả trạng thái',
+      filterButton: 'Lọc'
+    },
+    table: {
+      user: 'Người dùng',
+      role: 'Vai trò',
+      status: 'Trạng thái',
+      joined: 'Tham gia',
+      lastLogin: 'Đăng nhập cuối',
+      actions: 'Hành động',
+      never: 'Chưa bao giờ'
+    },
+    roles: {
+      admin: 'Quản trị viên',
+      recruiter: 'Nhà tuyển dụng (HR)',
+      candidate: 'Ứng viên'
+    },
+    status: {
+      active: 'Hoạt động',
+      inactive: 'Không hoạt động',
+      suspended: 'Tạm khóa'
+    },
+    empty: {
+      title: 'Không tìm thấy người dùng',
+      description: 'Thử điều chỉnh tìm kiếm hoặc bộ lọc'
     }
   }
 };

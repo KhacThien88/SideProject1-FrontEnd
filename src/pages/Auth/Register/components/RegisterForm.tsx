@@ -522,7 +522,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               disabled={isLoading}
               required
             />
-            <label htmlFor="acceptTerms" className="text-sm text-neutral-700">
+            <label htmlFor="acceptTerms" className="text-sm font-semibold text-neutral-700">
               {getContent('auth.register.acceptTerms')}{' '}
               <a 
                 href="#terms" 
@@ -544,25 +544,27 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           )}
 
           {/* Register Button */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2`}
-          >
-            {isLoading ? (
-              <div className="flex flex-row items-center justify-center">
-                <LoadingSpinner size="sm" variant="neutral" className="mr-2" />
-                {getContent('auth.register.registering')}
-              </div>
-            ) : (
-              getContent('auth.register.registerButton')
-            )}
-          </button>
+          <div className="w-full flex items-center justify-center">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`w-full max-w-md text-primary-700 hover:text-primary-800 bg-gradient-to-r from-primary-100/95 to-secondary-50/95 hover:from-primary-100/90 hover:to-secondary-100/80 rounded-2xl p-3 border border-neutral-200/70 hover:border-primary-200/60 shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${createFocusEffect.input('md', 'primary')}`}
+            >
+              {isLoading ? (
+                <div className="flex flex-row items-center justify-center">
+                  <LoadingSpinner size="sm" variant="neutral" className="mr-2" />
+                  {getContent('auth.register.registering')}
+                </div>
+              ) : (
+                getContent('auth.register.registerButton')
+              )}
+            </button>
+          </div>
         </form>
 
         {/* Login Link */}
         <div className="text-center mt-6">
-          <div className="text-sm text-neutral-600">
+          <div className="text-sm font-semibold text-neutral-600">
             {getContent('auth.register.hasAccount')}{' '}
             <a 
               href="/login"

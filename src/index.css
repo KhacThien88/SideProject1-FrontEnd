@@ -1222,7 +1222,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .focus-email {
-  text-transform: lowercase;
+  text-transform: normal;
 }
 
 .focus-url {

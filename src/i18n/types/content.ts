@@ -387,7 +387,23 @@ export interface ContentTaxonomy {
         description: string;
       };
     };
+    savedJobs: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
     jobPostings: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    users: {
       subscription: string;
       header: {
         title: string;
@@ -420,7 +436,9 @@ export interface ContentTaxonomy {
         dashboard: string;
         cvAnalysis: string;
         candidates: string;
+        savedJobs: string;
         jobPostings: string;
+        users: string;
         analytics: string;
         settings: string;
       };
@@ -624,6 +642,51 @@ export interface ContentTaxonomy {
       lowercase: string;
       number: string;
       special: string;
+    };
+  };
+
+  // Users Management
+  users: {
+    title: string;
+    subtitle: string;
+    addUser: string;
+    editUser: string;
+    stats: {
+      totalUsers: string;
+      candidates: string;
+      recruiters: string;
+      admins: string;
+    };
+    search: {
+      placeholder: string;
+    };
+    filters: {
+      allRoles: string;
+      allStatus: string;
+      filterButton: string;
+    };
+    table: {
+      user: string;
+      role: string;
+      status: string;
+      joined: string;
+      lastLogin: string;
+      actions: string;
+      never: string;
+    };
+    roles: {
+      admin: string;
+      recruiter: string;
+      candidate: string;
+    };
+    status: {
+      active: string;
+      inactive: string;
+      suspended: string;
+    };
+    empty: {
+      title: string;
+      description: string;
     };
   };
 }

@@ -11,6 +11,7 @@ import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
 import { JobDetailPage } from './pages/JobMatching/JobDetailPage';
+import { UsersPage } from './pages/Users';
 
 function App() {
   // Determine initial route based on current URL
@@ -26,6 +27,7 @@ function App() {
     if (hash === '#role-selection') return '/role-selection';
     if (hash === '#dashboard') return '/dashboard';
     if (hash === '#cv-analysis') return '/cv-analysis';
+    if (hash === '#users') return '/dashboard/users';
     if (hash.startsWith('#job/')) return hash.replace('#', '');
     
     // Check pathname
@@ -36,6 +38,7 @@ function App() {
     if (path === '/dashboard') return '/dashboard';
     if (path === '/reset-password') return '/reset-password';
     if (path === '/cv-analysis') return '/cv-analysis';
+    if (path === '/dashboard/users') return '/dashboard/users';
     if (path.startsWith('/job/')) return path;
     if (path === '/') return '/';
     if (path === '/verify-otp') return '/verify-otp';
@@ -57,6 +60,7 @@ function App() {
             <Route path="/role-selection" component={RoleSelectionPage} exact />
             <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/cv-analysis" component={CVAnalysis} exact />
+            <Route path="/dashboard/users" component={UsersPage} exact />
             <Route path="/job/" component={JobDetailPage} exact={false} />
             <Route path="/verify-otp" component={VerifyOTP} exact />
           </RouterProvider>

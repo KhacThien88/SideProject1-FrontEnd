@@ -424,7 +424,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             </svg>
 
             <span className="text-sm font-semibold text-primary-700 group-hover:text-primary-800 transition-colors duration-200">
-              {isLoadingAny ? 'Signing in...' : 'Continue with Google'}
+              {isLoadingAny ? getContent('auth.login.loggingIn') : getContent('auth.login.googleLogin')}
             </span>
           </button>
         </div>

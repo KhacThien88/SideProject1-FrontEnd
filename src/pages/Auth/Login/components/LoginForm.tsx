@@ -43,6 +43,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const isLoadingAny = isLoading || authLoading;
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const googleBtnContainerRef = useRef<HTMLDivElement | null>(null);
   // removed in-place forgot/reset UI; use dedicated pages
   const googleButtonRenderedRef = useRef(false);
 
@@ -64,18 +65,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     });
   };
 
-  // Initialize Google Sign-In library (no rendering official button)
+  // Initialize Google Sign-In library and render hidden official button
   const initializeGoogleSignIn = async () => {
     try {
       // Wait for GSI script readiness
       await waitForGsiReady(7000);
 
-      // Initialize Google Sign In (popup). FedCM disabled for local dev
+      // Initialize Google Sign In with default settings for full account picker
       console.log('[Google Sign-In:init] client_id, origin:', import.meta.env.VITE_GOOGLE_CLIENT_ID, window.location.origin);
       window.google.accounts.id.initialize({
         client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || 'your-google-client-id',
-        ux_mode: 'popup',
-        use_fedcm_for_prompt: false, // force pure popup to avoid FedCM/CORS issues during local dev
         callback: async (response: any) => {
           try {
             const tokenResponse = await AuthApiService.googleAuth(response.credential);
@@ -117,6 +116,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         }
       });
 
+      // Render hidden Google button for proper account picker UI
+      const parent = googleBtnContainerRef.current;
+      if (parent) {
+        parent.innerHTML = '';
+        window.google.accounts.id.renderButton(parent, {
+          type: 'standard',
+          theme: 'outline',
+          size: 'large',
+          text: 'signin_with',
+        });
+      }
+
       googleButtonRenderedRef.current = true;
       setIsLoading(false);
     } catch (error: any) {
@@ -126,15 +137,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     }
   };
 
-  // Handle custom Google button click - triggers the popup
-  const handleGoogleSignIn = () => {
-    if (!window.google?.accounts?.id) {
-      showErrorToast('Google Sign-In not initialized');
-      return;
+  // Handle custom button click - triggers the hidden Google button
+  const handleGoogleSignIn = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Click the hidden Google button to trigger full account picker
+    const googleBtn = googleBtnContainerRef.current?.querySelector('div[role="button"]') as HTMLElement;
+    if (googleBtn) {
+      googleBtn.click();
+      // Remove focus from custom button to prevent color loss after popup closes
+      (e.currentTarget as HTMLButtonElement).blur();
+    } else {
+      showErrorToast('Google Sign-In not ready');
     }
-    setIsLoading(true);
-    // Trigger Google One Tap prompt/popup
-    window.google.accounts.id.prompt();
   };
 
   // Render Google button on mount so user can click directly
@@ -345,7 +358,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               className="h-4 w-4 text-primary-600 border-neutral-300 rounded focus:outline-none"
               disabled={isLoadingAny}
             />
-            <label htmlFor="remember-me" className="ml-2 text-sm text-neutral-700">
+            <label htmlFor="remember-me" className="ml-2 text-sm font-semibold text-neutral-700">
               {getContent('auth.login.rememberMe')}
             </label>
           </div>
@@ -415,6 +428,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             </span>
           </button>
         </div>
+
+        {/* Hidden Google Button Container - triggers full account picker */}
+        <div 
+          ref={googleBtnContainerRef}
+          className="hidden"
+          aria-hidden="true"
+        />
       </form>
 
       {/* Sign Up Link */}

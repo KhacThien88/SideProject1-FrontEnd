@@ -84,6 +84,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               expires_in: tokenResponse.expires_in,
             });
             showSuccessToast(getContent('auth.login.toast.loginSuccess'));
+            // Navigate to dashboard after successful Google login
+            setTimeout(() => navigate('/dashboard'), 500);
           } catch (error: any) {
             console.error('Google login error:', error);
             // If backend requires role selection for new Google users, redirect to role selection page
@@ -212,10 +214,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       if (onSubmit) {
         await onSubmit(formData.email, formData.password, formData.rememberMe);
         showSuccessToast(getContent('auth.login.toast.loginSuccess'));
+        // Navigate to dashboard after successful login
+        setTimeout(() => navigate('/dashboard'), 500);
       } else {
         // Use AuthContext for real API call
         await login(formData.email, formData.password);
         showSuccessToast(getContent('auth.login.toast.loginSuccess'));
+        // Navigate to dashboard after successful login
+        setTimeout(() => navigate('/dashboard'), 500);
       }
     } catch (err: any) {
       console.error('Login error:', err);

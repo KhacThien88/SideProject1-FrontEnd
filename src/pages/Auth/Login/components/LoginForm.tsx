@@ -382,7 +382,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             disabled={isLoadingAny}
             className={`w-full bg-gradient-to-r from-primary-100/95 to-secondary-50/95 hover:from-primary-100/90 hover:to-secondary-100/80 rounded-2xl p-3 border border-neutral-200/70 hover:border-primary-200/60 shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${createFocusEffect.input('md', 'primary')}`}
           >
-            <span className="font-semibold text-sm text-primary-800">
+            <span className="font-semibold text-sm text-primary-700 hover:text-primary-800 transition-colors duration-200">
               {isLoadingAny ? (
                 <div className="flex items-center justify-center">
                   <LoadingSpinner size="sm" variant="neutral" className="mr-2" />
@@ -423,7 +423,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               <path d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0 6.09 0 2.71 2.24 1.064 5.51l3.34 2.59C5.192 5.736 7.396 3.977 10 3.977z" fill="#EA4335"/>
             </svg>
 
-            <span className="text-sm font-semibold text-primary-700 group-hover:text-primary-900 transition-colors duration-200">
+            <span className="text-sm font-semibold text-primary-700 group-hover:text-primary-800 transition-colors duration-200">
               {isLoadingAny ? 'Signing in...' : 'Continue with Google'}
             </span>
           </button>

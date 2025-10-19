@@ -51,6 +51,7 @@ export const DashboardSidebar: React.FC = () => {
 
   // Define all sidebar items with role-based access
   const allSidebarItems: SidebarItem[] = [
+    // ============ CANDIDATE NAVIGATION ============
     {
       key: 'dashboard',
       label: t.dashboard.sidebar.navigation.dashboard,
@@ -67,7 +68,7 @@ export const DashboardSidebar: React.FC = () => {
       href: '/cv-analysis',
       isActive: currentPath === '/cv-analysis',
       color: 'secondary',
-      roles: ['candidate'] // Chỉ candidate
+      roles: ['candidate'] // Candidate: Phân tích CV
     },
     {
       key: 'saved-jobs',
@@ -76,8 +77,28 @@ export const DashboardSidebar: React.FC = () => {
       href: '/dashboard/saved-jobs',
       isActive: currentPath === '/dashboard/saved-jobs',
       color: 'accent',
-      roles: ['candidate'] // Chỉ candidate - jobs đã save
+      roles: ['candidate'] // Candidate: Các job đã save
     },
+    {
+      key: 'candidate-analytics',
+      label: t.dashboard.sidebar.navigation.analytics,
+      icon: BarChart3,
+      href: '/dashboard/analytics',
+      isActive: currentPath === '/dashboard/analytics',
+      color: 'primary',
+      roles: ['candidate'] // Candidate: Phân tích CV, công việc, đề xuất cải thiện
+    },
+    {
+      key: 'candidate-settings',
+      label: t.dashboard.sidebar.navigation.settings,
+      icon: Settings,
+      href: '/dashboard/settings',
+      isActive: currentPath === '/dashboard/settings',
+      color: 'neutral',
+      roles: ['candidate'] // Candidate: Cài đặt
+    },
+
+    // ============ RECRUITER (HR) NAVIGATION ============
     {
       key: 'job-postings',
       label: t.dashboard.sidebar.navigation.jobPostings,
@@ -85,7 +106,7 @@ export const DashboardSidebar: React.FC = () => {
       href: '/dashboard/job-postings',
       isActive: currentPath === '/dashboard/job-postings',
       color: 'secondary',
-      roles: ['recruiter'] // Chỉ HR - đăng tuyển
+      roles: ['recruiter'] // HR: Đăng tin tuyển dụng
     },
     {
       key: 'candidates',
@@ -95,8 +116,28 @@ export const DashboardSidebar: React.FC = () => {
       isActive: currentPath === '/dashboard/candidates',
       badge: '12',
       color: 'accent',
-      roles: ['recruiter'] // Chỉ HR - ứng viên đã save
+      roles: ['recruiter'] // HR: Ứng viên đã save
     },
+    {
+      key: 'recruiter-analytics',
+      label: t.dashboard.sidebar.navigation.analytics,
+      icon: BarChart3,
+      href: '/dashboard/analytics',
+      isActive: currentPath === '/dashboard/analytics',
+      color: 'primary',
+      roles: ['recruiter'] // HR: Phân tích lượng ứng viên, công việc đăng
+    },
+    {
+      key: 'recruiter-settings',
+      label: t.dashboard.sidebar.navigation.settings,
+      icon: Settings,
+      href: '/dashboard/settings',
+      isActive: currentPath === '/dashboard/settings',
+      color: 'neutral',
+      roles: ['recruiter'] // HR: Cài đặt
+    },
+
+    // ============ ADMIN NAVIGATION ============
     {
       key: 'users',
       label: t.dashboard.sidebar.navigation.users,
@@ -104,25 +145,25 @@ export const DashboardSidebar: React.FC = () => {
       href: '/dashboard/users',
       isActive: currentPath === '/dashboard/users',
       color: 'accent',
-      roles: ['admin'] // Chỉ admin - quản lý user
+      roles: ['admin'] // Admin: Quản lý user theo role
     },
     {
-      key: 'analytics',
+      key: 'admin-analytics',
       label: t.dashboard.sidebar.navigation.analytics,
       icon: BarChart3,
       href: '/dashboard/analytics',
       isActive: currentPath === '/dashboard/analytics',
       color: 'primary',
-      roles: ['candidate', 'recruiter', 'admin'] // Tất cả - nhưng nội dung khác nhau
+      roles: ['admin'] // Admin: Phân tích về trang web
     },
     {
-      key: 'settings',
+      key: 'admin-settings',
       label: t.dashboard.sidebar.navigation.settings,
       icon: Settings,
       href: '/dashboard/settings',
       isActive: currentPath === '/dashboard/settings',
       color: 'neutral',
-      roles: ['candidate', 'recruiter', 'admin'] // Tất cả
+      roles: ['admin'] // Admin: Cài đặt
     }
   ];
 
@@ -130,7 +171,7 @@ export const DashboardSidebar: React.FC = () => {
   const sidebarItems = useMemo(() => {
     if (!user) return [];
     return allSidebarItems.filter(item => item.roles.includes(user.role));
-  }, [user, allSidebarItems, currentPath]);
+  }, [user?.role, currentPath]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNavigation = (href: string) => {
     navigate(href);

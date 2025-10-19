@@ -361,6 +361,251 @@ export interface ContentTaxonomy {
     };
   };
 
+  // Job Matching & CV Analysis
+  jobs: {
+    details: {
+      title: string;
+      jobNotFound: string;
+      jobNotFoundDescription: string;
+      loadingJobDetails: string;
+      matchAnalysis: string;
+      similarJobs: string;
+      companyInfo: string;
+      backToResults: string;
+      quickActions: string;
+      applyNow: string;
+      saveForLater: string;
+      downloadJD: string;
+      shareJob: string;
+      applicationTips: string;
+      highlightMatchingSkills: string;
+      emphasizeExperience: string;
+      addressSkillGaps: string;
+      considerLearningPlans: string;
+      standOut: string;
+      customizeApplication: string;
+      match: string;
+      saved: string;
+      saveJob: string;
+      share: string;
+      contact: string;
+      overview: string;
+      requirements: string;
+      company: string;
+      jobDescription: string;
+      benefitsPerks: string;
+      essentialRequirements: string;
+      preferredQualifications: string;
+      requiredSkills: string;
+      about: string;
+      industry: string;
+      companySize: string;
+      location: string;
+      view: string;
+      salary: string;
+      experience: string;
+      deadline: string;
+      postedAgo: string;
+      views: string;
+      applicants: string;
+      remote: string;
+      hybrid: string;
+      skillsMatched: string;
+      aiAnalysis: string;
+      tabs: {
+        overview: string;
+        requirements: string;
+        company: string;
+        similar: string;
+      };
+    };
+    matching: {
+      title: string;
+      noJobsFound: string;
+      noJobsFoundDescription: string;
+      resultsCount: string;
+      filterJobs: string;
+      jobRemoved: string;
+      removedFromSaved: string;
+      jobSaved: string;
+      addedToSaved: string;
+      application: string;
+      openingApplicationForm: string;
+      linkCopied: string;
+      jobLinkCopied: string;
+      checkOutJobAt: string;
+      jobSearchResults: string;
+      foundJobs: string;
+      matchingYourProfile: string;
+      filters: string;
+      filter: string;
+      applied: string;
+      relevance: string;
+      matchScore: string;
+      datePosted: string;
+      showing: string;
+      to: string;
+      of: string;
+      results: string;
+    };
+    utils: {
+      year: string;
+      month: string;
+      hour: string;
+      from: string;
+      upTo: string;
+      salaryNotSpecified: string;
+      justNow: string;
+      hoursAgo: string;
+      daysAgo: string;
+      weeksAgo: string;
+      monthsAgo: string;
+      excellentMatch: string;
+      goodMatch: string;
+      fairMatch: string;
+      poorMatch: string;
+    };
+    card: {
+      featured: string;
+      urgent: string;
+      remote: string;
+      match: string;
+      requiredSkills: string;
+      more: string;
+      of: string;
+      skillsMatched: string;
+      applyNow: string;
+      saved: string;
+      save: string;
+      share: string;
+      company: string;
+      away: string;
+    };
+    filters: {
+      activeFilters: string;
+      clearAll: string;
+      location: string;
+      jobType: string;
+      experienceLevel: string;
+      salary: string;
+      skills: string;
+      remote: string;
+      filterRecommendations: string;
+      searchKeywords: string;
+      jobTitleCompanySkills: string;
+      search: string;
+      anyLocation: string;
+      includeRemoteWork: string;
+      salaryRange: string;
+      minSalary: string;
+      maxSalary: string;
+      companySize: string;
+      skillsFromCV: string;
+      skillsWithStar: string;
+    };
+  };
+
+  // CV Analysis
+  cvAnalysis: {
+    targetPosition: string;
+    targetPositionDescription: string;
+    noResumesUploaded: string;
+    noResumesUploadedDescription: string;
+    uploadYourFirstResume: string;
+    jobRecommendations: string;
+    recommendedJobs: string;
+    basedOnCVAnalysis: string;
+    jobsMatchProfile: string;
+    filteredFrom: string;
+    total: string;
+    filters: string;
+    saveSearch: string;
+    noJobsMatchFilters: string;
+    tryAdjustingFilters: string;
+    clearAllFilters: string;
+    viewAllMatchingJobs: string;
+    exportReport: string;
+    startingAnalysis: string;
+    file: string;
+    files: string;
+    analysisCompleted: string;
+    allFilesCleared: string;
+    noFilesReady: string;
+    jobDetails: string;
+    openingJobDetails: string;
+    application: string;
+    redirectingToApplication: string;
+    jobLinkCopied: string;
+    jobRemovedFromSaved: string;
+    jobSavedSuccessfully: string;
+    jobOpportunity: string;
+    checkOutThisJob: string;
+    jobSaved: string;
+    savedToFavorites: string;
+    linkCopied: string;
+    checkOutJobAt: string;
+    upload: {
+      title: string;
+      dropHere: string;
+      dragAndDrop: string;
+      supports: string;
+      maxSize: string;
+      upTo: string;
+      chooseFiles: string;
+      uploadIssues: string;
+      filesAdded: string;
+      fileRemoved: string;
+    };
+    fileManagement: {
+      selectedFiles: string;
+      clearAll: string;
+      analyzing: string;
+      analyzeFiles: string;
+      ready: string;
+      error: string;
+      processing: string;
+      uploading: string;
+    };
+    progress: {
+      analyzingFiles: string;
+      uploading: string;
+      extracting: string;
+      analyzing: string;
+      completing: string;
+      processing: string;
+      estimatedTime: string;
+    };
+    results: {
+      title: string;
+      exportResults: string;
+      analyzedOn: string;
+      good: string;
+      fair: string;
+      average: string;
+      needsImprovement: string;
+      previewCV: string;
+      downloadReport: string;
+      removeResult: string;
+      name: string;
+      email: string;
+      phone: string;
+      location: string;
+      skillsMatch: string;
+      experience: string;
+      education: string;
+      keywords: string;
+      detectedSkills: string;
+      matchPercentage: string;
+      matchWith: string;
+      recommendations: string;
+      overallScore: string;
+      skillsDetected: string;
+      experienceLevel: string;
+      jobMatches: string;
+      candidate: string;
+    };
+  };
+
   // Pages - Dynamic content based on current page
   pages: {
     dashboard: {
@@ -613,18 +858,23 @@ export interface ContentTaxonomy {
     open: string;
     viewMore: string;
     viewLess: string;
-    toast: {
-      linkCopied: string;
-      jobSaved: string;
-      jobSavedSubtitle: string;
-      filesAddedSuccess: string;
-      noFilesReady: string;
-      analysisSuccess: string;
-      networkError: string;
-      networkErrorSubtitle: string;
-      genericError: string;
-      genericErrorSubtitle: string;
-    };
+    backToResults: string;
+    apply: string;
+    share: string;
+    export: string;
+    refresh: string;
+    clearAll: string;
+    clearAllFilters: string;
+    viewDetails: string;
+    loadMore: string;
+    sortBy: string;
+    filterBy: string;
+    viewMode: string;
+    activeFilters: string;
+    noResults: string;
+    noDataAvailable: string;
+    loadingData: string;
+    errorLoadingData: string;
   };
 
   // Password Requirements component
@@ -687,6 +937,267 @@ export interface ContentTaxonomy {
     empty: {
       title: string;
       description: string;
+    };
+  };
+
+  // Settings
+  settings: {
+    title: string;
+    saveChanges: string;
+    saving: string;
+    saveSuccess: string;
+    saveError: string;
+    loadError: string;
+    
+    tabs: {
+      profile: string;
+      notifications: string;
+      privacy: string;
+      data: string;
+      appearance: string;
+    };
+    
+    profile: {
+      title: string;
+      fullName: string;
+      email: string;
+      company: string;
+      role: string;
+      changePassword: string;
+      cancelPasswordChange: string;
+      currentPassword: string;
+      newPassword: string;
+      confirmPassword: string;
+      roles: {
+        hrManager: string;
+        recruiter: string;
+        talentAcquisition: string;
+        admin: string;
+      };
+    };
+    
+    notifications: {
+      emailAlerts: string;
+      emailAlertsDesc: string;
+      pushNotifications: string;
+      pushNotificationsDesc: string;
+      weeklyReports: string;
+      weeklyReportsDesc: string;
+      analysisComplete: string;
+      analysisCompleteDesc: string;
+    };
+    
+    privacy: {
+      dataRetention: string;
+      dataRetentionDesc: string;
+      shareAnalytics: string;
+      shareAnalyticsDesc: string;
+      autoDelete: string;
+      autoDeleteDesc: string;
+      days30: string;
+      days60: string;
+      days90: string;
+      days180: string;
+      days365: string;
+    };
+    
+    data: {
+      export: string;
+      exportDesc: string;
+      import: string;
+      importDesc: string;
+      dangerZone: string;
+      reset: string;
+      resetDesc: string;
+      delete: string;
+      deleteDesc: string;
+      exportSuccess: string;
+      importSuccess: string;
+      resetConfirm: string;
+      deleteConfirm: string;
+      deleteDoubleConfirm: string;
+    };
+    
+    appearance: {
+      language: string;
+    };
+  };
+
+  // Job Postings
+  jobPostings: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    createJobProfile: string;
+    editJobProfile: string;
+    jobProfile: string;
+    jobTitle: string;
+    jobTitlePlaceholder: string;
+    description: string;
+    descriptionPlaceholder: string;
+    experienceLevel: string;
+    experience: string;
+    years: string;
+    requiredSkills: string;
+    preferredSkills: string;
+    addSkillPlaceholder: string;
+    add: string;
+    noSkillsAdded: string;
+    activeMatches: string;
+    viewMatches: string;
+    edit: string;
+    delete: string;
+    cancel: string;
+    saving: string;
+    saveChanges: string;
+    createProfile: string;
+    more: string;
+    noJobsTitle: string;
+    noJobsSubtitle: string;
+    createFirstJob: string;
+    noResultsTitle: string;
+    noResultsSubtitle: string;
+    loadError: string;
+    createSuccess: string;
+    updateSuccess: string;
+    deleteSuccess: string;
+    saveError: string;
+    deleteError: string;
+    deleteConfirm: string;
+    viewMatchesInfo: string;
+  };
+
+  // Candidate Matches
+  candidateMatches: {
+    title: string;
+    backToJobs: string;
+    totalMatches: string;
+    requiredSkills: string;
+    filters: string;
+    clearFilters: string;
+    filterMatchScore: string;
+    filterExperience: string;
+    years: string;
+
+    sort: {
+      matchScore: string;
+      experience: string;
+      appliedDate: string;
+      name: string;
+    };
+
+    overallMatch: string;
+    skillsMatch: string;
+    experience: string;
+    yearsExperience: string;
+    matchedSkills: string;
+    missingSkills: string;
+    more: string;
+    appliedOn: string;
+    downloadResume: string;
+    save: string;
+    unsave: string;
+    saved: string;
+
+    noCandidates: string;
+    noMatches: string;
+    noResultsFilters: string;
+
+    success: {
+      saveToggled: string;
+      resumeDownloaded: string;
+    };
+
+    errors: {
+      loadFailed: string;
+      saveFailed: string;
+      downloadFailed: string;
+      jobNotFound: string;
+    };
+  };
+
+  // Saved Candidates
+  savedCandidates: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    filters: string;
+    clearFilters: string;
+    filterMatchScore: string;
+    filterExperience: string;
+    filterSkillMatches: string;
+    filterLocation: string;
+    filterSkills: string;
+    years: string;
+
+    sort: {
+      matchScore: string;
+      experience: string;
+      appliedDate: string;
+      name: string;
+    };
+
+    noCandidates: string;
+    noSavedYet: string;
+    noResultsFilters: string;
+
+    success: {
+      saveToggled: string;
+      resumeDownloaded: string;
+    };
+
+    errors: {
+      loadFailed: string;
+      saveFailed: string;
+      downloadFailed: string;
+    };
+  };
+
+  // Saved Jobs
+  savedJobs: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    filters: string;
+    clearFilters: string;
+    filterMatchScore: string;
+    filterSalary: string;
+    filterJobType: string;
+    filterLocation: string;
+    filterRemoteOnly: string;
+    salaryAny: string;
+    savedAt: string;
+    resultsCount: string;
+    noSavedYet: string;
+    noSavedDescription: string;
+    noResultsFilters: string;
+
+    sort: {
+      matchScore: string;
+      recent: string;
+      salaryHigh: string;
+      salaryLow: string;
+      company: string;
+    };
+
+    actions: {
+      refresh: string;
+      applyTitle: string;
+      applyMessage: string;
+      shareMessage: string;
+    };
+
+    success: {
+      removed: string;
+      refreshed: string;
+      shareTitle: string;
+      shareCopied: string;
+    };
+
+    errors: {
+      loadFailed: string;
+      removeFailed: string;
+      shareFailed: string;
     };
   };
 }

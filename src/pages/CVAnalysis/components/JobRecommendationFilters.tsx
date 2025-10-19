@@ -16,6 +16,7 @@ import {
 import type { JobSearchFilters } from '../../../types/jobMatching';
 import { JOB_MATCHING_CONFIG } from '../../../types/jobMatching';
 import { cn } from '../../../utils/cn';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface JobRecommendationFiltersProps {
   filters: JobSearchFilters;
@@ -30,6 +31,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
   detectedSkills = [],
   className
 }) => {
+  const { getContent } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchKeywords, setSearchKeywords] = useState(filters.keywords || '');
 
@@ -90,7 +92,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Filter className="w-5 h-5 text-neutral-600" />
-            <div className="font-semibold text-neutral-900">Filter Recommendations</div>
+            <div className="font-semibold text-neutral-900">{getContent('jobs.filters.filterRecommendations')}</div>
             {activeFiltersCount > 0 && (
               <Badge variant="primary" size="sm">{activeFiltersCount}</Badge>
             )}
@@ -104,7 +106,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
                 onClick={clearAllFilters}
                 className="text-xs"
               >
-                Clear All
+                {getContent('common.clearAll')}
               </Button>
             )}
             <Button
@@ -113,7 +115,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
               onClick={() => setIsExpanded(!isExpanded)}
               className="lg:hidden"
             >
-              {isExpanded ? 'Less' : 'More'}
+              {isExpanded ? getContent('common.viewLess') : getContent('common.viewMore')}
             </Button>
           </div>
         </div>
@@ -122,7 +124,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
       {/* Active filters */}
       {activeFiltersCount > 0 && (
         <div className="p-4 border-b border-neutral-200 bg-neutral-50">
-          <div className="text-sm font-medium text-neutral-700 mb-2">Active Filters:</div>
+          <div className="text-sm font-medium text-neutral-700 mb-2">{getContent('jobs.filters.activeFilters')}:</div>
           <div className="flex flex-wrap gap-2">
             {filters.keywords && (
               <Badge variant="primary" className="flex items-center gap-1">
@@ -145,7 +147,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
             
             {filters.location?.remote && (
               <Badge variant="info" className="flex items-center gap-1">
-                Remote
+                {getContent('jobs.filters.remote')}
                 <button onClick={() => updateFilters({ 
                   location: { ...filters.location, remote: false } 
                 })}>
@@ -197,12 +199,12 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
             <Search className="w-4 h-4 inline mr-1" />
-            Search Keywords
+            {getContent('jobs.filters.searchKeywords')}
           </label>
           <div className="flex gap-2">
             <input
               type="text"
-              placeholder="Job title, company, skills..."
+              placeholder={getContent('jobs.filters.jobTitleCompanySkills')}
               value={searchKeywords}
               onChange={(e) => setSearchKeywords(e.target.value)}
               onKeyPress={handleKeywordsKeyPress}
@@ -213,7 +215,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
               size="sm"
               onClick={handleKeywordsSubmit}
             >
-              Search
+              {getContent('jobs.filters.search')}
             </Button>
           </div>
         </div>
@@ -223,7 +225,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               <MapPin className="w-4 h-4 inline mr-1" />
-              Location
+              {getContent('jobs.filters.location')}
             </label>
             <select
               value={filters.location?.city || ''}
@@ -235,7 +237,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
               })}
               className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             >
-              <option value="">Any location</option>
+              <option value="">{getContent('jobs.filters.anyLocation')}</option>
               <option value="Ho Chi Minh City">Ho Chi Minh City</option>
               <option value="Hanoi">Hanoi</option>
               <option value="Da Nang">Da Nang</option>
@@ -254,7 +256,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
                 className="mr-2"
               />
               <label htmlFor="remote-work" className="text-sm text-neutral-700">
-                Include remote work
+                {getContent('jobs.filters.includeRemoteWork')}
               </label>
             </div>
           </div>
@@ -263,7 +265,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               <Briefcase className="w-4 h-4 inline mr-1" />
-              Job Type
+              {getContent('jobs.filters.jobType')}
             </label>
             <div className="space-y-2">
               {JOB_MATCHING_CONFIG.JOB_TYPES.map(({ value, label }) => (
@@ -291,13 +293,13 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
             <DollarSign className="w-4 h-4 inline mr-1" />
-            Salary Range (USD/month)
+            {getContent('jobs.filters.salaryRange')}
           </label>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <input
                 type="number"
-                placeholder="Min salary"
+                placeholder={getContent('jobs.filters.minSalary')}
                 value={filters.salary?.min || ''}
                 onChange={(e) => updateFilters({
                   salary: { 
@@ -311,7 +313,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
             <div>
               <input
                 type="number"
-                placeholder="Max salary"
+                placeholder={getContent('jobs.filters.maxSalary')}
                 value={filters.salary?.max || ''}
                 onChange={(e) => updateFilters({
                   salary: { 
@@ -329,7 +331,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
             <TrendingUp className="w-4 h-4 inline mr-1" />
-            Experience Level
+            {getContent('jobs.filters.experienceLevel')}
           </label>
           <div className="flex flex-wrap gap-2">
             {JOB_MATCHING_CONFIG.EXPERIENCE_LEVELS.map(({ value, label }) => (
@@ -356,7 +358,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
         <div>
           <label className="block text-sm font-medium text-neutral-700 mb-2">
             <Building2 className="w-4 h-4 inline mr-1" />
-            Company Size
+            {getContent('jobs.filters.companySize')}
           </label>
           <div className="flex flex-wrap gap-2">
             {JOB_MATCHING_CONFIG.COMPANY_SIZES.map(({ value}) => (
@@ -384,7 +386,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
           <div>
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               <Star className="w-4 h-4 inline mr-1" />
-              Skills {detectedSkills.length > 0 && '(From your CV)'}
+              {getContent('jobs.filters.skills')} {detectedSkills.length > 0 && getContent('jobs.filters.skillsFromCV')}
             </label>
             <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
               {availableSkills.slice(0, 20).map(skill => {
@@ -417,7 +419,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
             {detectedSkills.length > 0 && (
               <div className="text-xs text-success-600 mt-2">
                 <Star className="w-3 h-3 inline mr-1" />
-                Skills with star are from your CV analysis
+                {getContent('jobs.filters.skillsWithStar')}
               </div>
             )}
           </div>

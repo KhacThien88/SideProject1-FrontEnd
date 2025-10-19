@@ -55,6 +55,7 @@ export const DashboardHeader: React.FC = () => {
     if (currentPath === '/dashboard') return t.pages.dashboard.header;
     if (currentPath === '/cv-analysis') return t.pages.cvAnalysis.header;
     if (currentPath === '/dashboard/candidates') return t.pages.candidates.header;
+  if (currentPath === '/dashboard/saved-jobs') return t.pages.savedJobs.header;
     if (currentPath === '/dashboard/job-postings') return t.pages.jobPostings.header;
     if (currentPath === '/dashboard/analytics') return t.pages.analytics.header;
     if (currentPath === '/dashboard/settings') return t.pages.settings.header;
@@ -92,15 +93,6 @@ export const DashboardHeader: React.FC = () => {
 
             {/* Right side - Enhanced Actions */}
             <div className="flex items-center space-x-2 sm:space-x-4">
-              {/* Enhanced Search - Responsive */}
-              <div className="relative hidden md:block">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder={t.dashboard.header.search.placeholder}
-                  className="p-3 w-64 lg:w-80 border border-neutral-200 rounded-xl bg-neutral-50/50 backdrop-blur-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-300 focus:bg-white transition-all duration-300 text-neutral-700 text-sm"
-                />
-              </div>
 
               {/* Mobile Search Button */}
               <button className="md:hidden p-2.5 text-neutral-400 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-300">

@@ -517,36 +517,270 @@ export const en: ContentTaxonomy = {
     },
     googleSigningIn: 'Signing in with Google...',
     continueWithGoogle: 'Continue with Google',
-    googleSignInSuccess: 'Google sign-in successful',
-    logoutSuccess: 'Logout successful',
-    roleSelection: {
-      title: 'Choose Your Role',
-      subtitle: 'Select how you want to use TalentFit AI',
-      pleaseSelectRole: 'Please select a role to continue',
-      registrationSuccess: 'Registration completed successfully!',
-      registrationFailed: 'Registration failed. Please try again.',
-      completing: 'Completing registration...',
-      continueButton: 'Continue',
-      backToLogin: 'Back to Login',
-      helpText: 'You can change your role later in account settings',
-      candidate: {
-        title: 'Job Seeker',
-        description: 'Looking for your next career opportunity',
-        features: {
-          uploadCV: 'Upload and analyze your CV',
-          jobMatching: 'Get personalized job recommendations',
-          applyJobs: 'Apply to jobs with one click'
-        }
-      },
-      recruiter: {
-        title: 'Recruiter',
-        description: 'Hiring talent for your organization',
-        features: {
-          postJobs: 'Post job openings',
-          searchCandidates: 'Search and filter candidates',
-          manageApplications: 'Manage applications and interviews'
-        }
+    googleSignInSuccess: 'Google sign-in successful!',
+    logoutSuccess: 'Logged out successfully'
+  },
+
+  // Job Matching & CV Analysis
+  jobs: {
+    details: {
+      title: 'Job Details',
+      jobNotFound: 'Job Not Found',
+      jobNotFoundDescription: "The job you're looking for doesn't exist or has been removed.",
+      loadingJobDetails: 'Loading job details...',
+      matchAnalysis: 'Match Analysis',
+      similarJobs: 'Similar Jobs',
+      companyInfo: 'Company Info',
+      backToResults: 'Back to Results',
+      quickActions: 'Quick Actions',
+      applyNow: 'Apply Now',
+      saveForLater: 'Save for later',
+      downloadJD: 'Download JD',
+      shareJob: 'Share Job',
+      applicationTips: 'Application Tips',
+      highlightMatchingSkills: 'Highlight matching skills',
+      emphasizeExperience: 'Emphasize your',
+      addressSkillGaps: 'Address skill gaps',
+      considerLearningPlans: 'Consider mentioning your learning plans for',
+      standOut: 'Stand out',
+      customizeApplication: 'Customize your application for',
+      match: 'match',
+      saved: 'Saved',
+      saveJob: 'Save Job',
+      share: 'Share',
+      contact: 'Contact',
+      overview: 'Overview',
+      requirements: 'Requirements',
+      company: 'Company',
+      jobDescription: 'Job Description',
+      benefitsPerks: 'Benefits & Perks',
+      essentialRequirements: 'Essential Requirements',
+      preferredQualifications: 'Preferred Qualifications',
+      requiredSkills: 'Required Skills',
+      about: 'About',
+      industry: 'Industry',
+      companySize: 'Company Size',
+      location: 'Location',
+      view: 'View',
+      salary: 'Salary',
+      experience: 'Experience',
+      deadline: 'Deadline',
+      postedAgo: 'Posted',
+      views: 'views',
+      applicants: 'applicants',
+      remote: 'Remote',
+      hybrid: 'Hybrid',
+      skillsMatched: 'of {total} skills matched',
+      aiAnalysis: 'AI Analysis',
+      tabs: {
+        overview: 'Overview',
+        requirements: 'Requirements',
+        company: 'Company',
+        similar: 'Similar Jobs'
       }
+    },
+    matching: {
+      title: 'Job Matching',
+      noJobsFound: 'No Jobs Found',
+      noJobsFoundDescription: "We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms.",
+      resultsCount: 'results found',
+      filterJobs: 'Filter Jobs',
+      jobRemoved: 'Job removed',
+      removedFromSaved: 'removed from saved jobs',
+      jobSaved: 'Job saved',
+      addedToSaved: 'added to saved jobs',
+      application: 'Application',
+      openingApplicationForm: 'Opening application form...',
+      linkCopied: 'Link copied',
+      jobLinkCopied: 'Job link copied to clipboard',
+      checkOutJobAt: 'Check out this job opportunity',
+      jobSearchResults: 'Job Search Results',
+      foundJobs: 'Found',
+      matchingYourProfile: 'matching your profile',
+      filters: 'Filters',
+      filter: 'filter',
+      applied: 'applied',
+      relevance: 'Relevance',
+      matchScore: 'Match Score',
+      datePosted: 'Date Posted',
+      showing: 'Showing',
+      to: 'to',
+      of: 'of',
+      results: 'results'
+    },
+    utils: {
+      year: '/year',
+      month: '/month',
+      hour: '/hour',
+      from: 'From',
+      upTo: 'Up to',
+      salaryNotSpecified: 'Salary not specified',
+      justNow: 'Just now',
+      hoursAgo: ' h ago',
+      daysAgo: ' d ago',
+      weeksAgo: ' w ago',
+      monthsAgo: ' mo ago',
+      excellentMatch: 'Excellent match',
+      goodMatch: 'Good match',
+      fairMatch: 'Fair match',
+      poorMatch: 'Poor match'
+    },
+    card: {
+      featured: 'Featured',
+      urgent: 'Urgent',
+      remote: 'Remote',
+      match: 'match',
+      requiredSkills: 'Required Skills:',
+      more: 'more',
+      of: 'of',
+      skillsMatched: 'skills matched',
+      applyNow: 'Apply Now',
+      saved: 'Saved',
+      save: 'Save',
+      share: 'Share',
+      company: 'company',
+      away: 'km away'
+    },
+    filters: {
+      activeFilters: 'Active Filters',
+      clearAll: 'Clear All',
+      location: 'Location',
+      jobType: 'Job Type',
+      experienceLevel: 'Experience Level',
+      salary: 'Salary',
+      skills: 'Skills',
+      remote: 'Remote',
+      filterRecommendations: 'Filter Recommendations',
+      searchKeywords: 'Search Keywords',
+      jobTitleCompanySkills: 'Job title, company, skills...',
+      search: 'Search',
+      anyLocation: 'Any location',
+      includeRemoteWork: 'Include remote work',
+      salaryRange: 'Salary Range (USD/month)',
+      minSalary: 'Min salary',
+      maxSalary: 'Max salary',
+      companySize: 'Company Size',
+      skillsFromCV: '(From your CV)',
+      skillsWithStar: 'Skills with star are from your CV analysis'
+    }
+  },
+
+  // CV Analysis
+  cvAnalysis: {
+    targetPosition: 'Target Position',
+    targetPositionDescription: 'Select the job position to analyze CV compatibility',
+    noResumesUploaded: 'No Resumes Uploaded',
+    noResumesUploadedDescription: 'Upload your first resume to get started with AI-powered analysis.',
+    uploadYourFirstResume: 'Upload your first resume',
+    jobRecommendations: 'Job Recommendations',
+    recommendedJobs: 'Recommended Jobs',
+    basedOnCVAnalysis: 'Based on your CV analysis, here are',
+    jobsMatchProfile: 'jobs that match your profile',
+    filteredFrom: '(filtered from',
+    total: 'total)',
+    filters: 'Filters',
+    saveSearch: 'Save Search',
+    noJobsMatchFilters: 'No jobs match your current filters',
+    tryAdjustingFilters: 'Try adjusting your filters to see more results',
+    clearAllFilters: 'Clear All Filters',
+    viewAllMatchingJobs: 'View All Matching Jobs',
+    exportReport: 'Export Report',
+    startingAnalysis: 'Starting analysis for',
+    file: 'file',
+    files: 'files',
+    analysisCompleted: 'Analysis completed successfully!',
+    allFilesCleared: 'All files cleared',
+    noFilesReady: 'No files ready for analysis',
+    jobDetails: 'Job Details',
+    openingJobDetails: 'Opening job details...',
+    application: 'Application',
+    redirectingToApplication: 'Redirecting to application page...',
+    jobLinkCopied: 'Job link copied to clipboard',
+    jobRemovedFromSaved: 'Job removed from saved list',
+    jobSavedSuccessfully: 'Job saved successfully',
+    jobOpportunity: 'Job Opportunity',
+    checkOutThisJob: 'Check out this job opportunity',
+    jobSaved: 'Job saved',
+    savedToFavorites: 'has been saved to your favorites',
+    linkCopied: 'Link copied',
+    checkOutJobAt: 'Check out this job at',
+    upload: {
+      title: 'Upload Resume Files',
+      dropHere: 'Drop files here',
+      dragAndDrop: 'Drag & drop your resume files here, or click to browse',
+      supports: 'Supports PDF, DOC, and DOCX files',
+      maxSize: 'Max',
+      upTo: 'per file • Up to',
+      chooseFiles: 'Choose Files',
+      uploadIssues: 'Upload Issues',
+      filesAdded: 'added successfully',
+      fileRemoved: 'removed'
+    },
+    fileManagement: {
+      selectedFiles: 'Selected Files',
+      clearAll: 'Clear All',
+      analyzing: 'Analyzing...',
+      analyzeFiles: 'Analyze Files',
+      ready: 'Ready',
+      error: 'Error',
+      processing: 'Processing',
+      uploading: 'Uploading'
+    },
+    progress: {
+      analyzingFiles: 'Analyzing Files',
+      uploading: 'Uploading',
+      extracting: 'Extracting',
+      analyzing: 'Analyzing',
+      completing: 'Completing',
+      processing: 'Processing',
+      estimatedTime: 'Estimated time remaining'
+    },
+    results: {
+      title: 'Analysis Results',
+      exportResults: 'Export Results',
+      analyzedOn: 'Analyzed on',
+      good: 'Good',
+      fair: 'Fair',
+      average: 'Average',
+      needsImprovement: 'Needs Improvement',
+      previewCV: 'Preview CV',
+      downloadReport: 'Download Report',
+      removeResult: 'Remove Result',
+      name: 'Name',
+      email: 'Email',
+      phone: 'Phone',
+      location: 'Location',
+      skillsMatch: 'Skills Match',
+      experience: 'Experience',
+      education: 'Education',
+      keywords: 'Keywords',
+      detectedSkills: 'Detected Skills',
+      matchPercentage: 'Match Percentage',
+      matchWith: 'Match with',
+      recommendations: 'Recommendations',
+      overallScore: 'Overall Score',
+      skillsDetected: 'Skills Detected',
+      experienceLevel: 'Experience Level',
+      jobMatches: 'Job Matches',
+      candidate: 'Candidate'
+    }
+  },
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: 'Password Requirements',
+    strength: 'Strength:',
+    strengthLevels: {
+      weak: 'Weak',
+      medium: 'Medium',
+      strong: 'Strong'
+    },
+    requirements: {
+      minLength: 'At least 8 characters',
+      uppercase: 'At least 1 uppercase letter (A-Z)',
+      lowercase: 'At least 1 lowercase letter (a-z)',
+      number: 'At least 1 number (0-9)',
+      special: 'At least 1 special character (@, #, $, etc.)'
     }
   },
 
@@ -592,6 +826,89 @@ export const en: ContentTaxonomy = {
     }
   },
 
+  // Settings
+  settings: {
+    title: 'Settings',
+    saveChanges: 'Save Changes',
+    saving: 'Saving...',
+    saveSuccess: 'Settings saved successfully',
+    saveError: 'Failed to save settings',
+    loadError: 'Failed to load settings',
+    
+    tabs: {
+      profile: 'Profile',
+      notifications: 'Notifications',
+      privacy: 'Privacy & Security',
+      data: 'Data Management',
+      appearance: 'Appearance',
+    },
+    
+    profile: {
+      title: 'Profile Information',
+      fullName: 'Full Name',
+      email: 'Email Address',
+      company: 'Company',
+      role: 'Role',
+      changePassword: 'Change Password',
+      cancelPasswordChange: 'Cancel Password Change',
+      currentPassword: 'Current Password',
+      newPassword: 'New Password',
+      confirmPassword: 'Confirm New Password',
+      roles: {
+        hrManager: 'HR Manager',
+        recruiter: 'Recruiter',
+        talentAcquisition: 'Talent Acquisition',
+        admin: 'Admin',
+      },
+    },
+    
+    notifications: {
+      emailAlerts: 'Email Alerts',
+      emailAlertsDesc: 'Receive email notifications for important updates',
+      pushNotifications: 'Push Notifications',
+      pushNotificationsDesc: 'Get push notifications in your browser',
+      weeklyReports: 'Weekly Reports',
+      weeklyReportsDesc: 'Weekly summary of your recruitment analytics',
+      analysisComplete: 'Analysis Complete',
+      analysisCompleteDesc: 'Notification when resume analysis is complete',
+    },
+    
+    privacy: {
+      dataRetention: 'Data Retention Period',
+      dataRetentionDesc: 'How long should we keep your uploaded resumes?',
+      shareAnalytics: 'Share Anonymous Analytics',
+      shareAnalyticsDesc: 'Help us improve by sharing anonymous usage data',
+      autoDelete: 'Auto-delete Old Data',
+      autoDeleteDesc: 'Automatically delete data after retention period',
+      days30: '30 days',
+      days60: '60 days',
+      days90: '90 days',
+      days180: '180 days',
+      days365: '365 days',
+    },
+    
+    data: {
+      export: 'Export Data',
+      exportDesc: 'Download all your data in JSON format',
+      import: 'Import Data',
+      importDesc: 'Import data from previous backups',
+      dangerZone: 'Danger Zone',
+      reset: 'Reset Settings',
+      resetDesc: 'Reset all settings to default values',
+      delete: 'Delete All Data',
+      deleteDesc: 'Permanently delete all your data',
+      exportSuccess: 'Data exported successfully',
+      importSuccess: 'Data imported successfully',
+      resetConfirm: 'Are you sure you want to reset all settings to default? This action cannot be undone.',
+      deleteConfirm: 'Are you sure you want to delete ALL your data? This action is PERMANENT and cannot be undone.',
+      deleteDoubleConfirm: 'This will permanently delete all your data including resumes, analysis results, and settings. Type DELETE to confirm.',
+    },
+    
+    appearance: {
+      language: 'Language',
+    },
+  },
+
   // Pages - Dynamic content based on current page
   pages: {
     dashboard: {
@@ -624,6 +941,14 @@ export const en: ContentTaxonomy = {
         title: 'Saved Jobs',
         subtitle: 'Your Collection',
         description: 'View and manage your saved job opportunities'
+      }
+    },
+    savedJobs: {
+      subscription: 'Saved Jobs',
+      header: {
+        title: 'Saved',
+        subtitle: 'Jobs',
+        description: 'Review and manage the roles you bookmarked for later.'
       }
     },
     jobPostings: {
@@ -826,66 +1151,212 @@ export const en: ContentTaxonomy = {
     }
   },
 
-  // Password Requirements component
-  passwordRequirements: {
-    title: 'Password Requirements',
-    strength: 'Password Strength',
-    strengthLevels: {
-      weak: 'Weak',
-      medium: 'Medium',
-      strong: 'Strong'
-    },
-    requirements: {
-      minLength: 'At least 8 characters',
-      uppercase: 'One uppercase letter',
-      lowercase: 'One lowercase letter',
-      number: 'One number',
-      special: 'One special character'
-    }
+  common: {
+    loading: 'Loading...',
+    error: 'Error',
+    success: 'Success',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    save: 'Save',
+    edit: 'Edit',
+    delete: 'Delete',
+    back: 'Back',
+    next: 'Next',
+    previous: 'Previous',
+    close: 'Close',
+    open: 'Open',
+    viewMore: 'View More',
+    viewLess: 'View Less',
+    backToResults: 'Back to Results',
+    apply: 'Apply',
+    share: 'Share',
+    export: 'Export',
+    refresh: 'Refresh',
+    clearAll: 'Clear All',
+    clearAllFilters: 'Clear All Filters',
+    viewDetails: 'View Details',
+    loadMore: 'Load More',
+    sortBy: 'Sort by',
+    filterBy: 'Filter by',
+    viewMode: 'View Mode',
+    activeFilters: 'Active Filters',
+    noResults: 'No Results',
+    noDataAvailable: 'No data available',
+    loadingData: 'Loading data...',
+    errorLoadingData: 'Error loading data'
   },
 
-  // Users Management
-  users: {
-    title: 'Users Management',
-    subtitle: 'Manage all users and their roles',
-    addUser: 'Add User',
-    editUser: 'Edit User',
-    stats: {
-      totalUsers: 'Total Users',
-      candidates: 'Candidates',
-      recruiters: 'Recruiters',
-      admins: 'Admins'
+  jobPostings: {
+    title: 'Job Postings',
+    subtitle: 'Manage job profiles and requirements for resume analysis.',
+    searchPlaceholder: 'Search job profiles...',
+    createJobProfile: 'Create Job Profile',
+    editJobProfile: 'Edit Job Profile',
+    jobProfile: 'Job Profile',
+    jobTitle: 'Job Title',
+    jobTitlePlaceholder: 'e.g., Full Stack Developer',
+    description: 'Description',
+    descriptionPlaceholder: 'Describe the job position in detail...',
+    experienceLevel: 'Experience Level',
+    experience: 'Experience',
+    years: 'years',
+    requiredSkills: 'Required Skills',
+    preferredSkills: 'Preferred Skills',
+    addSkillPlaceholder: 'Add a skill...',
+    add: 'Add',
+    noSkillsAdded: 'No skills added yet',
+    activeMatches: 'Active Matches',
+    viewMatches: 'View Matches',
+    edit: 'Edit',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    saving: 'Saving...',
+    saveChanges: 'Save Changes',
+    createProfile: 'Create Profile',
+    more: 'more',
+    noJobsTitle: 'No Job Postings Yet',
+    noJobsSubtitle: 'Get started by creating your first job profile',
+    createFirstJob: 'Create First Job Posting',
+    noResultsTitle: 'No Results Found',
+    noResultsSubtitle: 'Try searching with different keywords',
+    loadError: 'Failed to load job postings',
+    createSuccess: 'Job profile created successfully',
+    updateSuccess: 'Job profile updated successfully',
+    deleteSuccess: 'Job profile deleted successfully',
+    saveError: 'Failed to save job profile',
+    deleteError: 'Failed to delete job profile',
+    deleteConfirm: 'Are you sure you want to delete this job profile?',
+    viewMatchesInfo: 'View matches feature coming soon',
+  },
+
+  candidateMatches: {
+    title: 'Matched Candidates',
+    backToJobs: 'Back to Job Postings',
+    totalMatches: 'Total matches',
+    requiredSkills: 'Required skills',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterExperience: 'Experience',
+    years: 'years',
+
+    sort: {
+      matchScore: 'Highest match score',
+      experience: 'Most experience',
+      appliedDate: 'Recently applied',
+      name: 'Name A-Z',
     },
-    search: {
-      placeholder: 'Search by name or email...'
+
+    overallMatch: 'Overall',
+    skillsMatch: 'Skills',
+    experience: 'Experience',
+    yearsExperience: 'years experience',
+    matchedSkills: 'Matched skills',
+    missingSkills: 'Missing skills',
+    more: 'more',
+    appliedOn: 'Applied on',
+    downloadResume: 'Download Resume',
+    save: 'Save candidate',
+    unsave: 'Unsave',
+    saved: 'Saved',
+
+    noCandidates: 'No candidates',
+    noMatches: 'No candidates have matched with this job posting yet',
+    noResultsFilters: 'No candidates found with current filters',
+
+    success: {
+      saveToggled: 'Candidate save status updated successfully',
+      resumeDownloaded: 'Resume downloaded successfully',
     },
-    filters: {
-      allRoles: 'All Roles',
-      allStatus: 'All Status',
-      filterButton: 'Filter'
+
+    errors: {
+      loadFailed: 'Failed to load candidates',
+      saveFailed: 'Failed to update save status',
+      downloadFailed: 'Failed to download resume',
+      jobNotFound: 'Job posting not found',
     },
-    table: {
-      user: 'User',
-      role: 'Role',
-      status: 'Status',
-      joined: 'Joined',
-      lastLogin: 'Last Login',
-      actions: 'Actions',
-      never: 'Never'
+  },
+
+  savedCandidates: {
+    title: 'Saved Candidates',
+    subtitle: 'Manage your starred candidates',
+    searchPlaceholder: 'Search candidates...',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterExperience: 'Experience',
+    filterSkillMatches: 'Skill matches count',
+    filterLocation: 'Location',
+    filterSkills: 'Skills',
+    years: 'years',
+
+    sort: {
+      matchScore: 'Highest match score',
+      experience: 'Most experience',
+      appliedDate: 'Recently applied',
+      name: 'Name A-Z',
     },
-    roles: {
-      admin: 'Admin',
-      recruiter: 'Recruiter (HR)',
-      candidate: 'Candidate'
+
+    noCandidates: 'No candidates',
+    noSavedYet: 'You haven\'t saved any candidates yet',
+    noResultsFilters: 'No candidates found with current filters',
+
+    success: {
+      saveToggled: 'Candidate save status updated successfully',
+      resumeDownloaded: 'Resume downloaded successfully',
     },
-    status: {
-      active: 'Active',
-      inactive: 'Inactive',
-      suspended: 'Suspended'
+
+    errors: {
+      loadFailed: 'Failed to load candidates',
+      saveFailed: 'Failed to update save status',
+      downloadFailed: 'Failed to download resume',
     },
-    empty: {
-      title: 'No users found',
-      description: 'Try adjusting your search or filters'
-    }
+  },
+
+  savedJobs: {
+    title: 'Saved Jobs',
+    subtitle: 'Keep track of roles you love and revisit them anytime.',
+    searchPlaceholder: 'Search saved jobs...',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterSalary: 'Salary range',
+    filterJobType: 'Job type',
+    filterLocation: 'Location',
+    filterRemoteOnly: 'Remote only',
+    salaryAny: 'Any',
+    savedAt: 'Saved',
+    resultsCount: 'Showing {count} of {total} saved jobs',
+    noSavedYet: 'You haven\'t saved any jobs yet',
+    noSavedDescription: 'Bookmark interesting opportunities to see them listed here.',
+    noResultsFilters: 'No saved jobs match the current filters',
+
+    sort: {
+      matchScore: 'Best match first',
+      recent: 'Recently saved',
+      salaryHigh: 'Highest salary',
+      salaryLow: 'Lowest salary',
+      company: 'Company A-Z',
+    },
+
+    actions: {
+      refresh: 'Refresh list',
+      applyTitle: 'Application',
+      applyMessage: 'We\'ll redirect you to the application page.',
+      shareMessage: 'Check out the {jobTitle} role at {companyName}!'
+    },
+
+    success: {
+      removed: 'Job removed from saved list',
+      refreshed: 'Saved jobs refreshed',
+      shareTitle: 'Link copied',
+      shareCopied: 'Job link copied to clipboard',
+    },
+
+    errors: {
+      loadFailed: 'Failed to load saved jobs',
+      removeFailed: 'Failed to update saved jobs',
+      shareFailed: 'Unable to share this job',
+    },
   }
 };

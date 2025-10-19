@@ -4,6 +4,7 @@ import { Button } from '../../ui/Button';
 import { Upload, Plus, AlertCircle } from 'lucide-react';
 import { CV_ANALYSIS_CONFIG } from '../../../types/cvAnalysis';
 import type { ValidationError } from '../../../types/cvAnalysis';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface UploadSectionProps {
   dragActive: boolean;
@@ -24,6 +25,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
   onFileInput,
   formatFileSize
 }) => {
+  const { getContent } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChooseFiles = () => {
@@ -56,15 +58,15 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
           
           <div>
             <div className="text-xl font-semibold text-neutral-900 mb-2">
-              Upload Resume Files
+              {getContent('cvAnalysis.upload.title')}
             </div>
             <p className="text-neutral-600 mb-2">
               {dragActive 
-                ? 'Drop files here' 
-                : 'Drag & drop your resume files here, or click to browse'}
+                ? getContent('cvAnalysis.upload.dropHere')
+                : getContent('cvAnalysis.upload.dragAndDrop')}
             </p>
             <p className="text-sm text-neutral-500">
-              Supports PDF, DOC, and DOCX files • Max {formatFileSize(CV_ANALYSIS_CONFIG.MAX_FILE_SIZE)} per file • Up to {CV_ANALYSIS_CONFIG.MAX_FILES} files
+              {getContent('cvAnalysis.upload.supports')} • {getContent('cvAnalysis.upload.maxSize')} {formatFileSize(CV_ANALYSIS_CONFIG.MAX_FILE_SIZE)} {getContent('cvAnalysis.upload.upTo')} {CV_ANALYSIS_CONFIG.MAX_FILES} {getContent('cvAnalysis.files')}
             </p>
           </div>
 
@@ -85,7 +87,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
             disabled={uploadedFilesCount >= CV_ANALYSIS_CONFIG.MAX_FILES}
           >
             <Plus className="w-5 h-5 mr-2" />
-            Choose Files
+            {getContent('cvAnalysis.upload.chooseFiles')}
           </Button>
         </div>
       </div>
@@ -95,7 +97,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
         <div className="mt-6 p-4 bg-error-50 border border-error-200 rounded-lg">
           <div className="flex items-center mb-2">
             <AlertCircle className="w-5 h-5 text-error-600 mr-2" />
-            <div className="font-medium text-error-800">Upload Issues</div>
+            <div className="font-medium text-error-800">{getContent('cvAnalysis.upload.uploadIssues')}</div>
           </div>
           <ul className="text-sm text-error-700 space-y-1">
             {validationErrors.map((error, index) => (

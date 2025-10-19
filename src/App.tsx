@@ -11,6 +11,11 @@ import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
 import { JobDetailPage } from './pages/JobMatching/JobDetailPage';
+import { SavedCandidates } from './pages/Candidates';
+import { SavedJobs } from './pages/SavedJobs';
+import { Settings } from './pages/Settings';
+import { JobPostings } from './pages/JobPostings';
+import { JobMatches } from './pages/CandidateMatching';
 import { UsersPage } from './pages/Users';
 
 function App() {
@@ -27,6 +32,10 @@ function App() {
     if (hash === '#role-selection') return '/role-selection';
     if (hash === '#dashboard') return '/dashboard';
     if (hash === '#cv-analysis') return '/cv-analysis';
+    if (hash === '#candidates') return '/dashboard/candidates';
+    if (hash === '#saved-jobs') return '/dashboard/saved-jobs';
+    if (hash === '#settings') return '/dashboard/settings';
+    if (hash === '#job-postings') return '/dashboard/job-postings';
     if (hash === '#users') return '/dashboard/users';
     if (hash.startsWith('#job/')) return hash.replace('#', '');
     
@@ -38,6 +47,11 @@ function App() {
     if (path === '/dashboard') return '/dashboard';
     if (path === '/reset-password') return '/reset-password';
     if (path === '/cv-analysis') return '/cv-analysis';
+    if (path === '/dashboard/candidates') return '/dashboard/candidates';
+    if (path === '/dashboard/saved-jobs') return '/dashboard/saved-jobs';
+    if (path === '/dashboard/settings') return '/dashboard/settings';
+    if (path === '/dashboard/job-postings') return '/dashboard/job-postings';
+    if (path.startsWith('/dashboard/job-postings/') && path.includes('/matches')) return path;
     if (path === '/dashboard/users') return '/dashboard/users';
     if (path.startsWith('/job/')) return path;
     if (path === '/') return '/';
@@ -56,6 +70,14 @@ function App() {
             <Route path="/login" component={Login} exact />
             <Route path="/register" component={Register} exact />
             <Route path="/forgot-password" component={ForgotPassword} exact />
+            <Route path="/cv-analysis" component={CVAnalysis} exact />
+            {/* More specific routes first */}
+            <Route path="/dashboard/job-postings/" component={JobMatches} exact={false} />
+            <Route path="/dashboard/job-postings" component={JobPostings} exact />
+            <Route path="/dashboard/candidates" component={SavedCandidates} exact />
+            <Route path="/dashboard/saved-jobs" component={SavedJobs} exact />
+            <Route path="/dashboard/settings" component={Settings} exact />
+            <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/reset-password" component={ResetPassword} exact />
             <Route path="/role-selection" component={RoleSelectionPage} exact />
             <Route path="/dashboard" component={Dashboard} exact />

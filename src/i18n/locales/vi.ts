@@ -482,36 +482,265 @@ export const vi: ContentTaxonomy = {
         generalErrorSubtitle: 'Vui lòng thử lại sau'
       }
     },
-    verifyOTP: {
-      title: 'Xác thực email',
-      subtitle: 'Nhập mã 6 chữ số chúng tôi đã gửi đến',
-      emailLabel: 'Email',
-      codeLabel: 'Mã xác thực',
-      codePlaceholder: 'Nhập mã 6 chữ số',
-      timerLabel: 'Mã hết hạn sau',
-      verifyButton: 'Xác thực',
-      verifyingButton: 'Đang xác thực...',
-      resendButton: 'Gửi lại',
-      resendCountdown: 'Gửi lại sau {seconds}s',
-      resendAvailable: 'Gửi lại ({count} lần còn lại)',
-      errorMessage: 'Mã không hợp lệ. Vui lòng thử lại.',
-      successMessage: 'Xác thực thành công',
-      successSubtitle: 'Đang chuyển hướng đến trang đăng nhập...',
-      toast: {
-        verificationSuccess: 'Xác thực thành công!',
-        verificationSuccessSubtitle: 'Email của bạn đã được xác thực',
-        verificationFailed: 'Xác thực thất bại',
-        verificationFailedSubtitle: 'Vui lòng kiểm tra lại mã và thử lại',
-        resendSuccess: 'Mã mới đã được gửi',
-        resendSuccessSubtitle: 'Vui lòng kiểm tra email của bạn',
-        resendFailed: 'Gửi lại mã thất bại',
-        resendFailedSubtitle: 'Vui lòng thử lại sau',
-        invalidCode: 'Mã xác thực không đúng',
-        codeExpired: 'Mã đã hết hạn',
-        tooManyAttempts: 'Quá nhiều lần thử sai',
-        networkError: 'Lỗi kết nối mạng',
-        networkErrorSubtitle: 'Vui lòng thử lại sau'
+    googleSigningIn: 'Đang đăng nhập...',
+    continueWithGoogle: 'Đăng nhập với Google',
+    googleSignInSuccess: 'Đăng nhập Google thành công!',
+    logoutSuccess: 'Đăng xuất thành công'
+  },
+
+  // Job Matching & CV Analysis
+  jobs: {
+    details: {
+      title: 'Chi Tiết Công Việc',
+      jobNotFound: 'Không Tìm Thấy Công Việc',
+      jobNotFoundDescription: 'Công việc bạn đang tìm không tồn tại hoặc đã bị xóa.',
+      loadingJobDetails: 'Đang tải chi tiết công việc...',
+      matchAnalysis: 'Phân Tích Phù Hợp',
+      similarJobs: 'Công Việc Tương Tự',
+      companyInfo: 'Thông Tin Công Ty',
+      backToResults: 'Quay Lại Kết Quả',
+      quickActions: 'Hành Động Nhanh',
+      applyNow: 'Ứng Tuyển Ngay',
+      saveForLater: 'Lưu để sau',
+      downloadJD: 'Tải JD',
+      shareJob: 'Chia Sẻ Công Việc',
+      applicationTips: 'Mẹo Ứng Tuyển',
+      highlightMatchingSkills: 'Nhấn mạnh kỹ năng phù hợp',
+      emphasizeExperience: 'Nhấn mạnh kinh nghiệm của bạn về',
+      addressSkillGaps: 'Giải quyết khoảng trống kỹ năng',
+      considerLearningPlans: 'Cân nhắc đề cập đến kế hoạch học tập của bạn cho',
+      standOut: 'Nổi bật',
+      customizeApplication: 'Tùy chỉnh đơn ứng tuyển cho',
+      match: 'phù hợp',
+      saved: 'Đã Lưu',
+      saveJob: 'Lưu Công Việc',
+      share: 'Chia Sẻ',
+      contact: 'Liên Hệ',
+      overview: 'Tổng Quan',
+      requirements: 'Yêu Cầu',
+      company: 'Công Ty',
+      jobDescription: 'Mô Tả Công Việc',
+      benefitsPerks: 'Quyền Lợi & Phúc Lợi',
+      essentialRequirements: 'Yêu Cầu Bắt Buộc',
+      preferredQualifications: 'Yêu Cầu Ưu Tiên',
+      requiredSkills: 'Kỹ Năng Yêu Cầu',
+      about: 'Về',
+      industry: 'Ngành Nghề',
+      companySize: 'Quy Mô Công Ty',
+      location: 'Địa Điểm',
+      view: 'Xem',
+      salary: 'Mức Lương',
+      experience: 'Kinh Nghiệm',
+      deadline: 'Hạn Chót',
+      postedAgo: 'Đã đăng',
+      views: 'lượt xem',
+      applicants: 'ứng viên',
+      remote: 'Từ Xa',
+      hybrid: 'Kết Hợp',
+      skillsMatched: 'trong tổng số {total} kỹ năng khớp',
+      aiAnalysis: 'Phân Tích AI',
+      tabs: {
+        overview: 'Tổng Quan',
+        requirements: 'Yêu Cầu',
+        company: 'Công Ty',
+        similar: 'Tương Tự'
       }
+    },
+    matching: {
+      title: 'Tìm Việc Phù Hợp',
+      noJobsFound: 'Không Tìm Thấy Công Việc',
+      noJobsFoundDescription: 'Chúng tôi không tìm thấy công việc nào phù hợp với tiêu chí của bạn. Hãy thử điều chỉnh bộ lọc hoặc từ khóa tìm kiếm.',
+      resultsCount: 'kết quả tìm thấy',
+      filterJobs: 'Lọc Công Việc',
+      jobRemoved: 'Đã xóa công việc',
+      removedFromSaved: 'đã xóa khỏi danh sách đã lưu',
+      jobSaved: 'Đã lưu công việc',
+      addedToSaved: 'đã thêm vào danh sách đã lưu',
+      application: 'Ứng Tuyển',
+      openingApplicationForm: 'Đang mở biểu mẫu ứng tuyển...',
+      linkCopied: 'Đã sao chép liên kết',
+      jobLinkCopied: 'Đã sao chép liên kết công việc',
+      checkOutJobAt: 'Xem cơ hội việc làm này',
+      jobSearchResults: 'Kết Quả Tìm Việc',
+      foundJobs: 'Tìm thấy',
+      matchingYourProfile: 'phù hợp với hồ sơ của bạn',
+      filters: 'Bộ Lọc',
+      filter: 'bộ lọc',
+      applied: 'đã áp dụng',
+      relevance: 'Liên Quan',
+      matchScore: 'Điểm Khớp',
+      datePosted: 'Ngày Đăng',
+      showing: 'Hiển thị',
+      to: 'đến',
+      of: 'trong tổng số',
+      results: 'kết quả'
+    },
+    utils: {
+      year: '/năm',
+      month: '/tháng',
+      hour: '/giờ',
+      from: 'Từ',
+      upTo: 'Lên đến',
+      salaryNotSpecified: 'Chưa ghi rõ mức lương',
+      justNow: 'Vừa xong',
+      hoursAgo: ' giờ trước',
+      daysAgo: ' ngày trước',
+      weeksAgo: ' tuần trước',
+      monthsAgo: ' tháng trước',
+      excellentMatch: 'Phù hợp xuất sắc',
+      goodMatch: 'Phù hợp tốt',
+      fairMatch: 'Phù hợp khá',
+      poorMatch: 'Phù hợp kém'
+    },
+    card: {
+      featured: 'Nổi Bật',
+      urgent: 'Gấp',
+      remote: 'Từ Xa',
+      match: 'khớp',
+      requiredSkills: 'Kỹ Năng Yêu Cầu:',
+      more: 'nữa',
+      of: 'trên',
+      skillsMatched: 'kỹ năng phù hợp',
+      applyNow: 'Ứng Tuyển Ngay',
+      saved: 'Đã Lưu',
+      save: 'Lưu',
+      share: 'Chia Sẻ',
+      company: 'công ty',
+      away: 'km'
+    },
+    filters: {
+      activeFilters: 'Bộ Lọc Đang Áp Dụng',
+      clearAll: 'Xóa Tất Cả',
+      location: 'Địa Điểm',
+      jobType: 'Loại Công Việc',
+      experienceLevel: 'Mức Kinh Nghiệm',
+      salary: 'Mức Lương',
+      skills: 'Kỹ Năng',
+      remote: 'Từ Xa',
+      filterRecommendations: 'Lọc Đề Xuất',
+      searchKeywords: 'Tìm Kiếm Từ Khóa',
+      jobTitleCompanySkills: 'Vị trí, công ty, kỹ năng...',
+      search: 'Tìm Kiếm',
+      anyLocation: 'Bất kỳ địa điểm',
+      includeRemoteWork: 'Bao gồm làm việc từ xa',
+      salaryRange: 'Khoảng Lương (USD/tháng)',
+      minSalary: 'Lương tối thiểu',
+      maxSalary: 'Lương tối đa',
+      companySize: 'Quy Mô Công Ty',
+      skillsFromCV: '(Từ CV của bạn)',
+      skillsWithStar: 'Kỹ năng có dấu sao là từ phân tích CV của bạn'
+    }
+  },
+
+  // CV Analysis
+  cvAnalysis: {
+    targetPosition: 'Vị Trí Mục Tiêu',
+    targetPositionDescription: 'Chọn vị trí công việc để phân tích độ tương thích CV',
+    noResumesUploaded: 'Chưa Tải Lên CV Nào',
+    noResumesUploadedDescription: 'Tải lên CV đầu tiên của bạn để bắt đầu phân tích bằng AI.',
+    uploadYourFirstResume: 'Tải lên CV đầu tiên',
+    jobRecommendations: 'Công Việc Đề Xuất',
+    recommendedJobs: 'Công Việc Đề Xuất',
+    basedOnCVAnalysis: 'Dựa trên phân tích CV của bạn, đây là',
+    jobsMatchProfile: 'công việc phù hợp với hồ sơ của bạn',
+    filteredFrom: '(đã lọc từ',
+    total: 'tổng số)',
+    filters: 'Bộ Lọc',
+    saveSearch: 'Lưu Tìm Kiếm',
+    noJobsMatchFilters: 'Không có công việc nào phù hợp với bộ lọc hiện tại',
+    tryAdjustingFilters: 'Hãy thử điều chỉnh bộ lọc để xem thêm kết quả',
+    clearAllFilters: 'Xóa Tất Cả Bộ Lọc',
+    viewAllMatchingJobs: 'Xem Tất Cả Công Việc Phù Hợp',
+    exportReport: 'Xuất Báo Cáo',
+    startingAnalysis: 'Đang bắt đầu phân tích cho',
+    file: 'tệp',
+    files: 'tệp',
+    analysisCompleted: 'Phân tích hoàn tất!',
+    allFilesCleared: 'Đã xóa tất cả tệp',
+    noFilesReady: 'Không có tệp nào sẵn sàng để phân tích',
+    jobDetails: 'Chi Tiết Công Việc',
+    openingJobDetails: 'Đang mở chi tiết công việc...',
+    application: 'Ứng Tuyển',
+    redirectingToApplication: 'Đang chuyển đến trang ứng tuyển...',
+    jobLinkCopied: 'Đã sao chép liên kết công việc',
+    jobRemovedFromSaved: 'Đã xóa công việc khỏi danh sách đã lưu',
+    jobSavedSuccessfully: 'Đã lưu công việc thành công',
+    jobOpportunity: 'Cơ Hội Việc Làm',
+    checkOutThisJob: 'Xem cơ hội việc làm này',
+    jobSaved: 'Đã lưu công việc',
+    savedToFavorites: 'đã được lưu vào yêu thích',
+    linkCopied: 'Đã sao chép liên kết',
+    checkOutJobAt: 'Xem công việc này tại',
+    upload: {
+      title: 'Tải Lên Tệp CV',
+      dropHere: 'Thả tệp vào đây',
+      dragAndDrop: 'Kéo và thả tệp CV của bạn vào đây, hoặc nhấp để chọn',
+      supports: 'Hỗ trợ tệp PDF, DOC và DOCX',
+      maxSize: 'Tối đa',
+      upTo: 'mỗi tệp • Tối đa',
+      chooseFiles: 'Chọn Tệp',
+      uploadIssues: 'Vấn Đề Tải Lên',
+      filesAdded: 'đã thêm thành công',
+      fileRemoved: 'đã xóa'
+    },
+    fileManagement: {
+      selectedFiles: 'Tệp Đã Chọn',
+      clearAll: 'Xóa Tất Cả',
+      analyzing: 'Đang phân tích...',
+      analyzeFiles: 'Phân Tích Tệp',
+      ready: 'Sẵn Sàng',
+      error: 'Lỗi',
+      processing: 'Đang Xử Lý',
+      uploading: 'Đang Tải Lên'
+    },
+    progress: {
+      analyzingFiles: 'Đang Phân Tích Tệp',
+      uploading: 'Đang Tải Lên',
+      extracting: 'Đang Trích Xuất',
+      analyzing: 'Đang Phân Tích',
+      completing: 'Đang Hoàn Thành',
+      processing: 'Đang xử lý',
+      estimatedTime: 'Thời gian ước tính còn lại'
+    },
+    results: {
+      title: 'Kết Quả Phân Tích',
+      exportResults: 'Xuất Kết Quả',
+      analyzedOn: 'Phân tích vào',
+      good: 'Tốt',
+      fair: 'Khá',
+      average: 'Trung Bình',
+      needsImprovement: 'Cần Cải Thiện',
+      previewCV: 'Xem Trước CV',
+      downloadReport: 'Tải Báo Cáo',
+      removeResult: 'Xóa Kết Quả',
+      name: 'Tên',
+      email: 'Email',
+      phone: 'Điện Thoại',
+      location: 'Địa Điểm',
+      skillsMatch: 'Kỹ Năng Phù Hợp',
+      experience: 'Kinh Nghiệm',
+      education: 'Học Vấn',
+      keywords: 'Từ Khóa',
+      detectedSkills: 'Kỹ Năng Phát Hiện',
+      matchPercentage: 'Tỷ Lệ Phù Hợp',
+      matchWith: 'Phù hợp với',
+      recommendations: 'Đề Xuất',
+      overallScore: 'Điểm Tổng Thể',
+      skillsDetected: 'Kỹ Năng Phát Hiện',
+      experienceLevel: 'Cấp Độ Kinh Nghiệm',
+      jobMatches: 'Công Việc Phù Hợp',
+      candidate: 'Ứng Viên'
+    }
+  },
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: 'Yêu cầu mật khẩu',
+    strength: 'Độ mạnh:',
+    strengthLevels: {
+      weak: 'Yếu',
+      medium: 'Trung bình', 
+      strong: 'Mạnh'
     },
     googleSigningIn: 'Đang đăng nhập với Google...',
     continueWithGoogle: 'Tiếp tục với Google',
@@ -553,41 +782,87 @@ export const vi: ContentTaxonomy = {
     emailInvalid: 'Email không đúng định dạng',
   },
 
-  common: {
-    loading: 'Đang tải...',
-    error: 'Lỗi',
-    success: 'Thành công',
-    cancel: 'Hủy',
-    confirm: 'Xác nhận',
-    save: 'Lưu',
-    edit: 'Chỉnh sửa',
-    delete: 'Xóa',
-    back: 'Quay lại',
-    next: 'Tiếp theo',
-    previous: 'Trước',
-    close: 'Đóng',
-    open: 'Mở',
-    viewMore: 'Xem thêm',
-    viewLess: 'Xem ít hơn',
-    toast: {
-      // General
-      linkCopied: 'Đã sao chép liên kết',
-
-      // Job
-      jobSaved: 'Đã lưu công việc',
-      jobSavedSubtitle: '{jobTitle} đã được thêm vào danh sách đã lưu',
-
-      // CV
-      filesAddedSuccess: 'Đã thêm thành công {count} tệp',
-      noFilesReady: 'Không có tệp nào sẵn sàng để phân tích',
-      analysisSuccess: 'Phân tích hoàn tất!',
-
-      // Network & Generic Errors
-      networkError: 'Lỗi kết nối mạng',
-      networkErrorSubtitle: 'Vui lòng kiểm tra kết nối và thử lại',
-      genericError: 'Đã có lỗi không mong muốn xảy ra',
-      genericErrorSubtitle: 'Vui lòng thử lại sau',
-    }
+  // Settings
+  settings: {
+    title: 'Cài đặt',
+    saveChanges: 'Lưu thay đổi',
+    saving: 'Đang lưu...',
+    saveSuccess: 'Đã lưu cài đặt thành công',
+    saveError: 'Lưu cài đặt thất bại',
+    loadError: 'Không thể tải cài đặt',
+    
+    tabs: {
+      profile: 'Hồ sơ',
+      notifications: 'Thông báo',
+      privacy: 'Bảo mật & Riêng tư',
+      data: 'Quản lý dữ liệu',
+      appearance: 'Giao diện',
+    },
+    
+    profile: {
+      title: 'Thông tin cá nhân',
+      fullName: 'Họ và tên',
+      email: 'Địa chỉ Email',
+      company: 'Công ty',
+      role: 'Vai trò',
+      changePassword: 'Đổi mật khẩu',
+      cancelPasswordChange: 'Hủy đổi mật khẩu',
+      currentPassword: 'Mật khẩu hiện tại',
+      newPassword: 'Mật khẩu mới',
+      confirmPassword: 'Xác nhận mật khẩu mới',
+      roles: {
+        hrManager: 'Quản lý nhân sự',
+        recruiter: 'Nhân viên tuyển dụng',
+        talentAcquisition: 'Chuyên viên tuyển dụng',
+        admin: 'Quản trị viên',
+      },
+    },
+    
+    notifications: {
+      emailAlerts: 'Thông báo Email',
+      emailAlertsDesc: 'Nhận thông báo qua email cho các cập nhật quan trọng',
+      pushNotifications: 'Thông báo đẩy',
+      pushNotificationsDesc: 'Nhận thông báo đẩy trên trình duyệt',
+      weeklyReports: 'Báo cáo hàng tuần',
+      weeklyReportsDesc: 'Tóm tắt hàng tuần về phân tích tuyển dụng của bạn',
+      analysisComplete: 'Phân tích hoàn tất',
+      analysisCompleteDesc: 'Thông báo khi phân tích hồ sơ hoàn tất',
+    },
+    
+    privacy: {
+      dataRetention: 'Thời gian lưu trữ dữ liệu',
+      dataRetentionDesc: 'Chúng tôi nên lưu trữ CV của bạn trong bao lâu?',
+      shareAnalytics: 'Chia sẻ dữ liệu phân tích ẩn danh',
+      shareAnalyticsDesc: 'Giúp chúng tôi cải thiện bằng cách chia sẻ dữ liệu sử dụng ẩn danh',
+      autoDelete: 'Tự động xóa dữ liệu cũ',
+      autoDeleteDesc: 'Tự động xóa dữ liệu sau thời gian lưu trữ',
+      days30: '30 ngày',
+      days60: '60 ngày',
+      days90: '90 ngày',
+      days180: '180 ngày',
+      days365: '365 ngày',
+    },
+    
+    data: {
+      export: 'Xuất dữ liệu',
+      exportDesc: 'Tải xuống tất cả dữ liệu của bạn dưới định dạng JSON',
+      import: 'Nhập dữ liệu',
+      importDesc: 'Nhập dữ liệu từ các bản sao lưu trước đó',
+      dangerZone: 'Vùng nguy hiểm',
+      reset: 'Đặt lại cài đặt',
+      resetDesc: 'Đặt lại tất cả cài đặt về giá trị mặc định',
+      delete: 'Xóa tất cả dữ liệu',
+      deleteDesc: 'Xóa vĩnh viễn tất cả dữ liệu của bạn',
+      exportSuccess: 'Đã xuất dữ liệu thành công',
+      importSuccess: 'Đã nhập dữ liệu thành công',
+      resetConfirm: 'Bạn có chắc chắn muốn đặt lại tất cả cài đặt về mặc định? Hành động này không thể hoàn tác.',
+      deleteConfirm: 'Bạn có chắc chắn muốn XÓA TẤT CẢ dữ liệu của bạn? Hành động này là VĨNH VIỄN và không thể hoàn tác.',
+      deleteDoubleConfirm: 'Điều này sẽ xóa vĩnh viễn tất cả dữ liệu của bạn bao gồm CV, kết quả phân tích và cài đặt. Gõ DELETE để xác nhận.',
+    },
+    
+    appearance: {
+      language: 'Ngôn ngữ',
+    },
   },
 
   // Pages - Dynamic content based on current page
@@ -622,6 +897,14 @@ export const vi: ContentTaxonomy = {
         title: 'Công việc đã lưu',
         subtitle: 'Bộ sưu tập',
         description: 'Xem và quản lý các cơ hội việc làm đã lưu'
+      }
+    },
+    savedJobs: {
+      subscription: 'Việc làm đã lưu',
+      header: {
+        title: 'Việc làm',
+        subtitle: 'đã lưu',
+        description: 'Xem lại và quản lý những cơ hội bạn đã đánh dấu.'
       }
     },
     jobPostings: {
@@ -665,9 +948,8 @@ export const vi: ContentTaxonomy = {
         dashboard: 'Bảng điều khiển',
         cvAnalysis: 'Phân tích CV',
         candidates: 'Ứng viên',
-        savedJobs: 'Công việc đã lưu',
-        jobPostings: 'Tin tuyển dụng',
-        users: 'Người dùng',
+        savedJobs: 'Việc làm đã lưu',
+        jobPostings: 'Đăng tuyển',
         analytics: 'Phân tích',
         settings: 'Cài đặt'
       },
@@ -824,66 +1106,212 @@ export const vi: ContentTaxonomy = {
     }
   },
 
-  // Password Requirements component
-  passwordRequirements: {
-    title: 'Yêu cầu mật khẩu',
-    strength: 'Độ mạnh mật khẩu',
-    strengthLevels: {
-      weak: 'Yếu',
-      medium: 'Trung bình',
-      strong: 'Mạnh'
-    },
-    requirements: {
-      minLength: 'Ít nhất 8 ký tự',
-      uppercase: 'Một chữ hoa',
-      lowercase: 'Một chữ thường',
-      number: 'Một chữ số',
-      special: 'Một ký tự đặc biệt'
-    }
+  common: {
+    loading: 'Đang tải...',
+    error: 'Lỗi',
+    success: 'Thành công',
+    cancel: 'Hủy',
+    confirm: 'Xác nhận',
+    save: 'Lưu',
+    edit: 'Chỉnh sửa',
+    delete: 'Xóa',
+    back: 'Quay lại',
+    next: 'Tiếp theo',
+    previous: 'Trước',
+    close: 'Đóng',
+    open: 'Mở',
+    viewMore: 'Xem thêm',
+    viewLess: 'Xem ít hơn',
+    backToResults: 'Quay Lại Kết Quả',
+    apply: 'Ứng Tuyển',
+    share: 'Chia Sẻ',
+    export: 'Xuất',
+    refresh: 'Làm Mới',
+    clearAll: 'Xóa Tất Cả',
+    clearAllFilters: 'Xóa Tất Cả Bộ Lọc',
+    viewDetails: 'Xem Chi Tiết',
+    loadMore: 'Tải Thêm',
+    sortBy: 'Sắp xếp theo',
+    filterBy: 'Lọc theo',
+    viewMode: 'Chế Độ Xem',
+    activeFilters: 'Bộ Lọc Đang Áp Dụng',
+    noResults: 'Không Có Kết Quả',
+    noDataAvailable: 'Không có dữ liệu',
+    loadingData: 'Đang tải dữ liệu...',
+    errorLoadingData: 'Lỗi khi tải dữ liệu'
   },
 
-  // Users Management
-  users: {
-    title: 'Quản lý người dùng',
-    subtitle: 'Quản lý tất cả người dùng và vai trò của họ',
-    addUser: 'Thêm người dùng',
-    editUser: 'Chỉnh sửa người dùng',
-    stats: {
-      totalUsers: 'Tổng người dùng',
-      candidates: 'Ứng viên',
-      recruiters: 'Nhà tuyển dụng',
-      admins: 'Quản trị viên'
+  jobPostings: {
+    title: 'Tin Tuyển Dụng',
+    subtitle: 'Quản lý hồ sơ công việc và yêu cầu cho phân tích CV.',
+    searchPlaceholder: 'Tìm kiếm hồ sơ công việc...',
+    createJobProfile: 'Tạo Hồ Sơ Công Việc',
+    editJobProfile: 'Chỉnh Sửa Hồ Sơ Công Việc',
+    jobProfile: 'Hồ Sơ Công Việc',
+    jobTitle: 'Tên Công Việc',
+    jobTitlePlaceholder: 'VD: Full Stack Developer',
+    description: 'Mô Tả',
+    descriptionPlaceholder: 'Mô tả chi tiết về vị trí công việc...',
+    experienceLevel: 'Mức Kinh Nghiệm',
+    experience: 'Kinh nghiệm',
+    years: 'năm',
+    requiredSkills: 'Kỹ Năng Bắt Buộc',
+    preferredSkills: 'Kỹ Năng Ưu Tiên',
+    addSkillPlaceholder: 'Thêm kỹ năng...',
+    add: 'Thêm',
+    noSkillsAdded: 'Chưa có kỹ năng nào được thêm',
+    activeMatches: 'Kết Quả Khớp',
+    viewMatches: 'Xem Kết Quả',
+    edit: 'Chỉnh sửa',
+    delete: 'Xóa',
+    cancel: 'Hủy',
+    saving: 'Đang lưu...',
+    saveChanges: 'Lưu Thay Đổi',
+    createProfile: 'Tạo Hồ Sơ',
+    more: 'thêm',
+    noJobsTitle: 'Chưa Có Tin Tuyển Dụng',
+    noJobsSubtitle: 'Bắt đầu bằng cách tạo hồ sơ công việc đầu tiên của bạn',
+    createFirstJob: 'Tạo Tin Tuyển Dụng Đầu Tiên',
+    noResultsTitle: 'Không Tìm Thấy Kết Quả',
+    noResultsSubtitle: 'Thử tìm kiếm với từ khóa khác',
+    loadError: 'Không thể tải tin tuyển dụng',
+    createSuccess: 'Tạo hồ sơ công việc thành công',
+    updateSuccess: 'Cập nhật hồ sơ công việc thành công',
+    deleteSuccess: 'Xóa hồ sơ công việc thành công',
+    saveError: 'Không thể lưu hồ sơ công việc',
+    deleteError: 'Không thể xóa hồ sơ công việc',
+    deleteConfirm: 'Bạn có chắc chắn muốn xóa hồ sơ công việc này?',
+    viewMatchesInfo: 'Tính năng xem kết quả khớp sẽ sớm có',
+  },
+
+  candidateMatches: {
+    title: 'Ứng Viên Phù Hợp',
+    backToJobs: 'Quay lại Tin Tuyển Dụng',
+    totalMatches: 'Tổng số khớp',
+    requiredSkills: 'Kỹ năng bắt buộc',
+    filters: 'Bộ lọc',
+    clearFilters: 'Xóa bộ lọc',
+    filterMatchScore: 'Điểm khớp',
+    filterExperience: 'Kinh nghiệm',
+    years: 'năm',
+
+    sort: {
+      matchScore: 'Điểm khớp cao nhất',
+      experience: 'Kinh nghiệm nhiều nhất',
+      appliedDate: 'Ngày ứng tuyển gần nhất',
+      name: 'Tên A-Z',
     },
-    search: {
-      placeholder: 'Tìm kiếm theo tên hoặc email...'
+
+    overallMatch: 'Tổng thể',
+    skillsMatch: 'Kỹ năng',
+    experience: 'Kinh nghiệm',
+    yearsExperience: 'năm kinh nghiệm',
+    matchedSkills: 'Kỹ năng khớp',
+    missingSkills: 'Kỹ năng thiếu',
+    more: 'nữa',
+    appliedOn: 'Ứng tuyển ngày',
+    downloadResume: 'Tải CV',
+    save: 'Lưu ứng viên',
+    unsave: 'Bỏ lưu',
+    saved: 'Đã lưu',
+
+    noCandidates: 'Không có ứng viên',
+    noMatches: 'Chưa có ứng viên nào phù hợp với tin tuyển dụng này',
+    noResultsFilters: 'Không tìm thấy ứng viên với bộ lọc hiện tại',
+
+    success: {
+      saveToggled: 'Cập nhật trạng thái lưu thành công',
+      resumeDownloaded: 'Tải CV thành công',
     },
-    filters: {
-      allRoles: 'Tất cả vai trò',
-      allStatus: 'Tất cả trạng thái',
-      filterButton: 'Lọc'
+
+    errors: {
+      loadFailed: 'Không thể tải danh sách ứng viên',
+      saveFailed: 'Không thể cập nhật trạng thái lưu',
+      downloadFailed: 'Không thể tải CV',
+      jobNotFound: 'Không tìm thấy tin tuyển dụng',
     },
-    table: {
-      user: 'Người dùng',
-      role: 'Vai trò',
-      status: 'Trạng thái',
-      joined: 'Tham gia',
-      lastLogin: 'Đăng nhập cuối',
-      actions: 'Hành động',
-      never: 'Chưa bao giờ'
+  },
+
+  savedCandidates: {
+    title: 'Ứng Viên Đã Lưu',
+    subtitle: 'Quản lý các ứng viên đã được đánh dấu sao',
+    searchPlaceholder: 'Tìm kiếm ứng viên...',
+    filters: 'Bộ lọc',
+    clearFilters: 'Xóa bộ lọc',
+    filterMatchScore: 'Điểm khớp',
+    filterExperience: 'Kinh nghiệm',
+    filterSkillMatches: 'Số kỹ năng khớp',
+    filterLocation: 'Địa điểm',
+    filterSkills: 'Kỹ năng',
+    years: 'năm',
+
+    sort: {
+      matchScore: 'Điểm khớp cao nhất',
+      experience: 'Kinh nghiệm nhiều nhất',
+      appliedDate: 'Ngày ứng tuyển gần nhất',
+      name: 'Tên A-Z',
     },
-    roles: {
-      admin: 'Quản trị viên',
-      recruiter: 'Nhà tuyển dụng (HR)',
-      candidate: 'Ứng viên'
+
+    noCandidates: 'Không có ứng viên',
+    noSavedYet: 'Bạn chưa lưu ứng viên nào',
+    noResultsFilters: 'Không tìm thấy ứng viên với bộ lọc hiện tại',
+
+    success: {
+      saveToggled: 'Cập nhật trạng thái lưu thành công',
+      resumeDownloaded: 'Tải CV thành công',
     },
-    status: {
-      active: 'Hoạt động',
-      inactive: 'Không hoạt động',
-      suspended: 'Tạm khóa'
+
+    errors: {
+      loadFailed: 'Không thể tải danh sách ứng viên',
+      saveFailed: 'Không thể cập nhật trạng thái lưu',
+      downloadFailed: 'Không thể tải CV',
     },
-    empty: {
-      title: 'Không tìm thấy người dùng',
-      description: 'Thử điều chỉnh tìm kiếm hoặc bộ lọc'
-    }
+  },
+
+  savedJobs: {
+    title: 'Việc Làm Đã Lưu',
+    subtitle: 'Theo dõi các vị trí yêu thích và quay lại bất cứ lúc nào.',
+    searchPlaceholder: 'Tìm kiếm việc làm đã lưu...',
+    filters: 'Bộ lọc',
+    clearFilters: 'Xóa bộ lọc',
+    filterMatchScore: 'Điểm phù hợp',
+    filterSalary: 'Khoảng lương',
+    filterJobType: 'Loại công việc',
+    filterLocation: 'Địa điểm',
+    filterRemoteOnly: 'Chỉ hiển thị công việc remote',
+    salaryAny: 'Bất kỳ',
+    savedAt: 'Đã lưu',
+    resultsCount: 'Hiển thị {count}/{total} việc làm đã lưu',
+    noSavedYet: 'Bạn chưa lưu việc làm nào',
+    noSavedDescription: 'Hãy đánh dấu các cơ hội phù hợp để quản lý tại đây.',
+    noResultsFilters: 'Không có việc làm nào phù hợp với bộ lọc hiện tại',
+
+    sort: {
+      matchScore: 'Điểm phù hợp cao nhất',
+      recent: 'Lưu gần đây nhất',
+      salaryHigh: 'Lương cao nhất',
+      salaryLow: 'Lương thấp nhất',
+      company: 'Công ty A-Z',
+    },
+
+    actions: {
+      refresh: 'Làm mới danh sách',
+      applyTitle: 'Ứng tuyển',
+      applyMessage: 'Chúng tôi sẽ chuyển bạn đến trang ứng tuyển.',
+      shareMessage: 'Tham khảo vị trí {jobTitle} tại {companyName} nhé!'
+    },
+
+    success: {
+      removed: 'Đã xóa việc làm khỏi danh sách lưu',
+      refreshed: 'Đã làm mới danh sách việc làm đã lưu',
+      shareTitle: 'Đã sao chép liên kết',
+      shareCopied: 'Đường dẫn công việc đã được sao chép vào clipboard',
+    },
+
+    errors: {
+      loadFailed: 'Không thể tải danh sách việc làm đã lưu',
+      removeFailed: 'Không thể cập nhật danh sách đã lưu',
+      shareFailed: 'Không thể chia sẻ việc làm này',
+    },
   }
 };

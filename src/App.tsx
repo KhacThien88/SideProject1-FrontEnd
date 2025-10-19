@@ -3,8 +3,10 @@ import { ToastProvider } from './contexts/ToastContext';
 import { AuthProvider } from './contexts/auth/AuthContext';
 import { RouterProvider, Route } from './components/Router';
 import { Login } from './pages/Auth/Login';
-import { Register } from './pages/Auth/Register';
-import { ForgotPassword } from './pages/Auth/ForgotPassword';
+import { ForgotPassword } from './pages/Auth/ForgotPassword/ForgotPassword';
+import { ResetPassword } from './pages/Auth/ResetPassword/ResetPassword';
+import { Register, VerifyOTP } from './pages/Auth/Register';
+import { RoleSelectionPage } from './pages/Auth/RoleSelection';
 import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
@@ -14,6 +16,7 @@ import { SavedJobs } from './pages/SavedJobs';
 import { Settings } from './pages/Settings';
 import { JobPostings } from './pages/JobPostings';
 import { JobMatches } from './pages/CandidateMatching';
+import { UsersPage } from './pages/Users';
 
 function App() {
   // Determine initial route based on current URL
@@ -25,27 +28,34 @@ function App() {
     if (hash === '#register') return '/register';
     if (hash === '#login') return '/login';
     if (hash === '#forgot-password') return '/forgot-password';
+    if (hash.startsWith('#reset-password')) return '/reset-password';
+    if (hash === '#role-selection') return '/role-selection';
     if (hash === '#dashboard') return '/dashboard';
     if (hash === '#cv-analysis') return '/cv-analysis';
     if (hash === '#candidates') return '/dashboard/candidates';
-  if (hash === '#saved-jobs') return '/dashboard/saved-jobs';
+    if (hash === '#saved-jobs') return '/dashboard/saved-jobs';
     if (hash === '#settings') return '/dashboard/settings';
     if (hash === '#job-postings') return '/dashboard/job-postings';
+    if (hash === '#users') return '/dashboard/users';
     if (hash.startsWith('#job/')) return hash.replace('#', '');
     
     // Check pathname
     if (path === '/register') return '/register';
     if (path === '/login') return '/login';
     if (path === '/forgot-password') return '/forgot-password';
+    if (path === '/role-selection') return '/role-selection';
     if (path === '/dashboard') return '/dashboard';
+    if (path === '/reset-password') return '/reset-password';
     if (path === '/cv-analysis') return '/cv-analysis';
     if (path === '/dashboard/candidates') return '/dashboard/candidates';
-  if (path === '/dashboard/saved-jobs') return '/dashboard/saved-jobs';
+    if (path === '/dashboard/saved-jobs') return '/dashboard/saved-jobs';
     if (path === '/dashboard/settings') return '/dashboard/settings';
     if (path === '/dashboard/job-postings') return '/dashboard/job-postings';
     if (path.startsWith('/dashboard/job-postings/') && path.includes('/matches')) return path;
+    if (path === '/dashboard/users') return '/dashboard/users';
     if (path.startsWith('/job/')) return path;
     if (path === '/') return '/';
+    if (path === '/verify-otp') return '/verify-otp';
     
     // Default to login for auth pages
     return '/login';
@@ -68,7 +78,13 @@ function App() {
             <Route path="/dashboard/saved-jobs" component={SavedJobs} exact />
             <Route path="/dashboard/settings" component={Settings} exact />
             <Route path="/dashboard" component={Dashboard} exact />
+            <Route path="/reset-password" component={ResetPassword} exact />
+            <Route path="/role-selection" component={RoleSelectionPage} exact />
+            <Route path="/dashboard" component={Dashboard} exact />
+            <Route path="/cv-analysis" component={CVAnalysis} exact />
+            <Route path="/dashboard/users" component={UsersPage} exact />
             <Route path="/job/" component={JobDetailPage} exact={false} />
+            <Route path="/verify-otp" component={VerifyOTP} exact />
           </RouterProvider>
         </AuthProvider>
       </ToastProvider>

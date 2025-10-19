@@ -4,16 +4,17 @@ import { Card } from '../../../../components/ui/Card';
 import { LoadingSpinner } from '../../../../components/ui/LoadingSpinner';
 import { useToast } from '../../../../contexts/ToastContext';
 import { useRouter } from '../../../../components/Router';
-import { ValidationInput } from '../../../../components/ui/ValidationInput';
 import { useValidation } from '../../../../hooks/useValidation';
+import { AuthApiService, ApiErrorHandler } from '../../../../services/api/authService';
+import { createFocusEffect } from '../../../../utils/focusEffects';
 import { z } from 'zod';
-import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle } from 'lucide-react';
 
 // Forgot Password Schema
 const forgotPasswordSchema = z.object({
   email: z.string()
-    .min(1, 'Email là bắt buộc')
-    .email('Email không đúng định dạng'),
+    .min(1, 'validation.emailRequired')
+    .email('validation.emailInvalid'),
 });
 
 interface ForgotPasswordFormProps {
@@ -87,18 +88,27 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSubmit
       if (onSubmit) {
         await onSubmit(values.email);
       } else {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        // Call real API
+        await AuthApiService.forgotPassword(values.email);
       }
       
       setIsSubmitted(true);
-      showSuccessToast(getContent('auth.forgotPassword.successMessage'));
+      showSuccessToast(getContent('auth.forgotPassword.toast.success'));
     } catch (err: any) {
       console.error('Forgot password error:', err);
-      showErrorToast(
-        getContent('auth.forgotPassword.errorMessage'),
-        getContent('validation.generalError')
-      );
+      
+      // Handle specific error cases
+      const errorMessage = ApiErrorHandler.handleError(err);
+      
+      if (errorMessage.includes('not found') || errorMessage.includes('not exist') || errorMessage.includes('Không tìm thấy tài khoản')) {
+        showErrorToast(getContent('auth.forgotPassword.toast.emailNotFound'));
+      } else if (errorMessage.includes('timeout') || errorMessage.includes('network')) {
+        showErrorToast(getContent('auth.forgotPassword.toast.networkError'));
+      } else if (errorMessage.includes('email') && errorMessage.includes('invalid')) {
+        showErrorToast(getContent('auth.forgotPassword.toast.emailInvalid'));
+      } else {
+        showErrorToast(errorMessage || getContent('auth.forgotPassword.toast.failed'));
+      }
     } finally {
       setIsLoading(false);
       isSubmittingRef.current = false;
@@ -107,120 +117,109 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSubmit
 
   if (isSubmitted) {
     return (
-      <div className="w-full mb-4">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-center gap-2">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-green-500 via-green-500/80 via-primary-500/80 to-primary-500 bg-clip-text text-transparent" style={{ lineHeight: '1.3'}}>
-              {getContent('auth.forgotPassword.successTitle')}
-            </h1>
-          </div>
-        </div>
-
-        <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
-          <div className="text-center space-y-4">
-            <div className="flex justify-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-10 h-10 text-green-600" />
-              </div>
+      <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
+        <div className="text-center space-y-4">
+          {/* Success Icon */}
+          <div className="flex justify-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+              <CheckCircle className="w-10 h-10 text-green-600" />
             </div>
-            
+          </div>
+          
+          {/* Success Title */}
+          <div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-green-600 via-primary-600 to-primary-500 bg-clip-text text-transparent mb-2">
+              {getContent('auth.forgotPassword.successTitle')}
+            </h2>
             <p className="text-neutral-700 text-sm">
               {getContent('auth.forgotPassword.checkEmailMessage')}
             </p>
-            
-            <p className="text-neutral-600 text-xs">
-              {getContent('auth.forgotPassword.emailSentTo')}: <strong>{values.email}</strong>
-            </p>
-            
-            <button
-              onClick={() => navigate('/login')}
-              className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-            >
-              {getContent('auth.forgotPassword.backToLogin')}
-            </button>
           </div>
-        </Card>
-      </div>
+          
+          {/* Email Info */}
+          <div className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl p-4 border border-primary-100">
+            <p className="text-neutral-600 text-sm">
+              {getContent('auth.forgotPassword.emailSentTo')}
+            </p>
+            <p className="text-primary-700 font-semibold mt-1 break-all">{values.email}</p>
+          </div>
+          
+          {/* Back to Login Button */}
+          <button
+            onClick={() => navigate('/login')}
+            className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          >
+            {getContent('auth.forgotPassword.backToLogin')}
+          </button>
+        </div>
+      </Card>
     );
   }
 
   return (
-    <div className="w-full mb-4">
-      {/* Header */}
-      <div className="text-center mb-6">
-        <div className="flex items-center justify-center gap-2">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-500 via-primary-500/80 via-secondary-500/80 to-secondary-500 bg-clip-text text-transparent" style={{ lineHeight: '1.3'}}>
-            {getContent('auth.forgotPassword.title')}
-          </h1>
-        </div>
-      </div>
-
-      <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
-        <p className="text-sm text-neutral-600 mb-6 text-center">
-          {getContent('auth.forgotPassword.subtitle')}
-        </p>
-
-        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-          {/* Email Field */}
-          <div className="relative">
-            <ValidationInput
-              id="email"
-              type="email"
-              label={getContent('auth.login.email')}
-              value={values.email}
-              onChange={(e) => {
-                setValue('email', e.target.value);
-                clearBlurError();
-              }}
-              onBlur={() => handleBlurValidation(values.email)}
-              validation={errors.email}
-              placeholder={getContent('auth.login.emailPlaceholder')}
-              autoComplete="email"
-              disabled={isLoading}
-              icon={<Mail className="w-4 h-4" />}
-            />
-            {blurErrors.email && (
-              <div className="text-xs text-red-500 mt-1">
-                {blurErrors.email}
-              </div>
-            )}
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
+    <Card variant="default" className="w-full shadow-lg backdrop-blur-md p-6">
+      <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+        {/* Email Field */}
+        <div>
+          <label htmlFor="email" className="block text-md font-medium text-primary-700 mb-1">
+            {getContent('auth.login.email')}
+          </label>
+          <input
+            id="email"
+            type="email"
+            value={values.email}
+            onChange={(e) => {
+              setValue('email', e.target.value);
+              clearBlurError();
+            }}
+            onBlur={() => handleBlurValidation(values.email)}
+            className={`w-full px-3 py-2 border rounded-lg transition-colors duration-200 ${
+              errors.email || blurErrors.email
+                ? 'border-error-500 bg-error-50' 
+                : 'border-neutral-300 bg-white'
+            } ${createFocusEffect.email('md')}`}
+            placeholder={getContent('auth.login.emailPlaceholder')}
+            autoComplete="email"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white rounded-2xl p-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-          >
-            {isLoading ? (
-              <div className="flex items-center justify-center space-x-2">
-                <LoadingSpinner size="sm" />
-                <span>{getContent('auth.forgotPassword.sending')}</span>
-              </div>
-            ) : (
-              getContent('auth.forgotPassword.sendResetLink')
-            )}
-          </button>
+          />
+          {blurErrors.email && (
+            <p className="mt-1 text-sm text-error-600">{blurErrors.email}</p>
+          )}
+        </div>
 
-          {/* Divider */}
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-neutral-200"></div>
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`w-full bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white rounded-2xl p-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${createFocusEffect.input('md', 'primary')}`}
+        >
+          {isLoading ? (
+            <div className="flex items-center justify-center space-x-2">
+              <LoadingSpinner size="sm" />
+              <span>{getContent('auth.forgotPassword.sending')}</span>
             </div>
-          </div>
+          ) : (
+            getContent('auth.forgotPassword.sendResetLink')
+          )}
+        </button>
 
-          {/* Back to Login */}
-          <button
-            type="button"
-            onClick={() => navigate('/login')}
-            className="w-full flex items-center justify-center gap-2 text-primary-600 hover:text-primary-700 font-medium transition-colors duration-200"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            {getContent('auth.forgotPassword.backToLogin')}
-          </button>
-        </form>
-      </Card>
-    </div>
+        {/* Divider */}
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-neutral-200"></div>
+          </div>
+        </div>
+
+        {/* Back to Login */}
+        <button
+          type="button"
+          onClick={() => navigate('/login')}
+          className="w-full flex items-center justify-center gap-2 text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          {getContent('auth.forgotPassword.backToLogin')}
+        </button>
+      </form>
+    </Card>
   );
 };

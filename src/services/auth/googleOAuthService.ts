@@ -5,14 +5,7 @@ import type {
   GoogleUserInfo
 } from '../../contexts/auth/authTypes';
 
-// Google Sign-In configuration interface
-interface GoogleSignInConfig {
-  client_id: string;
-  callback: (response: GoogleSignInResponse) => void;
-  auto_select?: boolean;
-  cancel_on_tap_outside?: boolean;
-  context?: 'signin' | 'signup' | 'use';
-}
+// Google Sign-In configuration interface (moved to avoid conflicts)
 
 // Google Sign-In response interface
 interface GoogleSignInResponse {
@@ -35,21 +28,7 @@ interface GoogleCredentialPayload {
   aud: string;
 }
 
-declare global {
-  interface Window {
-    google: {
-      accounts: {
-        id: {
-          initialize: (config: GoogleSignInConfig) => void;
-          renderButton: (element: HTMLElement, config: any) => void;
-          prompt: () => void;
-          disableAutoSelect: () => void;
-          revoke: (email: string, callback: () => void) => void;
-        };
-      };
-    };
-  }
-}
+// Google OAuth types are now defined in LoginForm.tsx to avoid conflicts
 
 class GoogleOAuthService {
   private clientId: string;

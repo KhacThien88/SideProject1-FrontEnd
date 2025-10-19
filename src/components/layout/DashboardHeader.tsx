@@ -3,6 +3,8 @@ import { useRouter } from '../../components/Router';
 import { Button } from '../../components/ui/Button';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useHeaderVisibility } from '../../hooks/useHeaderVisibility';
+import { useAuth } from '../../contexts/auth/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
 import {
   Bell,
   Search,
@@ -14,6 +16,8 @@ import {
 export const DashboardHeader: React.FC = () => {
   const { navigate } = useRouter();
   const { t } = useTranslation();
+  const { user, logout } = useAuth();
+  const { showSuccessToast } = useToast();
   const { isVisible } = useHeaderVisibility({
     threshold: 80,
     hideDelay: 200,
@@ -22,6 +26,29 @@ export const DashboardHeader: React.FC = () => {
 
   // Get current path to determine active page
   const currentPath = window.location.pathname;
+
+  // Get user display name
+  const getUserDisplayName = () => {
+    if (!user) return t.dashboard.header.user.name;
+    return user.full_name || user.email.split('@')[0];
+  };
+
+  // Get user role display
+  const getUserRoleDisplay = () => {
+    if (!user) return t.dashboard.header.user.role;
+    // Sử dụng i18n key từ users.roles
+    const roleKey = user.role as 'admin' | 'recruiter' | 'candidate';
+    return t.users.roles[roleKey] || user.role;
+  };
+
+  // Handle logout - Fast and responsive with toast notification
+  const handleLogout = () => {
+    // Show success toast
+    showSuccessToast(t.auth.logoutSuccess);
+    // Logout and redirect immediately - no waiting
+    logout();
+    navigate('/login');
+  };
 
   // Get current page header content based on path
   const getCurrentPageHeader = () => {
@@ -84,8 +111,8 @@ export const DashboardHeader: React.FC = () => {
                   <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
                 <div className="hidden lg:block min-w-0">
-                  <div className="text-sm font-semibold text-neutral-900 truncate">{t.dashboard.header.user.name}</div>
-                  <div className="text-xs text-neutral-500 font-medium truncate">{t.dashboard.header.user.role}</div>
+                  <div className="text-sm font-semibold text-neutral-900 truncate">{getUserDisplayName()}</div>
+                  <div className="text-xs text-neutral-500 font-medium truncate">{getUserRoleDisplay()}</div>
                 </div>
                 <ChevronDown className="w-4 h-4 text-neutral-400 group-hover:text-primary-600 transition-colors duration-300 hidden sm:block" />
               </div>
@@ -96,7 +123,7 @@ export const DashboardHeader: React.FC = () => {
                   variant="tertiary"
                   size="sm"
                   className="focus-ring text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300 hidden sm:flex"
-                  onClick={() => navigate('/login')}
+                  onClick={handleLogout}
                 >
                   <LogOut className="w-4 h-4 mr-2" />
                   <span className="hidden lg:inline">{t.dashboard.header.actions.logout}</span>
@@ -105,7 +132,7 @@ export const DashboardHeader: React.FC = () => {
                 {/* Mobile Logout */}
                 <button
                   className="sm:hidden p-2.5 text-red-600 hover:bg-red-50 rounded-xl transition-all duration-300"
-                  onClick={() => navigate('/login')}
+                  onClick={handleLogout}
                 >
                   <LogOut className="w-5 h-5" />
                 </button>

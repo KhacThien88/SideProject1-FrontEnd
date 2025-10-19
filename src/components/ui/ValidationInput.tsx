@@ -1,5 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import type { ValidationState } from '../../hooks/useValidation';
+import { createFocusEffect } from '../../utils/focusEffects';
 
 // Validation Input Props Interface
 interface ValidationInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -37,8 +38,8 @@ export const ValidationInput = forwardRef<HTMLInputElement, ValidationInputProps
 
     // Calculate validation state classes (no error styling since errors show via toast)
     const getValidationClasses = () => {
-      // Always use default styling since errors are shown via toast only
-      return 'border-neutral-300 bg-white focus:border-primary-500';
+      // Align focus behavior with Login: remove default border change on focus
+      return 'border-neutral-300 bg-white focus:border-transparent';
     };
 
     // Get validation icon (no icons since errors show via toast only)
@@ -119,7 +120,7 @@ export const ValidationInput = forwardRef<HTMLInputElement, ValidationInputProps
         <div className="relative">
           {/* Leading Icon */}
           {icon && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400">
+            <div aria-hidden className={`pointer-events-none absolute left-3 top-1/2 transform -translate-y-1/2 ${isFocused ? 'text-primary-500' : 'text-neutral-400'}`}>
               {icon}
             </div>
           )}
@@ -132,12 +133,17 @@ export const ValidationInput = forwardRef<HTMLInputElement, ValidationInputProps
               showPasswordToggle && type === 'password' ? 
                 (validation && validation.isValidating ? 'pr-20' : 'pr-12') : 
                 (validation && validation.isValidating ? 'pr-10' : 'pr-3')
-            } border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+            } border rounded-lg transition-colors duration-200 focus:outline-none ${
               getValidationClasses()
             } ${
-              isFocused ? 'ring-2 ring-opacity-20' : ''
-            } ${
               disabled ? 'bg-neutral-100 text-neutral-500 cursor-not-allowed' : ''
+            } ${
+              // Use the same focus system as Login page
+              (type === 'password'
+                ? createFocusEffect.password('md')
+                : type === 'email'
+                ? createFocusEffect.email('md')
+                : createFocusEffect.input('md'))
             } ${className}`}
             onBlur={handleBlur}
             onFocus={handleFocus}

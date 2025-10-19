@@ -136,6 +136,12 @@ export interface ContentTaxonomy {
     }[];
   };
 
+  // Validation
+  validation: {
+    emailRequired: string;
+    emailInvalid: string;
+  };
+
   // Authentication
   auth: {
     login: {
@@ -158,6 +164,22 @@ export interface ContentTaxonomy {
       noAccount: string;
       signUp: string;
       or: string;
+      toast: {
+        emailRequired: string;
+        emailMissingAt: string;
+        emailStartsWithAt: string;
+        emailMissingDomain: string;
+        emailMissingTLD: string;
+        emailInvalid: string;
+        passwordRequired: string;
+        loginSuccess: string;
+        loginError: string;
+        loginFailed: string;
+        invalidCredentials: string;
+        networkError: string;
+        googleNotLoaded: string;
+        googleContainerNotFound: string;
+      };
       hero: {
         sections: {
           name: string;
@@ -188,12 +210,42 @@ export interface ContentTaxonomy {
       confirmPassword: string;
       confirmPasswordPlaceholder: string;
       acceptTerms: string;
+      and: string;
       termsOfService: string;
       privacyPolicy: string;
       registerButton: string;
       registering: string;
       hasAccount: string;
       loginLink: string;
+      toast: {
+        fullNameRequired: string;
+        fullNameMinLength: string;
+        emailRequired: string;
+        emailMissingAt: string;
+        emailStartsWithAt: string;
+        emailMissingDomain: string;
+        emailMissingTLD: string;
+        emailInvalid: string;
+        passwordRequired: string;
+        passwordMinLength: string;
+        passwordUppercase: string;
+        passwordLowercase: string;
+        passwordNumbers: string;
+        passwordSpecialChar: string;
+        confirmPasswordRequired: string;
+        confirmPasswordMismatch: string;
+        phoneInvalid: string;
+        termsRequired: string;
+        registerSuccess: string;
+        registerSuccessSubtitle: string;
+        registerFailed: string;
+        emailExists: string;
+        emailExistsSubtitle: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+        generalError: string;
+        generalErrorSubtitle: string;
+      };
     };
     forgotPassword: {
       title: string;
@@ -206,11 +258,107 @@ export interface ContentTaxonomy {
       checkEmailMessage: string;
       emailSentTo: string;
       errorMessage: string;
+      toast: {
+        success: string;
+        failed: string;
+        emailNotFound: string;
+        networkError: string;
+        emailInvalid: string;
+      };
+    };
+    resetPassword: {
+      title: string;
+      subtitle: string;
+      token: string;
+      tokenPlaceholder: string;
+      newPassword: string;
+      newPasswordPlaceholder: string;
+      confirmPassword: string;
+      confirmPasswordPlaceholder: string;
+      passwordValid: string;
+      submit: string;
+      submitting: string;
+      backToLogin: string;
+      toast: {
+        invalidToken: string;
+        passwordMinLength: string;
+        passwordUppercase: string;
+        passwordLowercase: string;
+        passwordNumbers: string;
+        passwordSpecialChar: string;
+        confirmPasswordMismatch: string;
+        success: string;
+        failed: string;
+        invalidOrExpiredToken: string;
+        passwordTooWeak: string;
+        networkError: string;
+        generalError: string;
+      };
+    };
+    verifyOTP: {
+      title: string;
+      subtitle: string;
+      emailLabel: string;
+      codeLabel: string;
+      codePlaceholder: string;
+      timerLabel: string;
+      verifyButton: string;
+      verifyingButton: string;
+      resendButton: string;
+      resendCountdown: string;
+      resendAvailable: string;
+      errorMessage: string;
+      successMessage: string;
+      successSubtitle: string;
+      toast: {
+        verificationSuccess: string;
+        verificationSuccessSubtitle: string;
+        verificationFailed: string;
+        verificationFailedSubtitle: string;
+        resendSuccess: string;
+        resendSuccessSubtitle: string;
+        resendFailed: string;
+        resendFailedSubtitle: string;
+        invalidCode: string;
+        codeExpired: string;
+        tooManyAttempts: string;
+        networkError: string;
+        networkErrorSubtitle: string;
+      };
     };
     googleSigningIn: string;
     continueWithGoogle: string;
     googleSignInSuccess: string;
     logoutSuccess: string;
+    roleSelection: {
+      title: string;
+      subtitle: string;
+      pleaseSelectRole: string;
+      registrationSuccess: string;
+      registrationFailed: string;
+      completing: string;
+      continueButton: string;
+      backToLogin: string;
+      helpText: string;
+      candidate: {
+        title: string;
+        description: string;
+        features: {
+          uploadCV: string;
+          jobMatching: string;
+          applyJobs: string;
+        };
+      };
+      recruiter: {
+        title: string;
+        description: string;
+        features: {
+          postJobs: string;
+          searchCandidates: string;
+          manageApplications: string;
+        };
+      };
+    };
   };
 
   // Job Matching & CV Analysis
@@ -500,6 +648,14 @@ export interface ContentTaxonomy {
         description: string;
       };
     };
+    users: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
     analytics: {
       subscription: string;
       header: {
@@ -527,6 +683,7 @@ export interface ContentTaxonomy {
         candidates: string;
         savedJobs: string;
         jobPostings: string;
+        users: string;
         analytics: string;
         settings: string;
       };
@@ -619,6 +776,7 @@ export interface ContentTaxonomy {
         excellent: string;
       };
     };
+
   };
   
   // Footer
@@ -737,54 +895,49 @@ export interface ContentTaxonomy {
     };
   };
 
-  // Validation messages for all form validation with toast
-  validation: {
-    // Email validation
-    emailRequired: string;
-    emailInvalid: string;
-    emailMissingAt: string;
-    emailStartsWithAt: string;
-    emailMissingDomain: string;
-    emailMissingTLD: string;
-    
-    // Password validation
-    passwordRequired: string;
-    passwordMinLength8: string;
-    passwordMissingUppercase: string;
-    passwordMissingLowercase: string;
-    passwordMissingNumber: string;
-    passwordMissingSpecial: string;
-    
-    // Confirm password validation
-    confirmPasswordRequired: string;
-    confirmPasswordMismatch: string;
-    
-    // Full name validation
-    fullNameRequired: string;
-    fullNameTooShort: string;
-    fullNameTooLong: string;
-    
-    // Phone validation
-    phoneInvalid: string;
-    
-    // Accept terms validation
-    acceptTermsRequired: string;
-    
-    // Success messages
-    loginSuccess: string;
-    registerSuccess: string;
-    welcomeMessage: string;
-    
-    // Error messages
-    invalidCredentials: string;
-    networkError: string;
-    loginFailed: string;
-    registerFailed: string;
-    emailExists: string;
-    emailExistsSubtitle: string;
-    networkErrorSubtitle: string;
-    generalError: string;
-    validationFailed: string;
+  // Users Management
+  users: {
+    title: string;
+    subtitle: string;
+    addUser: string;
+    editUser: string;
+    stats: {
+      totalUsers: string;
+      candidates: string;
+      recruiters: string;
+      admins: string;
+    };
+    search: {
+      placeholder: string;
+    };
+    filters: {
+      allRoles: string;
+      allStatus: string;
+      filterButton: string;
+    };
+    table: {
+      user: string;
+      role: string;
+      status: string;
+      joined: string;
+      lastLogin: string;
+      actions: string;
+      never: string;
+    };
+    roles: {
+      admin: string;
+      recruiter: string;
+      candidate: string;
+    };
+    status: {
+      active: string;
+      inactive: string;
+      suspended: string;
+    };
+    empty: {
+      title: string;
+      description: string;
+    };
   };
 
   // Settings

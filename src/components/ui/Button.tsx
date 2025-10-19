@@ -14,7 +14,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         className={cn(
           // Base styles
-          'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
+          'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:shadow-[0_0_0_4px_rgba(35,104,254,0.12)]',
           // Size variants
           {
             'px-3 py-2 text-sm': size === 'sm',
@@ -24,13 +24,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           // Variant styles
           {
             // Primary variant
-            'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-sm hover:shadow-md active:bg-primary-800':
+            'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-sm hover:shadow-md active:bg-primary-800 focus-visible:ring-primary-500':
               variant === 'primary',
             // Secondary variant
-            'bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500 shadow-sm hover:shadow-md active:bg-secondary-800':
+            'bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500 shadow-sm hover:shadow-md active:bg-secondary-800 focus-visible:ring-secondary-500':
               variant === 'secondary',
             // Tertiary variant
-            'bg-transparent text-primary-600 border border-primary-600 hover:bg-primary-50 focus:ring-primary-500 active:bg-primary-100':
+            'bg-transparent text-primary-600 border border-primary-600 hover:bg-primary-50 focus:ring-primary-500 active:bg-primary-100 focus-visible:ring-primary-500':
               variant === 'tertiary',
           },
           className

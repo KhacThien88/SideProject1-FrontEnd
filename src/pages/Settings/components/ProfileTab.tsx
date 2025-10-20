@@ -112,7 +112,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility('current')}
-                className={`absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 ${createFocusEffect.input('sm', 'primary')}`}
+                className="absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 focus:outline-none focus:text-primary-600 transition-colors"
               >
                 {showPassword.current ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
@@ -132,7 +132,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility('new')}
-                className={`absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 ${createFocusEffect.input('sm', 'primary')}`}
+                className="absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 focus:outline-none focus:text-primary-600 transition-colors"
               >
                 {showPassword.new ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
@@ -152,7 +152,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility('confirm')}
-                className={`absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 ${createFocusEffect.input('sm', 'primary')}`}
+                className="absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 focus:outline-none focus:text-primary-600 transition-colors"
               >
                 {showPassword.confirm ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>

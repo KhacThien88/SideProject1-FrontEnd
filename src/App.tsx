@@ -2,6 +2,8 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { AuthProvider } from './contexts/auth/AuthContext';
 import { RouterProvider, Route } from './components/Router';
+import { PublicRoute } from './components/auth/PublicRoute';
+import { ProtectedRouteWrapper } from './components/auth/ProtectedRouteWrapper';
 import { Login } from './pages/Auth/Login';
 import { ForgotPassword } from './pages/Auth/ForgotPassword/ForgotPassword';
 import { ResetPassword } from './pages/Auth/ResetPassword/ResetPassword';
@@ -66,25 +68,34 @@ function App() {
       <ToastProvider>
         <AuthProvider>
           <RouterProvider initialRoute={getInitialRoute()}>
-            <Route path="/" component={Landing} exact />
-            <Route path="/login" component={Login} exact />
-            <Route path="/register" component={Register} exact />
+            {/* Public routes - wrapped with PublicRoute to check auth first */}
+            <Route path="/" component={() => <PublicRoute component={Landing} />} exact />
+            <Route path="/login" component={() => <PublicRoute component={Login} />} exact />
+            <Route path="/register" component={() => <PublicRoute component={Register} />} exact />
+            <Route path="/verify-otp" component={VerifyOTP} exact />
+            
+            {/* Auth recovery routes */}
             <Route path="/forgot-password" component={ForgotPassword} exact />
-            <Route path="/cv-analysis" component={CVAnalysis} exact />
-            {/* More specific routes first */}
-            <Route path="/dashboard/job-postings/" component={JobMatches} exact={false} />
-            <Route path="/dashboard/job-postings" component={JobPostings} exact />
-            <Route path="/dashboard/candidates" component={SavedCandidates} exact />
-            <Route path="/dashboard/saved-jobs" component={SavedJobs} exact />
-            <Route path="/dashboard/settings" component={Settings} exact />
-            <Route path="/dashboard" component={Dashboard} exact />
             <Route path="/reset-password" component={ResetPassword} exact />
             <Route path="/role-selection" component={RoleSelectionPage} exact />
-            <Route path="/dashboard" component={Dashboard} exact />
-            <Route path="/cv-analysis" component={CVAnalysis} exact />
-            <Route path="/dashboard/users" component={UsersPage} exact />
-            <Route path="/job/" component={JobDetailPage} exact={false} />
-            <Route path="/verify-otp" component={VerifyOTP} exact />
+            
+            {/* Protected routes - wrapped with ProtectedRouteWrapper */}
+            {/* Job matching routes (most specific first) */}
+            <Route path="/dashboard/job-postings/" component={() => <ProtectedRouteWrapper component={JobMatches} />} exact={false} />
+            <Route path="/dashboard/job-postings" component={() => <ProtectedRouteWrapper component={JobPostings} />} exact />
+            
+            {/* Dashboard sub-routes */}
+            <Route path="/dashboard/candidates" component={() => <ProtectedRouteWrapper component={SavedCandidates} />} exact />
+            <Route path="/dashboard/saved-jobs" component={() => <ProtectedRouteWrapper component={SavedJobs} />} exact />
+            <Route path="/dashboard/settings" component={() => <ProtectedRouteWrapper component={Settings} />} exact />
+            <Route path="/dashboard/users" component={() => <ProtectedRouteWrapper component={UsersPage} />} exact />
+            
+            {/* Main routes */}
+            <Route path="/dashboard" component={() => <ProtectedRouteWrapper component={Dashboard} />} exact />
+            <Route path="/cv-analysis" component={() => <ProtectedRouteWrapper component={CVAnalysis} />} exact />
+            
+            {/* Dynamic routes (least specific) */}
+            <Route path="/job/" component={() => <ProtectedRouteWrapper component={JobDetailPage} />} exact={false} />
           </RouterProvider>
         </AuthProvider>
       </ToastProvider>

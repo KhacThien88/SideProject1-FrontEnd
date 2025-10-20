@@ -482,10 +482,70 @@ export const vi: ContentTaxonomy = {
         generalErrorSubtitle: 'Vui lòng thử lại sau'
       }
     },
+    verifyOTP: {
+      title: 'Xác thực email',
+      subtitle: 'Nhập mã 6 chữ số chúng tôi đã gửi đến',
+      emailLabel: 'Email',
+      codeLabel: 'Mã xác thực',
+      codePlaceholder: 'Nhập mã 6 chữ số',
+      timerLabel: 'Mã hết hạn sau',
+      verifyButton: 'Xác thực',
+      verifyingButton: 'Đang xác thực...',
+      resendButton: 'Gửi lại',
+      resendCountdown: 'Gửi lại sau {seconds}s',
+      resendAvailable: 'Gửi lại ({count} lần còn lại)',
+      errorMessage: 'Mã không hợp lệ. Vui lòng thử lại.',
+      successMessage: 'Xác thực thành công',
+      successSubtitle: 'Đang chuyển hướng đến trang đăng nhập...',
+      toast: {
+        verificationSuccess: 'Xác thực thành công!',
+        verificationSuccessSubtitle: 'Email của bạn đã được xác thực',
+        verificationFailed: 'Xác thực thất bại',
+        verificationFailedSubtitle: 'Vui lòng kiểm tra lại mã và thử lại',
+        resendSuccess: 'Mã mới đã được gửi',
+        resendSuccessSubtitle: 'Vui lòng kiểm tra email của bạn',
+        resendFailed: 'Gửi lại mã thất bại',
+        resendFailedSubtitle: 'Vui lòng thử lại sau',
+        invalidCode: 'Mã xác thực không đúng',
+        codeExpired: 'Mã đã hết hạn',
+        tooManyAttempts: 'Quá nhiều lần thử sai',
+        networkError: 'Lỗi kết nối mạng',
+        networkErrorSubtitle: 'Vui lòng thử lại sau'
+      }
+    },
     googleSigningIn: 'Đang đăng nhập...',
     continueWithGoogle: 'Đăng nhập với Google',
     googleSignInSuccess: 'Đăng nhập Google thành công!',
-    logoutSuccess: 'Đăng xuất thành công'
+    logoutSuccess: 'Đăng xuất thành công',
+    roleSelection: {
+      title: 'Chọn vai trò của bạn',
+      subtitle: 'Chọn cách bạn muốn sử dụng TalentFit AI',
+      pleaseSelectRole: 'Vui lòng chọn vai trò để tiếp tục',
+      registrationSuccess: 'Đăng ký hoàn tất thành công!',
+      registrationFailed: 'Đăng ký thất bại. Vui lòng thử lại.',
+      completing: 'Đang hoàn tất đăng ký...',
+      continueButton: 'Tiếp tục',
+      backToLogin: 'Quay lại đăng nhập',
+      helpText: 'Bạn có thể thay đổi vai trò sau trong cài đặt tài khoản',
+      candidate: {
+        title: 'Người tìm việc',
+        description: 'Tìm kiếm cơ hội nghề nghiệp tiếp theo',
+        features: {
+          uploadCV: 'Tải lên và phân tích CV của bạn',
+          jobMatching: 'Nhận gợi ý việc làm cá nhân hóa',
+          applyJobs: 'Ứng tuyển việc làm chỉ với một cú click'
+        }
+      },
+      recruiter: {
+        title: 'Nhà tuyển dụng',
+        description: 'Tuyển dụng nhân tài cho tổ chức của bạn',
+        features: {
+          postJobs: 'Đăng tin tuyển dụng',
+          searchCandidates: 'Tìm kiếm và lọc ứng viên',
+          manageApplications: 'Quản lý đơn ứng tuyển và phỏng vấn'
+        }
+      }
+    }
   },
 
   // Job Matching & CV Analysis
@@ -742,38 +802,12 @@ export const vi: ContentTaxonomy = {
       medium: 'Trung bình', 
       strong: 'Mạnh'
     },
-    googleSigningIn: 'Đang đăng nhập với Google...',
-    continueWithGoogle: 'Tiếp tục với Google',
-    googleSignInSuccess: 'Đăng nhập Google thành công',
-    logoutSuccess: 'Đăng xuất thành công',
-    roleSelection: {
-      title: 'Chọn vai trò của bạn',
-      subtitle: 'Chọn cách bạn muốn sử dụng TalentFit AI',
-      pleaseSelectRole: 'Vui lòng chọn vai trò để tiếp tục',
-      registrationSuccess: 'Đăng ký hoàn tất thành công!',
-      registrationFailed: 'Đăng ký thất bại. Vui lòng thử lại.',
-      completing: 'Đang hoàn tất đăng ký...',
-      continueButton: 'Tiếp tục',
-      backToLogin: 'Quay lại đăng nhập',
-      helpText: 'Bạn có thể thay đổi vai trò sau trong cài đặt tài khoản',
-      candidate: {
-        title: 'Người tìm việc',
-        description: 'Tìm kiếm cơ hội nghề nghiệp tiếp theo',
-        features: {
-          uploadCV: 'Tải lên và phân tích CV của bạn',
-          jobMatching: 'Nhận gợi ý việc làm cá nhân hóa',
-          applyJobs: 'Ứng tuyển việc làm chỉ với một cú click'
-        }
-      },
-      recruiter: {
-        title: 'Nhà tuyển dụng',
-        description: 'Tuyển dụng nhân tài cho tổ chức của bạn',
-        features: {
-          postJobs: 'Đăng tin tuyển dụng',
-          searchCandidates: 'Tìm kiếm và lọc ứng viên',
-          manageApplications: 'Quản lý đơn ứng tuyển và phỏng vấn'
-        }
-      }
+    requirements: {
+      minLength: 'Ít nhất 8 ký tự',
+      uppercase: 'Một chữ hoa',
+      lowercase: 'Một chữ thường',
+      number: 'Một chữ số',
+      special: 'Một ký tự đặc biệt'
     }
   },
 
@@ -899,14 +933,6 @@ export const vi: ContentTaxonomy = {
         description: 'Xem và quản lý các cơ hội việc làm đã lưu'
       }
     },
-    savedJobs: {
-      subscription: 'Việc làm đã lưu',
-      header: {
-        title: 'Việc làm',
-        subtitle: 'đã lưu',
-        description: 'Xem lại và quản lý những cơ hội bạn đã đánh dấu.'
-      }
-    },
     jobPostings: {
       subscription: 'Tin tuyển dụng',
       header: {
@@ -950,6 +976,7 @@ export const vi: ContentTaxonomy = {
         candidates: 'Ứng viên',
         savedJobs: 'Việc làm đã lưu',
         jobPostings: 'Đăng tuyển',
+        users: 'Người dùng',
         analytics: 'Phân tích',
         settings: 'Cài đặt'
       },
@@ -1138,7 +1165,31 @@ export const vi: ContentTaxonomy = {
     noResults: 'Không Có Kết Quả',
     noDataAvailable: 'Không có dữ liệu',
     loadingData: 'Đang tải dữ liệu...',
-    errorLoadingData: 'Lỗi khi tải dữ liệu'
+    errorLoadingData: 'Lỗi khi tải dữ liệu',
+    toast: {
+      // General
+      linkCopied: 'Đã sao chép liên kết',
+
+      // Job
+      jobSaved: 'Đã lưu công việc',
+      jobSavedSubtitle: '{jobTitle} đã được thêm vào danh sách đã lưu',
+
+      // CV
+      filesAddedSuccess: 'Đã thêm thành công {count} tệp',
+      noFilesReady: 'Không có tệp nào sẵn sàng để phân tích',
+      analysisSuccess: 'Phân tích hoàn tất!',
+
+      // Network & Generic Errors
+      networkError: 'Lỗi kết nối mạng',
+      networkErrorSubtitle: 'Vui lòng kiểm tra kết nối và thử lại',
+      genericError: 'Đã có lỗi không mong muốn xảy ra',
+      genericErrorSubtitle: 'Vui lòng thử lại sau',
+    },
+    loadingScreen: {
+      loading: 'Đang tải...',
+      redirecting: 'Đang chuyển hướng...',
+      authenticating: 'Đang xác thực...',
+    }
   },
 
   jobPostings: {
@@ -1313,5 +1364,50 @@ export const vi: ContentTaxonomy = {
       removeFailed: 'Không thể cập nhật danh sách đã lưu',
       shareFailed: 'Không thể chia sẻ việc làm này',
     },
+  },
+
+  // Users Management
+  users: {
+    title: 'Quản lý người dùng',
+    subtitle: 'Quản lý tất cả người dùng và vai trò của họ',
+    addUser: 'Thêm người dùng',
+    editUser: 'Chỉnh sửa người dùng',
+    stats: {
+      totalUsers: 'Tổng người dùng',
+      candidates: 'Ứng viên',
+      recruiters: 'Nhà tuyển dụng',
+      admins: 'Quản trị viên'
+    },
+    search: {
+      placeholder: 'Tìm kiếm theo tên hoặc email...'
+    },
+    filters: {
+      allRoles: 'Tất cả vai trò',
+      allStatus: 'Tất cả trạng thái',
+      filterButton: 'Lọc'
+    },
+    table: {
+      user: 'Người dùng',
+      role: 'Vai trò',
+      status: 'Trạng thái',
+      joined: 'Tham gia',
+      lastLogin: 'Đăng nhập cuối',
+      actions: 'Hành động',
+      never: 'Chưa bao giờ'
+    },
+    roles: {
+      admin: 'Quản trị viên',
+      recruiter: 'Nhà tuyển dụng (HR)',
+      candidate: 'Ứng viên'
+    },
+    status: {
+      active: 'Hoạt động',
+      inactive: 'Không hoạt động',
+      suspended: 'Tạm khóa'
+    },
+    empty: {
+      title: 'Không tìm thấy người dùng',
+      description: 'Thử điều chỉnh tìm kiếm hoặc bộ lọc'
+    }
   }
 };

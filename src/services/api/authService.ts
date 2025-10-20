@@ -13,6 +13,19 @@ import type {
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 const API_TIMEOUT = 10000; // 10 seconds
 
+// Token refresh queue to prevent race conditions
+let isRefreshing = false;
+let refreshSubscribers: ((token: string) => void)[] = [];
+
+function subscribeTokenRefresh(callback: (token: string) => void) {
+  refreshSubscribers.push(callback);
+}
+
+function onTokenRefreshed(token: string) {
+  refreshSubscribers.forEach(callback => callback(token));
+  refreshSubscribers = [];
+}
+
 // HTTP Client with error handling
 class ApiClient {
   private baseURL: string;
@@ -46,7 +59,14 @@ class ApiClient {
           detail: `HTTP ${response.status}: ${response.statusText}`,
           status_code: response.status,
         }));
-        throw new Error(errorData.detail);
+        
+        // Create enhanced error with status code
+        const error: any = new Error(errorData.detail);
+        error.response = {
+          status: response.status,
+          data: errorData
+        };
+        throw error;
       }
 
       return await response.json();
@@ -161,17 +181,54 @@ export class AuthApiService {
   }
 
   /**
-   * Refresh access token
+   * Refresh access token with queue to prevent race conditions
    */
   static async refreshToken(refreshToken: string): Promise<TokenResponse> {
+    // If already refreshing, wait for the current refresh to complete
+    if (isRefreshing) {
+      return new Promise((resolve) => {
+        subscribeTokenRefresh((token: string) => {
+          // Get cached user info
+          const cachedUser = TokenManager.getUserInfo();
+          resolve({
+            access_token: token,
+            refresh_token: refreshToken,
+            expires_in: 3600,
+            token_type: 'bearer',
+            user: cachedUser || {} as any
+          });
+        });
+      });
+    }
+
+    isRefreshing = true;
+
     try {
       const response = await apiClient.post<TokenResponse>('/auth/refresh', {
         refresh_token: refreshToken,
       });
+      
+      // Store new tokens
+      TokenManager.storeTokens(response);
+      
+      // Store user info if present
+      if (response.user) {
+        TokenManager.storeUserInfo(response.user);
+      }
+      
+      // Notify all waiting requests
+      onTokenRefreshed(response.access_token);
+      
       return response;
     } catch (error) {
       console.error('Token refresh error:', error);
+      
+      // Clear tokens on refresh failure
+      TokenManager.clearTokens();
+      
       throw error;
+    } finally {
+      isRefreshing = false;
     }
   }
 
@@ -294,6 +351,7 @@ export class TokenManager {
   private static readonly ACCESS_TOKEN_KEY = 'access_token';
   private static readonly REFRESH_TOKEN_KEY = 'refresh_token';
   private static readonly TOKEN_EXPIRY_KEY = 'token_expiry';
+  private static readonly USER_INFO_KEY = 'user_info';
 
   /**
    * Store tokens in localStorage
@@ -307,6 +365,30 @@ export class TokenManager {
       localStorage.setItem(this.TOKEN_EXPIRY_KEY, expiryTime.toString());
     } catch (error) {
       console.error('Error storing tokens:', error);
+    }
+  }
+
+  /**
+   * Store user info in localStorage
+   */
+  static storeUserInfo(user: any): void {
+    try {
+      localStorage.setItem(this.USER_INFO_KEY, JSON.stringify(user));
+    } catch (error) {
+      console.error('Error storing user info:', error);
+    }
+  }
+
+  /**
+   * Get stored user info
+   */
+  static getUserInfo(): any | null {
+    try {
+      const userInfo = localStorage.getItem(this.USER_INFO_KEY);
+      return userInfo ? JSON.parse(userInfo) : null;
+    } catch (error) {
+      console.error('Error getting user info:', error);
+      return null;
     }
   }
 
@@ -357,6 +439,7 @@ export class TokenManager {
       localStorage.removeItem(this.ACCESS_TOKEN_KEY);
       localStorage.removeItem(this.REFRESH_TOKEN_KEY);
       localStorage.removeItem(this.TOKEN_EXPIRY_KEY);
+      localStorage.removeItem(this.USER_INFO_KEY);
     } catch (error) {
       console.error('Error clearing tokens:', error);
     }

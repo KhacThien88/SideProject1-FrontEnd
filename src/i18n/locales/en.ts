@@ -518,7 +518,36 @@ export const en: ContentTaxonomy = {
     googleSigningIn: 'Signing in with Google...',
     continueWithGoogle: 'Continue with Google',
     googleSignInSuccess: 'Google sign-in successful!',
-    logoutSuccess: 'Logged out successfully'
+    logoutSuccess: 'Logout successful',
+    roleSelection: {
+      title: 'Choose Your Role',
+      subtitle: 'Select how you want to use TalentFit AI',
+      pleaseSelectRole: 'Please select a role to continue',
+      registrationSuccess: 'Registration completed successfully!',
+      registrationFailed: 'Registration failed. Please try again.',
+      completing: 'Completing registration...',
+      continueButton: 'Continue',
+      backToLogin: 'Back to Login',
+      helpText: 'You can change your role later in account settings',
+      candidate: {
+        title: 'Job Seeker',
+        description: 'Looking for your next career opportunity',
+        features: {
+          uploadCV: 'Upload and analyze your CV',
+          jobMatching: 'Get personalized job recommendations',
+          applyJobs: 'Apply to jobs with one click'
+        }
+      },
+      recruiter: {
+        title: 'Recruiter',
+        description: 'Hiring talent for your organization',
+        features: {
+          postJobs: 'Post job openings',
+          searchCandidates: 'Search and filter candidates',
+          manageApplications: 'Manage applications and interviews'
+        }
+      }
+    }
   },
 
   // Job Matching & CV Analysis
@@ -805,6 +834,23 @@ export const en: ContentTaxonomy = {
     open: 'Open',
     viewMore: 'View More',
     viewLess: 'View Less',
+    backToResults: 'Back to Results',
+    apply: 'Apply',
+    share: 'Share',
+    export: 'Export',
+    refresh: 'Refresh',
+    clearAll: 'Clear All',
+    clearAllFilters: 'Clear All Filters',
+    viewDetails: 'View Details',
+    loadMore: 'Load More',
+    sortBy: 'Sort by',
+    filterBy: 'Filter by',
+    viewMode: 'View Mode',
+    activeFilters: 'Active Filters',
+    noResults: 'No Results',
+    noDataAvailable: 'No data available',
+    loadingData: 'Loading data...',
+    errorLoadingData: 'Error loading data',
     toast: {
       // General
       linkCopied: 'Link copied to clipboard',
@@ -823,6 +869,11 @@ export const en: ContentTaxonomy = {
       networkErrorSubtitle: 'Please check your connection and try again',
       genericError: 'An unexpected error occurred',
       genericErrorSubtitle: 'Please try again later',
+    },
+    loadingScreen: {
+      loading: 'Loading...',
+      redirecting: 'Redirecting...',
+      authenticating: 'Authenticating...',
     }
   },
 
@@ -941,14 +992,6 @@ export const en: ContentTaxonomy = {
         title: 'Saved Jobs',
         subtitle: 'Your Collection',
         description: 'View and manage your saved job opportunities'
-      }
-    },
-    savedJobs: {
-      subscription: 'Saved Jobs',
-      header: {
-        title: 'Saved',
-        subtitle: 'Jobs',
-        description: 'Review and manage the roles you bookmarked for later.'
       }
     },
     jobPostings: {
@@ -1151,40 +1194,7 @@ export const en: ContentTaxonomy = {
     }
   },
 
-  common: {
-    loading: 'Loading...',
-    error: 'Error',
-    success: 'Success',
-    cancel: 'Cancel',
-    confirm: 'Confirm',
-    save: 'Save',
-    edit: 'Edit',
-    delete: 'Delete',
-    back: 'Back',
-    next: 'Next',
-    previous: 'Previous',
-    close: 'Close',
-    open: 'Open',
-    viewMore: 'View More',
-    viewLess: 'View Less',
-    backToResults: 'Back to Results',
-    apply: 'Apply',
-    share: 'Share',
-    export: 'Export',
-    refresh: 'Refresh',
-    clearAll: 'Clear All',
-    clearAllFilters: 'Clear All Filters',
-    viewDetails: 'View Details',
-    loadMore: 'Load More',
-    sortBy: 'Sort by',
-    filterBy: 'Filter by',
-    viewMode: 'View Mode',
-    activeFilters: 'Active Filters',
-    noResults: 'No Results',
-    noDataAvailable: 'No data available',
-    loadingData: 'Loading data...',
-    errorLoadingData: 'Error loading data'
-  },
+
 
   jobPostings: {
     title: 'Job Postings',
@@ -1358,5 +1368,50 @@ export const en: ContentTaxonomy = {
       removeFailed: 'Failed to update saved jobs',
       shareFailed: 'Unable to share this job',
     },
+  },
+
+  // Users Management
+  users: {
+    title: 'Users Management',
+    subtitle: 'Manage all users and their roles',
+    addUser: 'Add User',
+    editUser: 'Edit User',
+    stats: {
+      totalUsers: 'Total Users',
+      candidates: 'Candidates',
+      recruiters: 'Recruiters',
+      admins: 'Admins'
+    },
+    search: {
+      placeholder: 'Search by name or email...'
+    },
+    filters: {
+      allRoles: 'All Roles',
+      allStatus: 'All Status',
+      filterButton: 'Filter'
+    },
+    table: {
+      user: 'User',
+      role: 'Role',
+      status: 'Status',
+      joined: 'Joined',
+      lastLogin: 'Last Login',
+      actions: 'Actions',
+      never: 'Never'
+    },
+    roles: {
+      admin: 'Admin',
+      recruiter: 'Recruiter (HR)',
+      candidate: 'Candidate'
+    },
+    status: {
+      active: 'Active',
+      inactive: 'Inactive',
+      suspended: 'Suspended'
+    },
+    empty: {
+      title: 'No users found',
+      description: 'Try adjusting your search or filters'
+    }
   }
 };

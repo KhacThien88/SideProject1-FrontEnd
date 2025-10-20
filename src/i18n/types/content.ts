@@ -875,6 +875,23 @@ export interface ContentTaxonomy {
     noDataAvailable: string;
     loadingData: string;
     errorLoadingData: string;
+    toast: {
+      linkCopied: string;
+      jobSaved: string;
+      jobSavedSubtitle: string;
+      filesAddedSuccess: string;
+      noFilesReady: string;
+      analysisSuccess: string;
+      networkError: string;
+      networkErrorSubtitle: string;
+      genericError: string;
+      genericErrorSubtitle: string;
+    };
+    loadingScreen: {
+      loading: string;
+      redirecting: string;
+      authenticating: string;
+    };
   };
 
   // Password Requirements component

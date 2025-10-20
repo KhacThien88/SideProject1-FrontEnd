@@ -79,25 +79,6 @@ export const DashboardSidebar: React.FC = () => {
       color: 'accent',
       roles: ['candidate'] // Candidate: Các job đã save
     },
-    {
-      key: 'candidate-analytics',
-      label: t.dashboard.sidebar.navigation.analytics,
-      icon: BarChart3,
-      href: '/dashboard/analytics',
-      isActive: currentPath === '/dashboard/analytics',
-      color: 'primary',
-      roles: ['candidate'] // Candidate: Phân tích CV, công việc, đề xuất cải thiện
-    },
-    {
-      key: 'candidate-settings',
-      label: t.dashboard.sidebar.navigation.settings,
-      icon: Settings,
-      href: '/dashboard/settings',
-      isActive: currentPath === '/dashboard/settings',
-      color: 'neutral',
-      roles: ['candidate'] // Candidate: Cài đặt
-    },
-
     // ============ RECRUITER (HR) NAVIGATION ============
     {
       key: 'job-postings',
@@ -118,24 +99,6 @@ export const DashboardSidebar: React.FC = () => {
       color: 'accent',
       roles: ['recruiter'] // HR: Ứng viên đã save
     },
-    {
-      key: 'recruiter-analytics',
-      label: t.dashboard.sidebar.navigation.analytics,
-      icon: BarChart3,
-      href: '/dashboard/analytics',
-      isActive: currentPath === '/dashboard/analytics',
-      color: 'primary',
-      roles: ['recruiter'] // HR: Phân tích lượng ứng viên, công việc đăng
-    },
-    {
-      key: 'recruiter-settings',
-      label: t.dashboard.sidebar.navigation.settings,
-      icon: Settings,
-      href: '/dashboard/settings',
-      isActive: currentPath === '/dashboard/settings',
-      color: 'neutral',
-      roles: ['recruiter'] // HR: Cài đặt
-    },
 
     // ============ ADMIN NAVIGATION ============
     {
@@ -147,23 +110,25 @@ export const DashboardSidebar: React.FC = () => {
       color: 'accent',
       roles: ['admin'] // Admin: Quản lý user theo role
     },
+
+    // ============ SHARED NAVIGATION (ALL ROLES) ============
     {
-      key: 'admin-analytics',
+      key: 'analytics',
       label: t.dashboard.sidebar.navigation.analytics,
       icon: BarChart3,
       href: '/dashboard/analytics',
       isActive: currentPath === '/dashboard/analytics',
       color: 'primary',
-      roles: ['admin'] // Admin: Phân tích về trang web
+      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles
     },
     {
-      key: 'admin-settings',
+      key: 'settings',
       label: t.dashboard.sidebar.navigation.settings,
       icon: Settings,
       href: '/dashboard/settings',
       isActive: currentPath === '/dashboard/settings',
       color: 'neutral',
-      roles: ['admin'] // Admin: Cài đặt
+      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles
     }
   ];
 

@@ -11,7 +11,7 @@ import {
   User,
   LogOut,
 } from 'lucide-react';
-
+import { createFocusEffect } from '../../utils/focusEffects';
 export const DashboardHeader: React.FC = () => {
   const { navigate } = useRouter();
   const { t } = useTranslation();
@@ -102,9 +102,9 @@ export const DashboardHeader: React.FC = () => {
               </button>
 
               {/* Enhanced Notifications */}
-              <button className="relative p-2.5 text-neutral-400 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-300">
+              <button className={`${createFocusEffect.glow('md', 'primary')} relative p-2.5 text-neutral-400 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-300`}>
                 <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-accent-500 to-secondary-500 text-white text-xs rounded-full flex items-center justify-center font-semibold shadow-lg">3</span>
+                <span className="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-accent-500 to-secondary-500 text-white text-xs rounded-full flex items-center justify-center font-semibold shadow-lg">3</span>
               </button>
 
               {/* Enhanced User Menu - Responsive */}

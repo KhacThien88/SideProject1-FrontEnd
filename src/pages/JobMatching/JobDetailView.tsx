@@ -209,7 +209,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-between gap-3 mt-6">
+            <div className="flex items-center justify-between gap-3 mt-6 mb-2">
                 <div className="flex items-center gap-4">
               <Button
                 variant="primary"
@@ -275,7 +275,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               </nav>
             </div>
 
-            <div className="p-6">
+            <div className="p-6 mb-4">
               {activeTab === 'overview' && (
                 <div className="space-y-6">
                   <div>
@@ -436,7 +436,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               </div>
             </div>
             
-            <div className="mt-4 p-3 bg-neutral-50 rounded-lg">
+            <div className="mt-4 p-3 bg-neutral-50 rounded-lg mb-4">
               <div className="text-xs font-medium text-neutral-700 mb-1">{getContent('jobs.details.aiAnalysis')}</div>
               <div className="text-xs text-neutral-600">{overallAnalysis}</div>
             </div>
@@ -445,7 +445,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
           {/* Quick Actions */}
           <Card className="p-6">
             <div className="text-lg font-semibold text-neutral-900 mb-4">{getContent('jobs.details.quickActions')}</div>
-            <div className="space-y-3">
+            <div className="space-y-3 mb-4">
               <Button variant="primary" className="w-full justify-start text-sm" onClick={handleApply}>
                 <ExternalLink className="w-4 h-4 mr-2" />
                 {getContent('jobs.details.applyNow')}
@@ -468,7 +468,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
           {/* Application Tips */}
           <Card className="p-6">
             <div className="text-lg font-semibold text-neutral-900 mb-4">{getContent('jobs.details.applicationTips')}</div>
-            <div className="space-y-3">
+            <div className="space-y-3 mb-2">
               <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-success-600 mt-0.5 flex-shrink-0" />
                 <div className="text-sm">

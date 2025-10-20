@@ -31,7 +31,7 @@ export const AnalysisProgressSection: React.FC<AnalysisProgressSectionProps> = (
         </Badge>
       </div>
       
-      <div className="space-y-4">
+      <div className="space-y-4 mb-4">
         <div>
           <div className="flex justify-between text-sm mb-2">
             <span className="text-neutral-600">

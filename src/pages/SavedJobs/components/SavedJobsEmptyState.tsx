@@ -15,7 +15,7 @@ export const SavedJobsEmptyState: React.FC<SavedJobsEmptyStateProps> = ({
   getContent,
 }) => {
   return (
-    <Card className="p-12 text-center">
+    <Card className="p-12 text-center mx-6">
       <div className="w-20 h-20 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
         <Briefcase className="w-10 h-10 text-primary-600" />
       </div>

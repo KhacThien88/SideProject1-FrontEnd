@@ -35,7 +35,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
   return (
     <Card className="p-8">
       <div 
-        className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 ${
+        className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 mb-6 ${
           dragActive 
             ? 'border-primary-400 bg-primary-50/50 shadow-brand-lg scale-[1.02]' 
             : 'border-neutral-300 hover:border-primary-300 hover:bg-primary-50/20 hover:shadow-brand'
@@ -45,7 +45,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
         onDragOver={onDrag}
         onDrop={onDrop}
       >
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex justify-center">
             <label htmlFor="resume-upload">
               <div className={`w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
@@ -57,7 +57,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
           </div>
           
           <div>
-            <div className="text-xl font-semibold text-neutral-900 mb-2">
+            <div className="text-xl font-semibold text-neutral-900">
               {getContent('cvAnalysis.upload.title')}
             </div>
             <p className="text-neutral-600 mb-2">
@@ -82,7 +82,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
           <Button
             variant="primary"
             size="lg"
-            className="inline-flex items-center px-6 py-3 cursor-pointer bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
+            className="inline-flex items-center mb-4 px-6 py-3 cursor-pointer bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
             onClick={handleChooseFiles}
             disabled={uploadedFilesCount >= CV_ANALYSIS_CONFIG.MAX_FILES}
           >

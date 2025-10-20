@@ -1,6 +1,7 @@
 import React from 'react';
 import type { PrivacySettings } from '../../../types/settings';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { createFocusEffect } from '../../../utils/focusEffects';
 
 interface PrivacyTabProps {
   settings: PrivacySettings;
@@ -11,7 +12,7 @@ export const PrivacyTab: React.FC<PrivacyTabProps> = ({ settings, onUpdate }) =>
   const { getContent } = useTranslation();
   
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 mb-4">
       {/* Data Retention Period */}
       <div>
         <div className="font-semibold text-neutral-900 mb-2">{getContent('settings.privacy.dataRetention')}</div>
@@ -21,7 +22,7 @@ export const PrivacyTab: React.FC<PrivacyTabProps> = ({ settings, onUpdate }) =>
         <select
           value={settings.dataRetentionPeriod}
           onChange={(e) => onUpdate({ dataRetentionPeriod: e.target.value as PrivacySettings['dataRetentionPeriod'] })}
-          className="w-full px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+          className={`w-full px-4 py-2.5 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}
         >
           <option value="30">{getContent('settings.privacy.days30')}</option>
           <option value="60">{getContent('settings.privacy.days60')}</option>
@@ -45,7 +46,7 @@ export const PrivacyTab: React.FC<PrivacyTabProps> = ({ settings, onUpdate }) =>
             type="checkbox"
             checked={settings.shareAnonymousAnalytics}
             onChange={(e) => onUpdate({ shareAnonymousAnalytics: e.target.checked })}
-            className="sr-only peer"
+            className={`sr-only peer ${createFocusEffect.input('md', 'primary')}`}
           />
           <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-primary-500 peer-checked:to-secondary-500"></div>
         </label>
@@ -65,7 +66,7 @@ export const PrivacyTab: React.FC<PrivacyTabProps> = ({ settings, onUpdate }) =>
             type="checkbox"
             checked={settings.autoDeleteOldData}
             onChange={(e) => onUpdate({ autoDeleteOldData: e.target.checked })}
-            className="sr-only peer"
+            className={`sr-only peer ${createFocusEffect.input('md', 'primary')}`}
           />
           <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-primary-500 peer-checked:to-secondary-500"></div>
         </label>

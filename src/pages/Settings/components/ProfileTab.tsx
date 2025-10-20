@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import type { UserProfile } from '../../../types/settings';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { createFocusEffect } from '../../../utils/focusEffects';
 
 interface ProfileTabProps {
   profile: UserProfile;
@@ -36,7 +37,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mb-4">
       {/* Profile Information */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -47,7 +48,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
             type="text"
             value={formData.fullName}
             onChange={(e) => handleChange('fullName', e.target.value)}
-            className="w-full px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            className={`w-full px-4 py-2.5 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}
           />
         </div>
 
@@ -59,7 +60,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
             type="email"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
-            className="w-full px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            className={`w-full px-4 py-2.5 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}
           />
         </div>
 
@@ -71,7 +72,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
             type="text"
             value={formData.company}
             onChange={(e) => handleChange('company', e.target.value)}
-            className="w-full px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            className={`w-full px-4 py-2.5 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}
           />
         </div>
 
@@ -79,24 +80,18 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
           <label className="block text-sm font-medium text-neutral-700 mb-2">
             {getContent('settings.profile.role')}
           </label>
-          <select
-            value={formData.role}
-            onChange={(e) => handleChange('role', e.target.value)}
-            className="w-full px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-          >
-            <option value="HR Manager">{getContent('settings.profile.roles.hrManager')}</option>
-            <option value="Recruiter">{getContent('settings.profile.roles.recruiter')}</option>
-            <option value="Talent Acquisition">{getContent('settings.profile.roles.talentAcquisition')}</option>
-            <option value="Admin">{getContent('settings.profile.roles.admin')}</option>
-          </select>
+          <div className={`w-full px-4 py-2.5 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}>
+            {formData.role}
+          </div>
         </div>
+
       </div>
 
       {/* Change Password Section */}
-      <div className="pt-6 border-t border-neutral-200">
+      <div className="pt-4 border-t border-neutral-200">
         <button
           onClick={() => setShowPasswordChange(!showPasswordChange)}
-          className="text-primary-600 hover:text-primary-700 font-medium text-sm"
+          className={`text-primary-600 hover:text-primary-700 font-medium text-sm ${createFocusEffect.input('sm', 'primary')}`}
         >
           {showPasswordChange ? getContent('settings.profile.cancelPasswordChange') : getContent('settings.profile.changePassword')}
         </button>
@@ -111,13 +106,13 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
                 type={showPassword.current ? 'text' : 'password'}
                 value={passwords.current}
                 onChange={(e) => handlePasswordChange('current', e.target.value)}
-                className="w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className={`w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}
                 placeholder={getContent('settings.profile.currentPassword')}
               />
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility('current')}
-                className="absolute right-4 top-10 text-neutral-500 hover:text-neutral-700"
+                className={`absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 ${createFocusEffect.input('sm', 'primary')}`}
               >
                 {showPassword.current ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
@@ -131,13 +126,13 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
                 type={showPassword.new ? 'text' : 'password'}
                 value={passwords.new}
                 onChange={(e) => handlePasswordChange('new', e.target.value)}
-                className="w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className={`w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}
                 placeholder={getContent('settings.profile.newPassword')}
               />
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility('new')}
-                className="absolute right-4 top-10 text-neutral-500 hover:text-neutral-700"
+                className={`absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 ${createFocusEffect.input('sm', 'primary')}`}
               >
                 {showPassword.new ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
@@ -151,13 +146,13 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => 
                 type={showPassword.confirm ? 'text' : 'password'}
                 value={passwords.confirm}
                 onChange={(e) => handlePasswordChange('confirm', e.target.value)}
-                className="w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className={`w-full px-4 py-2.5 pr-12 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}
                 placeholder={getContent('settings.profile.confirmPassword')}
               />
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility('confirm')}
-                className="absolute right-4 top-10 text-neutral-500 hover:text-neutral-700"
+                className={`absolute right-4 top-10 text-neutral-500 hover:text-neutral-700 ${createFocusEffect.input('sm', 'primary')}`}
               >
                 {showPassword.confirm ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>

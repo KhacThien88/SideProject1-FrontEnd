@@ -1,6 +1,7 @@
 import React from 'react';
 import type { AppearanceSettings } from '../../../types/settings';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { createFocusEffect } from '../../../utils/focusEffects';
 
 interface AppearanceTabProps {
   settings: AppearanceSettings;
@@ -20,7 +21,7 @@ export const AppearanceTab: React.FC<AppearanceTabProps> = ({ settings, onUpdate
         <select
           value={settings.language}
           onChange={(e) => onUpdate({ language: e.target.value as 'en' | 'vi' })}
-          className="w-full px-4 py-2.5 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+          className={`w-full px-4 py-2.5 mb-4 border border-neutral-300 rounded-xl transition-all ${createFocusEffect.input('md', 'primary')}`}
         >
           <option value="en">{currentLanguage === 'en' ? 'English' : 'Tiếng Anh'}</option>
           <option value="vi">{currentLanguage === 'en' ? 'Vietnamese' : 'Tiếng Việt'}</option>

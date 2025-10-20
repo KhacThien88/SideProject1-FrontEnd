@@ -36,7 +36,7 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
 
   return (
     <Card className="p-8">
-      <div className="mt-8">
+      <div className="my-4">
         <div className="flex items-center justify-between mb-4">
           <div className="text-lg font-semibold text-neutral-900">
             {getContent('cvAnalysis.fileManagement.selectedFiles')} ({uploadedFiles.length}/{CV_ANALYSIS_CONFIG.MAX_FILES})

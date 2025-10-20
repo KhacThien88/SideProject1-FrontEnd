@@ -417,7 +417,7 @@ export const JobRecommendationFilters: React.FC<JobRecommendationFiltersProps> =
               })}
             </div>
             {detectedSkills.length > 0 && (
-              <div className="text-xs text-success-600 mt-2">
+              <div className="text-xs text-success-600 my-2">
                 <Star className="w-3 h-3 inline mr-1" />
                 {getContent('jobs.filters.skillsWithStar')}
               </div>

@@ -69,7 +69,7 @@ export const JobCard: React.FC<JobCardProps> = ({
         )}
       >
       {/* Header with Match Score */}
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex items-start justify-between mb-2">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-2">
             <div className="text-lg font-semibold text-neutral-900 truncate">
@@ -185,14 +185,14 @@ export const JobCard: React.FC<JobCardProps> = ({
         </div>
         
         {skillsMatch.matched.length > 0 && (
-          <div className="text-xs text-success-600 mt-1">
+          <div className="text-xs text-success-600 mt-2">
             {skillsMatch.matched.length} {getContent('jobs.card.of')} {job.skills.length} {getContent('jobs.card.skillsMatched')} ({skillsMatch.percentage}%)
           </div>
         )}
       </div>
 
       {/* Action Buttons */}
-      <div className="flex items-center justify-between pt-4 border-t border-neutral-100">
+      <div className="flex items-center justify-between pt-4 border-t border-neutral-100 mb-4">
         <div className="flex items-center gap-2">
           <Button
             variant="primary"

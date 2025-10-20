@@ -31,7 +31,10 @@ export const DashboardSidebar: React.FC = () => {
   const { navigate } = useRouter();
   const { t, language } = useTranslation();
   const { user } = useAuth();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+  const saved = localStorage.getItem('sidebarCollapsed');
+    return saved === 'true';
+  });
 
   // Get current path to determine active item
   const currentPath = window.location.pathname;
@@ -143,7 +146,10 @@ export const DashboardSidebar: React.FC = () => {
   };
 
   const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
+    setIsCollapsed(prev => {
+      localStorage.setItem('sidebarCollapsed', String(!prev));
+      return !prev;
+    });
   };
 
   return (
@@ -151,21 +157,21 @@ export const DashboardSidebar: React.FC = () => {
       {/* Sidebar Spacer - giữ chỗ để main content không bị shift */}
       <div className={cn(
         'transition-all duration-500 ease-out flex-shrink-0',
-        isCollapsed ? 'w-16' : 'w-64'
+        isCollapsed ? 'w-16' : 'w-60'
       )} />
 
       {/* Main Sidebar - luôn fixed để tránh layout shift */}
       <div 
         className={cn(
           'fixed left-0 top-0 bg-gradient-to-b from-primary-50 via-white/95 to-secondary-50 backdrop-blur-xl border-r border-neutral-200/60 shadow-soft flex flex-col min-h-screen transition-all duration-500 ease-out',
-          isCollapsed ? 'w-16' : 'w-64',
+          isCollapsed ? 'w-16' : 'w-60',
           'z-[40]'
         )}
       >
         {/* Enhanced Header */}
         <div className={cn(
           'border-b border-neutral-200/60',
-          isCollapsed ? 'p-3' : 'p-6'
+          isCollapsed ? 'p-3' : 'p-4'
         )}>
           <div className="flex items-center justify-between">
             {!isCollapsed ? (
@@ -211,7 +217,7 @@ export const DashboardSidebar: React.FC = () => {
       {/* Enhanced Navigation */}
       <nav className={cn(
         'flex-1 space-y-2 overflow-y-auto',
-        isCollapsed ? 'p-2' : 'p-4'
+        isCollapsed ? 'p-1' : 'p-2'
       )}>
         <div className="space-y-1">
           {sidebarItems.map((item, index) => {
@@ -225,7 +231,7 @@ export const DashboardSidebar: React.FC = () => {
                   'focus-ring',
                   isCollapsed
                     ? 'justify-center px-2 py-3 rounded-xl'
-                    : 'space-x-4 px-4 py-3 rounded-2xl',
+                    : 'space-x-4 px-2 py-3 rounded-2xl',
                   item.isActive 
                     ? 'bg-brand-gradient-primary text-white shadow-brand-md' 
                     : 'text-neutral-600 hover:bg-primary-50/60 hover:text-primary-700'

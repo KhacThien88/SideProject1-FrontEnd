@@ -21,26 +21,24 @@ import type { SettingsData, SettingsTab } from '../../types/settings';
 export const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
   const [settings, setSettings] = useState<SettingsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // Changed to false - render UI immediately
   const [isSaving, setIsSaving] = useState(false);
   const { showSuccessToast, showErrorToast } = useToast();
   const { changeLanguage, getContent } = useTranslation();
 
-  // Load settings on mount
+  // Load settings on mount - non-blocking
   useEffect(() => {
     loadSettings();
   }, []);
 
   const loadSettings = async () => {
     try {
-      setIsLoading(true);
+      // Don't block UI rendering
       const data = await settingsService.getSettings();
       setSettings(data);
     } catch (error) {
       showErrorToast(getContent('settings.loadError'));
       console.error('Error loading settings:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -165,7 +163,7 @@ export const Settings: React.FC = () => {
     }
   };
 
-  if (isLoading || !settings) {
+  if (isLoading) {
     return (
       <Layout className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">
         <div className="flex min-h-screen">
@@ -174,7 +172,6 @@ export const Settings: React.FC = () => {
             <LoadingSpinner size="lg" />
           </div>
         </div>
-        
       </Layout>
     );
   }
@@ -239,7 +236,7 @@ export const Settings: React.FC = () => {
 
                       {/* Tab Content */}
                       <div>
-                        {activeTab === 'profile' && (
+                        {activeTab === 'profile' && settings && (
                           <ProfileTab
                             profile={settings.profile}
                             onUpdate={async (updates) => {
@@ -248,7 +245,7 @@ export const Settings: React.FC = () => {
                           />
                         )}
 
-                        {activeTab === 'notifications' && (
+                        {activeTab === 'notifications' && settings && (
                           <NotificationsTab
                             settings={settings.notifications}
                             onUpdate={(updates) => {
@@ -257,7 +254,7 @@ export const Settings: React.FC = () => {
                           />
                         )}
 
-                        {activeTab === 'privacy' && (
+                        {activeTab === 'privacy' && settings && (
                           <PrivacyTab
                             settings={settings.privacy}
                             onUpdate={(updates) => {
@@ -275,13 +272,37 @@ export const Settings: React.FC = () => {
                           />
                         )}
 
-                        {activeTab === 'appearance' && (
+                        {activeTab === 'appearance' && settings && (
                           <AppearanceTab
                             settings={settings.appearance}
                             onUpdate={(updates) => {
                               setSettings(prev => prev ? { ...prev, appearance: { ...prev.appearance, ...updates } } : null);
                             }}
                           />
+                        )}
+                        
+                        {/* Loading skeleton for when data is being fetched */}
+                        {!settings && activeTab !== 'data' && (
+                          <div className="space-y-6 animate-pulse">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div className="space-y-2">
+                                <div className="h-4 bg-neutral-200 rounded w-20"></div>
+                                <div className="h-10 bg-neutral-200 rounded"></div>
+                              </div>
+                              <div className="space-y-2">
+                                <div className="h-4 bg-neutral-200 rounded w-20"></div>
+                                <div className="h-10 bg-neutral-200 rounded"></div>
+                              </div>
+                              <div className="space-y-2">
+                                <div className="h-4 bg-neutral-200 rounded w-20"></div>
+                                <div className="h-10 bg-neutral-200 rounded"></div>
+                              </div>
+                              <div className="space-y-2">
+                                <div className="h-4 bg-neutral-200 rounded w-20"></div>
+                                <div className="h-10 bg-neutral-200 rounded"></div>
+                              </div>
+                            </div>
+                          </div>
                         )}
                       </div>
                     </Card>

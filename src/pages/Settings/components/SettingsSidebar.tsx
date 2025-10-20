@@ -31,7 +31,7 @@ export const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ activeTab, onT
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`
-                w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+                w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-xl transition-all duration-200
                 ${isActive 
                   ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-md' 
                   : 'text-neutral-700 hover:bg-neutral-100/80'

@@ -168,7 +168,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
     <div className="space-y-8">
       {/* CV Analysis Summary */}
       <Card className="p-6">
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex items-start justify-between mb-4">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
               <FileText className="w-6 h-6 text-white" />
@@ -243,7 +243,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
         </div>
 
         {/* Contact Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-neutral-50 rounded-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-neutral-50 rounded-lg mb-4">
           <div>
             <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.candidate')}</div>
             <div className="text-neutral-900">{primaryCV.contactInfo.name}</div>

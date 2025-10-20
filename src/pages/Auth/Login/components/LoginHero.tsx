@@ -120,7 +120,7 @@ export const LoginHero: React.FC = () => {
             </ViewTransition>
             
             {/* Progress indicators */}
-            <div className="flex space-x-2 mt-4 transition-opacity duration-300">
+            <div className="flex space-x-2 mt-4 transition-opacity duration-300 mb-4">
               {landingSections.map((_, index) => (
                 <div
                   key={index}

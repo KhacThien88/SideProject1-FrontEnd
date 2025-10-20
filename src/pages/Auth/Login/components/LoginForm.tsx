@@ -65,20 +65,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     });
   };
 
-  // Initialize and render the official Google button (user must click it to open popup)
-  const handleGoogleSignIn = async () => {
+  // Initialize Google Sign-In library and render hidden official button
+  const initializeGoogleSignIn = async () => {
     try {
-      setIsLoading(true);
-      
       // Wait for GSI script readiness
       await waitForGsiReady(7000);
 
-      // Initialize Google Sign In (popup). FedCM disabled for local dev
+      // Initialize Google Sign In with default settings for full account picker
       console.log('[Google Sign-In:init] client_id, origin:', import.meta.env.VITE_GOOGLE_CLIENT_ID, window.location.origin);
       window.google.accounts.id.initialize({
         client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || 'your-google-client-id',
-        ux_mode: 'popup',
-        use_fedcm_for_prompt: false, // force pure popup to avoid FedCM/CORS issues during local dev
         callback: async (response: any) => {
           try {
             const tokenResponse = await AuthApiService.googleAuth(response.credential);
@@ -88,6 +84,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               expires_in: tokenResponse.expires_in,
             });
             showSuccessToast(getContent('auth.login.toast.loginSuccess'));
+            // Navigate to dashboard after successful Google login
+            setTimeout(() => navigate('/dashboard'), 500);
           } catch (error: any) {
             console.error('Google login error:', error);
             // If backend requires role selection for new Google users, redirect to role selection page
@@ -120,30 +118,37 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         }
       });
 
-      // Render button into visible container; user click triggers popup
+      // Render hidden Google button for proper account picker UI
       const parent = googleBtnContainerRef.current;
-      if (!parent) {
-        throw new Error('Google button container not found');
+      if (parent) {
+        parent.innerHTML = '';
+        window.google.accounts.id.renderButton(parent, {
+          type: 'standard',
+          theme: 'outline',
+          size: 'large',
+          text: 'signin_with',
+        });
       }
-      // Clear previous render if any
-      parent.innerHTML = '';
-      // Calculate a balanced width for the Google button
-      const computedWidth = Math.min(360, Math.max(240, parent.clientWidth || 320));
-      window.google.accounts.id.renderButton(parent, {
-        type: 'standard',
-        theme: 'outline',
-        size: 'large',
-        text: 'signin_with',
-        shape: 'pill',
-        logo_alignment: 'left',
-        width: computedWidth,
-      });
+
       googleButtonRenderedRef.current = true;
       setIsLoading(false);
     } catch (error: any) {
-      console.error('Google Sign In error:', error);
+      console.error('Google Sign In initialization error:', error);
       showErrorToast(error.message || getContent('auth.login.toast.loginError'));
       setIsLoading(false);
+    }
+  };
+
+  // Handle custom button click - triggers the hidden Google button
+  const handleGoogleSignIn = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Click the hidden Google button to trigger full account picker
+    const googleBtn = googleBtnContainerRef.current?.querySelector('div[role="button"]') as HTMLElement;
+    if (googleBtn) {
+      googleBtn.click();
+      // Remove focus from custom button to prevent color loss after popup closes
+      (e.currentTarget as HTMLButtonElement).blur();
+    } else {
+      showErrorToast('Google Sign-In not ready');
     }
   };
 
@@ -151,7 +156,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   useEffect(() => {
     (async () => {
       try {
-        await handleGoogleSignIn();
+        await initializeGoogleSignIn();
       } catch {
         // ignore, handled in handler
       }
@@ -209,10 +214,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       if (onSubmit) {
         await onSubmit(formData.email, formData.password, formData.rememberMe);
         showSuccessToast(getContent('auth.login.toast.loginSuccess'));
+        // Navigate to dashboard after successful login
+        setTimeout(() => navigate('/dashboard'), 500);
       } else {
         // Use AuthContext for real API call
         await login(formData.email, formData.password);
         showSuccessToast(getContent('auth.login.toast.loginSuccess'));
+        // Navigate to dashboard after successful login
+        setTimeout(() => navigate('/dashboard'), 500);
       }
     } catch (err: any) {
       console.error('Login error:', err);
@@ -355,7 +364,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               className="h-4 w-4 text-primary-600 border-neutral-300 rounded focus:outline-none"
               disabled={isLoadingAny}
             />
-            <label htmlFor="remember-me" className="ml-2 text-sm text-neutral-700">
+            <label htmlFor="remember-me" className="ml-2 text-sm font-semibold text-neutral-700">
               {getContent('auth.login.rememberMe')}
             </label>
           </div>
@@ -379,7 +388,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             disabled={isLoadingAny}
             className={`w-full bg-gradient-to-r from-primary-100/95 to-secondary-50/95 hover:from-primary-100/90 hover:to-secondary-100/80 rounded-2xl p-3 border border-neutral-200/70 hover:border-primary-200/60 shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${createFocusEffect.input('md', 'primary')}`}
           >
-            <span className="font-medium text-primary-800">
+            <span className="font-semibold text-sm text-primary-700 hover:text-primary-800 transition-colors duration-200">
               {isLoadingAny ? (
                 <div className="flex items-center justify-center">
                   <LoadingSpinner size="sm" variant="neutral" className="mr-2" />
@@ -393,7 +402,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         </div>
 
         {/* Divider */}
-        <div className="relative">
+        <div className="relative mt-4 mx-4">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-neutral-300"></div>
           </div>
@@ -404,18 +413,38 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           </div>
         </div>
 
-        {/* Google Login Official Button (rendered by GIS) */}
+        {/* Custom Google Sign-In Button */}
         <div className="w-full flex items-center justify-center">
-          <div
-            ref={googleBtnContainerRef}
-            className="flex items-center justify-center"
-            style={{ width: '100%', maxWidth: 380 }}
-          />
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={isLoadingAny}
+            className={`w-full max-w-[380px] flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-primary-100/95 to-secondary-50/95 hover:from-primary-100/90 hover:to-secondary-100/80 rounded-2xl p-3 border border-neutral-200/70 hover:border-primary-200/60 shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${createFocusEffect.input('md', 'primary')}`}
+          >
+            {/* Google Logo SVG */}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.6 10.227c0-.709-.064-1.39-.182-2.045H10v3.868h5.382a4.6 4.6 0 01-1.996 3.018v2.51h3.232c1.891-1.742 2.982-4.305 2.982-7.35z" fill="#4285F4"/>
+              <path d="M10 20c2.7 0 4.964-.895 6.618-2.423l-3.232-2.509c-.895.6-2.04.955-3.386.955-2.605 0-4.81-1.76-5.595-4.123H1.064v2.59A9.996 9.996 0 0010 20z" fill="#34A853"/>
+              <path d="M4.405 11.9a6.015 6.015 0 010-3.8V5.51H1.064a9.996 9.996 0 000 8.98L4.405 11.9z" fill="#FBBC05"/>
+              <path d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0 6.09 0 2.71 2.24 1.064 5.51l3.34 2.59C5.192 5.736 7.396 3.977 10 3.977z" fill="#EA4335"/>
+            </svg>
+
+            <span className="text-sm font-semibold text-primary-700 group-hover:text-primary-800 transition-colors duration-200">
+              {isLoadingAny ? getContent('auth.login.loggingIn') : getContent('auth.login.googleLogin')}
+            </span>
+          </button>
         </div>
+
+        {/* Hidden Google Button Container - triggers full account picker */}
+        <div 
+          ref={googleBtnContainerRef}
+          className="hidden"
+          aria-hidden="true"
+        />
       </form>
 
       {/* Sign Up Link */}
-      <div className="text-center mt-8">
+      <div className="text-center mt-4 mb-4">
         <div className="text-sm text-neutral-600">
           {getContent('auth.login.noAccount')}{' '}
           <a 

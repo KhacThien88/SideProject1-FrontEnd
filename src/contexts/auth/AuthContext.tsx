@@ -333,21 +333,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  // Logout function
+  // Logout function - Optimized for fast logout
   const logout = async (): Promise<void> => {
-    dispatch({ type: 'AUTH_START' });
+    const accessToken = TokenManager.getAccessToken();
     
-    try {
-      const accessToken = TokenManager.getAccessToken();
-      if (accessToken) {
-        await AuthApiService.logout(accessToken);
-      }
-    } catch (error) {
-      console.error('Logout error:', error);
-    } finally {
-      // Clear tokens regardless of API call success
-      TokenManager.clearTokens();
-      dispatch({ type: 'AUTH_LOGOUT' });
+    // Clear tokens and update state immediately for instant logout
+    TokenManager.clearTokens();
+    dispatch({ type: 'AUTH_LOGOUT' });
+    
+    // Call logout API in background (fire and forget)
+    // This invalidates the token on server but doesn't block the UI
+    if (accessToken) {
+      AuthApiService.logout(accessToken).catch((error) => {
+        console.error('Background logout API error:', error);
+        // Silently fail - user is already logged out locally
+      });
     }
   };
 

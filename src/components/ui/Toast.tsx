@@ -173,8 +173,8 @@ export const Toast: React.FC<ToastProps> = ({
           config.bgColor
         )}
       >
-        <div className="flex items-start space-x-3">
-          <div className="flex-shrink-0 mt-0.5">
+        <div className="flex items-center justify-start space-x-3 mb-2">
+          <div className="flex-shrink-0">
             <Icon className={cn('w-5 h-5', config.iconColor)} />
           </div>
           
@@ -183,7 +183,7 @@ export const Toast: React.FC<ToastProps> = ({
               {title}
             </div>
             {message && (
-              <div className={cn('mt-1 text-sm leading-4', config.messageColor)}>
+              <div className={cn('text-sm leading-4', config.messageColor)}>
                 {message}
               </div>
             )}

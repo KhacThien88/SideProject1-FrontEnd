@@ -303,7 +303,7 @@ export const en: ContentTaxonomy = {
       emailRequired: 'Email is required',
       emailInvalid: 'Invalid email format',
       password: 'Password',
-      passwordPlaceholder: 'Enter password (at least 8 characters, with uppercase, lowercase, numbers and special characters)',
+      passwordPlaceholder: 'Enter your password',
       passwordRequired: 'Password is required',
       passwordMinLength: 'Password must be at least 8 characters',
       rememberMe: 'Remember me',
@@ -618,12 +618,28 @@ export const en: ContentTaxonomy = {
         description: 'Manage candidate profiles and applications'
       }
     },
+    savedJobs: {
+      subscription: 'Saved Jobs',
+      header: {
+        title: 'Saved Jobs',
+        subtitle: 'Your Collection',
+        description: 'View and manage your saved job opportunities'
+      }
+    },
     jobPostings: {
       subscription: 'Job Postings',
       header: {
         title: 'Job Postings',
         subtitle: 'Management',
         description: 'Create and manage job listings'
+      }
+    },
+    users: {
+      subscription: 'Users',
+      header: {
+        title: 'Users Management',
+        subtitle: 'Administration',
+        description: 'Manage all users and their roles'
       }
     },
     analytics: {
@@ -651,7 +667,9 @@ export const en: ContentTaxonomy = {
         dashboard: 'Dashboard',
         cvAnalysis: 'CV Analysis',
         candidates: 'Candidates',
+        savedJobs: 'Saved Jobs',
         jobPostings: 'Job Postings',
+        users: 'Users',
         analytics: 'Analytics',
         settings: 'Settings'
       },
@@ -823,6 +841,51 @@ export const en: ContentTaxonomy = {
       lowercase: 'One lowercase letter',
       number: 'One number',
       special: 'One special character'
+    }
+  },
+
+  // Users Management
+  users: {
+    title: 'Users Management',
+    subtitle: 'Manage all users and their roles',
+    addUser: 'Add User',
+    editUser: 'Edit User',
+    stats: {
+      totalUsers: 'Total Users',
+      candidates: 'Candidates',
+      recruiters: 'Recruiters',
+      admins: 'Admins'
+    },
+    search: {
+      placeholder: 'Search by name or email...'
+    },
+    filters: {
+      allRoles: 'All Roles',
+      allStatus: 'All Status',
+      filterButton: 'Filter'
+    },
+    table: {
+      user: 'User',
+      role: 'Role',
+      status: 'Status',
+      joined: 'Joined',
+      lastLogin: 'Last Login',
+      actions: 'Actions',
+      never: 'Never'
+    },
+    roles: {
+      admin: 'Admin',
+      recruiter: 'Recruiter (HR)',
+      candidate: 'Candidate'
+    },
+    status: {
+      active: 'Active',
+      inactive: 'Inactive',
+      suspended: 'Suspended'
+    },
+    empty: {
+      title: 'No users found',
+      description: 'Try adjusting your search or filters'
     }
   }
 };

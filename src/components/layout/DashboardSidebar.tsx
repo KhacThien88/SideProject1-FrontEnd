@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRouter } from '../Router';
 import { Button } from '../ui/Button';
 import { 
@@ -6,6 +6,7 @@ import {
   FileSearch, 
   Users, 
   Briefcase, 
+  Bookmark,
   BarChart3, 
   Settings, 
   ChevronLeft,
@@ -13,6 +14,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useAuth } from '../../contexts/auth/AuthContext';
 
 interface SidebarItem {
   key: string;
@@ -22,11 +24,13 @@ interface SidebarItem {
   isActive?: boolean;
   badge?: string;
   color?: string;
+  roles: Array<'candidate' | 'recruiter' | 'admin'>; // Roles có quyền truy cập
 }
 
 export const DashboardSidebar: React.FC = () => {
   const { navigate } = useRouter();
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -38,20 +42,24 @@ export const DashboardSidebar: React.FC = () => {
     if (currentPath === '/dashboard') return t.pages.dashboard.subscription;
     if (currentPath === '/cv-analysis') return t.pages.cvAnalysis.subscription;
     if (currentPath === '/dashboard/candidates') return t.pages.candidates.subscription;
+    if (currentPath === '/dashboard/saved-jobs') return t.pages.savedJobs.subscription;
     if (currentPath === '/dashboard/job-postings') return t.pages.jobPostings.subscription;
     if (currentPath === '/dashboard/analytics') return t.pages.analytics.subscription;
     if (currentPath === '/dashboard/settings') return t.pages.settings.subscription;
     return t.pages.dashboard.subscription; // default
   };
 
-  const sidebarItems: SidebarItem[] = [
+  // Define all sidebar items with role-based access
+  const allSidebarItems: SidebarItem[] = [
+    // ============ CANDIDATE NAVIGATION ============
     {
       key: 'dashboard',
       label: t.dashboard.sidebar.navigation.dashboard,
       icon: LayoutDashboard,
       href: '/dashboard',
       isActive: currentPath === '/dashboard',
-      color: 'primary'
+      color: 'primary',
+      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles
     },
     {
       key: 'cv-analysis',
@@ -59,7 +67,46 @@ export const DashboardSidebar: React.FC = () => {
       icon: FileSearch,
       href: '/cv-analysis',
       isActive: currentPath === '/cv-analysis',
-      color: 'secondary'
+      color: 'secondary',
+      roles: ['candidate'] // Candidate: Phân tích CV
+    },
+    {
+      key: 'saved-jobs',
+      label: t.dashboard.sidebar.navigation.savedJobs,
+      icon: Bookmark,
+      href: '/dashboard/saved-jobs',
+      isActive: currentPath === '/dashboard/saved-jobs',
+      color: 'accent',
+      roles: ['candidate'] // Candidate: Các job đã save
+    },
+    {
+      key: 'candidate-analytics',
+      label: t.dashboard.sidebar.navigation.analytics,
+      icon: BarChart3,
+      href: '/dashboard/analytics',
+      isActive: currentPath === '/dashboard/analytics',
+      color: 'primary',
+      roles: ['candidate'] // Candidate: Phân tích CV, công việc, đề xuất cải thiện
+    },
+    {
+      key: 'candidate-settings',
+      label: t.dashboard.sidebar.navigation.settings,
+      icon: Settings,
+      href: '/dashboard/settings',
+      isActive: currentPath === '/dashboard/settings',
+      color: 'neutral',
+      roles: ['candidate'] // Candidate: Cài đặt
+    },
+
+    // ============ RECRUITER (HR) NAVIGATION ============
+    {
+      key: 'job-postings',
+      label: t.dashboard.sidebar.navigation.jobPostings,
+      icon: Briefcase,
+      href: '/dashboard/job-postings',
+      isActive: currentPath === '/dashboard/job-postings',
+      color: 'secondary',
+      roles: ['recruiter'] // HR: Đăng tin tuyển dụng
     },
     {
       key: 'candidates',
@@ -68,33 +115,63 @@ export const DashboardSidebar: React.FC = () => {
       href: '/dashboard/candidates',
       isActive: currentPath === '/dashboard/candidates',
       badge: '12',
-      color: 'accent'
+      color: 'accent',
+      roles: ['recruiter'] // HR: Ứng viên đã save
     },
     {
-      key: 'job-postings',
-      label: t.dashboard.sidebar.navigation.jobPostings,
-      icon: Briefcase,
-      href: '/dashboard/job-postings',
-      isActive: currentPath === '/dashboard/job-postings',
-      color: 'secondary'
-    },
-    {
-      key: 'analytics',
+      key: 'recruiter-analytics',
       label: t.dashboard.sidebar.navigation.analytics,
       icon: BarChart3,
       href: '/dashboard/analytics',
       isActive: currentPath === '/dashboard/analytics',
-      color: 'primary'
+      color: 'primary',
+      roles: ['recruiter'] // HR: Phân tích lượng ứng viên, công việc đăng
     },
     {
-      key: 'settings',
+      key: 'recruiter-settings',
       label: t.dashboard.sidebar.navigation.settings,
       icon: Settings,
       href: '/dashboard/settings',
       isActive: currentPath === '/dashboard/settings',
-      color: 'neutral'
+      color: 'neutral',
+      roles: ['recruiter'] // HR: Cài đặt
+    },
+
+    // ============ ADMIN NAVIGATION ============
+    {
+      key: 'users',
+      label: t.dashboard.sidebar.navigation.users,
+      icon: Users,
+      href: '/dashboard/users',
+      isActive: currentPath === '/dashboard/users',
+      color: 'accent',
+      roles: ['admin'] // Admin: Quản lý user theo role
+    },
+    {
+      key: 'admin-analytics',
+      label: t.dashboard.sidebar.navigation.analytics,
+      icon: BarChart3,
+      href: '/dashboard/analytics',
+      isActive: currentPath === '/dashboard/analytics',
+      color: 'primary',
+      roles: ['admin'] // Admin: Phân tích về trang web
+    },
+    {
+      key: 'admin-settings',
+      label: t.dashboard.sidebar.navigation.settings,
+      icon: Settings,
+      href: '/dashboard/settings',
+      isActive: currentPath === '/dashboard/settings',
+      color: 'neutral',
+      roles: ['admin'] // Admin: Cài đặt
     }
   ];
+
+  // Filter sidebar items based on user role
+  const sidebarItems = useMemo(() => {
+    if (!user) return [];
+    return allSidebarItems.filter(item => item.roles.includes(user.role));
+  }, [user?.role, currentPath]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNavigation = (href: string) => {
     navigate(href);

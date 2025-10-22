@@ -1217,4 +1217,52 @@ export interface ContentTaxonomy {
       shareFailed: string;
     };
   };
+
+  // Upload Progress Component
+  uploadProgress: {
+    status: {
+      uploading: string;
+      processing: string;
+      completed: string;
+      failed: string;
+      unknown: string;
+    };
+    details: {
+      remaining: string;
+      processing: string;
+      completed: string;
+      failed: string;
+    };
+    actions: {
+      cancel: string;
+      retry: string;
+    };
+  };
+
+  // JD File Management
+  jdFileManagement: {
+    loading: string;
+    allStatuses: string;
+    actions: {
+      createJobProfile: string;
+      deleteFile: string;
+      clearCompleted: string;
+      clearAll: string;
+    };
+  };
+
+  // Admin Layout
+  adminAuth: {
+    verifying: string;
+  };
+
+  // Status Values
+  status: {
+    uploaded: string;
+    processing: string;
+    processed: string;
+    failed: string;
+    completed: string;
+    pending: string;
+  };
 }

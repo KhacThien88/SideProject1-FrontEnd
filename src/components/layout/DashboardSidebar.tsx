@@ -10,7 +10,12 @@ import {
   BarChart3, 
   Settings, 
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Shield,
+  FileText,
+  Upload,
+  MessageCircle,
+  Activity
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useTranslation } from '../../hooks/useTranslation';
@@ -48,6 +53,18 @@ export const DashboardSidebar: React.FC = () => {
     if (currentPath === '/dashboard/job-postings') return t.pages.jobPostings.subscription;
     if (currentPath === '/dashboard/analytics') return t.pages.analytics.subscription;
     if (currentPath === '/dashboard/settings') return t.pages.settings.subscription;
+    
+    // Admin routes
+    if (currentPath === '/admin/dashboard') return 'System Administration';
+    if (currentPath === '/admin/users') return 'User Management';
+    if (currentPath === '/admin/cvs') return 'CV Management';
+    if (currentPath === '/admin/audit-logs') return 'Audit & Security';
+    
+    // API Integration routes
+    if (currentPath === '/jd-upload') return 'Job Description Upload';
+    if (currentPath === '/text-extraction') return 'Document Processing';
+    if (currentPath === '/feedback') return 'User Feedback';
+    
     return t.pages.dashboard.subscription; // default
   };
 
@@ -104,13 +121,78 @@ export const DashboardSidebar: React.FC = () => {
 
     // ============ ADMIN NAVIGATION ============
     {
+      key: 'admin-dashboard',
+      label: 'Admin Dashboard',
+      icon: Shield,
+      href: '/admin/dashboard',
+      isActive: currentPath === '/admin/dashboard',
+      color: 'danger',
+      roles: ['admin'] // Admin: Dashboard quản trị
+    },
+    {
+      key: 'admin-users',
+      label: 'User Management',
+      icon: Users,
+      href: '/admin/users',
+      isActive: currentPath === '/admin/users',
+      color: 'danger',
+      roles: ['admin'] // Admin: Quản lý users
+    },
+    {
+      key: 'admin-cvs',
+      label: 'CV Management',
+      icon: FileText,
+      href: '/admin/cvs',
+      isActive: currentPath === '/admin/cvs',
+      color: 'danger',
+      roles: ['admin'] // Admin: Quản lý CVs
+    },
+    {
+      key: 'admin-audit',
+      label: 'Audit Logs',
+      icon: Activity,
+      href: '/admin/audit-logs',
+      isActive: currentPath === '/admin/audit-logs',
+      color: 'danger',
+      roles: ['admin'] // Admin: Audit logs
+    },
+    {
       key: 'users',
       label: t.dashboard.sidebar.navigation.users,
       icon: Users,
       href: '/dashboard/users',
       isActive: currentPath === '/dashboard/users',
       color: 'accent',
-      roles: ['admin'] // Admin: Quản lý user theo role
+      roles: ['admin'] // Admin: Quản lý user theo role (legacy)
+    },
+
+    // ============ API INTEGRATION FEATURES ============
+    {
+      key: 'jd-upload',
+      label: 'JD Upload',
+      icon: Upload,
+      href: '/jd-upload',
+      isActive: currentPath === '/jd-upload',
+      color: 'secondary',
+      roles: ['recruiter', 'admin'] // HR và Admin: Upload job descriptions
+    },
+    {
+      key: 'text-extraction',
+      label: 'Text Extraction',
+      icon: FileSearch,
+      href: '/text-extraction',
+      isActive: currentPath === '/text-extraction',
+      color: 'secondary',
+      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles: Extract text từ documents
+    },
+    {
+      key: 'feedback',
+      label: 'Feedback',
+      icon: MessageCircle,
+      href: '/feedback',
+      isActive: currentPath === '/feedback',
+      color: 'accent',
+      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles: Gửi feedback
     },
 
     // ============ SHARED NAVIGATION (ALL ROLES) ============

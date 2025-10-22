@@ -1409,5 +1409,53 @@ export const vi: ContentTaxonomy = {
       title: 'Không tìm thấy người dùng',
       description: 'Thử điều chỉnh tìm kiếm hoặc bộ lọc'
     }
+  },
+
+  // Upload Progress Component
+  uploadProgress: {
+    status: {
+      uploading: 'Đang tải lên',
+      processing: 'Đang xử lý', 
+      completed: 'Hoàn thành',
+      failed: 'Thất bại',
+      unknown: 'Không xác định'
+    },
+    details: {
+      remaining: 'Còn lại',
+      processing: 'Đang xử lý dữ liệu...',
+      completed: 'Upload hoàn thành thành công',
+      failed: 'Upload thất bại, vui lòng thử lại'
+    },
+    actions: {
+      cancel: 'Hủy',
+      retry: 'Thử lại'
+    }
+  },
+
+  // JD File Management  
+  jdFileManagement: {
+    loading: 'Đang tải danh sách...',
+    allStatuses: 'Tất cả trạng thái',
+    actions: {
+      createJobProfile: 'Tạo Job Profile',
+      deleteFile: 'Xóa file',
+      clearCompleted: 'Xóa hoàn thành',
+      clearAll: 'Xóa tất cả'
+    }
+  },
+
+  // Admin Layout
+  adminAuth: {
+    verifying: 'Đang xác thực quyền truy cập...'
+  },
+
+  // Status Values
+  status: {
+    uploaded: 'Đã tải lên',
+    processing: 'Đang xử lý',
+    processed: 'Đã xử lý',
+    failed: 'Thất bại',
+    completed: 'Hoàn thành',
+    pending: 'Đang chờ'
   }
 };

@@ -2,6 +2,21 @@
 export { cvUploadService } from './cv/cvUploadService';
 export { cvAnalysisService } from './cv/cvAnalysisService';
 
+// Text Extraction
+export { textractService } from './textract/textractService';
+
+// Job Description Upload
+export { jdUploadService } from './jd/jdUploadService';
+
+// Feedback System
+export { feedbackService } from './feedback/feedbackService';
+
+// Admin Management
+export { adminService } from './admin/adminService';
+
+// CV Admin Management
+export { cvAdminService } from './cvAdmin/cvAdminService';
+
 // Job Management
 export { jobPostingService } from './jobPosting/jobPostingService';
 export { jobMatchingService } from './jobs/jobMatchingService';
@@ -34,6 +49,63 @@ export type {
   CVUploadStatusResponse,
   CVListItem,
 } from './cv/cvUploadService';
+
+export type {
+  TextExtractionRequest,
+  TextExtractionResponse,
+  ExtractionStatusResponse,
+  ExtractionResultResponse,
+  ExtractionStatusCallback,
+  PollingOptions,
+} from './textract/textractService';
+
+export type {
+  JDUploadRequest,
+  JDUploadResponse,
+  JDUploadStatusResponse,
+  JDFileInfo,
+  JDListResponse,
+  JDListFilters,
+  FileValidationResult,
+  UploadProgress,
+  BulkUploadResult,
+} from './jd/jdUploadService';
+
+export type {
+  FeedbackSubmissionRequest,
+  FeedbackResponse,
+  FeedbackListResponse,
+  FeedbackListFilters,
+  FeedbackUpdateRequest,
+  FeedbackStatistics,
+  QuickFeedbackRequest,
+} from './feedback/feedbackService';
+
+export type {
+  AdminUser,
+  CreateUserRequest,
+  UpdateUserRequest,
+  UserListResponse,
+  UserListFilters,
+  DashboardStats,
+  SystemHealthResponse,
+  AuditLogEntry,
+  AuditLogResponse,
+  AuditLogFilters,
+  BulkUserOperation,
+  BulkOperationResult,
+} from './admin/adminService';
+
+export type {
+  AdminCVInfo,
+  CVAdminListResponse,
+  CVAdminListFilters,
+  CVUpdateRequest,
+  CVAnalytics,
+  BulkCVOperation,
+  BulkCVOperationResult,
+  CVQualityReport,
+} from './cvAdmin/cvAdminService';
 
 export type {
   CVAnalysisResult,

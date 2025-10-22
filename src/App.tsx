@@ -20,6 +20,18 @@ import { JobPostings } from './pages/JobPostings';
 import { JobMatches } from './pages/CandidateMatching';
 import { UsersPage } from './pages/Users';
 
+// Lazy load Admin Pages - Phase 3
+import { lazy, Suspense } from 'react';
+const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard').then(m => ({ default: m.AdminDashboard })));
+const UserManagement = lazy(() => import('./pages/Admin/UserManagement').then(m => ({ default: m.UserManagement })));
+const CVManagement = lazy(() => import('./pages/Admin/CVManagement').then(m => ({ default: m.default })));
+const AuditLogs = lazy(() => import('./pages/Admin/AuditLogs').then(m => ({ default: m.AuditLogs })));
+
+// Lazy load API Integration Pages - Phase 2  
+const JDUploadPage = lazy(() => import('./pages/JDUpload').then(m => ({ default: m.JDUploadPage })));
+const TextExtractionPage = lazy(() => import('./pages/TextExtraction').then(m => ({ default: m.TextExtractionPage })));
+const FeedbackPage = lazy(() => import('./pages/Feedback').then(m => ({ default: m.FeedbackPage })));
+
 function App() {
   // Determine initial route based on current URL
   const getInitialRoute = () => {
@@ -55,6 +67,18 @@ function App() {
     if (path === '/dashboard/job-postings') return '/dashboard/job-postings';
     if (path.startsWith('/dashboard/job-postings/') && path.includes('/matches')) return path;
     if (path === '/dashboard/users') return '/dashboard/users';
+    
+    // Admin routes - Phase 3
+    if (path === '/admin/dashboard') return '/admin/dashboard';
+    if (path === '/admin/users') return '/admin/users';
+    if (path === '/admin/cvs') return '/admin/cvs';
+    if (path === '/admin/audit-logs') return '/admin/audit-logs';
+    
+    // API Integration routes - Phase 2
+    if (path === '/jd-upload') return '/jd-upload';
+    if (path === '/text-extraction') return '/text-extraction';
+    if (path === '/feedback') return '/feedback';
+    
     if (path.startsWith('/job/')) return path;
     if (path === '/') return '/';
     if (path === '/verify-otp') return '/verify-otp';
@@ -80,6 +104,18 @@ function App() {
             <Route path="/role-selection" component={RoleSelectionPage} exact />
             
             {/* Protected routes - wrapped with ProtectedRouteWrapper */}
+            
+            {/* Admin routes - Phase 3 */}
+            <Route path="/admin/dashboard" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={AdminDashboard} /></Suspense>} exact />
+            <Route path="/admin/users" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={UserManagement} /></Suspense>} exact />
+            <Route path="/admin/cvs" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={CVManagement} /></Suspense>} exact />
+            <Route path="/admin/audit-logs" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={AuditLogs} /></Suspense>} exact />
+            
+            {/* API Integration routes - Phase 2 */}
+            <Route path="/jd-upload" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={JDUploadPage} /></Suspense>} exact />
+            <Route path="/text-extraction" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={TextExtractionPage} /></Suspense>} exact />
+            <Route path="/feedback" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={FeedbackPage} /></Suspense>} exact />
+
             {/* Job matching routes (most specific first) */}
             <Route path="/dashboard/job-postings/" component={() => <ProtectedRouteWrapper component={JobMatches} />} exact={false} />
             <Route path="/dashboard/job-postings" component={() => <ProtectedRouteWrapper component={JobPostings} />} exact />

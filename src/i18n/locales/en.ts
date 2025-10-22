@@ -1413,5 +1413,53 @@ export const en: ContentTaxonomy = {
       title: 'No users found',
       description: 'Try adjusting your search or filters'
     }
+  },
+
+  // Upload Progress Component
+  uploadProgress: {
+    status: {
+      uploading: 'Uploading',
+      processing: 'Processing', 
+      completed: 'Completed',
+      failed: 'Failed',
+      unknown: 'Unknown'
+    },
+    details: {
+      remaining: 'Remaining',
+      processing: 'Processing data...',
+      completed: 'Upload completed successfully',
+      failed: 'Upload failed, please try again'
+    },
+    actions: {
+      cancel: 'Cancel',
+      retry: 'Retry'
+    }
+  },
+
+  // JD File Management  
+  jdFileManagement: {
+    loading: 'Loading list...',
+    allStatuses: 'All statuses',
+    actions: {
+      createJobProfile: 'Create Job Profile',
+      deleteFile: 'Delete file',
+      clearCompleted: 'Clear completed',
+      clearAll: 'Clear all'
+    }
+  },
+
+  // Admin Layout
+  adminAuth: {
+    verifying: 'Verifying access permissions...'
+  },
+
+  // Status Values  
+  status: {
+    uploaded: 'Uploaded',
+    processing: 'Processing',
+    processed: 'Processed',
+    failed: 'Failed',
+    completed: 'Completed',
+    pending: 'Pending'
   }
 };

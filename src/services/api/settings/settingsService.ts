@@ -1,10 +1,62 @@
 import type { SettingsData, UserProfile, NotificationSettings, PrivacySettings, AppearanceSettings } from '../../../types/settings';
 import { TokenManager } from '../authService';
+import axios from 'axios';
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const SETTINGS_CACHE_KEY = 'user_settings_cache';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+export interface UpdateProfileRequest {
+  full_name?: string;
+  phone?: string;
+  bio?: string;
+  location?: string;
+  skills?: string[];
+  experience_years?: number;
+  education?: string;
+  linkedin_url?: string;
+  github_url?: string;
+  portfolio_url?: string;
+}
+
+export interface NotificationSettingsRequest {
+  enabled_channels: {
+    email: boolean;
+    in_app: boolean;
+    sms: boolean;
+  };
+  enabled_events: {
+    new_job_match: boolean;
+    application_status: boolean;
+    profile_views: boolean;
+    messages: boolean;
+    system: boolean;
+  };
+  frequency: 'immediate' | 'daily' | 'weekly';
+  quiet_hours: {
+    enabled: boolean;
+    start_time: string;
+    end_time: string;
+  };
+}
+
+export interface PrivacySettingsRequest {
+  profile_visibility: 'public' | 'private' | 'contacts_only';
+  show_contact_info: boolean;
+  show_work_history: boolean;
+  show_education: boolean;
+  allow_recruiter_contact: boolean;
+  data_sharing_consent: boolean;
+}
+
+export interface AppearanceSettingsRequest {
+  theme: 'light' | 'dark' | 'system';
+  language: 'vi' | 'en';
+  font_size: 'small' | 'medium' | 'large';
+  color_scheme: string;
+  compact_mode: boolean;
+}
 
 class SettingsService {
   // Get all settings - Now fetches real user data from backend with caching
@@ -156,16 +208,14 @@ class SettingsService {
         updateData.role = this.mapFrontendRoleToBackend(profile.role);
       }
 
-      const response = await fetch(`${API_BASE_URL}/auth/me`, {
-        method: 'PUT',
+      const response = await axios.put(`${API_BASE_URL}/users/profile`, updateData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updateData),
       });
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error(`Failed to update profile: ${response.statusText}`);
       }
 
@@ -222,6 +272,35 @@ class SettingsService {
   }
 
   // Export user data
+  async exportUserData(dataTypes: string[] = ['profile', 'applications', 'saved_jobs'], format: 'json' | 'csv' | 'pdf' = 'json'): Promise<{
+    request_id: string;
+    status: string;
+    estimated_completion_time: string;
+  }> {
+    const token = TokenManager.getAccessToken();
+    if (!token) {
+      throw new Error('No access token available');
+    }
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/users/export-data`, {
+        data_types: dataTypes,
+        format: format
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to export user data:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to export data');
+    }
+  }
+
+  // Legacy export method for backward compatibility
   async exportData(): Promise<Blob> {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -271,6 +350,98 @@ class SettingsService {
         }
       }, 500);
     });
+  }
+
+  // Legacy methods for backward compatibility
+  async getCurrentUser(): Promise<any> {
+    const settings = await this.getSettings();
+    return {
+      id: '1',
+      name: settings.profile.fullName,
+      email: settings.profile.email,
+      role: settings.profile.role.toLowerCase(),
+      settings: {
+        theme: settings.appearance.theme,
+        language: settings.appearance.language,
+        notifications: {
+          email: settings.notifications.emailAlerts,
+          push: settings.notifications.pushNotifications,
+          jobAlerts: settings.notifications.analysisComplete,
+        },
+        privacy: {
+          profileVisible: !settings.privacy.shareAnonymousAnalytics,
+          showEmail: false,
+          showPhone: true,
+        },
+      },
+    };
+  }
+
+  async updateCurrentUser(userData: any): Promise<any> {
+    if (userData.name) {
+      await this.updateProfile({ fullName: userData.name });
+    }
+    if (userData.email) {
+      await this.updateProfile({ email: userData.email });
+    }
+    return this.getCurrentUser();
+  }
+
+  async updateUserSettings(settings: any): Promise<any> {
+    if (settings.theme) {
+      await this.updateAppearance({ theme: settings.theme });
+      document.documentElement.setAttribute('data-theme', settings.theme);
+    }
+    return settings;
+  }
+
+  // Helper methods for settings management
+  getDefaultSettings(): any {
+    return {
+      user_id: '',
+      profile: {
+        theme: 'light',
+        language: 'vi',
+        timezone: 'Asia/Ho_Chi_Minh'
+      },
+      notifications: {
+        email: true,
+        push: true,
+        job_alerts: true,
+        application_updates: true,
+        profile_views: false
+      },
+      privacy: {
+        profile_visible: true,
+        show_email: false,
+        show_phone: false,
+        show_location: true
+      },
+      appearance: {
+        theme: 'light',
+        font_size: 'medium',
+        color_scheme: 'blue'
+      },
+      updated_at: new Date().toISOString()
+    };
+  }
+
+  // Apply theme to document
+  applyTheme(theme: 'light' | 'dark' | 'system'): void {
+    const root = document.documentElement;
+    
+    if (theme === 'system') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      theme = prefersDark ? 'dark' : 'light';
+    }
+
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }
+
+  // Get current theme
+  getCurrentTheme(): 'light' | 'dark' | 'system' {
+    return (localStorage.getItem('theme') as 'light' | 'dark' | 'system') || 'light';
   }
 }
 

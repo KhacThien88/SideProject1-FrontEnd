@@ -9,7 +9,7 @@ interface ProfileTabProps {
   onUpdate: (profile: Partial<UserProfile>) => Promise<void>;
 }
 
-export const ProfileTab: React.FC<ProfileTabProps> = ({ profile, onUpdate }) => {
+export const ProfileTab: React.FC<ProfileTabProps> = ({ profile }) => {
   const { getContent } = useTranslation();
   const [formData, setFormData] = useState(profile);
   const [showPasswordChange, setShowPasswordChange] = useState(false);

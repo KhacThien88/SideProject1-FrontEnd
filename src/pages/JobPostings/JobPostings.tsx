@@ -51,7 +51,22 @@ export const JobPostings: React.FC = () => {
   const loadJobProfiles = async () => {
     try {
       setIsLoading(true);
-      const profiles = await jobPostingService.getJobProfiles();
+      const response = await jobPostingService.getJobProfiles();
+      
+      // Convert API response to component state format
+      const profiles: JobProfile[] = response.profiles.map(profile => ({
+        id: profile.profile_id,
+        title: profile.title,
+        description: profile.description,
+        experience: profile.requirements?.experience || 'Not specified',
+        requiredSkills: profile.requirements?.skills || [],
+        preferredSkills: profile.requirements?.preferred_skills || [],
+        activeMatches: profile.applications_count || 0,
+        createdAt: new Date(profile.created_at),
+        updatedAt: new Date(profile.updated_at),
+        status: profile.status,
+      }));
+      
       setJobProfiles(profiles);
       setFilteredProfiles(profiles);
     } catch (error) {

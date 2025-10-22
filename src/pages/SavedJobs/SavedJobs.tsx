@@ -59,7 +59,80 @@ export const SavedJobs: React.FC = () => {
   const loadSavedJobs = async () => {
     try {
       setLoading(true);
-      const jobs = await savedJobsService.getSavedJobs();
+      const response = await savedJobsService.getSavedJobs();
+      
+      // Convert API response to component state format
+      const jobs: SavedJobItem[] = response.saved_jobs.map(savedJob => ({
+        job: {
+          id: savedJob.job_id,
+          title: savedJob.job_info.title,
+          company: {
+            id: 'unknown',
+            name: savedJob.job_info.company,
+            logo: undefined,
+            size: undefined,
+            industry: undefined,
+            location: undefined,
+          },
+          description: savedJob.job_info.description,
+          shortDescription: undefined,
+          requirements: {
+            essential: [],
+            preferred: [],
+            experience: '',
+            education: undefined,
+          },
+          benefits: [],
+          location: {
+            city: savedJob.job_info.location,
+            country: 'Unknown',
+            remote: false,
+            hybrid: undefined,
+          },
+          salary: savedJob.job_info.salary_range ? {
+            min: savedJob.job_info.salary_range.min,
+            max: savedJob.job_info.salary_range.max,
+            currency: savedJob.job_info.salary_range.currency,
+            period: 'yearly' as const,
+          } : {
+            min: undefined,
+            max: undefined,
+            currency: 'USD',
+            period: 'yearly' as const,
+          },
+          type: savedJob.job_info.job_type as any,
+          postedDate: savedJob.saved_at,
+          deadline: undefined,
+          applicationUrl: undefined,
+          tags: savedJob.tags || [],
+          skills: [],
+        },
+        matchScore: 0, // Default value since not provided in API
+        skillsMatch: {
+          matched: [],
+          missing: [],
+          percentage: 0,
+        },
+        experienceMatch: {
+          score: 0,
+          analysis: '',
+        },
+        locationMatch: {
+          score: 0,
+          distance: undefined,
+        },
+        salaryMatch: {
+          score: 0,
+          comparison: 'within' as const,
+        },
+        overallAnalysis: '',
+        recommendationLevel: 'medium' as const,
+        savedAt: savedJob.saved_at,
+        isSaved: true,
+        notes: savedJob.notes,
+        userTags: savedJob.tags,
+      }));
+      
       setSavedJobs(jobs);
     } catch (error) {
       console.error('Error loading saved jobs:', error);

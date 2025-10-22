@@ -274,22 +274,47 @@ export class AuthApiService {
    */
   static async googleAuth(googleToken: string): Promise<GoogleAuthResponse> {
     try {
-      const response = await apiClient.post<any>('/auth/google-auth', {
-        google_token: googleToken,
-      }, {
-        'X-Google-Client-Id': (import.meta as any)?.env?.VITE_GOOGLE_CLIENT_ID || '',
-        'X-Page-Origin': (typeof window !== 'undefined' ? window.location.origin : ''),
+      // Make the API call with custom handling for HTTP 202
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+      const url = `${API_BASE_URL}/auth/google-auth`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Google-Client-Id': (import.meta as any)?.env?.VITE_GOOGLE_CLIENT_ID || '',
+          'X-Page-Origin': (typeof window !== 'undefined' ? window.location.origin : ''),
+        },
+        body: JSON.stringify({
+          google_token: googleToken,
+        }),
       });
+
+      // Handle HTTP 202 (Role Selection Required) as special case
+      if (response.status === 202) {
+        const errorData = await response.json();
+        if (errorData.detail === 'ROLE_SELECTION_REQUIRED') {
+          throw new Error('ROLE_SELECTION_REQUIRED');
+        }
+      }
+
+      // Handle other non-ok responses as errors
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({
+          detail: `HTTP ${response.status}: ${response.statusText}`,
+        }));
+        throw new Error(errorData.detail || 'Google authentication failed');
+      }
+
+      // Success response - return the data
+      return await response.json();
+    } catch (error: any) {
+      console.error('Google auth error:', error);
       
-      // Handle backend flow that returns 202 with { detail: 'ROLE_SELECTION_REQUIRED' }
-      if (response && typeof response === 'object' && 'detail' in response && response.detail === 'ROLE_SELECTION_REQUIRED') {
-        // Throw a special error so upper layers can navigate to role selection
-        throw new Error('ROLE_SELECTION_REQUIRED');
+      // Re-throw ROLE_SELECTION_REQUIRED errors
+      if (error?.message === 'ROLE_SELECTION_REQUIRED') {
+        throw error;
       }
       
-      return response;
-    } catch (error) {
-      console.error('Google auth error:', error);
       throw error;
     }
   }

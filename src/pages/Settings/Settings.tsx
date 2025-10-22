@@ -21,7 +21,7 @@ import type { SettingsData, SettingsTab } from '../../types/settings';
 export const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
   const [settings, setSettings] = useState<SettingsData | null>(null);
-  const [isLoading, setIsLoading] = useState(false); // Changed to false - render UI immediately
+  const [isLoading] = useState(false); // Changed to false - render UI immediately
   const [isSaving, setIsSaving] = useState(false);
   const { showSuccessToast, showErrorToast } = useToast();
   const { changeLanguage, getContent } = useTranslation();

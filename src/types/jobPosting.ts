@@ -18,7 +18,7 @@ export interface JobProfile {
   activeMatches: number;
   createdAt: Date;
   updatedAt: Date;
-  status: 'active' | 'inactive' | 'draft';
+  status: 'active' | 'inactive' | 'draft' | 'archived';
 }
 
 export interface CreateJobProfileData {

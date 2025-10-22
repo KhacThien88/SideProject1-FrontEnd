@@ -56,14 +56,14 @@ export const SavedCandidates: React.FC = () => {
     try {
       setLoading(true);
       // Get all job profiles
-      const jobs = await jobPostingService.getJobProfiles();
+      const jobsResponse = await jobPostingService.getJobProfiles();
       
       // Get all candidates from all jobs and filter saved ones
       const allMatches: CandidateMatch[] = [];
-      for (const job of jobs) {
-        const matches = await candidateMatchService.getCandidateMatches(job.id);
+      for (const job of jobsResponse.profiles) {
+        const matchesResponse = await candidateMatchService.getCandidateMatches(job.profile_id);
         // Only include saved candidates (isSaved === true)
-        const savedMatches = matches.filter((m) => m.isSaved);
+        const savedMatches = matchesResponse.matches.filter((m: CandidateMatch) => m.isSaved);
         allMatches.push(...savedMatches);
       }
 

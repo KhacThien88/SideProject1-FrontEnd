@@ -74,19 +74,33 @@ export const JobMatches: React.FC = () => {
     console.log('Loading data for job ID:', id);
     try {
       setLoading(true);
-      const [job, matches] = await Promise.all([
+      const [jobResponse, matchesResponse] = await Promise.all([
         jobPostingService.getJobProfile(id),
         candidateMatchService.getCandidateMatches(id),
       ]);
 
-      if (!job) {
+      if (!jobResponse) {
         showErrorToast(getContent('candidateMatches.errors.jobNotFound'));
         navigate('/dashboard/job-postings');
         return;
       }
 
+      // Convert API response to component state format
+      const job: JobProfile = {
+        id: jobResponse.profile_id,
+        title: jobResponse.title,
+        description: jobResponse.description,
+        experience: jobResponse.requirements?.experience || 'Not specified',
+        requiredSkills: jobResponse.requirements?.skills || [],
+        preferredSkills: jobResponse.requirements?.preferred_skills || [],
+        activeMatches: jobResponse.applications_count || 0,
+        createdAt: new Date(jobResponse.created_at),
+        updatedAt: new Date(jobResponse.updated_at),
+        status: jobResponse.status,
+      };
+
       setJobProfile(job);
-      setCandidates(matches);
+      setCandidates(matchesResponse.matches);
     } catch (error) {
       console.error('Error loading candidates:', error);
       showErrorToast(getContent('candidateMatches.errors.loadFailed'));

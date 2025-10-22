@@ -1,105 +1,248 @@
-import type { SavedJobItem } from '../../../types/jobMatching';
-import { generateMockJobs, generateMockJobMatchResults } from '../../../utils/jobMatchingUtils';
+import axios from 'axios';
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
 
-const buildInitialSavedJobs = (): SavedJobItem[] => {
-  const mockJobs = generateMockJobs(18);
-  const mockMatches = generateMockJobMatchResults(mockJobs);
+export interface SavedJob {
+  job_id: string;
+  user_id: string;
+  saved_at: string;
+  notes?: string;
+  tags?: string[];
+  job_info: {
+    title: string;
+    company: string;
+    location: string;
+    salary_range?: {
+      min: number;
+      max: number;
+      currency: string;
+    };
+    job_type: string;
+    description: string;
+  };
+}
 
-  return mockMatches.map((match, index) => ({
-    ...match,
-    savedAt: new Date(Date.now() - index * 3_600_000).toISOString(),
-    isSaved: true,
-    notes: index % 4 === 0 ? 'Follow up with recruiter next week.' : undefined,
-    userTags: index % 3 === 0 ? ['frontend', 'priority'] : undefined,
-  }));
-};
+export interface SaveJobRequest {
+  job_id: string;
+  notes?: string;
+  tags?: string[];
+}
 
-let savedJobsStore: SavedJobItem[] = buildInitialSavedJobs();
+export interface UpdateSavedJobRequest {
+  notes?: string;
+  tags?: string[];
+}
 
-const cloneSavedJob = (job: SavedJobItem): SavedJobItem => ({
-  ...job,
-  job: {
-    ...job.job,
-    company: { ...job.job.company },
-    requirements: {
-      essential: [...job.job.requirements.essential],
-      preferred: [...job.job.requirements.preferred],
-      experience: job.job.requirements.experience,
-      education: job.job.requirements.education,
-    },
-    benefits: [...job.job.benefits],
-    location: { ...job.job.location },
-    salary: { ...job.job.salary },
-    tags: [...job.job.tags],
-    skills: [...job.job.skills],
-  },
-  skillsMatch: {
-    matched: [...job.skillsMatch.matched],
-    missing: [...job.skillsMatch.missing],
-    percentage: job.skillsMatch.percentage,
-  },
-  experienceMatch: { ...job.experienceMatch },
-  locationMatch: { ...job.locationMatch },
-  salaryMatch: { ...job.salaryMatch },
-  userTags: job.userTags ? [...job.userTags] : undefined,
-  notes: job.notes,
-  savedAt: job.savedAt,
-  isSaved: job.isSaved,
-});
+export interface SavedJobStats {
+  total_saved: number;
+  recent_saves: number;
+  categories: {
+    [key: string]: number;
+  };
+}
 
-export const savedJobsService = {
-  async getSavedJobs(): Promise<SavedJobItem[]> {
-    await delay(400);
-    return savedJobsStore.map(cloneSavedJob);
-  },
+class SavedJobsService {
+  private getAuthHeaders() {
+    const token = localStorage.getItem('access_token');
+    return {
+      'Authorization': `Bearer ${token}`,
+    };
+  }
 
-  async removeSavedJob(jobId: string): Promise<void> {
-    await delay(250);
-    savedJobsStore = savedJobsStore.filter((job) => job.job.id !== jobId);
-  },
+  // Get all saved jobs for current user
+  async getSavedJobs(
+    page: number = 1,
+    limit: number = 20,
+    tags?: string[]
+  ): Promise<{
+    saved_jobs: SavedJob[];
+    total: number;
+    page: number;
+    limit: number;
+  }> {
+    try {
+      const params: any = { page, limit };
+      if (tags && tags.length > 0) {
+        params.tags = tags.join(',');
+      }
 
-  async toggleSaved(jobId: string): Promise<'added' | 'removed'> {
-    await delay(250);
-    const existingIndex = savedJobsStore.findIndex((job) => job.job.id === jobId);
+      const response = await axios.get(`${API_BASE_URL}/saved-jobs`, {
+        headers: this.getAuthHeaders(),
+        params
+      });
 
-    if (existingIndex >= 0) {
-      savedJobsStore.splice(existingIndex, 1);
-      return 'removed';
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to get saved jobs:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to get saved jobs');
     }
+  }
 
-    const newJob = buildInitialSavedJobs()[0];
-    savedJobsStore = [
-      {
-        ...newJob,
-        job: {
-          ...newJob.job,
-          id: jobId,
+  // Save a job
+  async saveJob(saveRequest: SaveJobRequest): Promise<{ message: string }> {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/saved-jobs`, saveRequest, {
+        headers: {
+          ...this.getAuthHeaders(),
+          'Content-Type': 'application/json',
         },
-        savedAt: new Date().toISOString(),
-        isSaved: true,
-      },
-      ...savedJobsStore,
-    ];
+      });
 
-    return 'added';
-  },
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to save job:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to save job');
+    }
+  }
 
-  async addNote(jobId: string, note: string): Promise<SavedJobItem | null> {
-    await delay(200);
-    const job = savedJobsStore.find((item) => item.job.id === jobId);
-    if (!job) return null;
-    job.notes = note;
-    job.savedAt = new Date().toISOString();
-    return cloneSavedJob(job);
-  },
+  // Unsave a job
+  async unsaveJob(jobId: string): Promise<{ message: string }> {
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/saved-jobs/${jobId}`, {
+        headers: this.getAuthHeaders(),
+      });
 
-  async refreshSavedJobs(): Promise<SavedJobItem[]> {
-    await delay(500);
-    savedJobsStore = buildInitialSavedJobs();
-    return this.getSavedJobs();
-  },
-};
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to unsave job:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to unsave job');
+    }
+  }
 
-export default savedJobsService;
+  // Update saved job (notes, tags)
+  async updateSavedJob(jobId: string, updateData: UpdateSavedJobRequest): Promise<{ message: string }> {
+    try {
+      const response = await axios.put(`${API_BASE_URL}/saved-jobs/${jobId}`, updateData, {
+        headers: {
+          ...this.getAuthHeaders(),
+          'Content-Type': 'application/json',
+        },
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to update saved job:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to update saved job');
+    }
+  }
+
+  // Update job notes
+  async updateJobNotes(jobId: string, notes: string): Promise<{ message: string }> {
+    try {
+      const response = await axios.put(`${API_BASE_URL}/saved-jobs/${jobId}/note`, 
+        { notes }, 
+        {
+          headers: {
+            ...this.getAuthHeaders(),
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to update job notes:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to update notes');
+    }
+  }
+
+  // Get saved job statistics
+  async getSavedJobStats(): Promise<SavedJobStats> {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/saved-jobs/stats`, {
+        headers: this.getAuthHeaders(),
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to get saved job stats:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to get statistics');
+    }
+  }
+
+  // Check if job is saved
+  async isJobSaved(jobId: string): Promise<boolean> {
+    try {
+      const savedJobs = await this.getSavedJobs(1, 1000); // Get all to check
+      return savedJobs.saved_jobs.some(job => job.job_id === jobId);
+    } catch (error) {
+      console.error('Failed to check if job is saved:', error);
+      return false;
+    }
+  }
+
+  // Toggle save status
+  async toggleSaveJob(jobId: string, saveRequest?: SaveJobRequest): Promise<{ saved: boolean; message: string }> {
+    try {
+      const isSaved = await this.isJobSaved(jobId);
+      
+      if (isSaved) {
+        await this.unsaveJob(jobId);
+        return { saved: false, message: 'Job unsaved successfully' };
+      } else {
+        await this.saveJob(saveRequest || { job_id: jobId });
+        return { saved: true, message: 'Job saved successfully' };
+      }
+    } catch (error: any) {
+      console.error('Failed to toggle save job:', error);
+      throw new Error(error.message || 'Failed to toggle save status');
+    }
+  }
+
+  // Helper methods for UI
+  formatSavedDate(dateString: string): string {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 0) {
+      return 'Hôm nay';
+    } else if (diffInDays === 1) {
+      return 'Hôm qua';
+    } else if (diffInDays < 7) {
+      return `${diffInDays} ngày trước`;
+    } else if (diffInDays < 30) {
+      const weeks = Math.floor(diffInDays / 7);
+      return `${weeks} tuần trước`;
+    } else {
+      const months = Math.floor(diffInDays / 30);
+      return `${months} tháng trước`;
+    }
+  }
+
+  getJobTypeDisplayText(jobType: string): string {
+    const typeMap: { [key: string]: string } = {
+      'FULL_TIME': 'Toàn thời gian',
+      'PART_TIME': 'Bán thời gian',
+      'CONTRACT': 'Hợp đồng',
+      'INTERNSHIP': 'Thực tập',
+      'FREELANCE': 'Tự do'
+    };
+
+    return typeMap[jobType] || jobType;
+  }
+
+  // Legacy method for backward compatibility
+  async removeSavedJob(jobId: string): Promise<void> {
+    await this.unsaveJob(jobId);
+  }
+
+  // Legacy method for backward compatibility
+  async refreshSavedJobs(): Promise<SavedJob[]> {
+    const response = await this.getSavedJobs();
+    return response.saved_jobs;
+  }
+
+  // Legacy method for backward compatibility
+  async addNote(jobId: string, note: string): Promise<SavedJob | null> {
+    try {
+      await this.updateJobNotes(jobId, note);
+      const response = await this.getSavedJobs();
+      return response.saved_jobs.find(job => job.job_id === jobId) || null;
+    } catch (error) {
+      return null;
+    }
+  }
+}
+
+export const savedJobsService = new SavedJobsService();

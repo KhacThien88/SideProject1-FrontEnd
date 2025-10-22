@@ -1,208 +1,227 @@
+import axios from 'axios';
 import type { CandidateMatch, CandidateDetail, MatchFilters } from '../../../types/candidateMatch';
 
-// Mock candidate matches data
-const generateMockCandidateMatches = (jobProfileId: string, count: number = 10): CandidateMatch[] => {
-  const names = [
-    'Nguyễn Văn An', 'Trần Thị Bình', 'Lê Hoàng Cường', 'Phạm Thị Dung',
-    'Hoàng Văn Em', 'Đặng Thị Phương', 'Vũ Văn Giang', 'Bùi Thị Hà',
-    'Đinh Văn Hùng', 'Ngô Thị Lan', 'John Smith', 'Sarah Johnson',
-    'Michael Chen', 'Emily Wang', 'David Kim', 'Lisa Park'
-  ];
-  
-  const roles = [
-    'Senior Frontend Developer', 'Full Stack Engineer', 'Backend Developer',
-    'Software Engineer', 'Lead Developer', 'Technical Lead', 'DevOps Engineer'
-  ];
-  
-  const locations = ['Ho Chi Minh City', 'Hanoi', 'Da Nang', 'Singapore', 'Bangkok'];
-  
-  const skills = [
-    'JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'Java',
-    'Docker', 'Kubernetes', 'AWS', 'PostgreSQL', 'MongoDB', 'GraphQL',
-    'Vue.js', 'Angular', 'Express', 'Django', 'Spring Boot'
-  ];
-  
-  return Array.from({ length: count }, (_, i) => {
-    const matchScore = Math.floor(Math.random() * 40) + 60; // 60-100
-    const skillsMatch = Math.floor(Math.random() * 30) + 70;
-    const experienceMatch = Math.floor(Math.random() * 35) + 65;
-    const locationMatch = Math.random() > 0.3 ? 100 : Math.floor(Math.random() * 40) + 40;
-    
-    const allSkills = [...skills].sort(() => 0.5 - Math.random());
-    const matchedCount = Math.floor(Math.random() * 5) + 3;
-    const matchedSkills = allSkills.slice(0, matchedCount);
-    const missingSkills = allSkills.slice(matchedCount, matchedCount + 2);
-    const additionalSkills = allSkills.slice(matchedCount + 2, matchedCount + 5);
-    
-    const daysAgo = Math.floor(Math.random() * 30);
-    const appliedDate = new Date();
-    appliedDate.setDate(appliedDate.getDate() - daysAgo);
-    
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+
+export interface CandidateMatchRequest {
+  job_profile_id: string;
+  filters?: MatchFilters;
+  limit?: number;
+  min_score?: number;
+}
+
+export interface CandidateMatchResponse {
+  job_profile_id: string;
+  matches: CandidateMatch[];
+  total_matches: number;
+  filters_applied: MatchFilters;
+  generated_at: string;
+}
+
+class CandidateMatchService {
+  private getAuthHeaders() {
+    const token = localStorage.getItem('access_token');
     return {
-      id: `match-${jobProfileId}-${i + 1}`,
-      candidateId: `candidate-${i + 1}`,
-      jobProfileId,
-      matchScore,
-      
-      candidateName: names[i % names.length],
-      email: `${names[i % names.length].toLowerCase().replace(/\s+/g, '.')}@email.com`,
-      phone: `+84 ${Math.floor(Math.random() * 900000000) + 100000000}`,
-      avatar: `https://i.pravatar.cc/150?img=${(i % 70) + 1}`,
-      location: locations[Math.floor(Math.random() * locations.length)],
-      
-      currentRole: roles[Math.floor(Math.random() * roles.length)],
-      yearsOfExperience: Math.floor(Math.random() * 10) + 2,
-      education: ['Bachelor in Computer Science', 'Master in Software Engineering', 'Bachelor in Information Technology'][Math.floor(Math.random() * 3)],
-      
-      matchedSkills,
-      missingSkills,
-      additionalSkills,
-      
-      experienceMatch,
-      skillsMatch,
-      locationMatch,
-      
-      resumeUrl: `/resumes/candidate-${i + 1}.pdf`,
-      isSaved: false, // Default not saved
-      appliedDate,
-      lastUpdated: new Date(),
-      
-      summary: `Experienced ${roles[Math.floor(Math.random() * roles.length)].toLowerCase()} with ${Math.floor(Math.random() * 10) + 2} years in software development.`,
-      strengths: matchedSkills.slice(0, 3),
-      concerns: missingSkills.length > 0 ? [`Missing ${missingSkills[0]} experience`] : undefined,
+      'Authorization': `Bearer ${token}`,
     };
-  });
-};
+  }
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-// In-memory storage
-const candidateMatchesStore: Map<string, CandidateMatch[]> = new Map();
-
-export const candidateMatchService = {
-  // Get all candidate matches for a job profile
+  // Get candidate matches for a job profile
   async getCandidateMatches(
     jobProfileId: string,
-    filters?: MatchFilters
-  ): Promise<CandidateMatch[]> {
-    await delay(600);
-    
-    // Generate or get cached matches
-    if (!candidateMatchesStore.has(jobProfileId)) {
-      const matches = generateMockCandidateMatches(jobProfileId, 15);
-      candidateMatchesStore.set(jobProfileId, matches);
+    filters?: MatchFilters,
+    limit: number = 20
+  ): Promise<CandidateMatchResponse> {
+    try {
+      const requestData: CandidateMatchRequest = {
+        job_profile_id: jobProfileId,
+        filters,
+        limit,
+        min_score: 60
+      };
+
+      const response = await axios.get(`${API_BASE_URL}/jobs/candidates/${jobProfileId}`, {
+        headers: this.getAuthHeaders(),
+        params: requestData
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to get candidate matches:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to get candidate matches');
     }
-    
-    let matches = candidateMatchesStore.get(jobProfileId) || [];
-    
-    // Apply filters
-    if (filters) {
-      if (filters.minMatchScore !== undefined) {
-        matches = matches.filter(m => m.matchScore >= filters.minMatchScore!);
-      }
-      
-      if (filters.maxMatchScore !== undefined) {
-        matches = matches.filter(m => m.matchScore <= filters.maxMatchScore!);
-      }
-      
-      if (filters.experienceYears) {
-        if (filters.experienceYears.min !== undefined) {
-          matches = matches.filter(m => m.yearsOfExperience >= filters.experienceYears!.min!);
-        }
-        if (filters.experienceYears.max !== undefined) {
-          matches = matches.filter(m => m.yearsOfExperience <= filters.experienceYears!.max!);
-        }
-      }
-      
-      if (filters.skills && filters.skills.length > 0) {
-        matches = matches.filter(m =>
-          filters.skills!.some(skill =>
-            m.matchedSkills.some(ms => ms.toLowerCase().includes(skill.toLowerCase()))
-          )
-        );
-      }
-      
-      if (filters.location && filters.location.length > 0) {
-        matches = matches.filter(m => filters.location!.includes(m.location));
-      }
-    }
-    
-    return matches;
-  },
+  }
 
   // Get detailed candidate information
-  async getCandidateDetail(matchId: string): Promise<CandidateDetail | null> {
-    await delay(400);
-    
-    // Find the match across all job profiles
-    for (const matches of candidateMatchesStore.values()) {
-      const match = matches.find(m => m.id === matchId);
-      if (match) {
-        // Extend with additional details
-        return {
-          ...match,
-          linkedinUrl: `https://linkedin.com/in/${match.candidateName.toLowerCase().replace(/\s+/g, '-')}`,
-          githubUrl: `https://github.com/${match.candidateName.toLowerCase().replace(/\s+/g, '')}`,
-          portfolioUrl: `https://${match.candidateName.toLowerCase().replace(/\s+/g, '')}.dev`,
-          
-          workHistory: [
-            {
-              company: 'Tech Corp',
-              role: match.currentRole,
-              duration: '2020 - Present',
-              description: 'Led development of microservices architecture'
-            },
-            {
-              company: 'StartupXYZ',
-              role: 'Software Engineer',
-              duration: '2018 - 2020',
-              description: 'Developed web applications using React and Node.js'
-            }
-          ],
-          
-          educationHistory: [
-            {
-              institution: 'University of Technology',
-              degree: match.education.split(' in ')[0],
-              field: match.education.split(' in ')[1] || 'Computer Science',
-              year: '2014 - 2018'
-            }
-          ],
-          
-          certifications: ['AWS Certified Developer', 'Professional Scrum Master'],
-          
-          languages: [
-            { name: 'Vietnamese', proficiency: 'Native' },
-            { name: 'English', proficiency: 'Fluent' }
-          ]
-        };
-      }
-    }
-    
-    return null;
-  },
+  async getCandidateDetail(candidateId: string): Promise<CandidateDetail> {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/cv/${candidateId}`, {
+        headers: this.getAuthHeaders(),
+      });
 
-  // Toggle saved/bookmark status
-  async toggleSaved(matchId: string): Promise<CandidateMatch> {
-    await delay(300);
-    
-    for (const matches of candidateMatchesStore.values()) {
-      const match = matches.find(m => m.id === matchId);
-      if (match) {
-        match.isSaved = !match.isSaved;
-        match.lastUpdated = new Date();
-        return match;
-      }
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to get candidate detail:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to get candidate detail');
     }
-    
-    throw new Error('Match not found');
-  },
+  }
 
-  // Download resume
-  async downloadResume(_resumeUrl: string): Promise<Blob> {
-    await delay(500);
-    // Mock PDF blob - in real implementation would fetch from _resumeUrl
-    return new Blob(['Mock PDF content'], { type: 'application/pdf' });
-  },
-};
+  // Search candidates with AI
+  async searchCandidatesAI(
+    searchQuery: string,
+    filters?: MatchFilters,
+    limit: number = 20
+  ): Promise<{
+    candidates: CandidateMatch[];
+    total: number;
+    ai_insights: any;
+  }> {
+    try {
+      const searchRequest = {
+        keywords: [searchQuery],
+        ...filters,
+        limit
+      };
+
+      const response = await axios.post(`${API_BASE_URL}/cv/ai-search`, searchRequest, {
+        headers: {
+          ...this.getAuthHeaders(),
+          'Content-Type': 'application/json',
+        },
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to search candidates with AI:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to search candidates');
+    }
+  }
+
+  // Get candidate analytics
+  async getCandidateAnalytics(jobProfileId: string): Promise<{
+    total_candidates: number;
+    average_match_score: number;
+    top_skills: string[];
+    location_distribution: { [key: string]: number };
+    experience_distribution: { [key: string]: number };
+  }> {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/jobs/match/${jobProfileId}/analytics`, {
+        headers: this.getAuthHeaders(),
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to get candidate analytics:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to get analytics');
+    }
+  }
+
+  // Refresh candidate matches
+  async refreshMatches(jobProfileId: string): Promise<CandidateMatchResponse> {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/jobs/match`, 
+        { job_profile_id: jobProfileId },
+        {
+          headers: {
+            ...this.getAuthHeaders(),
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to refresh matches:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to refresh matches');
+    }
+  }
+
+  // Get match history
+  async getMatchHistory(jobProfileId: string): Promise<{
+    history: {
+      match_id: string;
+      generated_at: string;
+      total_matches: number;
+      filters_used: MatchFilters;
+    }[];
+  }> {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/jobs/match/${jobProfileId}/history`, {
+        headers: this.getAuthHeaders(),
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to get match history:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to get match history');
+    }
+  }
+
+  // Helper methods for UI
+  getMatchScoreColor(score: number): string {
+    if (score >= 90) return 'green';
+    if (score >= 80) return 'blue';
+    if (score >= 70) return 'orange';
+    return 'red';
+  }
+
+  getMatchScoreText(score: number): string {
+    if (score >= 90) return 'Xuất sắc';
+    if (score >= 80) return 'Tốt';
+    if (score >= 70) return 'Khá';
+    return 'Trung bình';
+  }
+
+  formatExperience(years: number): string {
+    if (years === 0) return 'Mới tốt nghiệp';
+    if (years === 1) return '1 năm kinh nghiệm';
+    return `${years} năm kinh nghiệm`;
+  }
+
+  // Legacy method for backward compatibility
+  async getCandidateMatchesLegacy(jobProfileId: string): Promise<CandidateMatch[]> {
+    const response = await this.getCandidateMatches(jobProfileId);
+    return response.matches;
+  }
+
+  // Toggle saved/bookmark status (legacy method)
+  async toggleSaved(candidateId: string): Promise<CandidateMatch> {
+    try {
+      // This would typically call a saved candidates API
+      // For now, we'll simulate the toggle
+      const response = await axios.post(`${API_BASE_URL}/saved-candidates/toggle`, 
+        { candidate_id: candidateId },
+        {
+          headers: {
+            ...this.getAuthHeaders(),
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      return response.data.candidate;
+    } catch (error: any) {
+      console.error('Failed to toggle saved candidate:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to toggle saved status');
+    }
+  }
+
+  // Download resume (legacy method)
+  async downloadResume(resumeUrl: string): Promise<Blob> {
+    try {
+      const response = await axios.get(resumeUrl, {
+        headers: this.getAuthHeaders(),
+        responseType: 'blob'
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to download resume:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to download resume');
+    }
+  }
+}
+
+export const candidateMatchService = new CandidateMatchService();
 

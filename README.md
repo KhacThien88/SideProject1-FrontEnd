@@ -46,7 +46,17 @@ npm run dev
 npm run build
 ```
 
-## 📁 Cấu trúc dự án
+## � Documentation
+
+All detailed documentation has been moved to [`docs/`](./docs/) folder:
+
+- **[docs/README.md](./docs/README.md)** - Documentation index
+- **[docs/AUTHENTICATION_FLOW_SUMMARY.md](./docs/AUTHENTICATION_FLOW_SUMMARY.md)** - Complete auth flow
+- **[docs/QUICK_REFERENCE.md](./docs/QUICK_REFERENCE.md)** - Quick lookup tables
+- **[docs/TESTING_GUIDE.md](./docs/TESTING_GUIDE.md)** - Test scenarios
+- See [`docs/README.md`](./docs/README.md) for full list
+
+## �📁 Cấu trúc dự án
 
 ```
 webapp/

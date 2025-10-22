@@ -5,12 +5,16 @@ import type {
   PaginationOptions 
 } from '../types/jobMatching';
 
+// Type for getContent function
+type GetContentFn = (key: string) => string;
+
 // Utility functions for job matching
 export const formatSalary = (
   min?: number, 
   max?: number, 
   currency: string = 'USD', 
-  period: string = 'yearly'
+  period: string = 'yearly',
+  getContent?: GetContentFn
 ): string => {
   const formatNumber = (num: number) => {
     if (currency === 'VND') {
@@ -19,19 +23,23 @@ export const formatSalary = (
     return new Intl.NumberFormat('en-US').format(num);
   };
 
-  const periodSuffix = period === 'yearly' ? '/year' : period === 'monthly' ? '/month' : '/hour';
+  const periodSuffix = getContent 
+    ? (period === 'yearly' ? getContent('jobs.utils.year') : period === 'monthly' ? getContent('jobs.utils.month') : getContent('jobs.utils.hour'))
+    : (period === 'yearly' ? '/year' : period === 'monthly' ? '/month' : '/hour');
   
   if (min && max) {
     return `${formatNumber(min)} - ${formatNumber(max)} ${currency}${periodSuffix}`;
   } else if (min) {
-    return `From ${formatNumber(min)} ${currency}${periodSuffix}`;
+    const fromText = getContent ? getContent('jobs.utils.from') : 'From';
+    return `${fromText} ${formatNumber(min)} ${currency}${periodSuffix}`;
   } else if (max) {
-    return `Up to ${formatNumber(max)} ${currency}${periodSuffix}`;
+    const upToText = getContent ? getContent('jobs.utils.upTo') : 'Up to';
+    return `${upToText} ${formatNumber(max)} ${currency}${periodSuffix}`;
   }
-  return 'Salary not specified';
+  return getContent ? getContent('jobs.utils.salaryNotSpecified') : 'Salary not specified';
 };
 
-export const calculateTimeAgo = (date: string): string => {
+export const calculateTimeAgo = (date: string, getContent?: GetContentFn): string => {
   const now = new Date();
   const postDate = new Date(date);
   const diffInMs = now.getTime() - postDate.getTime();
@@ -40,11 +48,11 @@ export const calculateTimeAgo = (date: string): string => {
   const diffInWeeks = Math.floor(diffInDays / 7);
   const diffInMonths = Math.floor(diffInDays / 30);
 
-  if (diffInHours < 1) return 'Just now';
-  if (diffInHours < 24) return `${diffInHours}h ago`;
-  if (diffInDays < 7) return `${diffInDays}d ago`;
-  if (diffInWeeks < 4) return `${diffInWeeks}w ago`;
-  return `${diffInMonths}mo ago`;
+  if (diffInHours < 1) return getContent ? getContent('jobs.utils.justNow') : 'Just now';
+  if (diffInHours < 24) return `${diffInHours}${getContent ? getContent('jobs.utils.hoursAgo') : ' h ago'}`;
+  if (diffInDays < 7) return `${diffInDays}${getContent ? getContent('jobs.utils.daysAgo') : ' d ago'}`;
+  if (diffInWeeks < 4) return `${diffInWeeks}${getContent ? getContent('jobs.utils.weeksAgo') : ' w ago'}`;
+  return `${diffInMonths}${getContent ? getContent('jobs.utils.monthsAgo') : ' mo ago'}`;
 };
 
 export const getMatchScoreColor = (score: number): string => {
@@ -53,11 +61,11 @@ export const getMatchScoreColor = (score: number): string => {
   return 'text-error-600 bg-error-100';
 };
 
-export const getMatchScoreText = (score: number): string => {
-  if (score >= 80) return 'Excellent match';
-  if (score >= 60) return 'Good match';
-  if (score >= 40) return 'Fair match';
-  return 'Poor match';
+export const getMatchScoreText = (score: number, getContent?: GetContentFn): string => {
+  if (score >= 80) return getContent ? getContent('jobs.utils.excellentMatch') : 'Excellent match';
+  if (score >= 60) return getContent ? getContent('jobs.utils.goodMatch') : 'Good match';
+  if (score >= 40) return getContent ? getContent('jobs.utils.fairMatch') : 'Fair match';
+  return getContent ? getContent('jobs.utils.poorMatch') : 'Poor match';
 };
 
 export const sortJobs = (

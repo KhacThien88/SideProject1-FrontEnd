@@ -150,7 +150,7 @@ export const MonthlyApplicationsChart: React.FC = () => {
         </svg>
       </div>
 
-      <div className="mt-6 pt-4 border-t border-neutral-200/60 flex items-center justify-between">
+      <div className="mb-2 pt-4 border-t border-neutral-200/60 flex items-center justify-between">
         <span className="text-sm text-neutral-500 font-medium">{t.dashboard.monthlyApplications.trend}</span>
         <div className="flex items-center space-x-2">
           <TrendingUp className="w-4 h-4 text-success-500" />

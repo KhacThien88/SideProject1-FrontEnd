@@ -29,10 +29,12 @@ interface SidebarItem {
 
 export const DashboardSidebar: React.FC = () => {
   const { navigate } = useRouter();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const { user } = useAuth();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+  const saved = localStorage.getItem('sidebarCollapsed');
+    return saved === 'true';
+  });
 
   // Get current path to determine active item
   const currentPath = window.location.pathname;
@@ -79,25 +81,6 @@ export const DashboardSidebar: React.FC = () => {
       color: 'accent',
       roles: ['candidate'] // Candidate: Các job đã save
     },
-    {
-      key: 'candidate-analytics',
-      label: t.dashboard.sidebar.navigation.analytics,
-      icon: BarChart3,
-      href: '/dashboard/analytics',
-      isActive: currentPath === '/dashboard/analytics',
-      color: 'primary',
-      roles: ['candidate'] // Candidate: Phân tích CV, công việc, đề xuất cải thiện
-    },
-    {
-      key: 'candidate-settings',
-      label: t.dashboard.sidebar.navigation.settings,
-      icon: Settings,
-      href: '/dashboard/settings',
-      isActive: currentPath === '/dashboard/settings',
-      color: 'neutral',
-      roles: ['candidate'] // Candidate: Cài đặt
-    },
-
     // ============ RECRUITER (HR) NAVIGATION ============
     {
       key: 'job-postings',
@@ -118,24 +101,6 @@ export const DashboardSidebar: React.FC = () => {
       color: 'accent',
       roles: ['recruiter'] // HR: Ứng viên đã save
     },
-    {
-      key: 'recruiter-analytics',
-      label: t.dashboard.sidebar.navigation.analytics,
-      icon: BarChart3,
-      href: '/dashboard/analytics',
-      isActive: currentPath === '/dashboard/analytics',
-      color: 'primary',
-      roles: ['recruiter'] // HR: Phân tích lượng ứng viên, công việc đăng
-    },
-    {
-      key: 'recruiter-settings',
-      label: t.dashboard.sidebar.navigation.settings,
-      icon: Settings,
-      href: '/dashboard/settings',
-      isActive: currentPath === '/dashboard/settings',
-      color: 'neutral',
-      roles: ['recruiter'] // HR: Cài đặt
-    },
 
     // ============ ADMIN NAVIGATION ============
     {
@@ -147,23 +112,25 @@ export const DashboardSidebar: React.FC = () => {
       color: 'accent',
       roles: ['admin'] // Admin: Quản lý user theo role
     },
+
+    // ============ SHARED NAVIGATION (ALL ROLES) ============
     {
-      key: 'admin-analytics',
+      key: 'analytics',
       label: t.dashboard.sidebar.navigation.analytics,
       icon: BarChart3,
       href: '/dashboard/analytics',
       isActive: currentPath === '/dashboard/analytics',
       color: 'primary',
-      roles: ['admin'] // Admin: Phân tích về trang web
+      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles
     },
     {
-      key: 'admin-settings',
+      key: 'settings',
       label: t.dashboard.sidebar.navigation.settings,
       icon: Settings,
       href: '/dashboard/settings',
       isActive: currentPath === '/dashboard/settings',
       color: 'neutral',
-      roles: ['admin'] // Admin: Cài đặt
+      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles
     }
   ];
 
@@ -171,67 +138,43 @@ export const DashboardSidebar: React.FC = () => {
   const sidebarItems = useMemo(() => {
     if (!user) return [];
     return allSidebarItems.filter(item => item.roles.includes(user.role));
-  }, [user?.role, currentPath]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user?.role, currentPath, language]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNavigation = (href: string) => {
     navigate(href);
+    // Don't auto-expand when collapsed - keep sidebar state as is
   };
 
   const toggleSidebar = () => {
-    if (!isCollapsed) {
-      // Khi thu gọn: ẩn luôn không hiện overlay
-      setIsCollapsed(true);
-      // Reset hover state với delay nhỏ để tránh flicker
-      setTimeout(() => setIsHovered(false), 100);
-    } else {
-      // Khi mở rộng
-      setIsCollapsed(false);
-    }
+    setIsCollapsed(prev => {
+      localStorage.setItem('sidebarCollapsed', String(!prev));
+      return !prev;
+    });
   };
 
   return (
     <>
-      {/* Enhanced Hover Zone - Vùng để hover khi sidebar ẩn, cover toàn bộ lề trái */}
-      {isCollapsed && !isHovered && (
-        <div 
-          className="fixed left-0 top-0 w-12 h-full z-[60] cursor-pointer"
-          onMouseEnter={() => setIsHovered(true)}
-          style={{ 
-            background: 'linear-gradient(to right, rgba(35, 104, 254, 0.02), transparent)',
-            pointerEvents: 'auto'
-          }}
-          title={t.dashboard.sidebar.hoverHint}
-        />
-      )}
-
       {/* Sidebar Spacer - giữ chỗ để main content không bị shift */}
       <div className={cn(
         'transition-all duration-500 ease-out flex-shrink-0',
-        isCollapsed ? 'w-0' : 'w-72'
+        isCollapsed ? 'w-16' : 'w-60'
       )} />
 
       {/* Main Sidebar - luôn fixed để tránh layout shift */}
       <div 
         className={cn(
           'fixed left-0 top-0 bg-gradient-to-b from-primary-50 via-white/95 to-secondary-50 backdrop-blur-xl border-r border-neutral-200/60 shadow-soft flex flex-col min-h-screen transition-all duration-500 ease-out',
-          isCollapsed 
-            ? (isHovered 
-                ? 'w-16 translate-x-0 shadow-2xl z-[70]' 
-                : 'w-16 -translate-x-full z-[30]'
-              )
-            : 'w-72 translate-x-0 z-[40]'
+          isCollapsed ? 'w-16' : 'w-60',
+          'z-[40]'
         )}
-        onMouseEnter={() => isCollapsed && setIsHovered(true)}
-        onMouseLeave={() => isCollapsed && setIsHovered(false)}
       >
         {/* Enhanced Header */}
         <div className={cn(
           'border-b border-neutral-200/60',
-          isCollapsed && isHovered ? 'p-3' : 'p-6'
+          isCollapsed ? 'p-3' : 'p-4'
         )}>
           <div className="flex items-center justify-between">
-            {/* Chỉ hiện full header khi không collapsed hoặc khi collapsed nhưng không hover */}
-            {!isCollapsed && (
+            {!isCollapsed ? (
               <>
                 <div className="flex items-center space-x-3 group min-w-0">
                   <div className="w-12 h-12 bg-brand-gradient-primary rounded-2xl flex items-center justify-center shadow-brand-md group-hover:shadow-brand-lg transition-all duration-300 hover-scale flex-shrink-0">
@@ -255,16 +198,14 @@ export const DashboardSidebar: React.FC = () => {
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
               </>
-            )}
-            
-            {/* Khi collapsed và hover: chỉ hiện nút expand */}
-            {isCollapsed && isHovered && (
+            ) : (
               <div className="flex justify-center w-full">
                 <Button
                   variant="tertiary"
                   size="sm"
                   onClick={toggleSidebar}
                   className="focus-ring p-2"
+                  title={t.dashboard.sidebar.expand}
                 >
                   <ChevronRight className="w-4 h-4" />
                 </Button>
@@ -276,7 +217,7 @@ export const DashboardSidebar: React.FC = () => {
       {/* Enhanced Navigation */}
       <nav className={cn(
         'flex-1 space-y-2 overflow-y-auto',
-        isCollapsed && isHovered ? 'p-2' : 'p-4'
+        isCollapsed ? 'p-1' : 'p-2'
       )}>
         <div className="space-y-1">
           {sidebarItems.map((item, index) => {
@@ -288,14 +229,9 @@ export const DashboardSidebar: React.FC = () => {
                 className={cn(
                   'w-full flex items-center text-left transition-all duration-300 group relative overflow-hidden',
                   'focus-ring',
-                  // Khi collapsed và hover: chỉ hiện icon center
-                  isCollapsed && isHovered
+                  isCollapsed
                     ? 'justify-center px-2 py-3 rounded-xl'
-                    // Khi bình thường: hiện full
-                    : !isCollapsed 
-                      ? 'space-x-4 px-4 py-3 rounded-2xl'
-                      // Khi collapsed không hover: ẩn
-                      : 'hidden',
+                    : 'space-x-4 px-2 py-3 rounded-2xl',
                   item.isActive 
                     ? 'bg-brand-gradient-primary text-white shadow-brand-md' 
                     : 'text-neutral-600 hover:bg-primary-50/60 hover:text-primary-700'
@@ -303,7 +239,7 @@ export const DashboardSidebar: React.FC = () => {
                 style={{
                   animationDelay: `${index * 0.1}s`
                 }}
-                title={isCollapsed && isHovered ? item.label : undefined}
+                title={isCollapsed ? item.label : undefined}
               >
                 {/* Background gradient for active item */}
                 {item.isActive && (
@@ -353,14 +289,6 @@ export const DashboardSidebar: React.FC = () => {
         </div>
       </nav>
       </div>
-
-      {/* Overlay backdrop khi sidebar mở với smooth animation */}
-      {isCollapsed && isHovered && (
-        <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[65] transition-all duration-300 animate-fade-in"
-          onClick={() => setIsHovered(false)}
-        />
-      )}
     </>
   );
 };

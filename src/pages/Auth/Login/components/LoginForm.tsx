@@ -31,7 +31,7 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { getContent } = useTranslation();
-  const { showErrorToast, showSuccessToast } = useToast();
+  const { showErrorToast, showSuccessToast, showWarningToast, showInfoToast } = useToast();
   const { login, isLoading: authLoading } = useAuth();
   const { navigate } = useRouter();
   const [formData, setFormData] = useState({
@@ -163,6 +163,31 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Check for session expiration message from AuthContext
+  useEffect(() => {
+    const authMessage = sessionStorage.getItem('authMessage');
+    if (authMessage) {
+      try {
+        const { type, message, subtitle } = JSON.parse(authMessage);
+        
+        // Display appropriate toast based on message type
+        if (type === 'warning') {
+          showWarningToast(message, subtitle || '');
+        } else if (type === 'error') {
+          showErrorToast(message, subtitle || '');
+        } else if (type === 'info') {
+          showInfoToast(message, subtitle || '');
+        }
+        
+        // Clear the message after displaying
+        sessionStorage.removeItem('authMessage');
+      } catch (error) {
+        console.error('Failed to parse authMessage:', error);
+        sessionStorage.removeItem('authMessage');
+      }
+    }
+  }, [showErrorToast, showSuccessToast, showWarningToast, showInfoToast]);
   // No hash-based forgot/reset here anymore
 
   const validateForm = () => {

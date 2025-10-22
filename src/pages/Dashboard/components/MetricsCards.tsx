@@ -103,7 +103,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
         colorClasses[color].border
       )}
     >
-      <div className="flex flex-col space-y-4 ">
+      <div className="flex flex-col space-y-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3 sm:space-x-2 min-w-0 flex-1">
             <div className={cn(
@@ -136,7 +136,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
             </div>
           </div>
         </div>
-        <div className="text-xs sm:text-sm text-neutral-500 leading-relaxed break-words">{description}</div>
+        <div className="mb-2 text-xs sm:text-sm text-neutral-500 leading-relaxed break-words">{description}</div>
       </div>
     </Card>
   );

@@ -6,6 +6,7 @@ import {
   generateMockJobMatchResults 
 } from '../../utils/jobMatchingUtils';
 import { useToast } from '../../contexts/ToastContext';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface JobDetailPageProps {
   jobId?: string;
@@ -21,6 +22,7 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
   className
 }) => {
   const { showSuccessToast, showInfoToast } = useToast();
+  const { getContent } = useTranslation();
   
   const [savedJobIds, setSavedJobIds] = useState<string[]>([]);
 
@@ -57,10 +59,10 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
     setSavedJobIds(prev => {
       const isAlreadySaved = prev.includes(job.id);
       if (isAlreadySaved) {
-        showInfoToast('Job removed', `${job.title} removed from saved jobs`);
+        showInfoToast(getContent('jobs.matching.jobRemoved'), `${job.title} ${getContent('jobs.matching.removedFromSaved')}`);
         return prev.filter(id => id !== job.id);
       } else {
-        showSuccessToast('Job saved', `${job.title} added to saved jobs`);
+        showSuccessToast(getContent('jobs.matching.jobSaved'), `${job.title} ${getContent('jobs.matching.addedToSaved')}`);
         return [...prev, job.id];
       }
     });
@@ -73,7 +75,7 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
       if (job.applicationUrl) {
         window.open(job.applicationUrl, '_blank');
       } else {
-        showInfoToast('Application', 'Opening application form...');
+        showInfoToast(getContent('jobs.matching.application'), getContent('jobs.matching.openingApplicationForm'));
       }
     }
   };
@@ -81,7 +83,7 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
   const handleJobShare = (job: Job) => {
     const shareData = {
       title: `${job.title} at ${job.company.name}`,
-      text: `Check out this job opportunity: ${job.title} at ${job.company.name}`,
+      text: `${getContent('jobs.matching.checkOutJobAt')}: ${job.title} at ${job.company.name}`,
       url: window.location.href
     };
 
@@ -90,7 +92,7 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
     } else {
       // Fallback to clipboard
       navigator.clipboard.writeText(window.location.href);
-      showSuccessToast('Link copied', 'Job link copied to clipboard');
+      showSuccessToast(getContent('jobs.matching.linkCopied'), getContent('jobs.matching.jobLinkCopied'));
     }
   };
 
@@ -100,7 +102,7 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
         <div className="flex items-center justify-center min-h-96">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-            <div className="text-neutral-600">Loading job details...</div>
+            <div className="text-neutral-600">{getContent('jobs.details.loadingJobDetails')}</div>
           </div>
         </div>
       </div>
@@ -112,15 +114,15 @@ export const JobDetailPage: React.FC<JobDetailPageProps> = ({
       <div className="py-8">
         <div className="text-center py-12">
           <div className="text-6xl text-neutral-300 mb-4">🔍</div>
-          <div className="text-2xl font-bold text-neutral-900 mb-2">Job Not Found</div>
+          <div className="text-2xl font-bold text-neutral-900 mb-2">{getContent('jobs.details.jobNotFound')}</div>
           <div className="text-neutral-600 mb-6">
-            The job you're looking for doesn't exist or has been removed.
+            {getContent('jobs.details.jobNotFoundDescription')}
           </div>
           <button
             onClick={handleBack}
             className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors"
           >
-            Back to Jobs
+            {getContent('jobs.details.backToResults')}
           </button>
         </div>
       </div>

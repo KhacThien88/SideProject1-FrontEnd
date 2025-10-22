@@ -162,7 +162,7 @@ export const RecentResumes: React.FC = () => {
         ))}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-neutral-200/60">
+      <div className="mb-2 pt-4 border-t border-neutral-200/60">
         <Button 
           variant="secondary" 
           size="sm" 

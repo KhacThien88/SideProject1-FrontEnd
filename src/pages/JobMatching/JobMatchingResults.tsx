@@ -25,6 +25,7 @@ import {
   generateMockJobMatchResults 
 } from '../../utils/jobMatchingUtils';
 import { cn } from '../../utils/cn';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface JobMatchingResultsProps {
   searchResults?: JobMatchResult[];
@@ -51,6 +52,8 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
   savedJobIds = [],
   className
 }) => {
+  const { getContent } = useTranslation();
+  
   // Mock data for development - replace with actual data
   const mockJobs = useMemo(() => generateMockJobs(50), []);
   const mockResults = useMemo(() => generateMockJobMatchResults(mockJobs), [mockJobs]);
@@ -100,7 +103,7 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
           <LoadingSpinner size="lg" className="mx-auto mb-4" />
-          <div className="text-neutral-600">Searching for matching jobs...</div>
+          <div className="text-neutral-600">{getContent('common.loadingData')}</div>
         </div>
       </div>
     );
@@ -112,16 +115,16 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
         <div className="w-20 h-20 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
           <Search className="w-10 h-10 text-primary-600" />
         </div>
-        <div className="text-xl font-semibold text-neutral-900 mb-2">No Jobs Found</div>
+        <div className="text-xl font-semibold text-neutral-900 mb-2">{getContent('jobs.matching.noJobsFound')}</div>
         <div className="text-neutral-600 mb-4">
-          We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms.
+          {getContent('jobs.matching.noJobsFoundDescription')}
         </div>
         <Button
           variant="primary"
           onClick={() => onFiltersChange?.({})}
           className="mt-4"
         >
-          Clear All Filters
+          {getContent('common.clearAllFilters')}
         </Button>
       </Card>
     );
@@ -132,9 +135,9 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
       {/* Search Results Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <div className="text-2xl font-bold text-neutral-900">Job Search Results</div>
+          <div className="text-2xl font-bold text-neutral-900">{getContent('jobs.matching.jobSearchResults')}</div>
           <div className="text-neutral-600 mt-1">
-            Found {results.length} job{results.length !== 1 ? 's' : ''} matching your profile
+            {getContent('jobs.matching.foundJobs')} {results.length} {getContent('jobs.matching.resultsCount')} {getContent('jobs.matching.matchingYourProfile')}
             {filters.keywords && (
               <span> for "<span className="font-medium">{filters.keywords}</span>"</span>
             )}
@@ -149,7 +152,7 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
             className="flex items-center gap-2"
           >
             <RefreshCw className="w-4 h-4" />
-            Refresh
+            {getContent('common.refresh')}
           </Button>
           
           <Button
@@ -159,7 +162,7 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
             className="flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
-            Export
+            {getContent('common.export')}
           </Button>
         </div>
       </div>
@@ -176,19 +179,19 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
               className="flex items-center gap-2"
             >
               <Filter className="w-4 h-4" />
-              Filters
+              {getContent('jobs.matching.filters')}
             </Button>
             
             {/* Active filters display */}
             {Object.keys(filters).length > 0 && (
               <div className="flex items-center gap-2 text-sm text-neutral-600">
-                <span>{Object.keys(filters).length} filter{Object.keys(filters).length !== 1 ? 's' : ''} applied</span>
+                <span>{Object.keys(filters).length} {getContent('jobs.matching.filter')}{Object.keys(filters).length !== 1 ? 's' : ''} {getContent('jobs.matching.applied')}</span>
                 {onFiltersChange && (
                   <button
                     onClick={() => onFiltersChange({})}
                     className="text-primary-600 hover:text-primary-700 underline"
                   >
-                    Clear all
+                    {getContent('common.clearAll')}
                   </button>
                 )}
               </div>
@@ -198,16 +201,16 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
           {/* Right side - Sort and View */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-neutral-600">Sort by:</span>
+              <span className="text-sm text-neutral-600">{getContent('common.sortBy')}:</span>
               <select
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value as JobSearchFilters['sortBy'])}
                 className="text-sm border border-neutral-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
               >
-                <option value="relevance">Relevance</option>
-                <option value="match-score">Match Score</option>
-                <option value="date">Date Posted</option>
-                <option value="salary">Salary</option>
+                <option value="relevance">{getContent('jobs.matching.relevance')}</option>
+                <option value="match-score">{getContent('jobs.matching.matchScore')}</option>
+                <option value="date">{getContent('jobs.matching.datePosted')}</option>
+                <option value="salary">{getContent('common.salary')}</option>
               </select>
               
               <button
@@ -270,7 +273,7 @@ export const JobMatchingResults: React.FC<JobMatchingResultsProps> = ({
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div className="text-sm text-neutral-600">
-              Showing {((currentPage - 1) * resultsPerPage) + 1} to {Math.min(currentPage * resultsPerPage, pagination.totalCount)} of {pagination.totalCount} results
+              {getContent('jobs.matching.showing')} {((currentPage - 1) * resultsPerPage) + 1} {getContent('jobs.matching.to')} {Math.min(currentPage * resultsPerPage, pagination.totalCount)} {getContent('jobs.matching.of')} {pagination.totalCount} {getContent('jobs.matching.results')}
             </div>
             
             <div className="flex items-center gap-2">

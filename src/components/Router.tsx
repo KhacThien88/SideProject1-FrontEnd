@@ -100,9 +100,20 @@ export const Route: React.FC<RouteProps> = ({
 }) => {
   const { currentRoute } = useRouter();
   
-  const matches = exact 
-    ? currentRoute === path 
-    : currentRoute.startsWith(path);
+  let matches = false;
+  
+  if (exact) {
+    matches = currentRoute === path;
+  } else {
+    // For non-exact routes, check if it starts with the path
+    // and ensure we're not matching exact routes by mistake
+    matches = currentRoute.startsWith(path) && currentRoute !== path.replace(/\/$/, '');
+  }
+  
+  // Debug logging
+  if (path.includes('job-postings')) {
+    console.log(`Route check: path="${path}", exact=${exact}, currentRoute="${currentRoute}", matches=${matches}`);
+  }
     
   if (!matches) return null;
   

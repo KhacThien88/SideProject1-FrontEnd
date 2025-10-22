@@ -130,7 +130,7 @@ class JobMatchingService {
   // Apply for a job
   async applyForJob(applicationRequest: JobApplicationRequest): Promise<JobApplicationResponse> {
     try {
-      const response = await axios.post(`${API_BASE_URL}/jobs/apply`, applicationRequest, {
+      const response = await axios.post(`${API_BASE_URL}/applications`, applicationRequest, {
         headers: {
           ...this.getAuthHeaders(),
           'Content-Type': 'application/json',

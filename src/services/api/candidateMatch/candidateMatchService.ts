@@ -40,7 +40,7 @@ class CandidateMatchService {
         min_score: 60
       };
 
-      const response = await axios.get(`${API_BASE_URL}/jobs/candidates/${jobProfileId}`, {
+      const response = await axios.get(`${API_BASE_URL}/candidate-match/jobs/${jobProfileId}/candidates`, {
         headers: this.getAuthHeaders(),
         params: requestData
       });
@@ -55,7 +55,7 @@ class CandidateMatchService {
   // Get detailed candidate information
   async getCandidateDetail(candidateId: string): Promise<CandidateDetail> {
     try {
-      const response = await axios.get(`${API_BASE_URL}/cv/${candidateId}`, {
+      const response = await axios.get(`${API_BASE_URL}/candidate-match/candidates/${candidateId}/detail`, {
         headers: this.getAuthHeaders(),
       });
 
@@ -83,7 +83,7 @@ class CandidateMatchService {
         limit
       };
 
-      const response = await axios.post(`${API_BASE_URL}/cv/ai-search`, searchRequest, {
+      const response = await axios.post(`${API_BASE_URL}/candidate-match/ai-search`, searchRequest, {
         headers: {
           ...this.getAuthHeaders(),
           'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ class CandidateMatchService {
     experience_distribution: { [key: string]: number };
   }> {
     try {
-      const response = await axios.get(`${API_BASE_URL}/jobs/match/${jobProfileId}/analytics`, {
+      const response = await axios.get(`${API_BASE_URL}/candidate-match/jobs/${jobProfileId}/analytics`, {
         headers: this.getAuthHeaders(),
       });
 
@@ -120,7 +120,7 @@ class CandidateMatchService {
   // Refresh candidate matches
   async refreshMatches(jobProfileId: string): Promise<CandidateMatchResponse> {
     try {
-      const response = await axios.post(`${API_BASE_URL}/jobs/match`, 
+      const response = await axios.post(`${API_BASE_URL}/candidate-match/jobs/refresh-matches`, 
         { job_profile_id: jobProfileId },
         {
           headers: {
@@ -147,7 +147,7 @@ class CandidateMatchService {
     }[];
   }> {
     try {
-      const response = await axios.get(`${API_BASE_URL}/jobs/match/${jobProfileId}/history`, {
+      const response = await axios.get(`${API_BASE_URL}/candidate-match/jobs/${jobProfileId}/match-history`, {
         headers: this.getAuthHeaders(),
       });
 
@@ -190,7 +190,7 @@ class CandidateMatchService {
     try {
       // This would typically call a saved candidates API
       // For now, we'll simulate the toggle
-      const response = await axios.post(`${API_BASE_URL}/saved-candidates/toggle`, 
+      const response = await axios.post(`${API_BASE_URL}/candidate-match/saved-candidates/toggle`, 
         { candidate_id: candidateId },
         {
           headers: {
@@ -204,6 +204,21 @@ class CandidateMatchService {
     } catch (error: any) {
       console.error('Failed to toggle saved candidate:', error);
       throw new Error(error.response?.data?.detail || 'Failed to toggle saved status');
+    }
+  }
+
+  // Get saved candidates
+  async getSavedCandidates(limit: number = 20): Promise<CandidateMatch[]> {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/candidate-match/saved-candidates`, {
+        headers: this.getAuthHeaders(),
+        params: { limit }
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to get saved candidates:', error);
+      throw new Error(error.response?.data?.detail || 'Failed to get saved candidates');
     }
   }
 

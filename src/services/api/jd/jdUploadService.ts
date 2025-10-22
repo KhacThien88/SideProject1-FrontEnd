@@ -260,7 +260,7 @@ class JDUploadService {
       };
 
       const response = await axios.post(
-        `${API_BASE_URL}/upload/jd`,
+        `${API_BASE_URL}/jd`,
         formData,
         config
       );
@@ -279,7 +279,7 @@ class JDUploadService {
   async getJDUploadStatus(fileId: string): Promise<JDUploadStatusResponse> {
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/upload/jd/${fileId}/status`,
+        `${API_BASE_URL}/jd/${fileId}/status`,
         {
           headers: this.getAuthHeaders(),
         }
@@ -316,7 +316,7 @@ class JDUploadService {
         });
       }
 
-      const response = await axios.get(`${API_BASE_URL}/upload/jd/list`, {
+      const response = await axios.get(`${API_BASE_URL}/jd/user/${params.user_id || 'current'}`, {
         headers: this.getAuthHeaders(),
         params,
       });
@@ -430,7 +430,7 @@ class JDUploadService {
   }> {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/upload/jd/${fileId}/create-job-profile`,
+        `${API_BASE_URL}/jd/${fileId}/create-job-profile`,
         profileData || {},
         {
           headers: {
@@ -454,7 +454,7 @@ class JDUploadService {
   async reprocessJD(fileId: string): Promise<{ message: string }> {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/upload/jd/${fileId}/reprocess`,
+        `${API_BASE_URL}/jd/${fileId}/reprocess`,
         {},
         {
           headers: this.getAuthHeaders(),

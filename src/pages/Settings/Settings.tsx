@@ -17,6 +17,7 @@ import { useToast } from '../../contexts/ToastContext';
 import { useTranslation } from '../../hooks/useTranslation';
 import { settingsService } from '../../services/api/settings/settingsService';
 import type { SettingsData, SettingsTab } from '../../types/settings';
+import Footer from '../../components/layout/Footer';
 
 export const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
@@ -184,7 +185,7 @@ export const Settings: React.FC = () => {
         <div className="flex-1 flex flex-col min-w-0">
           <DashboardHeader />
           
-          <main className="flex-1 overflow-auto">
+          <main className="flex-1 overflow-auto pb-40">
             <div className="py-8">
               <Container maxWidth="2xl">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -311,6 +312,7 @@ export const Settings: React.FC = () => {
               </Container>    
             </div>
           </main>
+          <Footer />
         </div>
       </div>
     </Layout>

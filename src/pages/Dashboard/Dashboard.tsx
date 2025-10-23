@@ -9,6 +9,7 @@ import { SkillsChart } from './components/SkillsChart';
 import { RecentResumes } from './components/RecentResumes';
 import { ProcessingQueue } from './components/ProcessingQueue';
 import { ScoreDistribution } from './components/ScoreDistribution';
+import Footer from '../../components/layout/Footer';
 
 export const Dashboard: React.FC = () => {
 
@@ -52,6 +53,7 @@ export const Dashboard: React.FC = () => {
               </Container>
             </div>
           </main>
+          <Footer />
         </div>
        
       </div>

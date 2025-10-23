@@ -14,6 +14,7 @@ import { useRouter } from '../../components/Router';
 import { SavedJobsSearchBar } from './components/SavedJobsSearchBar';
 import { SavedJobsFilters } from './components/SavedJobsFilters';
 import { SavedJobsEmptyState } from './components/SavedJobsEmptyState';
+import Footer from '../../components/layout/Footer';
 
 interface JobFiltersState {
   jobTypes: Job['type'][];
@@ -330,13 +331,13 @@ export const SavedJobs: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen bg-neutral-50">
+    <div className="flex min-h-screen bg-neutral-50">
       <DashboardSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <DashboardHeader />
 
-        <main className="flex-1 overflow-y-auto">
-          <div className="max-w-7xl mx-auto p-8 space-y-6">
+        <main className="flex-1 overflow-auto pb-20">
+          <div className="max-w-7xl mx-auto p-8 space-y-8">
             {/* Search and Controls */}
             <SavedJobsSearchBar
               searchQuery={searchQuery}
@@ -401,6 +402,7 @@ export const SavedJobs: React.FC = () => {
             )}
           </div>
         </main>
+        <Footer />
       </div>
     </div>
   );

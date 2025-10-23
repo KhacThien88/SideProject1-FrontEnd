@@ -78,7 +78,7 @@ export const DashboardSidebar: React.FC = () => {
       href: '/dashboard',
       isActive: currentPath === '/dashboard',
       color: 'primary',
-      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles
+      roles: ['admin'] // Tất cả roles
     },
     {
       key: 'cv-analysis',
@@ -166,35 +166,6 @@ export const DashboardSidebar: React.FC = () => {
       roles: ['admin'] // Admin: Quản lý user theo role (legacy)
     },
 
-    // ============ API INTEGRATION FEATURES ============
-    {
-      key: 'jd-upload',
-      label: 'JD Upload',
-      icon: Upload,
-      href: '/jd-upload',
-      isActive: currentPath === '/jd-upload',
-      color: 'secondary',
-      roles: ['recruiter', 'admin'] // HR và Admin: Upload job descriptions
-    },
-    {
-      key: 'text-extraction',
-      label: 'Text Extraction',
-      icon: FileSearch,
-      href: '/text-extraction',
-      isActive: currentPath === '/text-extraction',
-      color: 'secondary',
-      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles: Extract text từ documents
-    },
-    {
-      key: 'feedback',
-      label: 'Feedback',
-      icon: MessageCircle,
-      href: '/feedback',
-      isActive: currentPath === '/feedback',
-      color: 'accent',
-      roles: ['candidate', 'recruiter', 'admin'] // Tất cả roles: Gửi feedback
-    },
-
     // ============ SHARED NAVIGATION (ALL ROLES) ============
     {
       key: 'analytics',
@@ -253,7 +224,7 @@ export const DashboardSidebar: React.FC = () => {
         {/* Enhanced Header */}
         <div className={cn(
           'border-b border-neutral-200/60',
-          isCollapsed ? 'p-3' : 'p-4'
+          isCollapsed ? 'p-3' : 'p-2'
         )}>
           <div className="flex items-center justify-between">
             {!isCollapsed ? (

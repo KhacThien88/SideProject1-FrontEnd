@@ -3,6 +3,7 @@ import { DashboardSidebar } from '../../components/layout/DashboardSidebar';
 import { DashboardHeader } from '../../components/layout/DashboardHeader';
 import { Layout } from '../../components/common/Layout';
 import { Container } from '../../components/common/Container';
+import Footer from '../../components/layout/Footer';
 
 import { useToast } from '../../contexts/ToastContext';
 import { useTranslation } from '../../hooks/useTranslation';
@@ -253,7 +254,7 @@ export const CVAnalysis: React.FC = () => {
           <DashboardHeader />
           
           {/* CV Analysis Content */}
-          <main className="flex-1 overflow-auto">
+          <main className="flex-1 overflow-auto pb-15">
             <div className="py-8">
               <Container maxWidth="2xl" className="space-y-8">
                 
@@ -298,6 +299,7 @@ export const CVAnalysis: React.FC = () => {
               </Container>
             </div>
           </main>
+          <Footer />
         </div>
       </div>
     </Layout>

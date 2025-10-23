@@ -61,10 +61,11 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
     // Filter and rank jobs based on CV skills
     const rankedJobs = mockJobs.map(job => {
       // Calculate match score based on detected skills
+      const detectedSkills = primaryCV.detectedSkills || [];
       const matchedSkills = job.skills.filter(jobSkill =>
-        primaryCV.detectedSkills.some(cvSkill => 
-          cvSkill.name.toLowerCase().includes(jobSkill.toLowerCase()) ||
-          jobSkill.toLowerCase().includes(cvSkill.name.toLowerCase())
+        detectedSkills.some(cvSkill => 
+          cvSkill.name?.toLowerCase().includes(jobSkill.toLowerCase()) ||
+          jobSkill.toLowerCase().includes(cvSkill.name?.toLowerCase() || '')
         )
       );
       
@@ -91,7 +92,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
           score: 80 + Math.floor(Math.random() * 20),
           comparison: 'within' as const
         },
-        overallAnalysis: `Strong match based on your ${primaryCV.detectedSkills.slice(0, 3).map(s => s.name).join(', ')} skills`,
+        overallAnalysis: `Strong match based on your ${(primaryCV.detectedSkills || []).slice(0, 3).map(s => s.name || s).join(', ')} skills`,
         recommendationLevel: overallMatch >= 80 ? 'high' as const : overallMatch >= 60 ? 'medium' as const : 'low' as const
       };
     });
@@ -112,7 +113,8 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
 
   const detectedSkills = useMemo(() => {
     if (analysisResults.length === 0) return [];
-    return analysisResults[0].detectedSkills.map(skill => skill.name);
+    const detectedSkills = analysisResults[0].detectedSkills || [];
+    return detectedSkills.map(skill => skill.name || skill);
   }, [analysisResults]);
 
   const handleFiltersChange = useCallback((newFilters: JobSearchFilters) => {
@@ -197,7 +199,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
               <Award className="w-5 h-5 text-primary-600" />
               <span className="font-medium text-primary-800">{getContent('cvAnalysis.results.overallScore')}</span>
             </div>
-            <div className="text-2xl font-bold text-primary-900">{primaryCV.overallScore}%</div>
+            <div className="text-2xl font-bold text-primary-900">{primaryCV.overallScore || 0}%</div>
           </div>
           
           <div className="bg-gradient-to-r from-success-50 to-success-100 p-4 rounded-lg">
@@ -205,7 +207,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
               <TrendingUp className="w-5 h-5 text-success-600" />
               <span className="font-medium text-success-800">{getContent('cvAnalysis.results.skillsDetected')}</span>
             </div>
-            <div className="text-2xl font-bold text-success-900">{primaryCV.detectedSkills.length}</div>
+            <div className="text-2xl font-bold text-success-900">{(primaryCV.detectedSkills || []).length}</div>
           </div>
           
           <div className="bg-gradient-to-r from-warning-50 to-warning-100 p-4 rounded-lg">
@@ -213,7 +215,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
               <Users className="w-5 h-5 text-warning-600" />
               <span className="font-medium text-warning-800">{getContent('cvAnalysis.results.experienceLevel')}</span>
             </div>
-            <div className="text-2xl font-bold text-warning-900">{primaryCV.experience}%</div>
+            <div className="text-2xl font-bold text-warning-900">{primaryCV.experience || 0}%</div>
           </div>
           
           <div className="bg-gradient-to-r from-secondary-50 to-secondary-100 p-4 rounded-lg">
@@ -229,38 +231,40 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
         <div className="mb-6">
           <div className="text-lg font-semibold text-neutral-900 mb-3">{getContent('cvAnalysis.results.detectedSkills')}</div>
           <div className="flex flex-wrap gap-2">
-            {primaryCV.detectedSkills.map((skill, index) => (
+            {(primaryCV.detectedSkills || []).map((skill, index) => (
               <Badge
                 key={index}
                 variant="primary"
                 className="flex items-center gap-1"
               >
-                {skill.name}
-                <span className="text-xs opacity-75">({skill.confidence}%)</span>
+                {skill.name || skill}
+                {skill.confidence && <span className="text-xs opacity-75">({skill.confidence}%)</span>}
               </Badge>
             ))}
           </div>
         </div>
 
         {/* Contact Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-neutral-50 rounded-lg mb-4">
-          <div>
-            <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.candidate')}</div>
-            <div className="text-neutral-900">{primaryCV.contactInfo.name}</div>
+        {primaryCV.contactInfo && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-neutral-50 rounded-lg mb-4">
+            <div>
+              <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.candidate')}</div>
+              <div className="text-neutral-900">{primaryCV.contactInfo.name || 'N/A'}</div>
+            </div>
+            <div>
+              <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.location')}</div>
+              <div className="text-neutral-900">{primaryCV.contactInfo.location || 'N/A'}</div>
+            </div>
+            <div>
+              <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.email')}</div>
+              <div className="text-neutral-900">{primaryCV.contactInfo.email || 'N/A'}</div>
+            </div>
+            <div>
+              <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.phone')}</div>
+              <div className="text-neutral-900">{primaryCV.contactInfo.phone || 'N/A'}</div>
+            </div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.location')}</div>
-            <div className="text-neutral-900">{primaryCV.contactInfo.location}</div>
-          </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.email')}</div>
-            <div className="text-neutral-900">{primaryCV.contactInfo.email}</div>
-          </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.phone')}</div>
-            <div className="text-neutral-900">{primaryCV.contactInfo.phone}</div>
-          </div>
-        </div>
+        )}
       </Card>
     </div>
   );

@@ -5,13 +5,15 @@ export interface UploadedFile {
   type: string;
   file: File;
   uploadProgress?: number;
-  status?: 'uploading' | 'processing' | 'completed' | 'error';
+  status?: 'uploading' | 'processing' | 'completed' | 'failed' | 'error' | 'analyzed';
   error?: string;
   url?: string;
+  fileId?: string;           // Server-generated file ID
+  analysisStatus?: string;   // Analysis status from server
 }
 
 export interface AnalysisProgress {
-  stage: 'upload' | 'extract' | 'analyze' | 'complete';
+  stage: 'upload' | 'extract' | 'analyze' | 'processing' | 'complete';
   percentage: number;
   estimatedTime?: number;
   currentFile?: string;
@@ -24,28 +26,36 @@ export interface ValidationError {
 }
 
 export interface DetailedAnalysisResult {
-  id: string;
+  fileId: string;  // Changed from id to fileId
   fileName: string;
-  contactInfo: {
+  fileSize: number;
+  analysisDate: string;  // Changed from analyzedDate
+  status: string;
+  extractedData: any;
+  aiInsights: any;
+  analysisResult: any;
+  // Legacy fields for backward compatibility
+  id?: string;
+  contactInfo?: {
     name: string;
     email: string;
     phone: string;
     location: string;
   };
-  overallScore: number;
-  skillsMatch: number;
-  experience: number;
-  education: number;
-  keywords: number;
-  detectedSkills: Array<{
+  overallScore?: number;
+  skillsMatch?: number;
+  experience?: number;
+  education?: number;
+  keywords?: number;
+  detectedSkills?: Array<{
     name: string;
     confidence: number;
   }>;
-  jobMatchAnalysis: {
+  jobMatchAnalysis?: {
     matchPercentage: number;
     recommendations: string[];
   };
-  analyzedDate: string;
+  analyzedDate?: string;
 }
 
 // Configuration constants

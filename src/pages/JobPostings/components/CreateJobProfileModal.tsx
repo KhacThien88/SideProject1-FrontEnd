@@ -183,7 +183,7 @@ export const CreateJobProfileModal: React.FC<CreateJobProfileModalProps> = ({
                 onClick={handleAddRequiredSkill}
                 variant="secondary"
                 size="sm"
-                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
+                className="text-white bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 {getContent('jobPostings.add')}
@@ -230,7 +230,7 @@ export const CreateJobProfileModal: React.FC<CreateJobProfileModalProps> = ({
                 onClick={handleAddPreferredSkill}
                 variant="secondary"
                 size="sm"
-                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
+                className="text-white bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 {getContent('jobPostings.add')}
@@ -274,7 +274,7 @@ export const CreateJobProfileModal: React.FC<CreateJobProfileModalProps> = ({
               disabled={isSubmitting || !title.trim() || !description.trim() || requiredSkills.length === 0}
               variant="secondary"
               size="md"
-              className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
+              className="text-white flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-md"
             >
               {isSubmitting
                 ? getContent('jobPostings.saving')

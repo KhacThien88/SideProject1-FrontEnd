@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const SETTINGS_CACHE_KEY = 'user_settings_cache';
+const SETTINGS_CACHE_KEY_PREFIX = 'user_settings_cache';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export interface UpdateProfileRequest {
@@ -59,9 +59,15 @@ export interface AppearanceSettingsRequest {
 }
 
 class SettingsService {
+  // Keep track of an in-flight fetch to de-duplicate concurrent requests
+  private _inflightFetch: Promise<SettingsData> | null = null;
+  // Track last successful fetch timestamp (in ms) to avoid repeated refreshes
+  private _lastFetchAt: number | null = null;
+  // Minimum interval between background refreshes to allow (e.g., 10 seconds)
+  private readonly MIN_REFRESH_INTERVAL_MS = 10 * 1000;
   // Get all settings - Now fetches real user data from backend with caching
   async getSettings(): Promise<SettingsData> {
-    // Try to get cached data first
+    // Try to get cached data first (per-user cache)
     const cached = this.getCachedSettings();
     if (cached) {
       // Return cached data immediately, then refresh in background
@@ -73,9 +79,38 @@ class SettingsService {
     return this.fetchSettings();
   }
 
+  // Derive per-user cache key from stored user info (matches header behavior)
+  private getUserIdFromToken(): string | null {
+    try {
+      const stored = TokenManager.getUserInfo?.();
+      if (stored) {
+        const id = stored.id || stored.user_id || stored.sub || stored.email || stored.uuid;
+        if (id) return String(id);
+      }
+
+      const token = TokenManager.getAccessToken();
+      if (!token) return null;
+      const parts = token.split('.');
+      if (parts.length < 2) return null;
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+      return (payload.sub || payload.user_id || payload.id || payload.email) ?? null;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  private getCacheKey(): string | null {
+    const userId = this.getUserIdFromToken();
+    if (!userId) return null;
+    return `${SETTINGS_CACHE_KEY_PREFIX}_${userId}`;
+  }
+
   private getCachedSettings(): SettingsData | null {
     try {
-      const cached = localStorage.getItem(SETTINGS_CACHE_KEY);
+      const key = this.getCacheKey();
+      if (!key) return null;
+
+      const cached = localStorage.getItem(key);
       if (!cached) return null;
 
       const { data, timestamp } = JSON.parse(cached);
@@ -87,7 +122,7 @@ class SettingsService {
       }
 
       // Cache expired
-      localStorage.removeItem(SETTINGS_CACHE_KEY);
+      localStorage.removeItem(key);
       return null;
     } catch (error) {
       console.error('Error reading cache:', error);
@@ -97,18 +132,45 @@ class SettingsService {
 
   private setCachedSettings(data: SettingsData): void {
     try {
+      const key = this.getCacheKey();
+      if (!key) return;
+
       const cacheData = {
         data,
         timestamp: Date.now(),
       };
-      localStorage.setItem(SETTINGS_CACHE_KEY, JSON.stringify(cacheData));
+      localStorage.setItem(key, JSON.stringify(cacheData));
     } catch (error) {
       console.error('Error writing cache:', error);
     }
   }
 
+  // Force refresh and return fresh data (useful for updating UI)
+  async refreshSettings(): Promise<SettingsData> {
+    const fresh = await this.fetchSettings();
+    this.setCachedSettings(fresh);
+    return fresh;
+  }
+
+  // Clear cache for current user (call on logout/login)
+  clearCacheForCurrentUser(): void {
+    try {
+      const key = this.getCacheKey();
+      if (!key) return;
+      localStorage.removeItem(key);
+    } catch (err) {
+      console.error('Failed to clear settings cache:', err);
+    }
+  }
+
   private async refreshSettingsInBackground(): Promise<void> {
     try {
+      // If we've fetched recently, skip a background refresh to avoid extra network calls
+      const now = Date.now();
+      if (this._lastFetchAt && now - this._lastFetchAt < this.MIN_REFRESH_INTERVAL_MS) {
+        return;
+      }
+
       const data = await this.fetchSettings();
       this.setCachedSettings(data);
     } catch (error) {
@@ -117,25 +179,29 @@ class SettingsService {
   }
 
   private async fetchSettings(): Promise<SettingsData> {
+    // If a fetch is already in progress, return the same promise to avoid duplicate network requests
+    if (this._inflightFetch) return this._inflightFetch;
+
     const token = TokenManager.getAccessToken();
     if (!token) {
       throw new Error('No access token available');
     }
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/auth/me`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+    const promise = (async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/me`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch user data: ${response.statusText}`);
-      }
+        if (!response.ok) {
+          throw new Error(`Failed to fetch user data: ${response.statusText}`);
+        }
 
-      const userData = await response.json();
+        const userData = await response.json();
 
       // Map backend data to frontend settings structure
       const settingsData: SettingsData = {
@@ -163,14 +229,23 @@ class SettingsService {
         },
       };
 
-      // Cache the data
-      this.setCachedSettings(settingsData);
+  // Cache the data
+  this.setCachedSettings(settingsData);
+  // Update last fetch timestamp
+  this._lastFetchAt = Date.now();
 
-      return settingsData;
-    } catch (error) {
-      console.error('Error fetching settings:', error);
-      throw error;
-    }
+  return settingsData;
+      } catch (error) {
+        console.error('Error fetching settings:', error);
+        throw error;
+      } finally {
+        // Clear inflight reference when done so subsequent calls can start a new fetch
+        this._inflightFetch = null;
+      }
+    })();
+
+    this._inflightFetch = promise;
+    return promise;
   }
 
   // Helper method to map backend role to frontend display role
@@ -219,8 +294,9 @@ class SettingsService {
         throw new Error(`Failed to update profile: ${response.statusText}`);
       }
 
-      // Clear cache after update to force refresh
-      localStorage.removeItem(SETTINGS_CACHE_KEY);
+        // Clear cache after update to force refresh (per-user)
+        const key = this.getCacheKey();
+        if (key) localStorage.removeItem(key);
       
       console.log('Profile updated successfully');
     } catch (error) {
@@ -235,8 +311,6 @@ class SettingsService {
       'Candidate': 'candidate',
       'Recruiter': 'recruiter',
       'Admin': 'admin',
-      'HR Manager': 'hr_manager',
-      'Talent Acquisition': 'recruiter',
     };
     return roleMap[frontendRole] || 'candidate';
   }

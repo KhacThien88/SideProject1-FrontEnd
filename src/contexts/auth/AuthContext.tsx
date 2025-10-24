@@ -169,6 +169,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // Try to restore user from localStorage first (faster on F5)
         const cachedUser = TokenManager.getUserInfo();
         if (cachedUser) {
+          // Immediately set auth state with cached user for instant UI
           dispatch({
             type: 'AUTH_SUCCESS',
             payload: {
@@ -180,6 +181,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               },
             },
           });
+
+          // Warm settings cache in background
+          try {
+            // fire-and-forget
+            (await import('../../services/api/settings/settingsService')).settingsService.refreshSettings().catch(() => null);
+          } catch (e) {
+            // ignore dynamic import errors
+          }
+
           setIsInitialized(true);
           
           // If authenticated and on public page, redirect immediately
@@ -187,11 +197,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             window.location.href = '/dashboard';
             return;
           }
-          
-          // Verify token in background (don't block UI)
-          AuthApiService.getCurrentUser(accessToken).catch(() => {
-            // Silent fail - will be caught on next request
-          });
+
+          // Revalidate user info in background and update stored info when available
+          AuthApiService.getCurrentUser(accessToken)
+            .then((fresh) => {
+              TokenManager.storeUserInfo(fresh);
+              dispatch({ type: 'AUTH_UPDATE_USER', payload: fresh });
+            })
+            .catch(() => {
+              // Silent fail - will be handled by interceptors or next request
+            });
+
           return;
         }
 
@@ -213,6 +229,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               },
             },
           });
+          // Clear and warm settings cache for this user so Settings page loads instantly later
+          try { (await import('../../services/api/settings/settingsService')).settingsService.clearCacheForCurrentUser(); } catch (e) { /* ignore */ }
+          try { (await import('../../services/api/settings/settingsService')).settingsService.refreshSettings().catch(() => null); } catch (e) { /* ignore */ }
           setIsInitialized(true);
           
           // If authenticated and on public page, redirect immediately
@@ -245,6 +264,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                   },
                 },
               });
+              // Clear and warm settings cache for this user after token refresh
+              try { (await import('../../services/api/settings/settingsService')).settingsService.clearCacheForCurrentUser(); } catch (e) { /* ignore */ }
+              try { (await import('../../services/api/settings/settingsService')).settingsService.refreshSettings().catch(() => null); } catch (e) { /* ignore */ }
               setIsInitialized(true);
               
               // If authenticated and on public page, redirect immediately
@@ -338,6 +360,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           },
         },
       });
+      // Clear any settings cache and prefetch settings for the newly registered user
+      try { (await import('../../services/api/settings/settingsService')).settingsService.clearCacheForCurrentUser(); } catch (e) { /* ignore */ }
+      try { (await import('../../services/api/settings/settingsService')).settingsService.refreshSettings().catch(() => null); } catch (e) { /* ignore */ }
+      // Clear any existing settings cache for this user to avoid stale data
+      try { (await import('../../services/api/settings/settingsService')).settingsService.clearCacheForCurrentUser(); } catch (e) { /* ignore */ }
+      // Prefetch settings for this user in background to warm the cache
+      try { (await import('../../services/api/settings/settingsService')).settingsService.refreshSettings().catch(() => null); } catch (e) { /* ignore */ }
     } catch (error) {
       const errorMessage = ApiErrorHandler.handleError(error);
       dispatch({ type: 'AUTH_FAILURE', payload: errorMessage });
@@ -369,6 +398,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           },
         },
       });
+      // Clear any existing settings cache for this user to avoid stale data
+      try { (await import('../../services/api/settings/settingsService')).settingsService.clearCacheForCurrentUser(); } catch (e) { /* ignore */ }
+      // Prefetch settings in background to warm cache
+      try { (await import('../../services/api/settings/settingsService')).settingsService.refreshSettings().catch(() => null); } catch (e) { /* ignore */ }
     } catch (error: any) {
       // Check if this is a role selection required error (HTTP 202)
       if (error?.message?.includes('ROLE_SELECTION_REQUIRED')) {

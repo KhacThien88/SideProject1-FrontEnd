@@ -57,8 +57,9 @@ export const DashboardHeader: React.FC = () => {
     if (currentPath === '/dashboard') return t.pages.dashboard.header;
     if (currentPath === '/cv-analysis') return t.pages.cvAnalysis.header;
     if (currentPath === '/dashboard/candidates') return t.pages.candidates.header;
-  if (currentPath === '/dashboard/saved-jobs') return t.pages.savedJobs.header;
+    if (currentPath === '/dashboard/saved-jobs') return t.pages.savedJobs.header;
     if (currentPath === '/dashboard/job-postings') return t.pages.jobPostings.header;
+    if (currentPath === '/jd-analysis') return t.pages.jdAnalysis.header;
     if (currentPath === '/dashboard/analytics') return t.pages.analytics.header;
     if (currentPath === '/dashboard/settings') return t.pages.settings.header;
     return t.pages.dashboard.header; // default

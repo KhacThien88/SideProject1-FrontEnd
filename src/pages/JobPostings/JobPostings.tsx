@@ -12,6 +12,7 @@ import { jobPostingService } from '../../services/api/jobPosting/jobPostingServi
 import type { JobProfile, CreateJobProfileData } from '../../types/jobPosting';
 import { JobPostingCard } from './components/JobPostingCard';
 import { CreateJobProfileModal } from './components/CreateJobProfileModal';
+import { JDUploadOptionsModal } from '../JDAnalysis/components';
 import Footer from '../../components/layout/Footer';
 
 export const JobPostings: React.FC = () => {
@@ -25,6 +26,7 @@ export const JobPostings: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProfile, setEditingProfile] = useState<JobProfile | null>(null);
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   useEffect(() => {
     loadJobProfiles();
@@ -127,24 +129,24 @@ export const JobPostings: React.FC = () => {
   };
 
   const handleOpenCreateModal = () => {
-    setEditingProfile(null);
-    setIsModalOpen(true);
+    // Show upload options modal for new job postings
+    setShowUploadModal(true);
   };
 
   return (
     <Layout className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">
-      <div className="flex flex-col min-h-screen">
-        <div className="flex flex-1 overflow-hidden">
-          <DashboardSidebar />
+      <div className="flex min-h-screen">
+        <DashboardSidebar />
+        
+        <div className="flex-1 flex flex-col min-w-0">
+          <DashboardHeader />
           
-          <div className="flex-1 flex flex-col min-w-0">
-            <DashboardHeader />
-            
-            <main className="flex-1 overflow-auto pb-20">
-              <div className="py-8">
-                <Container maxWidth="2xl">
-                  {/* Search and Create */}
-                  <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          <main className="flex-1 overflow-auto pb-15">
+            <div className="py-8">
+              <Container maxWidth="2xl" className="space-y-6 sm:space-y-8">
+                {/* Search and Create */}
+                <div className="animate-slide-up" style={{animationDelay: '0.1s'}}>
+                  <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1 relative">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
                       <input
@@ -165,83 +167,97 @@ export const JobPostings: React.FC = () => {
                       {getContent('jobPostings.createJobProfile')}
                     </Button>
                   </div>
+                </div>
 
-            {/* Loading State */}
-            {isLoading && (
-              <div className="flex items-center justify-center py-20">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-              </div>
-            )}
+                {/* Loading State */}
+                {isLoading && (
+                  <div className="animate-slide-up" style={{animationDelay: '0.2s'}}>
+                    <div className="flex items-center justify-center py-20">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                    </div>
+                  </div>
+                )}
 
-            {/* Empty State */}
-            {!isLoading && filteredProfiles.length === 0 && !searchQuery && (
-              <div className="text-center py-20">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Briefcase className="w-10 h-10 text-primary-600" />
-                </div>
-                <div className="text-xl font-semibold text-neutral-900 mb-2">
-                  {getContent('jobPostings.noJobsTitle')}
-                </div>
-                <div className="text-neutral-600 mb-6">
-                  {getContent('jobPostings.noJobsSubtitle')}
-                </div>
-                <Button
-                  onClick={handleOpenCreateModal}
-                  variant="secondary"
-                  size="md"
-                  className="shadow-lg bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
-                >
-                  <Plus className="w-5 h-5 mr-2" />
-                  {getContent('jobPostings.createFirstJob')}
-                </Button>
-              </div>
-            )}
+                {/* Empty State */}
+                {!isLoading && filteredProfiles.length === 0 && !searchQuery && (
+                  <div className="animate-slide-up" style={{animationDelay: '0.2s'}}>
+                    <div className="text-center py-20">
+                      <div className="w-20 h-20 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Briefcase className="w-10 h-10 text-primary-600" />
+                      </div>
+                      <div className="text-xl font-semibold text-neutral-900 mb-2">
+                        {getContent('jobPostings.noJobsTitle')}
+                      </div>
+                      <div className="text-neutral-600 mb-6">
+                        {getContent('jobPostings.noJobsSubtitle')}
+                      </div>
+                      <Button
+                        onClick={handleOpenCreateModal}
+                        variant="secondary"
+                        size="md"
+                        className="shadow-lg bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
+                      >
+                        <Plus className="w-5 h-5 mr-2" />
+                        {getContent('jobPostings.createFirstJob')}
+                      </Button>
+                    </div>
+                  </div>
+                )}
 
-            {/* No Search Results */}
-            {!isLoading && filteredProfiles.length === 0 && searchQuery && (
-              <div className="text-center py-20">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Search className="w-10 h-10 text-white" />
-                </div>
-                <div className="text-xl font-semibold text-neutral-900 mb-2">
-                  {getContent('jobPostings.noResultsTitle')}
-                </div>
-                <div className="text-neutral-600">
-                  {getContent('jobPostings.noResultsSubtitle')}
-                </div>
-              </div>
-            )}
+                {/* No Search Results */}
+                {!isLoading && filteredProfiles.length === 0 && searchQuery && (
+                  <div className="animate-slide-up" style={{animationDelay: '0.2s'}}>
+                    <div className="text-center py-20">
+                      <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Search className="w-10 h-10 text-white" />
+                      </div>
+                      <div className="text-xl font-semibold text-neutral-900 mb-2">
+                        {getContent('jobPostings.noResultsTitle')}
+                      </div>
+                      <div className="text-neutral-600">
+                        {getContent('jobPostings.noResultsSubtitle')}
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-            {/* Job Profiles Grid */}
-            {!isLoading && filteredProfiles.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filteredProfiles.map((profile) => (
-                  <JobPostingCard
-                    key={profile.id}
-                    jobProfile={profile}
-                    onViewMatches={handleViewMatches}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                  />
-                ))}
-              </div>
-            )}
+                {/* Job Profiles Grid */}
+                {!isLoading && filteredProfiles.length > 0 && (
+                  <div className="animate-slide-up" style={{animationDelay: '0.3s'}}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {filteredProfiles.map((profile) => (
+                        <JobPostingCard
+                          key={profile.id}
+                          jobProfile={profile}
+                          onViewMatches={handleViewMatches}
+                          onEdit={handleEdit}
+                          onDelete={handleDelete}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-            {/* Create/Edit Modal */}
-            <CreateJobProfileModal
-              isOpen={isModalOpen}
-              onClose={() => {
-                setIsModalOpen(false);
-                setEditingProfile(null);
-              }}
-              onSubmit={handleCreateOrUpdate}
-              editingProfile={editingProfile}
-            />
-                </Container>
-              </div>
-            </main>
-            <Footer />
-          </div>
+                {/* Upload Options Modal */}
+                <JDUploadOptionsModal
+                  isOpen={showUploadModal}
+                  onClose={() => setShowUploadModal(false)}
+                />
+
+                {/* Create/Edit Modal */}
+                <CreateJobProfileModal
+                  isOpen={isModalOpen}
+                  onClose={() => {
+                    setIsModalOpen(false);
+                    setEditingProfile(null);
+                  }}
+                  onSubmit={handleCreateOrUpdate}
+                  editingProfile={editingProfile}
+                />
+              </Container>
+            </div>
+          </main>
+          <Footer />
         </div>
       </div>
     </Layout>

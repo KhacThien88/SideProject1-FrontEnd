@@ -964,6 +964,14 @@ export const vi: ContentTaxonomy = {
         subtitle: 'Cấu hình',
         description: 'Quản lý tài khoản và các tùy chọn của bạn'
       }
+    },
+    jdAnalysis: {
+      subscription: 'Phân tích JD',
+      header: {
+        title: 'JD Analysis',
+        subtitle: '& CV Matching',
+        description: 'Tải JD → AI phân tích → Tự động ghép CV'
+      }
     }
   },
 

@@ -237,8 +237,8 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
                 variant="primary"
                 className="flex items-center gap-1"
               >
-                {skill.name || skill}
-                {skill.confidence && <span className="text-xs opacity-75">({skill.confidence}%)</span>}
+                {typeof skill === 'string' ? skill : skill.name}
+                {typeof skill === 'object' && skill.confidence && <span className="text-xs opacity-75">({skill.confidence}%)</span>}
               </Badge>
             ))}
           </div>
@@ -315,7 +315,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
           <JobRecommendationFilters
             filters={searchFilters}
             onFiltersChange={handleFiltersChange}
-            detectedSkills={detectedSkills}
+            detectedSkills={detectedSkills.map(s => typeof s === 'string' ? s : s.name)}
           />
         </div>
       )}

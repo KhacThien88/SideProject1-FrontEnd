@@ -12,6 +12,7 @@ import { RoleSelectionPage } from './pages/Auth/RoleSelection';
 import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { CVAnalysis } from './pages/CVAnalysis';
+import { JDAnalysis } from './pages/JDAnalysis';
 import { JobDetailPage } from './pages/JobMatching/JobDetailPage';
 import { SavedCandidates } from './pages/Candidates';
 import { SavedJobs } from './pages/SavedJobs';
@@ -28,7 +29,6 @@ const CVManagement = lazy(() => import('./pages/Admin/CVManagement').then(m => (
 const AuditLogs = lazy(() => import('./pages/Admin/AuditLogs').then(m => ({ default: m.AuditLogs })));
 
 // Lazy load API Integration Pages - Phase 2  
-const JDUploadPage = lazy(() => import('./pages/JDUpload').then(m => ({ default: m.JDUploadPage })));
 const TextExtractionPage = lazy(() => import('./pages/TextExtraction').then(m => ({ default: m.TextExtractionPage })));
 const FeedbackPage = lazy(() => import('./pages/Feedback').then(m => ({ default: m.FeedbackPage })));
 
@@ -61,6 +61,7 @@ function App() {
     if (path === '/dashboard') return '/dashboard';
     if (path === '/reset-password') return '/reset-password';
     if (path === '/cv-analysis') return '/cv-analysis';
+    if (path === '/jd-analysis') return '/jd-analysis';
     if (path === '/dashboard/candidates') return '/dashboard/candidates';
     if (path === '/dashboard/saved-jobs') return '/dashboard/saved-jobs';
     if (path === '/dashboard/settings') return '/dashboard/settings';
@@ -75,7 +76,6 @@ function App() {
     if (path === '/admin/audit-logs') return '/admin/audit-logs';
     
     // API Integration routes - Phase 2
-    if (path === '/jd-upload') return '/jd-upload';
     if (path === '/text-extraction') return '/text-extraction';
     if (path === '/feedback') return '/feedback';
     
@@ -112,7 +112,6 @@ function App() {
             <Route path="/admin/audit-logs" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={AuditLogs} /></Suspense>} exact />
             
             {/* API Integration routes - Phase 2 */}
-            <Route path="/jd-upload" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={JDUploadPage} /></Suspense>} exact />
             <Route path="/text-extraction" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={TextExtractionPage} /></Suspense>} exact />
             <Route path="/feedback" component={() => <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}><ProtectedRouteWrapper component={FeedbackPage} /></Suspense>} exact />
 
@@ -129,6 +128,7 @@ function App() {
             {/* Main routes */}
             <Route path="/dashboard" component={() => <ProtectedRouteWrapper component={Dashboard} />} exact />
             <Route path="/cv-analysis" component={() => <ProtectedRouteWrapper component={CVAnalysis} />} exact />
+            <Route path="/jd-analysis" component={() => <ProtectedRouteWrapper component={JDAnalysis} />} exact />
             
             {/* Dynamic routes (least specific) */}
             <Route path="/job/" component={() => <ProtectedRouteWrapper component={JobDetailPage} />} exact={false} />

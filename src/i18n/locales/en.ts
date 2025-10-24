@@ -1025,6 +1025,14 @@ export const en: ContentTaxonomy = {
         subtitle: 'Configuration',
         description: 'Manage your account and preferences'
       }
+    },
+    jdAnalysis: {
+      subscription: 'JD Analysis',
+      header: {
+        title: 'JD Analysis',
+        subtitle: '& CV Matching',
+        description: 'Upload JD → AI Analysis → Auto-match CVs'
+      }
     }
   },
 

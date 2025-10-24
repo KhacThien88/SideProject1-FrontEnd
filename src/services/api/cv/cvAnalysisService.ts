@@ -44,7 +44,9 @@ class CVAnalysisService {
 
   /**
    * Wait until backend has persisted the upload record
+   * (Removed - no longer needed with synchronous upload)
    */
+  /*
   private async waitUntilUploaded(
     fileId: string,
     maxAttempts: number = 20,
@@ -70,6 +72,7 @@ class CVAnalysisService {
     }
     console.warn(`⚠️ Upload record still not visible after ${maxAttempts} attempts`);
   }
+  */
 
   /**
    * Start CV analysis for a file

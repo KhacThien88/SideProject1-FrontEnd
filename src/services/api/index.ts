@@ -60,15 +60,7 @@ export type {
 } from './textract/textractService';
 
 export type {
-  JDUploadRequest,
   JDUploadResponse,
-  JDUploadStatusResponse,
-  JDFileInfo,
-  JDListResponse,
-  JDListFilters,
-  FileValidationResult,
-  UploadProgress,
-  BulkUploadResult,
 } from './jd/jdUploadService';
 
 export type {
@@ -109,8 +101,6 @@ export type {
 
 export type {
   CVAnalysisResult,
-  CVSearchRequest,
-  CVSearchResult,
 } from './cv/cvAnalysisService';
 
 export type {

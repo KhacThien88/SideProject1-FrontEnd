@@ -13,8 +13,6 @@ import {
   ChevronRight,
   Shield,
   FileText,
-  Upload,
-  MessageCircle,
   Activity
 } from 'lucide-react';
 import { cn } from '../../utils/cn';

@@ -161,7 +161,7 @@ export const JobPostings: React.FC = () => {
                       onClick={handleOpenCreateModal}
                       variant="secondary"
                       size="md"
-                      className="whitespace-nowrap bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-lg"
+                      className="text-white whitespace-nowrap bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-lg"
                     >
                       <Plus className="w-5 h-5 mr-2" />
                       {getContent('jobPostings.createJobProfile')}
@@ -195,7 +195,7 @@ export const JobPostings: React.FC = () => {
                         onClick={handleOpenCreateModal}
                         variant="secondary"
                         size="md"
-                        className="shadow-lg bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
+                        className="text-white shadow-lg bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
                       >
                         <Plus className="w-5 h-5 mr-2" />
                         {getContent('jobPostings.createFirstJob')}

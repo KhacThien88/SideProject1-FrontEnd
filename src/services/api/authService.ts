@@ -275,7 +275,7 @@ export class AuthApiService {
   static async googleAuth(googleToken: string): Promise<GoogleAuthResponse> {
     try {
       // Make the API call with custom handling for HTTP 202
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
       const url = `${API_BASE_URL}/auth/google-auth`;
       const response = await fetch(url, {
         method: 'POST',

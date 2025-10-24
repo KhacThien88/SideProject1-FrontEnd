@@ -76,7 +76,7 @@ export const DashboardSidebar: React.FC = () => {
       href: '/dashboard',
       isActive: currentPath === '/dashboard',
       color: 'primary',
-      roles: ['admin'] // Tất cả roles
+      roles: ['admin', 'candidate', 'recruiter'] // Tất cả roles
     },
     {
       key: 'cv-analysis',

@@ -1025,6 +1025,26 @@ export const vi: ContentTaxonomy = {
       processingSpeed: {
         title: 'Tốc độ xử lý',
         description: 'Thời gian xử lý trung bình'
+      },
+      roles: {
+        admin: {
+          totalUsers: { title: 'Tổng người dùng', description: 'Tổng số người dùng đã đăng ký' },
+          systemUptime: { title: 'Thời gian hoạt động', description: 'Độ khả dụng của hệ thống' },
+          totalProcessedCV: { title: 'CV đã xử lý', description: 'Tổng CV đã được phân tích' },
+          activeJobs: { title: 'Tin tuyển dụng', description: 'Số lượng tin tuyển dụng đang hoạt động' }
+        },
+        candidate: {
+          applications: { title: 'Đơn ứng tuyển', description: 'Tổng số đơn đã nộp' },
+          pendingResponses: { title: 'Đang chờ phản hồi', description: 'Đơn chờ phản hồi' },
+          accepted: { title: 'Được chấp nhận', description: 'Đơn được chấp nhận' },
+          matchedJobs: { title: 'Công việc phù hợp', description: 'Công việc phù hợp với hồ sơ' }
+        },
+        recruiter: {
+          jobPosts: { title: 'Tin tuyển dụng', description: 'Tin tuyển dụng đang hoạt động' },
+          newApplicants: { title: 'Ứng viên mới', description: 'Ứng viên mới trong tuần' },
+          interviewed: { title: 'Đã phỏng vấn', description: 'Ứng viên đã phỏng vấn' },
+          hired: { title: 'Đã tuyển', description: 'Ứng viên đã tuyển thành công' }
+        }
       }
     },
     processingQueue: {
@@ -1047,6 +1067,26 @@ export const vi: ContentTaxonomy = {
       total: 'Tổng số',
       score: 'Điểm',
       match: 'Phù hợp'
+    },
+    recentCandidates: {
+      title: 'Ứng viên gần đây',
+      subtitle: 'Ứng viên mới ứng tuyển',
+      viewAll: 'Xem tất cả',
+      total: 'Tổng số',
+      match: 'Phù hợp'
+      ,
+      status: {
+        new: 'Mới',
+        reviewing: 'Đang xem xét',
+        interviewed: 'Đã phỏng vấn',
+        hired: 'Đã tuyển',
+        rejected: 'Từ chối'
+      },
+      actions: {
+        viewProfile: 'Xem hồ sơ',
+        sendEmail: 'Gửi email',
+        call: 'Gọi điện'
+      }
     },
     monthlyApplications: {
       title: 'Lượt ứng tuyển hàng tháng',

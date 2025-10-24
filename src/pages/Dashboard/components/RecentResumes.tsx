@@ -166,7 +166,7 @@ export const RecentResumes: React.FC = () => {
         <Button 
           variant="secondary" 
           size="sm" 
-          className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-brand-sm hover:shadow-brand-md focus-ring"
+          className="w-full text-white bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-brand-sm hover:shadow-brand-md focus-ring"
         >
           {t.dashboard.recentResumes.viewAll} ({recentResumes.length + 128} {t.dashboard.recentResumes.total})
         </Button>

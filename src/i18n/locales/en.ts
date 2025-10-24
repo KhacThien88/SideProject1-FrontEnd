@@ -1087,6 +1087,27 @@ export const en: ContentTaxonomy = {
         title: 'Processing Speed',
         description: 'Average processing time'
       }
+      ,
+      roles: {
+        admin: {
+          totalUsers: { title: 'Total Users', description: 'Total registered users' },
+          systemUptime: { title: 'System Uptime', description: 'System availability' },
+          totalProcessedCV: { title: 'Processed CVs', description: 'Total CVs analyzed' },
+          activeJobs: { title: 'Active Jobs', description: 'Number of active job posts' }
+        },
+        candidate: {
+          applications: { title: 'Applications', description: 'Total applications' },
+          pendingResponses: { title: 'Pending Responses', description: 'Applications waiting for feedback' },
+          accepted: { title: 'Accepted', description: 'Applications accepted' },
+          matchedJobs: { title: 'Matched Jobs', description: 'Jobs matched to profile' }
+        },
+        recruiter: {
+          jobPosts: { title: 'Job Posts', description: 'Active job posts' },
+          newApplicants: { title: 'New Applicants', description: 'Applicants this week' },
+          interviewed: { title: 'Interviewed', description: 'Applicants interviewed' },
+          hired: { title: 'Hired', description: 'Successful hires' }
+        }
+      }
     },
     processingQueue: {
       title: 'Processing Queue',
@@ -1108,6 +1129,25 @@ export const en: ContentTaxonomy = {
       total: 'Total',
       score: 'Score',
       match: 'Match'
+    },
+    recentCandidates: {
+      title: 'Recent Candidates',
+      subtitle: 'New applicants',
+      viewAll: 'View All',
+      total: 'Total',
+      match: 'Match',
+      status: {
+        new: 'New',
+        reviewing: 'Reviewing',
+        interviewed: 'Interviewed',
+        hired: 'Hired',
+        rejected: 'Rejected'
+      },
+      actions: {
+        viewProfile: 'View Profile',
+        sendEmail: 'Send Email',
+        call: 'Call'
+      }
     },
     monthlyApplications: {
       title: 'Monthly Applications',

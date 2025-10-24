@@ -725,6 +725,27 @@ export interface ContentTaxonomy {
         title: string;
         description: string;
       };
+      // Role-specific metric keys (optional)
+      roles?: {
+        admin: {
+          totalUsers: { title: string; description: string };
+          systemUptime: { title: string; description: string };
+          totalProcessedCV: { title: string; description: string };
+          activeJobs: { title: string; description: string };
+        };
+        candidate: {
+          applications: { title: string; description: string };
+          pendingResponses: { title: string; description: string };
+          accepted: { title: string; description: string };
+          matchedJobs: { title: string; description: string };
+        };
+        recruiter: {
+          jobPosts: { title: string; description: string };
+          newApplicants: { title: string; description: string };
+          interviewed: { title: string; description: string };
+          hired: { title: string; description: string };
+        };
+      };
     };
     processingQueue: {
       title: string;
@@ -746,6 +767,25 @@ export interface ContentTaxonomy {
       total: string;
       score: string;
       match: string;
+    };
+    recentCandidates: {
+      title: string;
+      subtitle: string;
+      viewAll: string;
+      total: string;
+      match: string;
+      status: {
+        new: string;
+        reviewing: string;
+        interviewed: string;
+        hired: string;
+        rejected: string;
+      };
+      actions: {
+        viewProfile: string;
+        sendEmail: string;
+        call: string;
+      };
     };
     monthlyApplications: {
       title: string;

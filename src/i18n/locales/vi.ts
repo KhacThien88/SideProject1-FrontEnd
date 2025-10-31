@@ -5,7 +5,9 @@ export const vi: ContentTaxonomy = {
     features: 'Tính năng',
     pricing: 'Giá cả',
     about: 'Về chúng tôi',
+    contact: 'Liên hệ',
     login: 'Đăng nhập',
+    signup: 'Đăng ký',
     language: 'Ngôn ngữ',
   },
   
@@ -48,6 +50,33 @@ export const vi: ContentTaxonomy = {
         metric: 'GDPR Compliant',
       },
     ],
+  },
+
+  valueProposition: {
+    title: 'Giá trị cốt lõi của chúng tôi',
+    subtitle: 'Khám phá những lợi ích vượt trội mà nền tảng AI của chúng tôi mang lại cho việc tìm kiếm và tuyển dụng nhân tài.',
+    values: {
+      accuracy: {
+        title: 'Độ chính xác cao',
+        description: 'Phân tích CV với độ chính xác 95% nhờ công nghệ AI tiên tiến',
+        metric: '95%',
+      },
+      efficiency: {
+        title: 'Hiệu suất vượt trội',
+        description: 'Xử lý và phân tích CV trong vòng 10 giây',
+        metric: '10s',
+      },
+      insights: {
+        title: 'Phân tích sâu sắc',
+        description: 'Trích xuất kỹ năng, kinh nghiệm và học vấn chi tiết',
+        metric: '100%',
+      },
+      scalability: {
+        title: 'Khả năng mở rộng',
+        description: 'Xử lý hàng nghìn CV đồng thời không giới hạn',
+        metric: '∞',
+      },
+    },
   },
 
   landing: {
@@ -113,6 +142,7 @@ export const vi: ContentTaxonomy = {
   
   howItWorks: {
     title: 'Quy trình hoạt động',
+    subtitle: 'Quá trình đơn giản, nhanh chóng và hiệu quả chỉ trong 6 bước',
     steps: [
       {
         title: 'Upload CV',

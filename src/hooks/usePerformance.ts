@@ -1,5 +1,14 @@
-import { useEffect, useState } from 'react';
-import { performanceMonitor, type WebVitals } from '../utils/performance';
+import { useEffect, useState, useCallback } from 'react';
+import { 
+  performanceMonitor, 
+  realTimeMonitor,
+  performanceTester,
+  regressionDetector,
+  type WebVitals,
+  type PerformanceAlert,
+  type PerformanceTestResult,
+  type RegressionReport
+} from '../utils/performance';
 
 /**
  * Custom hook for monitoring Core Web Vitals
@@ -72,4 +81,151 @@ export const usePerformanceGrade = () => {
   }, []);
 
   return grade;
+};
+
+/**
+ * Hook for real-time performance monitoring with alerts
+ */
+export const useRealTimePerformance = () => {
+  const [alerts, setAlerts] = useState<PerformanceAlert[]>([]);
+  const [isMonitoring, setIsMonitoring] = useState(false);
+
+  useEffect(() => {
+    // Subscribe to alerts
+    const unsubscribe = realTimeMonitor.onAlert((alert) => {
+      setAlerts(prev => [...prev, alert]);
+    });
+
+    // Start monitoring
+    realTimeMonitor.startMonitoring();
+    setIsMonitoring(true);
+
+    return () => {
+      unsubscribe();
+      realTimeMonitor.stopMonitoring();
+      setIsMonitoring(false);
+    };
+  }, []);
+
+  const clearAlerts = useCallback(() => {
+    setAlerts([]);
+    realTimeMonitor.clearAlerts();
+  }, []);
+
+  const getLatestAlert = useCallback(() => {
+    return alerts[alerts.length - 1] || null;
+  }, [alerts]);
+
+  return {
+    alerts,
+    isMonitoring,
+    clearAlerts,
+    getLatestAlert,
+  };
+};
+
+/**
+ * Hook for automated performance testing
+ */
+export const usePerformanceTesting = () => {
+  const [isRunning, setIsRunning] = useState(false);
+  const [results, setResults] = useState<PerformanceTestResult[]>([]);
+  const [latestResult, setLatestResult] = useState<PerformanceTestResult | null>(null);
+
+  const runTest = useCallback(async () => {
+    setIsRunning(true);
+    try {
+      const result = await performanceTester.runTest();
+      setLatestResult(result);
+      setResults(prev => [...prev, result]);
+      return result;
+    } finally {
+      setIsRunning(false);
+    }
+  }, []);
+
+  const runTestSuite = useCallback(async (iterations: number = 3) => {
+    setIsRunning(true);
+    try {
+      const suiteResults = await performanceTester.runTestSuite(iterations);
+      setResults(prev => [...prev, ...suiteResults]);
+      setLatestResult(suiteResults[suiteResults.length - 1]);
+      return suiteResults;
+    } finally {
+      setIsRunning(false);
+    }
+  }, []);
+
+  const getAverageMetrics = useCallback(() => {
+    return performanceTester.getAverageMetrics();
+  }, []);
+
+  return {
+    isRunning,
+    results,
+    latestResult,
+    runTest,
+    runTestSuite,
+    getAverageMetrics,
+  };
+};
+
+/**
+ * Hook for performance regression detection
+ */
+export const useRegressionDetection = () => {
+  const [baseline, setBaseline] = useState<Partial<WebVitals> | null>(null);
+  const [latestReport, setLatestReport] = useState<RegressionReport | null>(null);
+
+  useEffect(() => {
+    // Load baseline on mount
+    regressionDetector.loadBaseline();
+  }, []);
+
+  const setBaselineMetrics = useCallback((metrics: Partial<WebVitals>) => {
+    regressionDetector.setBaseline(metrics);
+    setBaseline(metrics);
+  }, []);
+
+  const checkForRegressions = useCallback((current: Partial<WebVitals>) => {
+    const report = regressionDetector.detectRegressions(current);
+    setLatestReport(report);
+    return report;
+  }, []);
+
+  const generateReport = useCallback((current: Partial<WebVitals>) => {
+    return regressionDetector.generateReport(current);
+  }, []);
+
+  const setThreshold = useCallback((percent: number) => {
+    regressionDetector.setThreshold(percent);
+  }, []);
+
+  return {
+    baseline,
+    latestReport,
+    setBaselineMetrics,
+    checkForRegressions,
+    generateReport,
+    setThreshold,
+  };
+};
+
+/**
+ * Combined hook for comprehensive performance monitoring
+ */
+export const usePerformanceMonitoring = () => {
+  const vitals = usePerformance();
+  const grade = usePerformanceGrade();
+  const realTime = useRealTimePerformance();
+  const testing = usePerformanceTesting();
+  const regression = useRegressionDetection();
+
+  return {
+    vitals,
+    grade,
+    realTime,
+    testing,
+    regression,
+  };
 };

@@ -4,7 +4,9 @@ export interface ContentTaxonomy {
     features: string;
     pricing: string;
     about: string;
+    contact: string;
     login: string;
+    signup: string;
     language: string;
   };
   
@@ -29,7 +31,35 @@ export interface ContentTaxonomy {
       metric: string;
     }[];
   };
-  
+
+  // Value Proposition (top-level)
+  valueProposition: {
+    title: string;
+    subtitle: string;
+    values: {
+      accuracy: {
+        title: string;
+        description: string;
+        metric: string;
+      };
+      efficiency: {
+        title: string;
+        description: string;
+        metric: string;
+      };
+      insights: {
+        title: string;
+        description: string;
+        metric: string;
+      };
+      scalability: {
+        title: string;
+        description: string;
+        metric: string;
+      };
+    };
+  };
+
   // Landing sections
   landing: {
     valueProposition: {
@@ -77,6 +107,7 @@ export interface ContentTaxonomy {
   // How It Works
   howItWorks: {
     title: string;
+    subtitle: string;
     steps: {
       title: string;
       description: string;

@@ -411,6 +411,378 @@ export const checkPerformanceBudget = async (
 };
 
 /**
- * Export performance monitor instance
+ * Real-time Performance Monitoring
+ */
+export interface PerformanceAlert {
+  type: 'warning' | 'critical';
+  metric: string;
+  value: number;
+  threshold: number;
+  timestamp: number;
+  message: string;
+}
+
+export class RealTimePerformanceMonitor {
+  private static instance: RealTimePerformanceMonitor;
+  private alerts: PerformanceAlert[] = [];
+  private listeners: Array<(alert: PerformanceAlert) => void> = [];
+  private monitoringInterval?: number;
+  private budget: PerformanceBudget = DEFAULT_BUDGET;
+
+  private constructor() {
+    this.startMonitoring();
+  }
+
+  static getInstance(): RealTimePerformanceMonitor {
+    if (!RealTimePerformanceMonitor.instance) {
+      RealTimePerformanceMonitor.instance = new RealTimePerformanceMonitor();
+    }
+    return RealTimePerformanceMonitor.instance;
+  }
+
+  /**
+   * Start real-time monitoring
+   */
+  startMonitoring(intervalMs: number = 5000): void {
+    if (typeof window === 'undefined') return;
+
+    this.monitoringInterval = window.setInterval(() => {
+      this.checkMetrics();
+    }, intervalMs);
+  }
+
+  /**
+   * Stop monitoring
+   */
+  stopMonitoring(): void {
+    if (this.monitoringInterval) {
+      clearInterval(this.monitoringInterval);
+      this.monitoringInterval = undefined;
+    }
+  }
+
+  /**
+   * Set performance budget
+   */
+  setBudget(budget: Partial<PerformanceBudget>): void {
+    this.budget = { ...this.budget, ...budget };
+  }
+
+  /**
+   * Check metrics against budget
+   */
+  private checkMetrics(): void {
+    const monitor = PerformanceMonitor.getInstance();
+    const vitals = monitor.getCoreWebVitals();
+
+    // Check LCP
+    if (vitals.LCP && vitals.LCP > this.budget.maxLCP) {
+      this.createAlert({
+        type: vitals.LCP > this.budget.maxLCP * 1.5 ? 'critical' : 'warning',
+        metric: 'LCP',
+        value: vitals.LCP,
+        threshold: this.budget.maxLCP,
+        timestamp: Date.now(),
+        message: `Largest Contentful Paint (${vitals.LCP.toFixed(0)}ms) exceeds budget (${this.budget.maxLCP}ms)`,
+      });
+    }
+
+    // Check FID
+    if (vitals.FID && vitals.FID > this.budget.maxFID) {
+      this.createAlert({
+        type: vitals.FID > this.budget.maxFID * 2 ? 'critical' : 'warning',
+        metric: 'FID',
+        value: vitals.FID,
+        threshold: this.budget.maxFID,
+        timestamp: Date.now(),
+        message: `First Input Delay (${vitals.FID.toFixed(0)}ms) exceeds budget (${this.budget.maxFID}ms)`,
+      });
+    }
+
+    // Check CLS
+    if (vitals.CLS !== undefined && vitals.CLS > this.budget.maxCLS) {
+      this.createAlert({
+        type: vitals.CLS > this.budget.maxCLS * 2 ? 'critical' : 'warning',
+        metric: 'CLS',
+        value: vitals.CLS,
+        threshold: this.budget.maxCLS,
+        timestamp: Date.now(),
+        message: `Cumulative Layout Shift (${vitals.CLS.toFixed(3)}) exceeds budget (${this.budget.maxCLS})`,
+      });
+    }
+  }
+
+  /**
+   * Create and emit alert
+   */
+  private createAlert(alert: PerformanceAlert): void {
+    this.alerts.push(alert);
+    this.listeners.forEach(listener => listener(alert));
+
+    // Log to console in development
+    if (import.meta.env.DEV) {
+      const emoji = alert.type === 'critical' ? '🔴' : '⚠️';
+      console.warn(`${emoji} [Performance Alert]`, alert.message);
+    }
+
+    // Send to monitoring service
+    this.sendToMonitoring(alert);
+  }
+
+  /**
+   * Send alert to monitoring service
+   */
+  private sendToMonitoring(alert: PerformanceAlert): void {
+    // Send to external monitoring service (e.g., Sentry, DataDog)
+    if (typeof window !== 'undefined' && (window as any).Sentry) {
+      (window as any).Sentry.captureMessage(alert.message, {
+        level: alert.type === 'critical' ? 'error' : 'warning',
+        tags: {
+          metric: alert.metric,
+          value: alert.value,
+          threshold: alert.threshold,
+        },
+      });
+    }
+  }
+
+  /**
+   * Subscribe to alerts
+   */
+  onAlert(callback: (alert: PerformanceAlert) => void): () => void {
+    this.listeners.push(callback);
+    return () => {
+      this.listeners = this.listeners.filter(l => l !== callback);
+    };
+  }
+
+  /**
+   * Get all alerts
+   */
+  getAlerts(): PerformanceAlert[] {
+    return [...this.alerts];
+  }
+
+  /**
+   * Clear alerts
+   */
+  clearAlerts(): void {
+    this.alerts = [];
+  }
+}
+
+/**
+ * Automated Performance Testing
+ */
+export interface PerformanceTestResult {
+  passed: boolean;
+  score: number;
+  metrics: Partial<WebVitals>;
+  violations: string[];
+  timestamp: number;
+  url: string;
+}
+
+export class AutomatedPerformanceTester {
+  private testHistory: PerformanceTestResult[] = [];
+  private budget: PerformanceBudget = DEFAULT_BUDGET;
+
+  /**
+   * Run performance test
+   */
+  async runTest(): Promise<PerformanceTestResult> {
+    const monitor = PerformanceMonitor.getInstance();
+    const vitals = monitor.getCoreWebVitals();
+    const grade = monitor.getPerformanceGrade();
+    const budgetCheck = await checkPerformanceBudget(this.budget);
+
+    const result: PerformanceTestResult = {
+      passed: budgetCheck.passed,
+      score: grade.score,
+      metrics: vitals,
+      violations: budgetCheck.violations,
+      timestamp: Date.now(),
+      url: typeof window !== 'undefined' ? window.location.href : '',
+    };
+
+    this.testHistory.push(result);
+    return result;
+  }
+
+  /**
+   * Run test suite
+   */
+  async runTestSuite(iterations: number = 3): Promise<PerformanceTestResult[]> {
+    const results: PerformanceTestResult[] = [];
+
+    for (let i = 0; i < iterations; i++) {
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait between tests
+      const result = await this.runTest();
+      results.push(result);
+    }
+
+    return results;
+  }
+
+  /**
+   * Get test history
+   */
+  getTestHistory(): PerformanceTestResult[] {
+    return [...this.testHistory];
+  }
+
+  /**
+   * Get average metrics from history
+   */
+  getAverageMetrics(): Partial<WebVitals> {
+    if (this.testHistory.length === 0) return {};
+
+    const sum: Partial<WebVitals> = {};
+    const count = this.testHistory.length;
+
+    this.testHistory.forEach(result => {
+      Object.entries(result.metrics).forEach(([key, value]) => {
+        if (value !== undefined) {
+          sum[key as keyof WebVitals] = (sum[key as keyof WebVitals] || 0) + value;
+        }
+      });
+    });
+
+    const average: Partial<WebVitals> = {};
+    Object.entries(sum).forEach(([key, value]) => {
+      average[key as keyof WebVitals] = value / count;
+    });
+
+    return average;
+  }
+
+  /**
+   * Set performance budget
+   */
+  setBudget(budget: Partial<PerformanceBudget>): void {
+    this.budget = { ...this.budget, ...budget };
+  }
+}
+
+/**
+ * Performance Regression Detection
+ */
+export interface RegressionReport {
+  hasRegression: boolean;
+  regressions: Array<{
+    metric: string;
+    baseline: number;
+    current: number;
+    change: number;
+    changePercent: number;
+  }>;
+  timestamp: number;
+}
+
+export class PerformanceRegressionDetector {
+  private baseline: Partial<WebVitals> | null = null;
+  private threshold: number = 10; // 10% regression threshold
+
+  /**
+   * Set baseline metrics
+   */
+  setBaseline(metrics: Partial<WebVitals>): void {
+    this.baseline = { ...metrics };
+    
+    // Store in localStorage for persistence
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('performance_baseline', JSON.stringify(this.baseline));
+    }
+  }
+
+  /**
+   * Load baseline from storage
+   */
+  loadBaseline(): void {
+    if (typeof localStorage !== 'undefined') {
+      const stored = localStorage.getItem('performance_baseline');
+      if (stored) {
+        this.baseline = JSON.parse(stored);
+      }
+    }
+  }
+
+  /**
+   * Set regression threshold
+   */
+  setThreshold(percent: number): void {
+    this.threshold = percent;
+  }
+
+  /**
+   * Detect regressions
+   */
+  detectRegressions(current: Partial<WebVitals>): RegressionReport {
+    if (!this.baseline) {
+      return {
+        hasRegression: false,
+        regressions: [],
+        timestamp: Date.now(),
+      };
+    }
+
+    const regressions: RegressionReport['regressions'] = [];
+
+    // Check each metric
+    Object.entries(current).forEach(([key, currentValue]) => {
+      const baselineValue = this.baseline![key as keyof WebVitals];
+      
+      if (baselineValue !== undefined && currentValue !== undefined) {
+        const change = currentValue - baselineValue;
+        const changePercent = (change / baselineValue) * 100;
+
+        // For CLS, any increase is bad. For others, higher is worse
+        if (changePercent > this.threshold) {
+          regressions.push({
+            metric: key,
+            baseline: baselineValue,
+            current: currentValue,
+            change,
+            changePercent,
+          });
+        }
+      }
+    });
+
+    return {
+      hasRegression: regressions.length > 0,
+      regressions,
+      timestamp: Date.now(),
+    };
+  }
+
+  /**
+   * Generate regression report
+   */
+  generateReport(current: Partial<WebVitals>): string {
+    const report = this.detectRegressions(current);
+
+    if (!report.hasRegression) {
+      return '✅ No performance regressions detected';
+    }
+
+    let output = '⚠️ Performance Regressions Detected:\n\n';
+    
+    report.regressions.forEach(reg => {
+      output += `${reg.metric}:\n`;
+      output += `  Baseline: ${reg.baseline.toFixed(2)}\n`;
+      output += `  Current: ${reg.current.toFixed(2)}\n`;
+      output += `  Change: +${reg.change.toFixed(2)} (+${reg.changePercent.toFixed(1)}%)\n\n`;
+    });
+
+    return output;
+  }
+}
+
+/**
+ * Export singleton instances
  */
 export const performanceMonitor = PerformanceMonitor.getInstance();
+export const realTimeMonitor = RealTimePerformanceMonitor.getInstance();
+export const performanceTester = new AutomatedPerformanceTester();
+export const regressionDetector = new PerformanceRegressionDetector();

@@ -77,18 +77,18 @@ export const Statistics: React.FC = () => {
   const { getContent } = useTranslation();
 
   return (
-    <section className="py-20 bg-neutral-900 text-white relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-white via-neutral-50/50 to-primary-50/30 relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-accent-500/20" />
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-100/30 to-accent-100/20" />
         <div className="absolute top-0 left-0 w-full h-full">
           <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
             <defs>
-              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <pattern id="grid-stats" width="10" height="10" patternUnits="userSpaceOnUse">
                 <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5" />
               </pattern>
             </defs>
-            <rect width="100" height="100" fill="url(#grid)" />
+            <rect width="100" height="100" fill="url(#grid-stats)" />
           </svg>
         </div>
       </div>
@@ -96,10 +96,10 @@ export const Statistics: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-fluid animate-fade-in-scale">
-          <h2 className="text-hierarchy-1 font-bold text-gray-900 animate-bounce-in animate-text-glow">
+          <h2 className="text-hierarchy-1 font-bold text-neutral-900 animate-bounce-in animate-text-glow">
             {getContent('statistics.title')}
           </h2>
-          <p className="text-hierarchy-3 text-gray-600 max-w-2xl mx-auto animate-slide-left stagger-1">
+          <p className="text-hierarchy-3 text-neutral-600 max-w-2xl mx-auto animate-slide-left stagger-1">
             {getContent('statistics.description')}
           </p>
         </div>
@@ -112,11 +112,11 @@ export const Statistics: React.FC = () => {
             return (
               <div
                 key={stat.id}
-                className="group bg-white/10 backdrop-blur-sm rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 hover-float hover:shadow-2xl glass-effect animate-bounce-in micro-scale micro-glow stagger-2"
+                className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-neutral-200/50 hover:border-primary-200/50 hover:bg-white transition-all duration-300 hover-float hover:shadow-2xl animate-bounce-in micro-scale stagger-2"
                 style={{ animationDelay: `${0.3 + index * 0.15}s` }}
               >
                 {/* Icon */}
-                <div className={`inline-flex items-center justify-center w-16 h-16 ${stat.bgColor} rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`inline-flex items-center justify-center w-16 h-16 ${stat.bgColor} rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
                   <IconComponent className={`w-8 h-8 ${stat.color}`} />
                 </div>
 
@@ -126,20 +126,20 @@ export const Statistics: React.FC = () => {
                     end={stat.value}
                     suffix={stat.suffix}
                     decimals={stat.decimals}
-                    className="text-4xl md:text-5xl font-bold text-white"
+                    className="text-4xl md:text-5xl font-bold text-neutral-900"
                   />
                 </div>
 
                 {/* Title & Description */}
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <h3 className="text-xl font-semibold text-neutral-900 mb-2">
                   {stat.title}
                 </h3>
-                <p className="text-neutral-300 leading-relaxed">
+                <p className="text-neutral-600 leading-relaxed">
                   {stat.description}
                 </p>
 
                 {/* Hover Effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/0 to-accent-500/0 group-hover:from-primary-500/10 group-hover:to-accent-500/10 transition-all duration-300 pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/0 to-accent-500/0 group-hover:from-primary-500/5 group-hover:to-accent-500/5 transition-all duration-300 pointer-events-none" />
               </div>
             );
           })}
@@ -147,7 +147,7 @@ export const Statistics: React.FC = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="inline-flex items-center space-x-2 text-neutral-300">
+          <div className="inline-flex items-center space-x-2 text-neutral-600">
             <Clock className="w-5 h-5" />
             <span>Cập nhật thời gian thực • Dữ liệu tháng {new Date().getMonth() + 1}/{new Date().getFullYear()}</span>
           </div>

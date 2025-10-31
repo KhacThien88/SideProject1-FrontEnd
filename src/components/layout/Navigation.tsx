@@ -111,10 +111,10 @@ export const Navigation: React.FC = () => {
           <div className="hidden lg:flex items-center space-x-4">
             <LanguageToggle />
             
-            <Button 
-              variant="tertiary" 
-              size="md" 
-              className="hover-lift focus-ring touch-target font-semibold"
+            <Button
+              variant="secondary"
+              size="md"
+              className="hover-lift focus-ring touch-target font-semibold border-2"
               onClick={() => navigate('/login')}
             >
               {getContent('nav.login')}
@@ -191,10 +191,10 @@ export const Navigation: React.FC = () => {
           
           {/* Mobile action buttons */}
           <div className="pt-6 border-t border-neutral-200/60 space-y-4">
-            <Button 
-              variant="tertiary" 
-              size="lg" 
-              className="w-full hover-lift animate-slide-up touch-target font-semibold" 
+            <Button
+              variant="secondary"
+              size="lg"
+              className="w-full hover-lift animate-slide-up touch-target font-semibold border-2"
               style={{animationDelay: '0.4s'}}
               onClick={() => navigate('/login')}
             >

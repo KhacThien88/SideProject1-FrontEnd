@@ -14,7 +14,6 @@ import { MobileCTA } from '../../components/mobile/MobileCTA';
 
 // Lazy load non-critical sections for better performance
 const MultiPathCTA = lazy(() => import('../../components/common/MultiPathCTA').then(m => ({ default: m.MultiPathCTA })));
-const SocialProof = lazy(() => import('../../components/common/SocialProof').then(m => ({ default: m.SocialProof })));
 const ValueProposition = lazy(() => import('./components/ValueProposition'));
 const FeaturesShowcase = lazy(() => import('./components/FeaturesShowcase'));
 const HowItWorks = lazy(() => import('./components/HowItWorks').then(m => ({ default: m.HowItWorks })));
@@ -89,11 +88,6 @@ export const Landing: React.FC = () => {
         <main>
           {/* Critical above-the-fold content - loaded immediately */}
           <HeroSection />
-
-          {/* Social Proof - builds trust immediately */}
-          <Suspense fallback={<SectionLoader />}>
-            <SocialProof />
-          </Suspense>
 
           {/* Non-critical content - lazy loaded */}
           <Suspense fallback={<SectionLoader />}>

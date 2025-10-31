@@ -8,7 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate:sitemap": "tsx scripts/generate-sitemap.ts"
+    "generate:sitemap": "tsx scripts/generate-sitemap.ts",
+    "test:performance": "tsx scripts/performance-test.ts",
+    "test:performance:local": "npm run test:performance http://localhost:5173",
+    "analyze:bundle": "vite-bundle-analyzer"
   },
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",
@@ -21,6 +24,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-i18next": "^15.7.3",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.3",
     "react-toastify": "^11.0.5",
     "tailwind-merge": "^3.3.1",

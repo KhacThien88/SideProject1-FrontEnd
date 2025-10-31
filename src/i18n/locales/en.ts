@@ -5,7 +5,9 @@ export const en: ContentTaxonomy = {
     features: 'Features',
     pricing: 'Pricing',
     about: 'About Us',
+    contact: 'Contact',
     login: 'Login',
+    signup: 'Sign Up',
     language: 'Language',
   },
   
@@ -48,6 +50,33 @@ export const en: ContentTaxonomy = {
         metric: 'GDPR Compliant',
       },
     ],
+  },
+
+  valueProposition: {
+    title: 'Our Core Values',
+    subtitle: 'Discover the superior benefits that our AI platform brings to talent search and recruitment.',
+    values: {
+      accuracy: {
+        title: 'High Accuracy',
+        description: 'Analyze CVs with 95% accuracy thanks to advanced AI technology',
+        metric: '95%',
+      },
+      efficiency: {
+        title: 'Superior Performance',
+        description: 'Process and analyze CVs within 10 seconds',
+        metric: '10s',
+      },
+      insights: {
+        title: 'Deep Insights',
+        description: 'Extract skills, experience and education in detail',
+        metric: '100%',
+      },
+      scalability: {
+        title: 'Scalability',
+        description: 'Process thousands of CVs simultaneously without limits',
+        metric: '∞',
+      },
+    },
   },
 
   landing: {
@@ -113,6 +142,7 @@ export const en: ContentTaxonomy = {
   
   howItWorks: {
     title: 'How It Works',
+    subtitle: 'Simple, fast and effective process in just 6 steps',
     steps: [
       {
         title: 'Upload CV',

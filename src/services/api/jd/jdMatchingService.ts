@@ -2,9 +2,8 @@
  * JD Matching Service
  * API calls for JD-CV matching operations
  */
-import { api } from '../base';
-import {
-  JDCVMatch,
+import { apiClient as api } from '../client';
+import type {
   JDMatchesResponse,
   CVMatchesResponse,
   RecruiterMatchesResponse,

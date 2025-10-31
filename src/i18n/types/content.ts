@@ -68,6 +68,10 @@ export interface ContentTaxonomy {
       name: string;
       description: string;
     }[];
+    platformSupport: {
+      title: string;
+      description: string;
+    };
   };
   
   // How It Works
@@ -83,6 +87,7 @@ export interface ContentTaxonomy {
   // Statistics
   statistics: {
     title: string;
+    description: string;
     items: {
       label: string;
       description: string;
@@ -119,6 +124,10 @@ export interface ContentTaxonomy {
   cta: {
     title: string;
     subtitle: string;
+    headline: string;
+    primaryCTA: string;
+    secondaryCTA: string;
+    trustMessage: string;
     buttons: {
       getStarted: string;
       learnMore: string;
@@ -129,11 +138,53 @@ export interface ContentTaxonomy {
   featuresShowcase: {
     title: string;
     subtitle: string;
-    features: {
-      title: string;
-      description: string;
-      icon: string;
-    }[];
+    tabs: {
+      candidates: string;
+      recruiters: string;
+      admins: string;
+    };
+    candidates: {
+      upload: {
+        title: string;
+        description: string;
+      };
+      analysis: {
+        title: string;
+        description: string;
+      };
+      matching: {
+        title: string;
+        description: string;
+      };
+    };
+    recruiters: {
+      posting: {
+        title: string;
+        description: string;
+      };
+      search: {
+        title: string;
+        description: string;
+      };
+      management: {
+        title: string;
+        description: string;
+      };
+    };
+    admins: {
+      users: {
+        title: string;
+        description: string;
+      };
+      monitoring: {
+        title: string;
+        description: string;
+      };
+      analytics: {
+        title: string;
+        description: string;
+      };
+    };
   };
 
   // Validation
@@ -657,6 +708,14 @@ export interface ContentTaxonomy {
       };
     };
     analytics: {
+      subscription: string;
+      header: {
+        title: string;
+        subtitle: string;
+        description: string;
+      };
+    };
+    jdAnalysis: {
       subscription: string;
       header: {
         title: string;
@@ -1304,5 +1363,249 @@ export interface ContentTaxonomy {
     failed: string;
     completed: string;
     pending: string;
+  };
+
+  // Social Proof
+  socialProof?: {
+    activeUsers: string;
+    successRate: string;
+    jobsMatched: string;
+  };
+
+  trustBadges?: {
+    title: string;
+    subtitle: string;
+    gdprCompliant: {
+      title: string;
+      description: string;
+    };
+    ssl: {
+      title: string;
+      description: string;
+    };
+    certified: {
+      title: string;
+      description: string;
+    };
+    verified: {
+      title: string;
+      description: string;
+    };
+  };
+
+  successStories?: {
+    title: string;
+    subtitle: string;
+    story1: {
+      text: string;
+    };
+    story2: {
+      text: string;
+    };
+    story3: {
+      text: string;
+    };
+  };
+
+  caseStudies?: {
+    title: string;
+    subtitle: string;
+  };
+
+  reviews?: {
+    title: string;
+    subtitle: string;
+  };
+
+  // Engagement Features
+  exitIntent?: {
+    title: string;
+    subtitle: string;
+    ctaButton: string;
+    noThanks: string;
+  };
+
+  scrollEngagement?: {
+    title: string;
+    message: string;
+    ctaButton: string;
+  };
+
+  timeBased?: {
+    title: string;
+    message: string;
+    ctaButton: string;
+  };
+
+  chatWidget?: {
+    title: string;
+    status: string;
+    welcomeMessage: string;
+    placeholder: string;
+    autoReply: string;
+    quickReplies: {
+      pricing: string;
+      features: string;
+      demo: string;
+    };
+  };
+
+  // CTA Optimization
+  smartCTA?: {
+    control: string;
+    variantA: string;
+    variantB: string;
+    noCredit: string;
+  };
+
+  multiPathCTA?: {
+    title: string;
+    subtitle: string;
+    getStarted: string;
+    contactUs: string;
+    help: string;
+    footer: string;
+    jobSeeker: {
+      title: string;
+      description: string;
+      badge: string;
+    };
+    recruiter: {
+      title: string;
+      description: string;
+    };
+    enterprise: {
+      title: string;
+      description: string;
+    };
+  };
+
+  urgency?: {
+    countdown: {
+      label: string;
+    };
+    socialProof: {
+      label: string;
+    };
+    limitedSpots: {
+      only: string;
+      left: string;
+      subtitle: string;
+    };
+    trending: {
+      label: string;
+      text: string;
+    };
+  };
+
+  personalizedCTA?: {
+    newVisitor: string;
+    returningVisitor: string;
+    engagedUser: string;
+    deepScroll: string;
+    activity: string;
+  };
+
+  // Pricing Components
+  pricingCalculator?: {
+    title: string;
+    subtitle: string;
+    employees: string;
+    jobPosts: string;
+    monthly: string;
+    yearly: string;
+    save: string;
+    savings: string;
+    includes: string;
+    features: string;
+  };
+
+  featureComparison?: {
+    title: string;
+    subtitle: string;
+    features: string;
+    basic: string;
+    pro: string;
+    enterprise: string;
+    popular: string;
+    cvAnalysis: string;
+    jobMatching: string;
+    storage: string;
+    support: string;
+    analytics: string;
+    customization: string;
+    api: string;
+    team: string;
+    guarantee: string;
+    noCreditCard: string;
+  };
+
+  interactiveDemo?: {
+    title: string;
+    subtitle: string;
+    previous: string;
+    next: string;
+    finish: string;
+    step1: {
+      title: string;
+      description: string;
+    };
+    step2: {
+      title: string;
+      description: string;
+    };
+    step3: {
+      title: string;
+      description: string;
+    };
+    step4: {
+      title: string;
+      description: string;
+    };
+  };
+
+  // Mobile Optimization
+  mobileCTA?: {
+    upload: string;
+    title: string;
+    subtitle: string;
+    start: string;
+  };
+
+  mobileForm?: {
+    tapToUpload: string;
+    supportedFormats: string;
+    analyze: string;
+    analyzing: string;
+    privacy: string;
+  };
+
+  // SEO Content
+  seo: {
+    home: {
+      title: string;
+      description: string;
+      keywords: string[];
+    };
+    login: {
+      title: string;
+      description: string;
+    };
+    register: {
+      title: string;
+      description: string;
+    };
+    dashboard: {
+      title: string;
+      description: string;
+    };
+    cvAnalysis: {
+      title: string;
+      description: string;
+    };
+    jobMatching: {
+      title: string;
+      description: string;
+    };
   };
 }

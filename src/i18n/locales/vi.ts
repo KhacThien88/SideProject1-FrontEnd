@@ -105,6 +105,10 @@ export const vi: ContentTaxonomy = {
         description: 'Ứng dụng desktop đa nền tảng cho Windows, macOS và Linux',
       },
     ],
+    platformSupport: {
+      title: 'Hỗ Trợ Đa Nền Tảng',
+      description: 'Truy cập nền tảng của chúng tôi từ bất kỳ thiết bị nào, bất kỳ lúc nào, bất kỳ đâu.',
+    },
   },
   
   howItWorks: {
@@ -174,7 +178,8 @@ export const vi: ContentTaxonomy = {
   },
   
   statistics: {
-    title: 'Số liệu thuyết phục',
+    title: 'Số Liệu Ấn Tượng',
+    description: 'Con số nói lên sự thành công và niềm tin từ hàng nghìn người dùng trên toàn quốc',
     items: [
       { label: 'Users', description: 'Người dùng tin tưởng' },
       { label: 'Accuracy', description: 'Độ chính xác AI' },
@@ -263,6 +268,10 @@ export const vi: ContentTaxonomy = {
   cta: {
     title: 'Sẵn sàng bắt đầu?',
     subtitle: 'Tham gia cùng hàng nghìn công ty đã tin tưởng sử dụng nền tảng của chúng tôi.',
+    headline: 'Sẵn Sàng Chuyển Đổi Sự Nghiệp?',
+    primaryCTA: 'Bắt Đầu Miễn Phí',
+    secondaryCTA: 'Đặt Lịch Demo',
+    trustMessage: 'Được tin tưởng bởi hơn 10,000+ chuyên gia tuyển dụng và ứng viên',
     buttons: {
       getStarted: 'Bắt đầu miễn phí',
       learnMore: 'Tìm hiểu thêm',
@@ -272,23 +281,53 @@ export const vi: ContentTaxonomy = {
   featuresShowcase: {
     title: 'Tính năng nổi bật',
     subtitle: 'Khám phá những tính năng mạnh mẽ giúp bạn tối ưu hóa quy trình tuyển dụng',
-    features: [
-      {
-        title: 'Phân tích CV thông minh',
-        description: 'AI phân tích và đánh giá CV một cách chính xác và nhanh chóng',
-        icon: 'brain',
+    tabs: {
+      candidates: 'Cho Ứng Viên',
+      recruiters: 'Cho Nhà Tuyển Dụng',
+      admins: 'Cho Quản Trị Viên',
+    },
+    candidates: {
+      upload: {
+        title: 'Tải Lên CV',
+        description: 'Tải lên CV của bạn (PDF/Word) để phân tích tự động bằng AI. Hỗ trợ đa ngôn ngữ và tự động nhận diện định dạng.',
       },
-      {
-        title: 'Matching công việc',
-        description: 'Tìm kiếm và ghép nối ứng viên phù hợp với vị trí tuyển dụng',
-        icon: 'target',
+      analysis: {
+        title: 'Phân Tích AI',
+        description: 'AI trích xuất thông tin chính xác từ CV: kỹ năng, kinh nghiệm, học vấn. Phân tích sâu và đánh giá chất lượng CV.',
       },
-      {
-        title: 'Dashboard quản lý',
-        description: 'Theo dõi và quản lý toàn bộ quy trình tuyển dụng một cách hiệu quả',
-        icon: 'dashboard',
+      matching: {
+        title: 'Khớp Việc Làm',
+        description: 'Tìm công việc phù hợp nhất dựa trên phân tích CV. Thuật toán AI đề xuất các cơ hội việc làm phù hợp với bạn nhất.',
       },
-    ],
+    },
+    recruiters: {
+      posting: {
+        title: 'Đăng Tin Tuyển Dụng',
+        description: 'Tạo và quản lý tin tuyển dụng dễ dàng. Tự động phân phối đến các kênh tuyển dụng phổ biến.',
+      },
+      search: {
+        title: 'Tìm Ứng Viên',
+        description: 'Tìm kiếm và lọc ứng viên phù hợp từ cơ sở dữ liệu CV. Sử dụng AI để tìm những ứng viên tiềm năng nhất.',
+      },
+      management: {
+        title: 'Quản Lý Quy Trình',
+        description: 'Theo dõi và quản lý toàn bộ quy trình tuyển dụng. Quản lý đơn ứng tuyển, lịch phỏng vấn và quyết định tuyển dụng.',
+      },
+    },
+    admins: {
+      users: {
+        title: 'Quản Lý Người Dùng',
+        description: 'Quản lý tài khoản người dùng, phân quyền và theo dõi hoạt động. Kiểm soát truy cập và bảo mật hệ thống.',
+      },
+      monitoring: {
+        title: 'Giám Sát Hệ Thống',
+        description: 'Theo dõi hiệu suất hệ thống, logs và cảnh báo. Đảm bảo hệ thống hoạt động ổn định và an toàn.',
+      },
+      analytics: {
+        title: 'Phân Tích & Báo Cáo',
+        description: 'Xem báo cáo chi tiết về hoạt động của hệ thống. Phân tích xu hướng và đưa ra quyết định dựa trên dữ liệu.',
+      },
+    },
   },
   
   auth: {
@@ -1505,5 +1544,258 @@ export const vi: ContentTaxonomy = {
     failed: 'Thất bại',
     completed: 'Hoàn thành',
     pending: 'Đang chờ'
+  },
+
+  // Social Proof
+  socialProof: {
+    activeUsers: 'Người dùng hoạt động',
+    successRate: 'Tỷ lệ thành công',
+    jobsMatched: 'Việc làm đã khớp',
+  },
+
+  trustBadges: {
+    title: 'Nền tảng Tin cậy & Bảo mật',
+    subtitle: 'Bảo mật dữ liệu của bạn là ưu tiên hàng đầu của chúng tôi',
+    gdprCompliant: {
+      title: 'Tuân thủ GDPR',
+      description: 'Tuân thủ đầy đủ các quy định bảo vệ dữ liệu của EU',
+    },
+    ssl: {
+      title: 'Mã hóa SSL',
+      description: 'Mã hóa 256-bit chuẩn ngân hàng cho mọi dữ liệu',
+    },
+    certified: {
+      title: 'Chứng nhận ISO',
+      description: 'Chứng nhận ISO 27001 về bảo mật thông tin',
+    },
+    verified: {
+      title: 'Nền tảng Xác minh',
+      description: 'Được tin dùng bởi hơn 1000+ công ty trên toàn cầu',
+    },
+  },
+
+  successStories: {
+    title: 'Câu chuyện Thành công',
+    subtitle: 'Xem cách nền tảng của chúng tôi đã giúp hàng ngàn người đạt được mục tiêu nghề nghiệp',
+    story1: {
+      text: 'TalentFit AI đã giúp tôi tìm được công việc mơ ước chỉ trong 2 tuần. Khớp AI cực kỳ chính xác và tiết kiệm vô số thời gian tìm việc.',
+    },
+    story2: {
+      text: 'Là một nhà tuyển dụng, nền tảng này đã biến đổi quy trình tuyển dụng của chúng tôi. Chúng tôi giảm 50% thời gian tuyển dụng và tìm được ứng viên chất lượng hơn.',
+    },
+    story3: {
+      text: 'Phân tích AI về CV của tôi đã cho tôi những hiểu biết mà tôi chưa bao giờ nghĩ đến. Nó giúp tôi làm nổi bật điểm mạnh và nhận được 3 lời mời phỏng vấn trong tuần đầu tiên.',
+    },
+  },
+
+  caseStudies: {
+    title: 'Kết quả Đã chứng minh',
+    subtitle: 'Xem cách các công ty hàng đầu chuyển đổi quy trình tuyển dụng của họ',
+  },
+
+  reviews: {
+    title: 'Người dùng Nói gì về Chúng tôi',
+    subtitle: 'Được tin dùng bởi hàng ngàn chuyên gia',
+  },
+
+  // Engagement Features
+  exitIntent: {
+    title: 'Đợi đã! Trước khi bạn rời đi...',
+    subtitle: 'Nhận giảm giá 30% cho tháng đầu tiên và bắt đầu tìm ứng viên hoàn hảo ngay hôm nay!',
+    ctaButton: 'Nhận Ưu đãi',
+    noThanks: 'Không, cảm ơn',
+  },
+
+  scrollEngagement: {
+    title: 'Vẫn đang Khám phá?',
+    message: 'Tham gia cùng hàng ngàn người đã tìm được công việc mơ ước!',
+    ctaButton: 'Bắt đầu Miễn phí',
+  },
+
+  timeBased: {
+    title: 'Ưu đãi Có hạn!',
+    message: 'Giảm 50% cho 100 người đăng ký đầu tiên',
+    ctaButton: 'Nhận Ngay',
+  },
+
+  chatWidget: {
+    title: 'Hỗ trợ TalentFit',
+    status: 'Trực tuyến',
+    welcomeMessage: 'Xin chào! Tôi có thể giúp gì cho bạn?',
+    placeholder: 'Nhập tin nhắn của bạn...',
+    autoReply: 'Cảm ơn tin nhắn của bạn! Đội ngũ của chúng tôi sẽ phản hồi sớm nhất.',
+    quickReplies: {
+      pricing: 'Thông tin giá',
+      features: 'Tính năng',
+      demo: 'Yêu cầu demo',
+    },
+  },
+
+  // CTA Optimization
+  smartCTA: {
+    control: 'Tải CV Ngay',
+    variantA: 'Dùng Thử Miễn Phí',
+    variantB: 'Bắt Đầu Ngay',
+    noCredit: 'Không cần thẻ tín dụng',
+  },
+
+  multiPathCTA: {
+    title: 'Chọn Con Đường Của Bạn',
+    subtitle: 'Chọn lựa chọn phù hợp nhất với bạn',
+    getStarted: 'Bắt Đầu',
+    contactUs: 'Liên hệ chúng tôi',
+    help: 'và chúng tôi sẽ giúp bạn lựa chọn.',
+    footer: 'Chưa chắc chắn? ',
+    jobSeeker: {
+      title: 'Tôi Đang Tìm Việc',
+      description: 'Tải CV lên và nhận gợi ý việc làm phù hợp',
+      badge: 'Phổ Biến Nhất',
+    },
+    recruiter: {
+      title: 'Tôi Đang Tuyển Dụng',
+      description: 'Đăng tin tuyển dụng và tìm ứng viên hoàn hảo',
+    },
+    enterprise: {
+      title: 'Giải Pháp Doanh Nghiệp',
+      description: 'Giải pháp tùy chỉnh cho tổ chức lớn',
+    },
+  },
+
+  urgency: {
+    countdown: {
+      label: 'Ưu đãi kết thúc sau',
+    },
+    socialProof: {
+      label: 'người đã đăng ký hôm nay',
+    },
+    limitedSpots: {
+      only: 'Chỉ còn',
+      left: 'chỗ trống',
+      subtitle: 'trong tháng này',
+    },
+    trending: {
+      label: 'Xu Hướng',
+      text: '#1 Phổ Biến Nhất',
+    },
+  },
+
+  personalizedCTA: {
+    newVisitor: 'Bắt đầu hành trình với khớp việc làm AI',
+    returningVisitor: 'Chào mừng trở lại! Sẵn sàng bắt đầu chưa?',
+    engagedUser: 'Bạn có vẻ quan tâm! Tham gia cùng hàng ngàn người dùng hài lòng.',
+    deepScroll: 'Bạn đã xem những gì chúng tôi cung cấp. Hãy biến nó thành hiện thực!',
+    activity: '147 người đã tham gia trong 24 giờ qua',
+  },
+
+  // Mobile Optimization
+  mobileCTA: {
+    upload: 'Tải CV',
+    title: 'Bắt đầu Hành trình Sự nghiệp',
+    subtitle: 'Tải CV và tìm việc làm',
+    start: 'Bắt đầu',
+  },
+
+  mobileForm: {
+    tapToUpload: 'Chạm để Tải CV',
+    supportedFormats: 'PDF, DOC, DOCX tối đa 10MB',
+    analyze: 'Phân tích CV',
+    analyzing: 'Đang phân tích...',
+    privacy: 'CV của bạn được xử lý an toàn. Chúng tôi không bao giờ chia sẻ dữ liệu của bạn.',
+  },
+
+  // Pricing & Process
+  pricingCalculator: {
+    title: 'Máy Tính Giá',
+    subtitle: 'Tùy chỉnh gói của bạn',
+    employees: 'Số Lượng Nhân Viên',
+    jobPosts: 'Bài Đăng Việc Làm Hàng Tháng',
+    monthly: 'Gói Tháng',
+    yearly: 'Gói Năm',
+    save: 'TIẾT KIỆM',
+    savings: 'Tiết kiệm',
+    includes: 'Bao gồm',
+    features: 'Phân tích CV không giới hạn, Khớp AI, Hỗ trợ ưu tiên, Phân tích nâng cao',
+  },
+
+  featureComparison: {
+    title: 'So Sánh Gói',
+    subtitle: 'Chọn gói phù hợp với nhu cầu của bạn',
+    features: 'Tính Năng',
+    basic: 'Cơ Bản',
+    pro: 'Chuyên Nghiệp',
+    enterprise: 'Doanh Nghiệp',
+    popular: 'PHỔ BIẾN',
+    cvAnalysis: 'Phân Tích CV',
+    jobMatching: 'Khớp Việc Làm AI',
+    storage: 'Lưu Trữ Đám Mây',
+    support: 'Hỗ Trợ Ưu Tiên',
+    analytics: 'Phân Tích Nâng Cao',
+    customization: 'Thương Hiệu Tùy Chỉnh',
+    api: 'Truy Cập API',
+    team: 'Cộng Tác Nhóm',
+    guarantee: 'Tất cả gói bao gồm bảo đảm hoàn tiền 14 ngày',
+    noCreditCard: 'Không cần thẻ tín dụng • Hủy bất cứ lúc nào • Thiết lập ngay lập tức',
+  },
+
+  interactiveDemo: {
+    title: 'Xem Cách Hoạt Động',
+    subtitle: 'Trình diễn tương tác về nền tảng của chúng tôi',
+    previous: 'Trước',
+    next: 'Tiếp',
+    finish: 'Hoàn Thành',
+    step1: {
+      title: 'Tải CV Của Bạn',
+      description: 'Kéo thả CV hoặc nhấp để duyệt',
+    },
+    step2: {
+      title: 'Phân Tích AI',
+      description: 'AI của chúng tôi phân tích kỹ năng và kinh nghiệm của bạn',
+    },
+    step3: {
+      title: 'Khớp Thông Minh',
+      description: 'Nhận khớp với cơ hội việc làm phù hợp',
+    },
+    step4: {
+      title: 'Ứng Tuyển & Thành Công',
+      description: 'Ứng tuyển việc làm chỉ với một cú nhấp chuột',
+    },
+  },
+
+  // SEO Content
+  seo: {
+    home: {
+      title: 'Nền tảng Phân tích CV & Khớp Việc làm AI - TalentFit AI',
+      description: 'Tìm việc làm hoàn hảo với phân tích CV bằng AI. TalentFit AI giúp ứng viên khớp với công việc và nhà tuyển dụng tìm ứng viên lý tưởng bằng công nghệ AI tiên tiến.',
+      keywords: [
+        'phân tích CV AI',
+        'khớp việc làm',
+        'phân tích hồ sơ',
+        'tuyển dụng AI',
+        'tìm việc làm',
+        'nền tảng nghề nghiệp',
+        'tối ưu CV',
+        'tìm việc Việt Nam'
+      ]
+    },
+    login: {
+      title: 'Đăng nhập - Truy cập Tài khoản',
+      description: 'Đăng nhập vào TalentFit AI để truy cập gợi ý việc làm cá nhân hóa và phân tích CV của bạn.'
+    },
+    register: {
+      title: 'Đăng ký - Bắt đầu Hành trình Nghề nghiệp',
+      description: 'Tạo tài khoản TalentFit AI và khám phá khớp việc làm bằng AI phù hợp với kỹ năng của bạn.'
+    },
+    dashboard: {
+      title: 'Bảng điều khiển - Trung tâm Nghề nghiệp',
+      description: 'Quản lý phân tích CV, khớp việc làm và đơn ứng tuyển của bạn tất cả ở một nơi.'
+    },
+    cvAnalysis: {
+      title: 'Phân tích CV - Phân tích Hồ sơ AI',
+      description: 'Tải lên CV của bạn và nhận phân tích chi tiết bằng AI với gợi ý cải thiện và khớp việc làm.'
+    },
+    jobMatching: {
+      title: 'Khớp Việc làm - Tìm Cơ hội Hoàn hảo',
+      description: 'Khám phá các cơ hội việc làm phù hợp với kỹ năng và kinh nghiệm của bạn bằng công nghệ khớp AI.'
+    }
   }
 };

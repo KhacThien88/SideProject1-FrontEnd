@@ -105,6 +105,10 @@ export const en: ContentTaxonomy = {
         description: 'Cross-platform desktop application for Windows, macOS, and Linux',
       },
     ],
+    platformSupport: {
+      title: 'Multi-Platform Support',
+      description: 'Access our platform from any device, anytime, anywhere.',
+    },
   },
   
   howItWorks: {
@@ -174,7 +178,8 @@ export const en: ContentTaxonomy = {
   },
   
   statistics: {
-    title: 'Convincing Statistics',
+    title: 'Impressive Statistics',
+    description: 'Numbers that speak to our success and trust from thousands of users nationwide',
     items: [
       { label: 'Users', description: 'Trusted users' },
       { label: 'Accuracy', description: 'AI accuracy rate' },
@@ -263,6 +268,10 @@ export const en: ContentTaxonomy = {
   cta: {
     title: 'Ready to get started?',
     subtitle: 'Join thousands of companies that trust our platform.',
+    headline: 'Ready to Transform Your Career?',
+    primaryCTA: 'Get Started Free',
+    secondaryCTA: 'Schedule Demo',
+    trustMessage: 'Trusted by over 10,000+ recruitment professionals and candidates',
     buttons: {
       getStarted: 'Start for free',
       learnMore: 'Learn more',
@@ -272,23 +281,53 @@ export const en: ContentTaxonomy = {
   featuresShowcase: {
     title: 'Featured Capabilities',
     subtitle: 'Discover the powerful features of our platform',
-    features: [
-      {
-        title: 'AI Resume Analysis',
-        description: 'Intelligent CV analysis with high accuracy',
-        icon: 'brain',
+    tabs: {
+      candidates: 'For Candidates',
+      recruiters: 'For Recruiters',
+      admins: 'For Admins',
+    },
+    candidates: {
+      upload: {
+        title: 'Upload CV',
+        description: 'Upload your CV (PDF/Word) for automatic AI analysis. Multi-language support and automatic format detection.',
       },
-      {
-        title: 'Smart Job Matching',
-        description: 'Connect candidates with the most suitable jobs',
-        icon: 'target',
+      analysis: {
+        title: 'AI Analysis',
+        description: 'AI accurately extracts information from CV: skills, experience, education. Deep analysis and CV quality assessment.',
       },
-      {
-        title: 'Real-time Analytics',
-        description: 'Track recruitment performance in real-time',
-        icon: 'chart',
+      matching: {
+        title: 'Job Matching',
+        description: 'Find the most suitable jobs based on CV analysis. AI algorithm suggests job opportunities that match you best.',
       },
-    ],
+    },
+    recruiters: {
+      posting: {
+        title: 'Post Jobs',
+        description: 'Create and manage job postings easily. Automatically distribute to popular recruitment channels.',
+      },
+      search: {
+        title: 'Search Candidates',
+        description: 'Search and filter suitable candidates from CV database. Use AI to find the most potential candidates.',
+      },
+      management: {
+        title: 'Process Management',
+        description: 'Track and manage the entire recruitment process. Manage applications, interview schedules, and hiring decisions.',
+      },
+    },
+    admins: {
+      users: {
+        title: 'User Management',
+        description: 'Manage user accounts, permissions and track activities. Control access and system security.',
+      },
+      monitoring: {
+        title: 'System Monitoring',
+        description: 'Monitor system performance, logs and alerts. Ensure system operates stably and securely.',
+      },
+      analytics: {
+        title: 'Analytics & Reports',
+        description: 'View detailed reports on system activities. Analyze trends and make data-driven decisions.',
+      },
+    },
   },
   
 
@@ -1509,5 +1548,258 @@ export const en: ContentTaxonomy = {
     failed: 'Failed',
     completed: 'Completed',
     pending: 'Pending'
+  },
+
+  // Social Proof
+  socialProof: {
+    activeUsers: 'Active Users',
+    successRate: 'Success Rate',
+    jobsMatched: 'Jobs Matched',
+  },
+
+  trustBadges: {
+    title: 'Trusted & Secure Platform',
+    subtitle: 'Your data security is our top priority',
+    gdprCompliant: {
+      title: 'GDPR Compliant',
+      description: 'Full compliance with EU data protection regulations',
+    },
+    ssl: {
+      title: 'SSL Encrypted',
+      description: 'Bank-grade 256-bit encryption for all data',
+    },
+    certified: {
+      title: 'ISO Certified',
+      description: 'ISO 27001 certified for information security',
+    },
+    verified: {
+      title: 'Verified Platform',
+      description: 'Trusted by 1000+ companies worldwide',
+    },
+  },
+
+  successStories: {
+    title: 'Customer Success Stories',
+    subtitle: 'See how our platform has helped thousands achieve their career goals',
+    story1: {
+      text: 'TalentFit AI helped me find my dream job in just 2 weeks. The AI matching was incredibly accurate and saved me countless hours of job searching.',
+    },
+    story2: {
+      text: 'As a recruiter, this platform has transformed our hiring process. We reduced time-to-hire by 50% and found better quality candidates.',
+    },
+    story3: {
+      text: 'The AI analysis of my CV gave me insights I never considered. It helped me highlight my strengths and land 3 interviews in the first week.',
+    },
+  },
+
+  caseStudies: {
+    title: 'Proven Results',
+    subtitle: 'See how leading companies transformed their recruitment process',
+  },
+
+  reviews: {
+    title: 'What Our Users Say',
+    subtitle: 'Trusted by thousands of professionals',
+  },
+
+  // Engagement Features
+  exitIntent: {
+    title: 'Wait! Before You Go...',
+    subtitle: 'Get 30% off your first month and start finding the perfect candidates today!',
+    ctaButton: 'Claim My Offer',
+    noThanks: 'No thanks, I\'ll pass',
+  },
+
+  scrollEngagement: {
+    title: 'Still Exploring?',
+    message: 'Join thousands who found their dream job!',
+    ctaButton: 'Get Started Free',
+  },
+
+  timeBased: {
+    title: 'Limited Time Offer!',
+    message: 'Get 50% off for the first 100 signups',
+    ctaButton: 'Claim Now',
+  },
+
+  chatWidget: {
+    title: 'TalentFit Support',
+    status: 'Online',
+    welcomeMessage: 'Hi! How can I help you today?',
+    placeholder: 'Type your message...',
+    autoReply: 'Thanks for your message! Our team will get back to you shortly.',
+    quickReplies: {
+      pricing: 'Pricing info',
+      features: 'Features',
+      demo: 'Request demo',
+    },
+  },
+
+  // CTA Optimization
+  smartCTA: {
+    control: 'Upload CV Now',
+    variantA: 'Start Free Trial',
+    variantB: 'Get Started Now',
+    noCredit: 'No credit card required',
+  },
+
+  multiPathCTA: {
+    title: 'Choose Your Path',
+    subtitle: 'Select the option that best describes you',
+    getStarted: 'Get Started',
+    contactUs: 'Contact us',
+    help: 'and we\'ll help you choose.',
+    footer: 'Not sure which one? ',
+    jobSeeker: {
+      title: 'I\'m Looking for a Job',
+      description: 'Upload your CV and get matched with opportunities',
+      badge: 'Most Popular',
+    },
+    recruiter: {
+      title: 'I\'m Hiring Talent',
+      description: 'Post jobs and find the perfect candidates',
+    },
+    enterprise: {
+      title: 'Enterprise Solution',
+      description: 'Custom solutions for large organizations',
+    },
+  },
+
+  urgency: {
+    countdown: {
+      label: 'Offer ends in',
+    },
+    socialProof: {
+      label: 'people signed up today',
+    },
+    limitedSpots: {
+      only: 'Only',
+      left: 'spots left',
+      subtitle: 'for this month',
+    },
+    trending: {
+      label: 'Trending',
+      text: '#1 Most Popular',
+    },
+  },
+
+  personalizedCTA: {
+    newVisitor: 'Start your journey with AI-powered job matching',
+    returningVisitor: 'Welcome back! Ready to get started?',
+    engagedUser: 'You seem interested! Join thousands of satisfied users.',
+    deepScroll: 'You\'ve seen what we offer. Let\'s make it happen!',
+    activity: '147 people joined in the last 24 hours',
+  },
+
+  // Mobile Optimization
+  mobileCTA: {
+    upload: 'Upload CV',
+    title: 'Start Your Career Journey',
+    subtitle: 'Upload CV and find jobs',
+    start: 'Start',
+  },
+
+  mobileForm: {
+    tapToUpload: 'Tap to Upload CV',
+    supportedFormats: 'PDF, DOC, DOCX up to 10MB',
+    analyze: 'Analyze CV',
+    analyzing: 'Analyzing...',
+    privacy: 'Your CV is processed securely. We never share your data.',
+  },
+
+  // Pricing & Process
+  pricingCalculator: {
+    title: 'Pricing Calculator',
+    subtitle: 'Customize your plan',
+    employees: 'Number of Employees',
+    jobPosts: 'Monthly Job Posts',
+    monthly: 'Monthly Plan',
+    yearly: 'Yearly Plan',
+    save: 'SAVE',
+    savings: 'Save',
+    includes: 'Includes',
+    features: 'Unlimited CV analysis, AI matching, Priority support, Advanced analytics',
+  },
+
+  featureComparison: {
+    title: 'Compare Plans',
+    subtitle: 'Choose the perfect plan for your needs',
+    features: 'Features',
+    basic: 'Basic',
+    pro: 'Pro',
+    enterprise: 'Enterprise',
+    popular: 'POPULAR',
+    cvAnalysis: 'CV Analysis',
+    jobMatching: 'AI Job Matching',
+    storage: 'Cloud Storage',
+    support: 'Priority Support',
+    analytics: 'Advanced Analytics',
+    customization: 'Custom Branding',
+    api: 'API Access',
+    team: 'Team Collaboration',
+    guarantee: 'All plans include 14-day money-back guarantee',
+    noCreditCard: 'No credit card required • Cancel anytime • Instant setup',
+  },
+
+  interactiveDemo: {
+    title: 'See How It Works',
+    subtitle: 'Interactive demonstration of our platform',
+    previous: 'Previous',
+    next: 'Next',
+    finish: 'Finish',
+    step1: {
+      title: 'Upload Your CV',
+      description: 'Drag and drop your CV or click to browse',
+    },
+    step2: {
+      title: 'AI Analysis',
+      description: 'Our AI analyzes your skills and experience',
+    },
+    step3: {
+      title: 'Smart Matching',
+      description: 'Get matched with relevant job opportunities',
+    },
+    step4: {
+      title: 'Apply & Success',
+      description: 'Apply to jobs with one click',
+    },
+  },
+
+  // SEO Content
+  seo: {
+    home: {
+      title: 'AI-Powered CV Analysis & Job Matching Platform - TalentFit AI',
+      description: 'Find the perfect job with AI-powered CV analysis. TalentFit AI helps candidates match with jobs and recruiters find ideal candidates using advanced AI technology.',
+      keywords: [
+        'AI CV analysis',
+        'job matching',
+        'resume analyzer',
+        'recruitment AI',
+        'talent acquisition',
+        'career platform',
+        'job search',
+        'CV optimization'
+      ]
+    },
+    login: {
+      title: 'Login - Access Your Account',
+      description: 'Login to TalentFit AI to access your personalized job recommendations and CV analysis.'
+    },
+    register: {
+      title: 'Sign Up - Start Your Career Journey',
+      description: 'Create your TalentFit AI account and discover AI-powered job matching tailored to your skills.'
+    },
+    dashboard: {
+      title: 'Dashboard - Your Career Hub',
+      description: 'Manage your CV analysis, job matches, and applications all in one place.'
+    },
+    cvAnalysis: {
+      title: 'CV Analysis - AI-Powered Resume Analysis',
+      description: 'Upload your CV and get detailed AI analysis with improvement suggestions and job matches.'
+    },
+    jobMatching: {
+      title: 'Job Matching - Find Perfect Opportunities',
+      description: 'Discover job opportunities that match your skills and experience with AI-powered matching technology.'
+    }
   }
 };

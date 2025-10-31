@@ -23,7 +23,7 @@ import type {
   DetailedJDAnalysisResult,
   CVMatchResult 
 } from '../../types/jdAnalysis';
-import type { JDCVMatch, JDMatchesResponse } from '../../types/jdMatching';
+import type { JDCVMatch } from '../../types/jdMatching';
 
 // Reuse upload components from CVAnalysis (temporarily simplified)
 const JDAnalysis: React.FC = () => {
@@ -329,9 +329,7 @@ const JDAnalysis: React.FC = () => {
                     <label
                       htmlFor="jd-upload"
                       className="cursor-pointer inline-flex items-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-[#2563EB] hover:bg-[#2563EB] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 ease-in-out"
-                      style={{
-                        boxShadow: 'hover' ? '0 2px 8px rgba(37, 99, 235, 0.25)' : 'none'
-                      }}
+
                     >
                       {isDragging ? '📁 Thả file vào đây' : 'Select JD File'}
                     </label>

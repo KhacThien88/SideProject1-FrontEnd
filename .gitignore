@@ -83,5 +83,18 @@ Desktop.ini
 *.swo
 *~
 
-# DOC
+# Documentation & Planning (Local Only)
 .doc-plans
+
+# Kiro IDE Files (Keep Local)
+.kiro/
+.kiro/**/*
+*.kiro
+kiro-*
+
+# Project Planning & Specs (Local Only)
+specs/
+plans/
+docs/internal/
+
+CLAUDE.md

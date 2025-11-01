@@ -22,6 +22,7 @@ import {
   filterJobs
 } from '../../../utils/jobMatchingUtils';
 import { useToast } from '../../../contexts/ToastContext';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface CVAnalysisWithJobsProps {
   analysisResults: DetailedAnalysisResult[];
@@ -41,6 +42,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
   savedJobIds = []
 }) => {
   const { showSuccessToast, showInfoToast } = useToast();
+  const { getContent } = useTranslation();
   const [searchFilters, setSearchFilters] = useState<JobSearchFilters>({});
   const [showFilters, setShowFilters] = useState(false);
   const [selectedJobResult, setSelectedJobResult] = useState<JobMatchResult | null>(null);
@@ -59,10 +61,11 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
     // Filter and rank jobs based on CV skills
     const rankedJobs = mockJobs.map(job => {
       // Calculate match score based on detected skills
+      const detectedSkills = primaryCV.detectedSkills || [];
       const matchedSkills = job.skills.filter(jobSkill =>
-        primaryCV.detectedSkills.some(cvSkill => 
-          cvSkill.name.toLowerCase().includes(jobSkill.toLowerCase()) ||
-          jobSkill.toLowerCase().includes(cvSkill.name.toLowerCase())
+        detectedSkills.some(cvSkill => 
+          cvSkill.name?.toLowerCase().includes(jobSkill.toLowerCase()) ||
+          jobSkill.toLowerCase().includes(cvSkill.name?.toLowerCase() || '')
         )
       );
       
@@ -89,7 +92,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
           score: 80 + Math.floor(Math.random() * 20),
           comparison: 'within' as const
         },
-        overallAnalysis: `Strong match based on your ${primaryCV.detectedSkills.slice(0, 3).map(s => s.name).join(', ')} skills`,
+        overallAnalysis: `Strong match based on your ${(primaryCV.detectedSkills || []).slice(0, 3).map(s => s.name || s).join(', ')} skills`,
         recommendationLevel: overallMatch >= 80 ? 'high' as const : overallMatch >= 60 ? 'medium' as const : 'low' as const
       };
     });
@@ -110,7 +113,8 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
 
   const detectedSkills = useMemo(() => {
     if (analysisResults.length === 0) return [];
-    return analysisResults[0].detectedSkills.map(skill => skill.name);
+    const detectedSkills = analysisResults[0].detectedSkills || [];
+    return detectedSkills.map(skill => skill.name || skill);
   }, [analysisResults]);
 
   const handleFiltersChange = useCallback((newFilters: JobSearchFilters) => {
@@ -133,12 +137,12 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
 
   const handleJobSave = (job: any) => {
     onJobSave(job.id);
-    showSuccessToast('Job saved', `${job.title} has been saved to your favorites`);
+    showSuccessToast(getContent('cvAnalysis.jobSaved'), `${job.title} ${getContent('cvAnalysis.savedToFavorites')}`);
   };
 
   const handleJobApply = (jobId: string) => {
     onJobApply(jobId);
-    showInfoToast('Application', 'Redirecting to application page...');
+    showInfoToast(getContent('cvAnalysis.application'), getContent('cvAnalysis.redirectingToApplication'));
   };
 
   const handleJobShare = (job: any) => {
@@ -146,12 +150,12 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
     if (navigator.share) {
       navigator.share({
         title: job.title,
-        text: `Check out this job at ${job.company.name}: ${job.title}`,
+        text: `${getContent('cvAnalysis.checkOutJobAt')} ${job.company.name}: ${job.title}`,
         url: window.location.href
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
-      showSuccessToast('Link copied', 'Job link copied to clipboard');
+      showSuccessToast(getContent('cvAnalysis.linkCopied'), getContent('cvAnalysis.jobLinkCopied'));
     }
   };
 
@@ -166,17 +170,14 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
     <div className="space-y-8">
       {/* CV Analysis Summary */}
       <Card className="p-6">
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex items-start justify-between mb-4">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
               <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <div className="text-2xl font-bold text-neutral-900 mb-1">CV Analysis Complete</div>
+              <div className="text-2xl font-bold text-neutral-900 mb-1">{getContent('cvAnalysis.results.title')}</div>
               <div className="text-neutral-600">
-                Analyzed {analysisResults.length} resume{analysisResults.length > 1 ? 's' : ''} • 
-                Found {primaryCV.detectedSkills.length} skills • 
-                {allJobRecommendations.length} job matches
               </div>
             </div>
           </div>
@@ -187,7 +188,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
             className="flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
-            Export Report
+            {getContent('cvAnalysis.exportReport')}
           </Button>
         </div>
 
@@ -196,31 +197,31 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
           <div className="bg-gradient-to-r from-primary-50 to-primary-100 p-4 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Award className="w-5 h-5 text-primary-600" />
-              <span className="font-medium text-primary-800">Overall Score</span>
+              <span className="font-medium text-primary-800">{getContent('cvAnalysis.results.overallScore')}</span>
             </div>
-            <div className="text-2xl font-bold text-primary-900">{primaryCV.overallScore}%</div>
+            <div className="text-2xl font-bold text-primary-900">{primaryCV.overallScore || 0}%</div>
           </div>
           
           <div className="bg-gradient-to-r from-success-50 to-success-100 p-4 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="w-5 h-5 text-success-600" />
-              <span className="font-medium text-success-800">Skills Detected</span>
+              <span className="font-medium text-success-800">{getContent('cvAnalysis.results.skillsDetected')}</span>
             </div>
-            <div className="text-2xl font-bold text-success-900">{primaryCV.detectedSkills.length}</div>
+            <div className="text-2xl font-bold text-success-900">{(primaryCV.detectedSkills || []).length}</div>
           </div>
           
           <div className="bg-gradient-to-r from-warning-50 to-warning-100 p-4 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Users className="w-5 h-5 text-warning-600" />
-              <span className="font-medium text-warning-800">Experience Level</span>
+              <span className="font-medium text-warning-800">{getContent('cvAnalysis.results.experienceLevel')}</span>
             </div>
-            <div className="text-2xl font-bold text-warning-900">{primaryCV.experience}%</div>
+            <div className="text-2xl font-bold text-warning-900">{primaryCV.experience || 0}%</div>
           </div>
           
           <div className="bg-gradient-to-r from-secondary-50 to-secondary-100 p-4 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <MapPin className="w-5 h-5 text-secondary-600" />
-              <span className="font-medium text-secondary-800">Job Matches</span>
+              <span className="font-medium text-secondary-800">{getContent('cvAnalysis.results.jobMatches')}</span>
             </div>
             <div className="text-2xl font-bold text-secondary-900">{allJobRecommendations.length}</div>
           </div>
@@ -228,40 +229,42 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
 
         {/* Detected Skills */}
         <div className="mb-6">
-          <div className="text-lg font-semibold text-neutral-900 mb-3">Detected Skills</div>
+          <div className="text-lg font-semibold text-neutral-900 mb-3">{getContent('cvAnalysis.results.detectedSkills')}</div>
           <div className="flex flex-wrap gap-2">
-            {primaryCV.detectedSkills.map((skill, index) => (
+            {(primaryCV.detectedSkills || []).map((skill, index) => (
               <Badge
                 key={index}
                 variant="primary"
                 className="flex items-center gap-1"
               >
-                {skill.name}
-                <span className="text-xs opacity-75">({skill.confidence}%)</span>
+                {typeof skill === 'string' ? skill : skill.name}
+                {typeof skill === 'object' && skill.confidence && <span className="text-xs opacity-75">({skill.confidence}%)</span>}
               </Badge>
             ))}
           </div>
         </div>
 
         {/* Contact Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-neutral-50 rounded-lg">
-          <div>
-            <div className="text-sm font-medium text-neutral-700 mb-1">Candidate</div>
-            <div className="text-neutral-900">{primaryCV.contactInfo.name}</div>
+        {primaryCV.contactInfo && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-neutral-50 rounded-lg mb-4">
+            <div>
+              <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.candidate')}</div>
+              <div className="text-neutral-900">{primaryCV.contactInfo.name || 'N/A'}</div>
+            </div>
+            <div>
+              <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.location')}</div>
+              <div className="text-neutral-900">{primaryCV.contactInfo.location || 'N/A'}</div>
+            </div>
+            <div>
+              <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.email')}</div>
+              <div className="text-neutral-900">{primaryCV.contactInfo.email || 'N/A'}</div>
+            </div>
+            <div>
+              <div className="text-sm font-medium text-neutral-700 mb-1">{getContent('cvAnalysis.results.phone')}</div>
+              <div className="text-neutral-900">{primaryCV.contactInfo.phone || 'N/A'}</div>
+            </div>
           </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-700 mb-1">Location</div>
-            <div className="text-neutral-900">{primaryCV.contactInfo.location}</div>
-          </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-700 mb-1">Email</div>
-            <div className="text-neutral-900">{primaryCV.contactInfo.email}</div>
-          </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-700 mb-1">Phone</div>
-            <div className="text-neutral-900">{primaryCV.contactInfo.phone}</div>
-          </div>
-        </div>
+        )}
       </Card>
     </div>
   );
@@ -279,10 +282,10 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
     <div className="mt-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <div className="text-2xl font-bold text-neutral-900 mb-1">Recommended Jobs</div>
+          <div className="text-2xl font-bold text-neutral-900 mb-1">{getContent('cvAnalysis.recommendedJobs')}</div>
           <div className="text-neutral-600">
-            Based on your CV analysis, here are {filteredJobRecommendations.length} jobs that match your profile
-            {Object.keys(searchFilters).length > 0 && ` (filtered from ${allJobRecommendations.length} total)`}
+            {getContent('cvAnalysis.basedOnCVAnalysis')} {filteredJobRecommendations.length} {getContent('cvAnalysis.jobsMatchProfile')}
+            {Object.keys(searchFilters).length > 0 && ` ${getContent('cvAnalysis.filteredFrom')} ${allJobRecommendations.length} ${getContent('cvAnalysis.total')}`}
           </div>
         </div>
         
@@ -294,14 +297,14 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
             className="flex items-center gap-2"
           >
             <Filter className="w-4 h-4" />
-            Filters
+            {getContent('cvAnalysis.filters')}
             {Object.keys(searchFilters).length > 0 && (
               <Badge variant="primary" size="sm">{Object.keys(searchFilters).length}</Badge>
             )}
           </Button>
           <Button variant="primary" size="sm">
             <Star className="w-4 h-4 mr-2" />
-            Save Search
+            {getContent('cvAnalysis.saveSearch')}
           </Button>
         </div>
       </div>
@@ -312,7 +315,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
           <JobRecommendationFilters
             filters={searchFilters}
             onFiltersChange={handleFiltersChange}
-            detectedSkills={detectedSkills}
+            detectedSkills={detectedSkills.map(s => typeof s === 'string' ? s : s.name)}
           />
         </div>
       )}
@@ -322,14 +325,14 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
         <Card className="p-8 text-center">
           <div className="text-neutral-500 mb-4">
             <Filter className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <div className="text-lg font-medium">No jobs match your current filters</div>
-            <div className="text-sm">Try adjusting your filters to see more results</div>
+            <div className="text-lg font-medium">{getContent('cvAnalysis.noJobsMatchFilters')}</div>
+            <div className="text-sm">{getContent('cvAnalysis.tryAdjustingFilters')}</div>
           </div>
           <Button 
             variant="secondary" 
             onClick={() => setSearchFilters({})}
           >
-            Clear All Filters
+            {getContent('cvAnalysis.clearAllFilters')}
           </Button>
         </Card>
       )}
@@ -355,7 +358,7 @@ export const CVAnalysisWithJobs: React.FC<CVAnalysisWithJobsProps> = ({
       {filteredJobRecommendations.length > 0 && (
         <div className="text-center mt-8">
           <Button variant="secondary" size="lg">
-            View All Matching Jobs ({allJobRecommendations.length}+)
+            {getContent('cvAnalysis.viewAllMatchingJobs')} ({allJobRecommendations.length}+)
           </Button>
         </div>
       )}

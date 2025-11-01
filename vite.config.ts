@@ -15,5 +15,29 @@ export default defineConfig({
       'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
       'Cross-Origin-Embedder-Policy': 'unsafe-none'
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          // Separate vendor libraries for better caching
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('react-i18next') || id.includes('i18next')) {
+              return 'i18n-vendor';
+            }
+            // All other node_modules go to vendor
+            return 'vendor';
+          }
+        }
+      }
+    },
+    // Reduce chunk size warning from 500KB
+    chunkSizeWarningLimit: 500,
+    
+    // Generate source maps for better debugging
+    sourcemap: true
   }
 })

@@ -121,7 +121,11 @@ export const generateMockAnalysisResults = (files: UploadedFile[]): DetailedAnal
     
     return {
       id: file.id,
+      fileId: file.id,
       fileName: file.name,
+      fileSize: file.size || 0,
+      analysisDate: new Date().toISOString(),
+      status: 'analyzed' as const,
       contactInfo: {
         name: names[Math.floor(Math.random() * names.length)],
         email: 'candidate@email.com',
@@ -138,7 +142,10 @@ export const generateMockAnalysisResults = (files: UploadedFile[]): DetailedAnal
         matchPercentage: Math.floor(Math.random() * 20) + 75, // 75-95%
         recommendations: randomRecommendations
       },
-      analyzedDate: new Date().toLocaleDateString()
+      analyzedDate: new Date().toLocaleDateString(),
+      extractedData: {},
+      aiInsights: {},
+      analysisResult: {}
     };
   });
 };

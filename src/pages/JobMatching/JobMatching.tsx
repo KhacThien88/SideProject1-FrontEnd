@@ -5,11 +5,13 @@ import { JobDetailView } from './JobDetailView';
 import { JobFilters } from '../../components/JobMatching/JobFilters';
 import type { JobSearchFilters, Job } from '../../types/jobMatching';
 import { useToast } from '../../contexts/ToastContext';
+import { useTranslation } from '../../hooks/useTranslation';
 
 type ViewMode = 'search' | 'detail';
 
 export const JobMatching: React.FC = () => {
   const { showSuccessToast, showInfoToast } = useToast();
+  const { getContent } = useTranslation();
   
   const [viewMode, setViewMode] = useState<ViewMode>('search');
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
@@ -25,34 +27,34 @@ export const JobMatching: React.FC = () => {
     setSavedJobIds(prev => {
       const isAlreadySaved = prev.includes(job.id);
       if (isAlreadySaved) {
-        showInfoToast('Job removed', `${job.title} removed from saved jobs`);
+        showInfoToast(getContent('jobs.matching.jobRemoved'), `${job.title} ${getContent('jobs.matching.removedFromSaved')}`);
         return prev.filter(id => id !== job.id);
       } else {
-        showSuccessToast('Job saved', `${job.title} added to saved jobs`);
+        showSuccessToast(getContent('jobs.matching.jobSaved'), `${job.title} ${getContent('jobs.matching.addedToSaved')}`);
         return [...prev, job.id];
       }
     });
-  }, [showSuccessToast, showInfoToast]);
+  }, [showSuccessToast, showInfoToast, getContent]);
 
   const handleJobApply = useCallback((jobId: string) => {
     // In a real app, this would redirect to application page or open external URL
-    showInfoToast('Application', 'Redirecting to application page...');
+    showInfoToast(getContent('jobs.matching.application'), getContent('jobs.matching.openingApplicationForm'));
     console.log('Applying to job:', jobId);
-  }, [showInfoToast]);
+  }, [showInfoToast, getContent]);
 
   const handleJobShare = useCallback((job: Job) => {
     // In a real app, this would open share modal or copy to clipboard
     if (navigator.share) {
       navigator.share({
         title: job.title,
-        text: `Check out this job at ${job.company.name}: ${job.title}`,
+        text: `${getContent('jobs.matching.checkOutJobAt')} ${job.company.name}: ${job.title}`,
         url: window.location.href
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
-      showSuccessToast('Link copied', 'Job link copied to clipboard');
+      showSuccessToast(getContent('jobs.matching.linkCopied'), getContent('jobs.matching.jobLinkCopied'));
     }
-  }, [showSuccessToast]);
+  }, [showSuccessToast, getContent]);
 
   const handleJobViewDetails = useCallback((jobId: string) => {
     setSelectedJobId(jobId);

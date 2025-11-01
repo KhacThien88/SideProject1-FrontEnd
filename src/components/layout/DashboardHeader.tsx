@@ -10,9 +10,8 @@ import {
   Search,
   User,
   LogOut,
-  ChevronDown
 } from 'lucide-react';
-
+import { createFocusEffect } from '../../utils/focusEffects';
 export const DashboardHeader: React.FC = () => {
   const { navigate } = useRouter();
   const { t } = useTranslation();
@@ -24,6 +23,9 @@ export const DashboardHeader: React.FC = () => {
     showOnHoverZone: 80
   });
 
+  const handleUserClick = () => {
+    navigate('/dashboard/settings');
+  };
   // Get current path to determine active page
   const currentPath = window.location.pathname;
 
@@ -55,7 +57,9 @@ export const DashboardHeader: React.FC = () => {
     if (currentPath === '/dashboard') return t.pages.dashboard.header;
     if (currentPath === '/cv-analysis') return t.pages.cvAnalysis.header;
     if (currentPath === '/dashboard/candidates') return t.pages.candidates.header;
+    if (currentPath === '/dashboard/saved-jobs') return t.pages.savedJobs.header;
     if (currentPath === '/dashboard/job-postings') return t.pages.jobPostings.header;
+    if (currentPath === '/jd-analysis') return t.pages.jdAnalysis.header;
     if (currentPath === '/dashboard/analytics') return t.pages.analytics.header;
     if (currentPath === '/dashboard/settings') return t.pages.settings.header;
     return t.pages.dashboard.header; // default
@@ -92,15 +96,6 @@ export const DashboardHeader: React.FC = () => {
 
             {/* Right side - Enhanced Actions */}
             <div className="flex items-center space-x-2 sm:space-x-4">
-              {/* Enhanced Search - Responsive */}
-              <div className="relative hidden md:block">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder={t.dashboard.header.search.placeholder}
-                  className="p-3 w-64 lg:w-80 border border-neutral-200 rounded-xl bg-neutral-50/50 backdrop-blur-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-300 focus:bg-white transition-all duration-300 text-neutral-700 text-sm"
-                />
-              </div>
 
               {/* Mobile Search Button */}
               <button className="md:hidden p-2.5 text-neutral-400 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-300">
@@ -108,13 +103,15 @@ export const DashboardHeader: React.FC = () => {
               </button>
 
               {/* Enhanced Notifications */}
-              <button className="relative p-2.5 text-neutral-400 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-300">
+              <button className={`${createFocusEffect.glow('md', 'primary')} relative p-2.5 text-neutral-400 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-300`}>
                 <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-accent-500 to-secondary-500 text-white text-xs rounded-full flex items-center justify-center font-semibold shadow-lg">3</span>
+                <span className="absolute top-1 right-1 w-4 h-4 bg-gradient-to-r from-accent-500 to-secondary-500 text-white text-xs rounded-full flex items-center justify-center font-semibold shadow-lg">3</span>
               </button>
 
               {/* Enhanced User Menu - Responsive */}
-              <div className="flex items-center space-x-2 sm:space-x-3 bg-neutral-50/50 backdrop-blur-sm rounded-xl p-1.5 sm:p-2 hover:bg-neutral-100/50 transition-all duration-300 group cursor-pointer">
+              <div 
+                onClick={handleUserClick}
+                className="flex items-center space-x-2 sm:space-x-3 bg-neutral-50/50 backdrop-blur-sm rounded-xl p-1.5 sm:p-2 hover:bg-neutral-100/50 transition-all duration-300 group cursor-pointer">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-brand-gradient-primary rounded-lg flex items-center justify-center shadow-brand-sm group-hover:shadow-brand-md transition-all duration-300">
                   <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
@@ -122,7 +119,6 @@ export const DashboardHeader: React.FC = () => {
                   <div className="text-sm font-semibold text-neutral-900 truncate">{getUserDisplayName()}</div>
                   <div className="text-xs text-neutral-500 font-medium truncate">{getUserRoleDisplay()}</div>
                 </div>
-                <ChevronDown className="w-4 h-4 text-neutral-400 group-hover:text-primary-600 transition-colors duration-300 hidden sm:block" />
               </div>
 
               {/* Action Buttons - Responsive */}

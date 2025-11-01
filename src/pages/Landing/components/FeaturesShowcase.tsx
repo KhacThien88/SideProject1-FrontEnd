@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { User, Building, Settings, Globe, MessageSquare, Smartphone, Code, Users, Briefcase, Brain, Target } from 'lucide-react';
+import { Building, Settings, Globe, Smartphone, Code, Users, Briefcase, Brain, Upload, Target as TargetIcon, Video } from 'lucide-react';
+import { SiSlack, SiWhatsapp } from 'react-icons/si';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { cn } from '../../../utils/cn';
 
@@ -59,7 +60,7 @@ const FeaturesShowcase: React.FC = () => {
   const features = {
     candidates: [
       {
-        icon: User,
+        icon: Upload,
         title: getContent('featuresShowcase.candidates.upload.title'),
         description: getContent('featuresShowcase.candidates.upload.description')
       },
@@ -69,7 +70,7 @@ const FeaturesShowcase: React.FC = () => {
         description: getContent('featuresShowcase.candidates.analysis.description')
       },
       {
-        icon: Target,
+        icon: TargetIcon,
         title: getContent('featuresShowcase.candidates.matching.title'),
         description: getContent('featuresShowcase.candidates.matching.description')
       }
@@ -110,14 +111,14 @@ const FeaturesShowcase: React.FC = () => {
     ]
   };
 
-  // Platform support data
+  // Platform support data with brand icons
   const platformSupport = [
     { name: 'Web App', icon: Globe },
     { name: 'Mobile', icon: Smartphone },
     { name: 'API', icon: Code },
-    { name: 'Slack', icon: MessageSquare },
-    { name: 'WhatsApp', icon: MessageSquare },
-    { name: 'Teams', icon: Users }
+    { name: 'Slack', icon: SiSlack },
+    { name: 'WhatsApp', icon: SiWhatsapp },
+    { name: 'Teams', icon: Video }
   ];
 
   const tabs = [
@@ -166,13 +167,9 @@ const FeaturesShowcase: React.FC = () => {
             ✨ Features Overview
           </div>
   
-          <h2 className="text-hierarchy-2 font-bold text-neutral-900 mb-6 sm:mb-8 animate-slide-down stagger-2">
+          <h2 className="text-hierarchy-2 font-bold mb-6 sm:mb-8 animate-slide-down stagger-2">
             <span className="text-brand-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-500 hover-gradient">
-              {getContent('featuresShowcase.title').split(' ').slice(0, 2).join(' ')}
-            </span>
-            <br />
-            <span className="text-neutral-800">
-              {getContent('featuresShowcase.title').split(' ').slice(2).join(' ')}
+              {getContent('featuresShowcase.title')}
             </span>
           </h2>
           <p className="text-hierarchy-3 text-neutral-600 max-w-4xl mx-auto font-medium animate-fade-in-scale stagger-3">
@@ -190,10 +187,10 @@ const FeaturesShowcase: React.FC = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'group flex items-center space-x-3 sm:space-x-4 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-500 relative overflow-hidden w-full sm:w-auto justify-center sm:justify-start animate-rotate-in glass-effect',
+                  'group flex items-center space-x-3 sm:space-x-4 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-500 relative overflow-hidden w-full sm:w-auto justify-center sm:justify-start animate-rotate-in',
                   isActive
-                    ? `bg-gradient-to-r ${tab.gradient} text-white shadow-brand scale-105 transform hover-glow`
-                    : 'bg-white text-neutral-600 hover:bg-gradient-to-r hover:from-neutral-50 hover:to-neutral-100 border-2 border-neutral-200/50 hover:border-neutral-300/50 shadow-soft hover:shadow-brand hover-tilt',
+                    ? `bg-gradient-to-r ${tab.gradient} text-white shadow-brand-lg scale-105 transform hover-glow ring-2 ring-offset-2 ring-${tab.color}-400`
+                    : 'bg-neutral-50/80 text-neutral-500 hover:bg-neutral-100/80 border border-neutral-200/60 hover:border-neutral-300/60 shadow-sm hover:shadow-md hover-tilt',
                   `stagger-${Math.min(index + 4, 6)}`
                 )}
               >
@@ -239,27 +236,27 @@ const FeaturesShowcase: React.FC = () => {
                   isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 absolute inset-0 pointer-events-none'
                 )}
               >
-                <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
-                  {/* Enhanced Features List */}
-                  <div className="space-y-6 sm:space-y-8">
+                <div className="space-y-12">
+                  {/* Enhanced Features List - Grid Layout */}
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                     {features[tab.id as keyof typeof features]?.map((feature, index) => {
                       const Icon = feature.icon;
                       return (
                         <div
                           key={index}
                           className={cn(
-                            "group flex items-start space-x-4 sm:space-x-6 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/60 backdrop-blur-sm border border-neutral-200/50 hover:border-primary-200/50 shadow-soft hover:shadow-brand-xl transition-all duration-500 animate-fade-in-scale glass-effect hover-float",
+                            "group flex flex-col items-start p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-white/60 backdrop-blur-sm border border-neutral-200/50 hover:border-primary-200/50 shadow-soft hover:shadow-brand-xl transition-all duration-500 animate-fade-in-scale glass-effect hover-float",
                             `stagger-${Math.min(index + 6, 6)}`
                           )}
                         >
                           <div className={cn(
-                            'flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl flex items-center justify-center shadow-soft group-hover:shadow-brand hover-scale hover-glow transition-all duration-300 glass-effect-strong',
+                            'flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 mb-6',
                             `bg-gradient-to-r ${tab.gradient}`
                           )}>
-                            <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                            {Icon && <Icon className="w-8 h-8 text-white" />}
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-hierarchy-4 font-bold text-neutral-900 mb-2 group-hover:text-primary-700 transition-colors duration-300">
+                            <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mb-3 group-hover:text-primary-700 transition-colors duration-300">
                               {feature.title}
                             </h3>
                             <p className="text-sm sm:text-base text-neutral-600 leading-relaxed group-hover:text-neutral-700 transition-colors duration-300">
@@ -273,35 +270,35 @@ const FeaturesShowcase: React.FC = () => {
                     })}
                   </div>
 
-                  {/* Enhanced Platform Support */}
-                  <div className="bg-gradient-to-br from-white/80 to-neutral-50/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-neutral-200/50 shadow-brand hover:shadow-brand-xl transition-all duration-500 animate-slide-down glass-effect hover-tilt stagger-6">
-                    <div className="text-center mb-8 space-y-fluid">
-                      <h3 className="text-hierarchy-4 font-bold text-neutral-900 mb-4 sm:mb-6 text-center">
+                  {/* Enhanced Platform Support - Full Width */}
+                  <div className="bg-gradient-to-br from-white/80 to-neutral-50/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-8 sm:p-12 border border-neutral-200/50 shadow-brand hover:shadow-brand-xl transition-all duration-500 animate-slide-down glass-effect hover-tilt stagger-6">
+                    <div className="text-center mb-10 space-y-fluid">
+                      <h3 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-4">
                         {getContent('features.platformSupport.title')}
                       </h3>
-                      <p className="text-neutral-600">
+                      <p className="text-base sm:text-lg text-neutral-600 max-w-3xl mx-auto">
                         {getContent('features.platformSupport.description')}
                       </p>
                     </div>
-                    
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8">
                       {platformSupport.map((platform, index) => {
                         const Icon = platform.icon;
                         return (
                           <div
                             key={platform.name}
                             className={cn(
-                              "group flex flex-col items-center p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/60 border border-neutral-200/30 hover:border-primary-200/50 shadow-soft hover:shadow-brand transition-all duration-300 glass-effect hover-float animate-rotate-in",
+                              "group flex flex-col items-center p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-white/60 border border-neutral-200/30 hover:border-primary-200/50 shadow-soft hover:shadow-brand transition-all duration-300 glass-effect hover-float animate-rotate-in",
                               `stagger-${Math.min(index + 1, 6)}`
                             )}
                           >
                             <div className={cn(
-                               'w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-soft group-hover:shadow-brand hover-scale transition-all duration-300 glass-effect-strong',
+                               'w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300',
                                'bg-gradient-to-r from-primary-500 to-secondary-500'
                              )}>
-                              <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                              {Icon && <Icon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />}
                             </div>
-                            <span className="text-xs sm:text-sm font-semibold text-neutral-700 group-hover:text-primary-700 transition-colors duration-300 text-center">
+                            <span className="text-sm sm:text-base font-semibold text-neutral-700 group-hover:text-primary-700 transition-colors duration-300 text-center">
                                {platform.name}
                              </span>
                           </div>

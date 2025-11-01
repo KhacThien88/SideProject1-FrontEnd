@@ -5,7 +5,9 @@ export const en: ContentTaxonomy = {
     features: 'Features',
     pricing: 'Pricing',
     about: 'About Us',
+    contact: 'Contact',
     login: 'Login',
+    signup: 'Sign Up',
     language: 'Language',
   },
   
@@ -48,6 +50,33 @@ export const en: ContentTaxonomy = {
         metric: 'GDPR Compliant',
       },
     ],
+  },
+
+  valueProposition: {
+    title: 'Our Core Values',
+    subtitle: 'Discover the superior benefits that our AI platform brings to talent search and recruitment.',
+    values: {
+      accuracy: {
+        title: 'High Accuracy',
+        description: 'Analyze CVs with 95% accuracy thanks to advanced AI technology',
+        metric: '95%',
+      },
+      efficiency: {
+        title: 'Superior Performance',
+        description: 'Process and analyze CVs within 10 seconds',
+        metric: '10s',
+      },
+      insights: {
+        title: 'Deep Insights',
+        description: 'Extract skills, experience and education in detail',
+        metric: '100%',
+      },
+      scalability: {
+        title: 'Scalability',
+        description: 'Process thousands of CVs simultaneously without limits',
+        metric: '∞',
+      },
+    },
   },
 
   landing: {
@@ -105,10 +134,15 @@ export const en: ContentTaxonomy = {
         description: 'Cross-platform desktop application for Windows, macOS, and Linux',
       },
     ],
+    platformSupport: {
+      title: 'Multi-Platform Support',
+      description: 'Access our platform from any device, anytime, anywhere.',
+    },
   },
   
   howItWorks: {
     title: 'How It Works',
+    subtitle: 'Simple, fast and effective process in just 6 steps',
     steps: [
       {
         title: 'Upload CV',
@@ -174,7 +208,8 @@ export const en: ContentTaxonomy = {
   },
   
   statistics: {
-    title: 'Convincing Statistics',
+    title: 'Impressive Statistics',
+    description: 'Numbers that speak to our success and trust from thousands of users nationwide',
     items: [
       { label: 'Users', description: 'Trusted users' },
       { label: 'Accuracy', description: 'AI accuracy rate' },
@@ -263,6 +298,10 @@ export const en: ContentTaxonomy = {
   cta: {
     title: 'Ready to get started?',
     subtitle: 'Join thousands of companies that trust our platform.',
+    headline: 'Ready to Transform Your Career?',
+    primaryCTA: 'Get Started Free',
+    secondaryCTA: 'Schedule Demo',
+    trustMessage: 'Trusted by over 10,000+ recruitment professionals and candidates',
     buttons: {
       getStarted: 'Start for free',
       learnMore: 'Learn more',
@@ -272,23 +311,53 @@ export const en: ContentTaxonomy = {
   featuresShowcase: {
     title: 'Featured Capabilities',
     subtitle: 'Discover the powerful features of our platform',
-    features: [
-      {
-        title: 'AI Resume Analysis',
-        description: 'Intelligent CV analysis with high accuracy',
-        icon: 'brain',
+    tabs: {
+      candidates: 'For Candidates',
+      recruiters: 'For Recruiters',
+      admins: 'For Admins',
+    },
+    candidates: {
+      upload: {
+        title: 'Upload CV',
+        description: 'Upload your CV (PDF/Word) for automatic AI analysis. Multi-language support and automatic format detection.',
       },
-      {
-        title: 'Smart Job Matching',
-        description: 'Connect candidates with the most suitable jobs',
-        icon: 'target',
+      analysis: {
+        title: 'AI Analysis',
+        description: 'AI accurately extracts information from CV: skills, experience, education. Deep analysis and CV quality assessment.',
       },
-      {
-        title: 'Real-time Analytics',
-        description: 'Track recruitment performance in real-time',
-        icon: 'chart',
+      matching: {
+        title: 'Job Matching',
+        description: 'Find the most suitable jobs based on CV analysis. AI algorithm suggests job opportunities that match you best.',
       },
-    ],
+    },
+    recruiters: {
+      posting: {
+        title: 'Post Jobs',
+        description: 'Create and manage job postings easily. Automatically distribute to popular recruitment channels.',
+      },
+      search: {
+        title: 'Search Candidates',
+        description: 'Search and filter suitable candidates from CV database. Use AI to find the most potential candidates.',
+      },
+      management: {
+        title: 'Process Management',
+        description: 'Track and manage the entire recruitment process. Manage applications, interview schedules, and hiring decisions.',
+      },
+    },
+    admins: {
+      users: {
+        title: 'User Management',
+        description: 'Manage user accounts, permissions and track activities. Control access and system security.',
+      },
+      monitoring: {
+        title: 'System Monitoring',
+        description: 'Monitor system performance, logs and alerts. Ensure system operates stably and securely.',
+      },
+      analytics: {
+        title: 'Analytics & Reports',
+        description: 'View detailed reports on system activities. Analyze trends and make data-driven decisions.',
+      },
+    },
   },
   
 
@@ -517,7 +586,7 @@ export const en: ContentTaxonomy = {
     },
     googleSigningIn: 'Signing in with Google...',
     continueWithGoogle: 'Continue with Google',
-    googleSignInSuccess: 'Google sign-in successful',
+    googleSignInSuccess: 'Google sign-in successful!',
     logoutSuccess: 'Logout successful',
     roleSelection: {
       title: 'Choose Your Role',
@@ -550,6 +619,269 @@ export const en: ContentTaxonomy = {
     }
   },
 
+  // Job Matching & CV Analysis
+  jobs: {
+    details: {
+      title: 'Job Details',
+      jobNotFound: 'Job Not Found',
+      jobNotFoundDescription: "The job you're looking for doesn't exist or has been removed.",
+      loadingJobDetails: 'Loading job details...',
+      matchAnalysis: 'Match Analysis',
+      similarJobs: 'Similar Jobs',
+      companyInfo: 'Company Info',
+      backToResults: 'Back to Results',
+      quickActions: 'Quick Actions',
+      applyNow: 'Apply Now',
+      saveForLater: 'Save for later',
+      downloadJD: 'Download JD',
+      shareJob: 'Share Job',
+      applicationTips: 'Application Tips',
+      highlightMatchingSkills: 'Highlight matching skills',
+      emphasizeExperience: 'Emphasize your',
+      addressSkillGaps: 'Address skill gaps',
+      considerLearningPlans: 'Consider mentioning your learning plans for',
+      standOut: 'Stand out',
+      customizeApplication: 'Customize your application for',
+      match: 'match',
+      saved: 'Saved',
+      saveJob: 'Save Job',
+      share: 'Share',
+      contact: 'Contact',
+      overview: 'Overview',
+      requirements: 'Requirements',
+      company: 'Company',
+      jobDescription: 'Job Description',
+      benefitsPerks: 'Benefits & Perks',
+      essentialRequirements: 'Essential Requirements',
+      preferredQualifications: 'Preferred Qualifications',
+      requiredSkills: 'Required Skills',
+      about: 'About',
+      industry: 'Industry',
+      companySize: 'Company Size',
+      location: 'Location',
+      view: 'View',
+      salary: 'Salary',
+      experience: 'Experience',
+      deadline: 'Deadline',
+      postedAgo: 'Posted',
+      views: 'views',
+      applicants: 'applicants',
+      remote: 'Remote',
+      hybrid: 'Hybrid',
+      skillsMatched: 'of {total} skills matched',
+      aiAnalysis: 'AI Analysis',
+      tabs: {
+        overview: 'Overview',
+        requirements: 'Requirements',
+        company: 'Company',
+        similar: 'Similar Jobs'
+      }
+    },
+    matching: {
+      title: 'Job Matching',
+      noJobsFound: 'No Jobs Found',
+      noJobsFoundDescription: "We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms.",
+      resultsCount: 'results found',
+      filterJobs: 'Filter Jobs',
+      jobRemoved: 'Job removed',
+      removedFromSaved: 'removed from saved jobs',
+      jobSaved: 'Job saved',
+      addedToSaved: 'added to saved jobs',
+      application: 'Application',
+      openingApplicationForm: 'Opening application form...',
+      linkCopied: 'Link copied',
+      jobLinkCopied: 'Job link copied to clipboard',
+      checkOutJobAt: 'Check out this job opportunity',
+      jobSearchResults: 'Job Search Results',
+      foundJobs: 'Found',
+      matchingYourProfile: 'matching your profile',
+      filters: 'Filters',
+      filter: 'filter',
+      applied: 'applied',
+      relevance: 'Relevance',
+      matchScore: 'Match Score',
+      datePosted: 'Date Posted',
+      showing: 'Showing',
+      to: 'to',
+      of: 'of',
+      results: 'results'
+    },
+    utils: {
+      year: '/year',
+      month: '/month',
+      hour: '/hour',
+      from: 'From',
+      upTo: 'Up to',
+      salaryNotSpecified: 'Salary not specified',
+      justNow: 'Just now',
+      hoursAgo: ' h ago',
+      daysAgo: ' d ago',
+      weeksAgo: ' w ago',
+      monthsAgo: ' mo ago',
+      excellentMatch: 'Excellent match',
+      goodMatch: 'Good match',
+      fairMatch: 'Fair match',
+      poorMatch: 'Poor match'
+    },
+    card: {
+      featured: 'Featured',
+      urgent: 'Urgent',
+      remote: 'Remote',
+      match: 'match',
+      requiredSkills: 'Required Skills:',
+      more: 'more',
+      of: 'of',
+      skillsMatched: 'skills matched',
+      applyNow: 'Apply Now',
+      saved: 'Saved',
+      save: 'Save',
+      share: 'Share',
+      company: 'company',
+      away: 'km away'
+    },
+    filters: {
+      activeFilters: 'Active Filters',
+      clearAll: 'Clear All',
+      location: 'Location',
+      jobType: 'Job Type',
+      experienceLevel: 'Experience Level',
+      salary: 'Salary',
+      skills: 'Skills',
+      remote: 'Remote',
+      filterRecommendations: 'Filter Recommendations',
+      searchKeywords: 'Search Keywords',
+      jobTitleCompanySkills: 'Job title, company, skills...',
+      search: 'Search',
+      anyLocation: 'Any location',
+      includeRemoteWork: 'Include remote work',
+      salaryRange: 'Salary Range (USD/month)',
+      minSalary: 'Min salary',
+      maxSalary: 'Max salary',
+      companySize: 'Company Size',
+      skillsFromCV: '(From your CV)',
+      skillsWithStar: 'Skills with star are from your CV analysis'
+    }
+  },
+
+  // CV Analysis
+  cvAnalysis: {
+    targetPosition: 'Target Position',
+    targetPositionDescription: 'Select the job position to analyze CV compatibility',
+    noResumesUploaded: 'No Resumes Uploaded',
+    noResumesUploadedDescription: 'Upload your first resume to get started with AI-powered analysis.',
+    uploadYourFirstResume: 'Upload your first resume',
+    jobRecommendations: 'Job Recommendations',
+    recommendedJobs: 'Recommended Jobs',
+    basedOnCVAnalysis: 'Based on your CV analysis, here are',
+    jobsMatchProfile: 'jobs that match your profile',
+    filteredFrom: '(filtered from',
+    total: 'total)',
+    filters: 'Filters',
+    saveSearch: 'Save Search',
+    noJobsMatchFilters: 'No jobs match your current filters',
+    tryAdjustingFilters: 'Try adjusting your filters to see more results',
+    clearAllFilters: 'Clear All Filters',
+    viewAllMatchingJobs: 'View All Matching Jobs',
+    exportReport: 'Export Report',
+    startingAnalysis: 'Starting analysis for',
+    file: 'file',
+    files: 'files',
+    analysisCompleted: 'Analysis completed successfully!',
+    allFilesCleared: 'All files cleared',
+    noFilesReady: 'No files ready for analysis',
+    jobDetails: 'Job Details',
+    openingJobDetails: 'Opening job details...',
+    application: 'Application',
+    redirectingToApplication: 'Redirecting to application page...',
+    jobLinkCopied: 'Job link copied to clipboard',
+    jobRemovedFromSaved: 'Job removed from saved list',
+    jobSavedSuccessfully: 'Job saved successfully',
+    jobOpportunity: 'Job Opportunity',
+    checkOutThisJob: 'Check out this job opportunity',
+    jobSaved: 'Job saved',
+    savedToFavorites: 'has been saved to your favorites',
+    linkCopied: 'Link copied',
+    checkOutJobAt: 'Check out this job at',
+    upload: {
+      title: 'Upload Resume Files',
+      dropHere: 'Drop files here',
+      dragAndDrop: 'Drag & drop your resume files here, or click to browse',
+      supports: 'Supports PDF, DOC, and DOCX files',
+      maxSize: 'Max',
+      upTo: 'per file • Up to',
+      chooseFiles: 'Choose Files',
+      uploadIssues: 'Upload Issues',
+      filesAdded: 'added successfully',
+      fileRemoved: 'removed'
+    },
+    fileManagement: {
+      selectedFiles: 'Selected Files',
+      clearAll: 'Clear All',
+      analyzing: 'Analyzing...',
+      analyzeFiles: 'Analyze Files',
+      ready: 'Ready',
+      error: 'Error',
+      processing: 'Processing',
+      uploading: 'Uploading'
+    },
+    progress: {
+      analyzingFiles: 'Analyzing Files',
+      uploading: 'Uploading',
+      extracting: 'Extracting',
+      analyzing: 'Analyzing',
+      completing: 'Completing',
+      processing: 'Processing',
+      estimatedTime: 'Estimated time remaining'
+    },
+    results: {
+      title: 'Analysis Results',
+      exportResults: 'Export Results',
+      analyzedOn: 'Analyzed on',
+      good: 'Good',
+      fair: 'Fair',
+      average: 'Average',
+      needsImprovement: 'Needs Improvement',
+      previewCV: 'Preview CV',
+      downloadReport: 'Download Report',
+      removeResult: 'Remove Result',
+      name: 'Name',
+      email: 'Email',
+      phone: 'Phone',
+      location: 'Location',
+      skillsMatch: 'Skills Match',
+      experience: 'Experience',
+      education: 'Education',
+      keywords: 'Keywords',
+      detectedSkills: 'Detected Skills',
+      matchPercentage: 'Match Percentage',
+      matchWith: 'Match with',
+      recommendations: 'Recommendations',
+      overallScore: 'Overall Score',
+      skillsDetected: 'Skills Detected',
+      experienceLevel: 'Experience Level',
+      jobMatches: 'Job Matches',
+      candidate: 'Candidate'
+    }
+  },
+
+  // Password Requirements component
+  passwordRequirements: {
+    title: 'Password Requirements',
+    strength: 'Strength:',
+    strengthLevels: {
+      weak: 'Weak',
+      medium: 'Medium',
+      strong: 'Strong'
+    },
+    requirements: {
+      minLength: 'At least 8 characters',
+      uppercase: 'At least 1 uppercase letter (A-Z)',
+      lowercase: 'At least 1 lowercase letter (a-z)',
+      number: 'At least 1 number (0-9)',
+      special: 'At least 1 special character (@, #, $, etc.)'
+    }
+  },
+
   validation: {
     emailRequired: 'Email is required',
     emailInvalid: 'Invalid email format',
@@ -571,6 +903,23 @@ export const en: ContentTaxonomy = {
     open: 'Open',
     viewMore: 'View More',
     viewLess: 'View Less',
+    backToResults: 'Back to Results',
+    apply: 'Apply',
+    share: 'Share',
+    export: 'Export',
+    refresh: 'Refresh',
+    clearAll: 'Clear All',
+    clearAllFilters: 'Clear All Filters',
+    viewDetails: 'View Details',
+    loadMore: 'Load More',
+    sortBy: 'Sort by',
+    filterBy: 'Filter by',
+    viewMode: 'View Mode',
+    activeFilters: 'Active Filters',
+    noResults: 'No Results',
+    noDataAvailable: 'No data available',
+    loadingData: 'Loading data...',
+    errorLoadingData: 'Error loading data',
     toast: {
       // General
       linkCopied: 'Link copied to clipboard',
@@ -589,7 +938,95 @@ export const en: ContentTaxonomy = {
       networkErrorSubtitle: 'Please check your connection and try again',
       genericError: 'An unexpected error occurred',
       genericErrorSubtitle: 'Please try again later',
+    },
+    loadingScreen: {
+      loading: 'Loading...',
+      redirecting: 'Redirecting...',
+      authenticating: 'Authenticating...',
     }
+  },
+
+  // Settings
+  settings: {
+    title: 'Settings',
+    saveChanges: 'Save Changes',
+    saving: 'Saving...',
+    saveSuccess: 'Settings saved successfully',
+    saveError: 'Failed to save settings',
+    loadError: 'Failed to load settings',
+    
+    tabs: {
+      profile: 'Profile',
+      notifications: 'Notifications',
+      privacy: 'Privacy & Security',
+      data: 'Data Management',
+      appearance: 'Appearance',
+    },
+    
+    profile: {
+      title: 'Profile Information',
+      fullName: 'Full Name',
+      email: 'Email Address',
+      company: 'Company',
+      role: 'Role',
+      changePassword: 'Change Password',
+      cancelPasswordChange: 'Cancel Password Change',
+      currentPassword: 'Current Password',
+      newPassword: 'New Password',
+      confirmPassword: 'Confirm New Password',
+      roles: {
+        hrManager: 'HR Manager',
+        recruiter: 'Recruiter',
+        talentAcquisition: 'Talent Acquisition',
+        admin: 'Admin',
+      },
+    },
+    
+    notifications: {
+      emailAlerts: 'Email Alerts',
+      emailAlertsDesc: 'Receive email notifications for important updates',
+      pushNotifications: 'Push Notifications',
+      pushNotificationsDesc: 'Get push notifications in your browser',
+      weeklyReports: 'Weekly Reports',
+      weeklyReportsDesc: 'Weekly summary of your recruitment analytics',
+      analysisComplete: 'Analysis Complete',
+      analysisCompleteDesc: 'Notification when resume analysis is complete',
+    },
+    
+    privacy: {
+      dataRetention: 'Data Retention Period',
+      dataRetentionDesc: 'How long should we keep your uploaded resumes?',
+      shareAnalytics: 'Share Anonymous Analytics',
+      shareAnalyticsDesc: 'Help us improve by sharing anonymous usage data',
+      autoDelete: 'Auto-delete Old Data',
+      autoDeleteDesc: 'Automatically delete data after retention period',
+      days30: '30 days',
+      days60: '60 days',
+      days90: '90 days',
+      days180: '180 days',
+      days365: '365 days',
+    },
+    
+    data: {
+      export: 'Export Data',
+      exportDesc: 'Download all your data in JSON format',
+      import: 'Import Data',
+      importDesc: 'Import data from previous backups',
+      dangerZone: 'Danger Zone',
+      reset: 'Reset Settings',
+      resetDesc: 'Reset all settings to default values',
+      delete: 'Delete All Data',
+      deleteDesc: 'Permanently delete all your data',
+      exportSuccess: 'Data exported successfully',
+      importSuccess: 'Data imported successfully',
+      resetConfirm: 'Are you sure you want to reset all settings to default? This action cannot be undone.',
+      deleteConfirm: 'Are you sure you want to delete ALL your data? This action is PERMANENT and cannot be undone.',
+      deleteDoubleConfirm: 'This will permanently delete all your data including resumes, analysis results, and settings. Type DELETE to confirm.',
+    },
+    
+    appearance: {
+      language: 'Language',
+    },
   },
 
   // Pages - Dynamic content based on current page
@@ -657,6 +1094,14 @@ export const en: ContentTaxonomy = {
         subtitle: 'Configuration',
         description: 'Manage your account and preferences'
       }
+    },
+    jdAnalysis: {
+      subscription: 'JD Analysis',
+      header: {
+        title: 'JD Analysis',
+        subtitle: '& CV Matching',
+        description: 'Upload JD → AI Analysis → Auto-match CVs'
+      }
     }
   },
 
@@ -711,6 +1156,27 @@ export const en: ContentTaxonomy = {
         title: 'Processing Speed',
         description: 'Average processing time'
       }
+      ,
+      roles: {
+        admin: {
+          totalUsers: { title: 'Total Users', description: 'Total registered users' },
+          systemUptime: { title: 'System Uptime', description: 'System availability' },
+          totalProcessedCV: { title: 'Processed CVs', description: 'Total CVs analyzed' },
+          activeJobs: { title: 'Active Jobs', description: 'Number of active job posts' }
+        },
+        candidate: {
+          applications: { title: 'Applications', description: 'Total applications' },
+          pendingResponses: { title: 'Pending Responses', description: 'Applications waiting for feedback' },
+          accepted: { title: 'Accepted', description: 'Applications accepted' },
+          matchedJobs: { title: 'Matched Jobs', description: 'Jobs matched to profile' }
+        },
+        recruiter: {
+          jobPosts: { title: 'Job Posts', description: 'Active job posts' },
+          newApplicants: { title: 'New Applicants', description: 'Applicants this week' },
+          interviewed: { title: 'Interviewed', description: 'Applicants interviewed' },
+          hired: { title: 'Hired', description: 'Successful hires' }
+        }
+      }
     },
     processingQueue: {
       title: 'Processing Queue',
@@ -732,6 +1198,25 @@ export const en: ContentTaxonomy = {
       total: 'Total',
       score: 'Score',
       match: 'Match'
+    },
+    recentCandidates: {
+      title: 'Recent Candidates',
+      subtitle: 'New applicants',
+      viewAll: 'View All',
+      total: 'Total',
+      match: 'Match',
+      status: {
+        new: 'New',
+        reviewing: 'Reviewing',
+        interviewed: 'Interviewed',
+        hired: 'Hired',
+        rejected: 'Rejected'
+      },
+      actions: {
+        viewProfile: 'View Profile',
+        sendEmail: 'Send Email',
+        call: 'Call'
+      }
     },
     monthlyApplications: {
       title: 'Monthly Applications',
@@ -826,22 +1311,180 @@ export const en: ContentTaxonomy = {
     }
   },
 
-  // Password Requirements component
-  passwordRequirements: {
-    title: 'Password Requirements',
-    strength: 'Password Strength',
-    strengthLevels: {
-      weak: 'Weak',
-      medium: 'Medium',
-      strong: 'Strong'
+
+
+  jobPostings: {
+    title: 'Job Postings',
+    subtitle: 'Manage job profiles and requirements for resume analysis.',
+    searchPlaceholder: 'Search job profiles...',
+    createJobProfile: 'Create Job Profile',
+    editJobProfile: 'Edit Job Profile',
+    jobProfile: 'Job Profile',
+    jobTitle: 'Job Title',
+    jobTitlePlaceholder: 'e.g., Full Stack Developer',
+    description: 'Description',
+    descriptionPlaceholder: 'Describe the job position in detail...',
+    experienceLevel: 'Experience Level',
+    experience: 'Experience',
+    years: 'years',
+    requiredSkills: 'Required Skills',
+    preferredSkills: 'Preferred Skills',
+    addSkillPlaceholder: 'Add a skill...',
+    add: 'Add',
+    noSkillsAdded: 'No skills added yet',
+    activeMatches: 'Active Matches',
+    viewMatches: 'View Matches',
+    edit: 'Edit',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    saving: 'Saving...',
+    saveChanges: 'Save Changes',
+    createProfile: 'Create Profile',
+    more: 'more',
+    noJobsTitle: 'No Job Postings Yet',
+    noJobsSubtitle: 'Get started by creating your first job profile',
+    createFirstJob: 'Create First Job Posting',
+    noResultsTitle: 'No Results Found',
+    noResultsSubtitle: 'Try searching with different keywords',
+    loadError: 'Failed to load job postings',
+    createSuccess: 'Job profile created successfully',
+    updateSuccess: 'Job profile updated successfully',
+    deleteSuccess: 'Job profile deleted successfully',
+    saveError: 'Failed to save job profile',
+    deleteError: 'Failed to delete job profile',
+    deleteConfirm: 'Are you sure you want to delete this job profile?',
+    viewMatchesInfo: 'View matches feature coming soon',
+  },
+
+  candidateMatches: {
+    title: 'Matched Candidates',
+    backToJobs: 'Back to Job Postings',
+    totalMatches: 'Total matches',
+    requiredSkills: 'Required skills',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterExperience: 'Experience',
+    years: 'years',
+
+    sort: {
+      matchScore: 'Highest match score',
+      experience: 'Most experience',
+      appliedDate: 'Recently applied',
+      name: 'Name A-Z',
     },
-    requirements: {
-      minLength: 'At least 8 characters',
-      uppercase: 'One uppercase letter',
-      lowercase: 'One lowercase letter',
-      number: 'One number',
-      special: 'One special character'
-    }
+
+    overallMatch: 'Overall',
+    skillsMatch: 'Skills',
+    experience: 'Experience',
+    yearsExperience: 'years experience',
+    matchedSkills: 'Matched skills',
+    missingSkills: 'Missing skills',
+    more: 'more',
+    appliedOn: 'Applied on',
+    downloadResume: 'Download Resume',
+    save: 'Save candidate',
+    unsave: 'Unsave',
+    saved: 'Saved',
+
+    noCandidates: 'No candidates',
+    noMatches: 'No candidates have matched with this job posting yet',
+    noResultsFilters: 'No candidates found with current filters',
+
+    success: {
+      saveToggled: 'Candidate save status updated successfully',
+      resumeDownloaded: 'Resume downloaded successfully',
+    },
+
+    errors: {
+      loadFailed: 'Failed to load candidates',
+      saveFailed: 'Failed to update save status',
+      downloadFailed: 'Failed to download resume',
+      jobNotFound: 'Job posting not found',
+    },
+  },
+
+  savedCandidates: {
+    title: 'Saved Candidates',
+    subtitle: 'Manage your starred candidates',
+    searchPlaceholder: 'Search candidates...',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterExperience: 'Experience',
+    filterSkillMatches: 'Skill matches count',
+    filterLocation: 'Location',
+    filterSkills: 'Skills',
+    years: 'years',
+
+    sort: {
+      matchScore: 'Highest match score',
+      experience: 'Most experience',
+      appliedDate: 'Recently applied',
+      name: 'Name A-Z',
+    },
+
+    noCandidates: 'No candidates',
+    noSavedYet: 'You haven\'t saved any candidates yet',
+    noResultsFilters: 'No candidates found with current filters',
+
+    success: {
+      saveToggled: 'Candidate save status updated successfully',
+      resumeDownloaded: 'Resume downloaded successfully',
+    },
+
+    errors: {
+      loadFailed: 'Failed to load candidates',
+      saveFailed: 'Failed to update save status',
+      downloadFailed: 'Failed to download resume',
+    },
+  },
+
+  savedJobs: {
+    title: 'Saved Jobs',
+    subtitle: 'Keep track of roles you love and revisit them anytime.',
+    searchPlaceholder: 'Search saved jobs...',
+    filters: 'Filters',
+    clearFilters: 'Clear filters',
+    filterMatchScore: 'Match score',
+    filterSalary: 'Salary range',
+    filterJobType: 'Job type',
+    filterLocation: 'Location',
+    filterRemoteOnly: 'Remote only',
+    salaryAny: 'Any',
+    savedAt: 'Saved',
+    resultsCount: 'Showing {count} of {total} saved jobs',
+    noSavedYet: 'You haven\'t saved any jobs yet',
+    noSavedDescription: 'Bookmark interesting opportunities to see them listed here.',
+    noResultsFilters: 'No saved jobs match the current filters',
+
+    sort: {
+      matchScore: 'Best match first',
+      recent: 'Recently saved',
+      salaryHigh: 'Highest salary',
+      salaryLow: 'Lowest salary',
+      company: 'Company A-Z',
+    },
+
+    actions: {
+      refresh: 'Refresh list',
+      applyTitle: 'Application',
+      applyMessage: 'We\'ll redirect you to the application page.',
+      shareMessage: 'Check out the {jobTitle} role at {companyName}!'
+    },
+
+    success: {
+      removed: 'Job removed from saved list',
+      refreshed: 'Saved jobs refreshed',
+      shareTitle: 'Link copied',
+      shareCopied: 'Job link copied to clipboard',
+    },
+
+    errors: {
+      loadFailed: 'Failed to load saved jobs',
+      removeFailed: 'Failed to update saved jobs',
+      shareFailed: 'Unable to share this job',
+    },
   },
 
   // Users Management
@@ -886,6 +1529,307 @@ export const en: ContentTaxonomy = {
     empty: {
       title: 'No users found',
       description: 'Try adjusting your search or filters'
+    }
+  },
+
+  // Upload Progress Component
+  uploadProgress: {
+    status: {
+      uploading: 'Uploading',
+      processing: 'Processing', 
+      completed: 'Completed',
+      failed: 'Failed',
+      unknown: 'Unknown'
+    },
+    details: {
+      remaining: 'Remaining',
+      processing: 'Processing data...',
+      completed: 'Upload completed successfully',
+      failed: 'Upload failed, please try again'
+    },
+    actions: {
+      cancel: 'Cancel',
+      retry: 'Retry'
+    }
+  },
+
+  // JD File Management  
+  jdFileManagement: {
+    loading: 'Loading list...',
+    allStatuses: 'All statuses',
+    actions: {
+      createJobProfile: 'Create Job Profile',
+      deleteFile: 'Delete file',
+      clearCompleted: 'Clear completed',
+      clearAll: 'Clear all'
+    }
+  },
+
+  // Admin Layout
+  adminAuth: {
+    verifying: 'Verifying access permissions...'
+  },
+
+  // Status Values  
+  status: {
+    uploaded: 'Uploaded',
+    processing: 'Processing',
+    processed: 'Processed',
+    failed: 'Failed',
+    completed: 'Completed',
+    pending: 'Pending'
+  },
+
+  // Social Proof
+  socialProof: {
+    activeUsers: 'Active Users',
+    successRate: 'Success Rate',
+    jobsMatched: 'Jobs Matched',
+  },
+
+  trustBadges: {
+    title: 'Trusted & Secure Platform',
+    subtitle: 'Your data security is our top priority',
+    gdprCompliant: {
+      title: 'GDPR Compliant',
+      description: 'Full compliance with EU data protection regulations',
+    },
+    ssl: {
+      title: 'SSL Encrypted',
+      description: 'Bank-grade 256-bit encryption for all data',
+    },
+    certified: {
+      title: 'ISO Certified',
+      description: 'ISO 27001 certified for information security',
+    },
+    verified: {
+      title: 'Verified Platform',
+      description: 'Trusted by 1000+ companies worldwide',
+    },
+  },
+
+  successStories: {
+    title: 'Customer Success Stories',
+    subtitle: 'See how our platform has helped thousands achieve their career goals',
+    story1: {
+      text: 'TalentFit AI helped me find my dream job in just 2 weeks. The AI matching was incredibly accurate and saved me countless hours of job searching.',
+    },
+    story2: {
+      text: 'As a recruiter, this platform has transformed our hiring process. We reduced time-to-hire by 50% and found better quality candidates.',
+    },
+    story3: {
+      text: 'The AI analysis of my CV gave me insights I never considered. It helped me highlight my strengths and land 3 interviews in the first week.',
+    },
+  },
+
+  caseStudies: {
+    title: 'Proven Results',
+    subtitle: 'See how leading companies transformed their recruitment process',
+  },
+
+  reviews: {
+    title: 'What Our Users Say',
+    subtitle: 'Trusted by thousands of professionals',
+  },
+
+  // Engagement Features
+  exitIntent: {
+    title: 'Wait! Before You Go...',
+    subtitle: 'Get 30% off your first month and start finding the perfect candidates today!',
+    ctaButton: 'Claim My Offer',
+    noThanks: 'No thanks, I\'ll pass',
+  },
+
+  scrollEngagement: {
+    title: 'Still Exploring?',
+    message: 'Join thousands who found their dream job!',
+    ctaButton: 'Get Started Free',
+  },
+
+  timeBased: {
+    title: 'Limited Time Offer!',
+    message: 'Get 50% off for the first 100 signups',
+    ctaButton: 'Claim Now',
+  },
+
+  chatWidget: {
+    title: 'TalentFit Support',
+    status: 'Online',
+    welcomeMessage: 'Hi! How can I help you today?',
+    placeholder: 'Type your message...',
+    autoReply: 'Thanks for your message! Our team will get back to you shortly.',
+    quickReplies: {
+      pricing: 'Pricing info',
+      features: 'Features',
+      demo: 'Request demo',
+    },
+  },
+
+  // CTA Optimization
+  smartCTA: {
+    control: 'Upload CV Now',
+    variantA: 'Start Free Trial',
+    variantB: 'Get Started Now',
+    noCredit: 'No credit card required',
+  },
+
+  multiPathCTA: {
+    title: 'Choose Your Path',
+    subtitle: 'Select the option that best describes you',
+    getStarted: 'Get Started',
+    contactUs: 'Contact us',
+    help: 'and we\'ll help you choose.',
+    footer: 'Not sure which one? ',
+    jobSeeker: {
+      title: 'I\'m Looking for a Job',
+      description: 'Upload your CV and get matched with opportunities',
+      badge: 'Most Popular',
+    },
+    recruiter: {
+      title: 'I\'m Hiring Talent',
+      description: 'Post jobs and find the perfect candidates',
+    },
+    enterprise: {
+      title: 'Enterprise Solution',
+      description: 'Custom solutions for large organizations',
+    },
+  },
+
+  urgency: {
+    countdown: {
+      label: 'Offer ends in',
+    },
+    socialProof: {
+      label: 'people signed up today',
+    },
+    limitedSpots: {
+      only: 'Only',
+      left: 'spots left',
+      subtitle: 'for this month',
+    },
+    trending: {
+      label: 'Trending',
+      text: '#1 Most Popular',
+    },
+  },
+
+  personalizedCTA: {
+    newVisitor: 'Start your journey with AI-powered job matching',
+    returningVisitor: 'Welcome back! Ready to get started?',
+    engagedUser: 'You seem interested! Join thousands of satisfied users.',
+    deepScroll: 'You\'ve seen what we offer. Let\'s make it happen!',
+    activity: '147 people joined in the last 24 hours',
+  },
+
+  // Mobile Optimization
+  mobileCTA: {
+    upload: 'Upload CV',
+    title: 'Start Your Career Journey',
+    subtitle: 'Upload CV and find jobs',
+    start: 'Start',
+  },
+
+  mobileForm: {
+    tapToUpload: 'Tap to Upload CV',
+    supportedFormats: 'PDF, DOC, DOCX up to 10MB',
+    analyze: 'Analyze CV',
+    analyzing: 'Analyzing...',
+    privacy: 'Your CV is processed securely. We never share your data.',
+  },
+
+  // Pricing & Process
+  pricingCalculator: {
+    title: 'Pricing Calculator',
+    subtitle: 'Customize your plan',
+    employees: 'Number of Employees',
+    jobPosts: 'Monthly Job Posts',
+    monthly: 'Monthly Plan',
+    yearly: 'Yearly Plan',
+    save: 'SAVE',
+    savings: 'Save',
+    includes: 'Includes',
+    features: 'Unlimited CV analysis, AI matching, Priority support, Advanced analytics',
+  },
+
+  featureComparison: {
+    title: 'Compare Plans',
+    subtitle: 'Choose the perfect plan for your needs',
+    features: 'Features',
+    basic: 'Basic',
+    pro: 'Pro',
+    enterprise: 'Enterprise',
+    popular: 'POPULAR',
+    cvAnalysis: 'CV Analysis',
+    jobMatching: 'AI Job Matching',
+    storage: 'Cloud Storage',
+    support: 'Priority Support',
+    analytics: 'Advanced Analytics',
+    customization: 'Custom Branding',
+    api: 'API Access',
+    team: 'Team Collaboration',
+    guarantee: 'All plans include 14-day money-back guarantee',
+    noCreditCard: 'No credit card required • Cancel anytime • Instant setup',
+  },
+
+  interactiveDemo: {
+    title: 'See How It Works',
+    subtitle: 'Interactive demonstration of our platform',
+    previous: 'Previous',
+    next: 'Next',
+    finish: 'Finish',
+    step1: {
+      title: 'Upload Your CV',
+      description: 'Drag and drop your CV or click to browse',
+    },
+    step2: {
+      title: 'AI Analysis',
+      description: 'Our AI analyzes your skills and experience',
+    },
+    step3: {
+      title: 'Smart Matching',
+      description: 'Get matched with relevant job opportunities',
+    },
+    step4: {
+      title: 'Apply & Success',
+      description: 'Apply to jobs with one click',
+    },
+  },
+
+  // SEO Content
+  seo: {
+    home: {
+      title: 'AI-Powered CV Analysis & Job Matching Platform - TalentFit AI',
+      description: 'Find the perfect job with AI-powered CV analysis. TalentFit AI helps candidates match with jobs and recruiters find ideal candidates using advanced AI technology.',
+      keywords: [
+        'AI CV analysis',
+        'job matching',
+        'resume analyzer',
+        'recruitment AI',
+        'talent acquisition',
+        'career platform',
+        'job search',
+        'CV optimization'
+      ]
+    },
+    login: {
+      title: 'Login - Access Your Account',
+      description: 'Login to TalentFit AI to access your personalized job recommendations and CV analysis.'
+    },
+    register: {
+      title: 'Sign Up - Start Your Career Journey',
+      description: 'Create your TalentFit AI account and discover AI-powered job matching tailored to your skills.'
+    },
+    dashboard: {
+      title: 'Dashboard - Your Career Hub',
+      description: 'Manage your CV analysis, job matches, and applications all in one place.'
+    },
+    cvAnalysis: {
+      title: 'CV Analysis - AI-Powered Resume Analysis',
+      description: 'Upload your CV and get detailed AI analysis with improvement suggestions and job matches.'
+    },
+    jobMatching: {
+      title: 'Job Matching - Find Perfect Opportunities',
+      description: 'Discover job opportunities that match your skills and experience with AI-powered matching technology.'
     }
   }
 };

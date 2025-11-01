@@ -4,15 +4,18 @@ import { Button } from '../../ui/Button';
 import { Badge } from '../../ui/Badge';
 import { LoadingSpinner } from '../../ui/LoadingSpinner';
 import { ProgressBar } from '../../ui/ProgressBar';
-import { FileText, X, RefreshCw, Eye } from 'lucide-react';
+import { FileText, X, RefreshCw, Eye, RotateCcw } from 'lucide-react';
 import { CV_ANALYSIS_CONFIG } from '../../../types/cvAnalysis';
 import type { UploadedFile, FileAction, AnalysisHandler } from '../../../types/cvAnalysis';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface FileManagementSectionProps {
   uploadedFiles: UploadedFile[];
   isProcessing: boolean;
   onRemoveFile: FileAction;
   onReplaceFile: FileAction;
+  onRetryUpload?: FileAction;  // New retry function
+  onRefreshResults?: (fileId: string) => void;  // New refresh results function
   onClearAllFiles: () => void;
   onStartAnalysis: AnalysisHandler;
   formatFileSize: (bytes: number) => string;
@@ -23,20 +26,24 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
   isProcessing,
   onRemoveFile,
   onReplaceFile,
+  onRetryUpload,
+  onRefreshResults,
   onClearAllFiles,
   onStartAnalysis,
   formatFileSize
 }) => {
+  const { getContent } = useTranslation();
+  
   if (uploadedFiles.length === 0) {
     return null;
   }
 
   return (
     <Card className="p-8">
-      <div className="mt-8">
+      <div className="my-4">
         <div className="flex items-center justify-between mb-4">
           <div className="text-lg font-semibold text-neutral-900">
-            Selected Files ({uploadedFiles.length}/{CV_ANALYSIS_CONFIG.MAX_FILES})
+            {getContent('cvAnalysis.fileManagement.selectedFiles')} ({uploadedFiles.length}/{CV_ANALYSIS_CONFIG.MAX_FILES})
           </div>
           <div className="flex items-center space-x-3">
             <Button
@@ -45,7 +52,7 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
               size="sm"
               className="text-neutral-600"
             >
-              Clear All
+              {getContent('cvAnalysis.fileManagement.clearAll')}
             </Button>
             <Button
               onClick={onStartAnalysis}
@@ -54,7 +61,7 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
               className="flex items-center space-x-2 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600"
             >
               {isProcessing && <LoadingSpinner size="sm" />}
-              <span>{isProcessing ? 'Analyzing...' : 'Analyze Files'}</span>
+              <span>{isProcessing ? getContent('cvAnalysis.fileManagement.analyzing') : getContent('cvAnalysis.fileManagement.analyzeFiles')}</span>
             </Button>
           </div>
         </div>
@@ -78,22 +85,22 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
                   <Badge 
                     variant={
                       file.status === 'completed' ? 'success' :
-                      file.status === 'error' ? 'error' :
+                      file.status === 'failed' || file.status === 'error' ? 'error' :
                       file.status === 'processing' ? 'warning' :
                       'info'
                     }
                     size="sm"
                     dot={file.status === 'uploading' || file.status === 'processing'}
                   >
-                    {file.status === 'completed' ? 'Ready' :
-                     file.status === 'error' ? 'Error' :
-                     file.status === 'processing' ? 'Processing' :
-                     'Uploading'}
+                    {file.status === 'completed' ? getContent('cvAnalysis.fileManagement.ready') :
+                     file.status === 'failed' || file.status === 'error' ? getContent('cvAnalysis.fileManagement.error') :
+                     file.status === 'processing' ? getContent('cvAnalysis.fileManagement.processing') :
+                     getContent('cvAnalysis.fileManagement.uploading')}
                   </Badge>
 
                   {/* Action Buttons */}
                   <div className="flex items-center space-x-1">
-                    {file.url && (
+                    {file.url && file.status === 'completed' && (
                       <button
                         onClick={() => window.open(file.url, '_blank')}
                         className="p-2 text-neutral-400 hover:text-primary-500 rounded transition-all duration-200 hover:bg-primary-50"
@@ -103,13 +110,35 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
                       </button>
                     )}
                     
-                    <button
-                      onClick={() => onReplaceFile(file.id)}
-                      className="p-2 text-neutral-400 hover:text-secondary-500 rounded transition-all duration-200 hover:bg-secondary-50"
-                      title="Replace file"
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                    </button>
+                    {(file.status === 'failed' || file.status === 'error') && onRetryUpload && (
+                      <button
+                        onClick={() => onRetryUpload(file.id)}
+                        className="p-2 text-neutral-400 hover:text-amber-500 rounded transition-all duration-200 hover:bg-amber-50"
+                        title="Retry upload"
+                      >
+                        <RotateCcw className="w-4 h-4" />
+                      </button>
+                    )}
+                    
+                    {(file.status === 'analyzed' || file.analysisStatus === 'analyzed') && file.fileId && onRefreshResults && (
+                      <button
+                        onClick={() => onRefreshResults(file.fileId!)}
+                        className="p-2 text-neutral-400 hover:text-green-500 rounded transition-all duration-200 hover:bg-green-50"
+                        title="Refresh analysis results"
+                      >
+                        <RefreshCw className="w-4 h-4" />
+                      </button>
+                    )}
+                    
+                    {file.status === 'completed' && (
+                      <button
+                        onClick={() => onReplaceFile(file.id)}
+                        className="p-2 text-neutral-400 hover:text-secondary-500 rounded transition-all duration-200 hover:bg-secondary-50"
+                        title="Replace file"
+                      >
+                        <RefreshCw className="w-4 h-4" />
+                      </button>
+                    )}
                     
                     <button
                       onClick={() => onRemoveFile(file.id)}
@@ -139,9 +168,17 @@ export const FileManagementSection: React.FC<FileManagementSectionProps> = ({
               )}
 
               {/* Error Message */}
-              {file.status === 'error' && file.error && (
+              {(file.status === 'failed' || file.status === 'error') && file.error && (
                 <div className="mt-3 p-2 bg-error-50 border border-error-200 rounded text-sm text-error-700">
                   {file.error}
+                </div>
+              )}
+              
+              {/* Server File ID Info */}
+              {file.status === 'completed' && file.fileId && (
+                <div className="mt-2 text-xs text-neutral-500">
+                  File ID: {file.fileId}
+                  {file.analysisStatus && ` • Status: ${file.analysisStatus}`}
                 </div>
               )}
             </div>

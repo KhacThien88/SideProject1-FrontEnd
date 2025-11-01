@@ -2,7 +2,7 @@ import React from 'react';
 import type { ReactNode } from 'react';
 import { useAuth } from '../../contexts/auth/AuthContext';
 import { useRouter } from '../Router';
-import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { LoadingScreen } from '../ui/LoadingScreen';
 import type { RouteProtection } from '../../contexts/auth/authTypes';
 
 // Props for ProtectedRoute component
@@ -35,16 +35,20 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   // Show loading while auth state is being initialized
   if (!isInitialized || isLoading) {
-    return fallback || (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+    return fallback || <LoadingScreen message="Đang tải..." />;
   }
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    navigate(redirectTo);
+    // Store message for display after redirect
+    sessionStorage.setItem('authMessage', JSON.stringify({
+      type: 'warning',
+      message: 'Vui lòng đăng nhập để tiếp tục',
+      subtitle: 'Bạn cần đăng nhập để truy cập trang này'
+    }));
+    
+    // Use hard redirect for clean state
+    window.location.href = redirectTo;
     return null;
   }
 
@@ -73,11 +77,7 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({
 
   // Show loading while auth state is being initialized
   if (!isInitialized || isLoading) {
-    return fallback || (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+    return fallback || <LoadingScreen message="Đang tải..." />;
   }
 
   // Redirect to dashboard if already authenticated
@@ -114,11 +114,7 @@ export const RoleBasedRoute: React.FC<RoleBasedRouteProps> = ({
 
   // Show loading while auth state is being initialized
   if (!isInitialized || isLoading) {
-    return fallback || (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+    return fallback || <LoadingScreen message="Đang tải..." />;
   }
 
   // Redirect to login if not authenticated

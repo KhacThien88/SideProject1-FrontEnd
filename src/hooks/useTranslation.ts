@@ -31,12 +31,27 @@ export const useTranslation = () => {
 
   const t = translations[language] || translations.vi;
   
-  const getContent = (key: string) => {
+  const getContent = (key: string, fallback?: string) => {
     const keys = key.split('.');
     let result: any = t;
+
     for (const k of keys) {
       result = result?.[k];
+      if (result === undefined) {
+        break;
+      }
     }
+
+    // If content is missing, log a warning in development and return fallback
+    if (result === undefined) {
+      if (import.meta.env.DEV) {
+        console.warn(`[i18n] Missing translation key: "${key}" for language "${language}"`);
+      }
+
+      // Return fallback if provided, otherwise return the key itself as a visual indicator
+      return fallback !== undefined ? fallback : `[${key}]`;
+    }
+
     return result;
   };
 

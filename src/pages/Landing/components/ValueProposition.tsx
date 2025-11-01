@@ -6,11 +6,11 @@ import { cn } from '../../../utils/cn';
 
 
 export const ValueProposition: React.FC = () => {
-  const { getContent } = useTranslation();
+  const { t } = useTranslation();
 
   const values = [
     {
-      key: 'valueProposition.values.accuracy',
+      key: 'accuracy',
       icon: Target,
       color: 'text-primary-600',
       bgColor: 'bg-gradient-to-br from-primary-50 to-primary-100/50',
@@ -18,7 +18,7 @@ export const ValueProposition: React.FC = () => {
       shadowColor: 'shadow-primary-100/50',
     },
     {
-      key: 'valueProposition.values.efficiency',
+      key: 'efficiency',
       icon: Zap,
       color: 'text-secondary-600',
       bgColor: 'bg-gradient-to-br from-secondary-50 to-secondary-100/50',
@@ -26,7 +26,7 @@ export const ValueProposition: React.FC = () => {
       shadowColor: 'shadow-secondary-100/50',
     },
     {
-      key: 'valueProposition.values.insights',
+      key: 'insights',
       icon: BarChart3,
       color: 'text-accent-600',
       bgColor: 'bg-gradient-to-br from-accent-50 to-accent-100/50',
@@ -34,7 +34,7 @@ export const ValueProposition: React.FC = () => {
       shadowColor: 'shadow-accent-100/50',
     },
     {
-      key: 'valueProposition.values.scalability',
+      key: 'scalability',
       icon: TrendingUp,
       color: 'text-purple-600',
       bgColor: 'bg-gradient-to-br from-purple-50 to-purple-100/50',
@@ -59,17 +59,13 @@ export const ValueProposition: React.FC = () => {
             <span className="w-2 h-2 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full mr-2 animate-shimmer" />
             Core Values
           </div>
-          <h2 className="text-hierarchy-2 font-bold text-neutral-900 mb-6 sm:mb-8 animate-bounce-in animate-text-glow stagger-2">
+          <h2 className="text-hierarchy-2 font-bold mb-6 sm:mb-8 text-center animate-bounce-in animate-text-glow stagger-2">
             <span className="text-brand-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-500 hover-gradient">
-              {(getContent('valueProposition.title') || 'AI-Powered CV Analysis').split(' ').slice(0, 2).join(' ')}
-            </span>
-            <br />
-            <span className="text-neutral-800">
-              {(getContent('valueProposition.title') || 'AI-Powered CV Analysis').split(' ').slice(2).join(' ')}
+              {t.valueProposition?.title || 'Our Core Values'}
             </span>
           </h2>
           <p className="text-hierarchy-3 text-neutral-600 max-w-4xl mx-auto font-medium animate-slide-left stagger-3">
-            {getContent('valueProposition.subtitle')}
+            {t.valueProposition?.subtitle}
           </p>
         </div>
 
@@ -101,18 +97,18 @@ export const ValueProposition: React.FC = () => {
                 </div>
                 
                 <h3 className="text-hierarchy-4 font-bold text-neutral-900 mb-3 sm:mb-4 group-hover:text-primary-700 transition-colors duration-300">
-                  {getContent(`${value.key}.title`)}
+                  {t.valueProposition?.values?.[value.key as keyof typeof t.valueProposition.values]?.title}
                 </h3>
-                
-                <p className="text-neutral-600 leading-relaxed text-base sm:text-lg group-hover:text-neutral-700 transition-colors duration-300">
-                  {getContent(`${value.key}.description`)}
+
+                <p className="text-neutral-600 leading-relaxed text-base sm:text-lg group-hover:text-neutral-700 transition-colors duration-300 mb-4">
+                  {t.valueProposition?.values?.[value.key as keyof typeof t.valueProposition.values]?.description}
                 </p>
-                
+
                 <div className={cn(
                   'text-2xl sm:text-3xl font-bold mb-2 group-hover:scale-105 transition-transform duration-300',
                   value.color
                 )}>
-                  {getContent(`${value.key}.metric`)}
+                  {t.valueProposition?.values?.[value.key as keyof typeof t.valueProposition.values]?.metric}
                 </div>
                 
                 {/* Bottom accent line */}

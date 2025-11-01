@@ -116,13 +116,9 @@ export const HowItWorks: React.FC = () => {
             ✨ How It Works
           </div>
           
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-8 leading-tight">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
             <span className="text-brand-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-500">
-              {getContent('howItWorks.title').split(' ').slice(0, 2).join(' ')}
-            </span>
-            <br />
-            <span className="text-neutral-800">
-              {getContent('howItWorks.title').split(' ').slice(2).join(' ')}
+              {getContent('howItWorks.title')}
             </span>
           </h2>
           
